@@ -30,7 +30,7 @@ public class GraphicsMenu : SubMenuAbstraction
         }
         else
         {
-            SetResolution(resolutionsSupport.Length);
+            SetResolution(GetCurrentResolutionIndex());
             PlayerPrefs.SetInt("RESOLUTION", resolutionsIndex);
             resolutionsBox.value = resolutionsIndex;
         }
@@ -43,7 +43,7 @@ public class GraphicsMenu : SubMenuAbstraction
         }
         else
         {
-            QualitySettings.SetQualityLevel((QualitySettings.names.Length));
+            QualitySettings.SetQualityLevel(QualitySettings.GetQualityLevel());
             graphicQuality = (QualitySettings.names.Length);
             PlayerPrefs.SetInt("QUALITY", graphicQuality);
             graphicsBox.value = graphicQuality;
@@ -76,6 +76,18 @@ public class GraphicsMenu : SubMenuAbstraction
         resolutionsBox.captionText.text = "Resolução";
     }
 
+    private int GetCurrentResolutionIndex()
+    {
+        for (int i = 0; i < Screen.resolutions.Length; i++)
+        {
+            if (Screen.resolutions[i].height == Screen.currentResolution.height)
+                if (Screen.resolutions[i].width == Screen.currentResolution.width)
+                    return i;
+        }
+
+        return Screen.resolutions.Length;
+    }
+
     private void SetResolution(int index)
     {
         resolutionsIndex = index;
@@ -89,14 +101,20 @@ public class GraphicsMenu : SubMenuAbstraction
         PlayerPrefs.SetInt("RESOLUTION", resolutionsBox.value);
 
         SetResolution(resolutionsBox.value);
-        QualitySettings.SetQualityLevel(PlayerPrefs.GetInt("qualidadeGrafica"));
+        QualitySettings.SetQualityLevel(PlayerPrefs.GetInt("QUALITY"));
 
         resolutionsBox.captionText.text = "Resolução";
         graphicsBox.captionText.text = "Gráficos";
     }
 
-    public Button GetReturnButton()
+    public static void LoadGraphicOptions()
     {
-        return returnButton;
+        if (PlayerPrefs.HasKey("RESOLUTION"))
+            Screen.SetResolution(
+                Screen.resolutions[PlayerPrefs.GetInt("RESOLUTION")].width,
+                Screen.resolutions[PlayerPrefs.GetInt("RESOLUTION")].height, 
+                true);
+        if (PlayerPrefs.HasKey("QUALITY"))
+            QualitySettings.SetQualityLevel(PlayerPrefs.GetInt("QUALITY"));
     }
 }

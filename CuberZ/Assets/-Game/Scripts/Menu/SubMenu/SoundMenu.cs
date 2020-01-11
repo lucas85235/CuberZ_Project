@@ -27,6 +27,5 @@ public class SoundMenu : SubMenuAbstraction
     {
         PlayerPrefs.SetFloat("VOLUME", volumeSlider.value);
         AudioListener.volume = volumeSlider.value;
-
     }
 }

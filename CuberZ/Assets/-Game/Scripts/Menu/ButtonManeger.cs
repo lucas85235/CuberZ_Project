@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
+// Recalcular espaço entre os botões 
+// Verificar se a resolução esta sendo setada corretamente
 public class ButtonManager : MonoBehaviour
 {
     private float initialSpaceButtons;
@@ -28,6 +29,9 @@ public class ButtonManager : MonoBehaviour
     {
         spaceBetweenButtons = space;
         initialSpaceButtons = initialSpace;
+
+        initialSpaceButtons *= Screen.height;
+        spaceBetweenButtons *= Screen.height;
     }
 
     public GameObject GetCurrentButton()

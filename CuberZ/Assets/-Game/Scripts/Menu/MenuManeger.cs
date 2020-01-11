@@ -13,13 +13,15 @@ public class MenuManeger : MonoBehaviour
     [Header("Set Buttons")]
     [SerializeField] private GameObject buttonPrefab_;
     [SerializeField] private GameObject disableButtonPrefab_;
-    public float initialSpace = 20;
-    public float spaceBetween = 40;
+    public float initialSpace = 0.05f;
+    public float spaceBetween = 0.1f;
 
 
     // Start is called before the first frame update
     private void Start()
     {
+        GraphicsMenu.LoadGraphicOptions();
+
         button = new ButtonManager();
 
         button.SetParentPosition(this.transform);

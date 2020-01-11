@@ -369,8 +369,8 @@ MonoBehaviour:
     type: 3}
   disableButtonPrefab_: {fileID: 9078290909330587540, guid: c79681e491e92c049b5fdd5b3eb49dac,
     type: 3}
-  initialSpace: 20
-  spaceBetween: 40
+  initialSpace: 0.05
+  spaceBetween: 0.1
 --- !u!114 &2025944222
 MonoBehaviour:
   m_ObjectHideFlags: 0
