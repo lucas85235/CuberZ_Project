@@ -8,12 +8,14 @@ public class MenuManeger : MonoBehaviour
 {
     private ButtonManager button;
 
+    [SerializeField] private GameObject graphicMenu, soundMenu;
+
+    [Header("Set Buttons")]
     [SerializeField] private GameObject buttonPrefab_;
     [SerializeField] private GameObject disableButtonPrefab_;
-
-    [Header("Space Between Buttons")]
     public float initialSpace = 20;
     public float spaceBetween = 40;
+
 
     // Start is called before the first frame update
     private void Start()
@@ -55,7 +57,7 @@ public class MenuManeger : MonoBehaviour
         button.SetButton("Novo Jogo", 3);
         button.CreateButton(buttonPrefab_);
         button.GetCurrentButton().GetComponent<Button>().onClick.AddListener(
-            () => LoadScene("SiglePlayer"));
+            () => LoadScene("SinglePlayer"));
 
         button.SetButton("Continuar", 1);
         if (!PlayerPrefs.HasKey("SaveGame"))
@@ -66,7 +68,7 @@ public class MenuManeger : MonoBehaviour
         {
             button.CreateButton(buttonPrefab_);
             button.GetCurrentButton().GetComponent<Button>().onClick.AddListener(
-                () => LoadScene("SiglePlayer"));
+                () => LoadScene("SinglePlayer"));
         }           
 
         button.SetButton("Voltar", 2);
@@ -80,10 +82,14 @@ public class MenuManeger : MonoBehaviour
         ClearMenu();
 
         button.SetButton("Gráficos", 3);
-        button.CreateButton(disableButtonPrefab_);
+        button.CreateButton(buttonPrefab_);
+        button.GetCurrentButton().GetComponent<Button>().onClick.AddListener(
+            () => DrawSubMenu(graphicMenu));
 
         button.SetButton("Som", 1);
-        button.CreateButton(disableButtonPrefab_);
+        button.CreateButton(buttonPrefab_);
+        button.GetCurrentButton().GetComponent<Button>().onClick.AddListener(
+            () => DrawSubMenu(soundMenu));
 
         button.SetButton("Legenda", 2);
         button.CreateButton(disableButtonPrefab_);
@@ -97,7 +103,18 @@ public class MenuManeger : MonoBehaviour
             ()=> MainMenu());
     }
 
-    void ClearMenu()
+    private void DrawSubMenu(GameObject menuObject)
+    {
+        ClearMenu();
+
+        GameObject referenceObject = Instantiate(menuObject, this.transform.position,
+            Quaternion.identity, this.transform);
+
+        referenceObject.GetComponent<SubMenuAbstraction>().GetReturnButton().onClick.AddListener(
+            () => OptionsMenu());
+    }
+
+    public void ClearMenu()
     {
         foreach (Transform child in transform)
         {
