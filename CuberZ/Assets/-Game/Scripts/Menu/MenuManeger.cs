@@ -58,7 +58,16 @@ public class MenuManeger : MonoBehaviour
             () => LoadScene("SiglePlayer"));
 
         button.SetButton("Continuar", 1);
-        button.CreateButton(disableButtonPrefab_); // Verificar se existe um save
+        if (!PlayerPrefs.HasKey("SaveGame"))
+        {
+            button.CreateButton(disableButtonPrefab_);
+        }
+        else
+        {
+            button.CreateButton(buttonPrefab_);
+            button.GetCurrentButton().GetComponent<Button>().onClick.AddListener(
+                () => LoadScene("SiglePlayer"));
+        }           
 
         button.SetButton("Voltar", 2);
         button.CreateButton(buttonPrefab_);
@@ -96,13 +105,14 @@ public class MenuManeger : MonoBehaviour
         }
     }
 
-    public void LoadScene(string scene)
+    public static void LoadScene(string scene)
     {
         SceneManager.LoadScene(scene);
     }
 
     public void QuitGame()
     {
+        SaveGame.DeleteSave();
         Application.Quit();
     }
 }
