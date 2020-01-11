@@ -10,18 +10,18 @@ public class ButtonManager : MonoBehaviour
 
     private GameObject currentButton_;
     private Vector3 buttonPosition_;
+    private Transform parentPosition_;
+
     private string buttonText_;
 
     public void CreateButton(GameObject button)
     {
         GameObject buttonObject = button;
         buttonObject.transform.GetChild(0).GetComponent<Text>().
-            text = GetButtonText();
+            text = buttonText_;
 
-        Instantiate(buttonObject, this.transform.position + GetButtonPosition(),
-            Quaternion.identity, this.transform);
-
-        currentButton_ = buttonObject;
+        currentButton_ = Instantiate(buttonObject, parentPosition_.position + buttonPosition_,
+            Quaternion.identity, parentPosition_);
     }
 
     public void SetSpaceBetweenButtons(float space, float initialSpace)
@@ -35,13 +35,10 @@ public class ButtonManager : MonoBehaviour
         return currentButton_;
     }
 
-    public Vector3 GetButtonPosition()
+    public void SetButton(string buttonText, int countButton)
     {
-        return buttonPosition_;
-    }
+        buttonText_ = buttonText;
 
-    public void SetButtonPositon(int countButton)
-    {
         switch (countButton)
         {
             case 1: buttonPosition_ = new Vector3(0, initialSpaceButtons, 0); break;
@@ -58,13 +55,8 @@ public class ButtonManager : MonoBehaviour
         }
     }
 
-    public string GetButtonText()
+    public void SetParentPosition(Transform parent)
     {
-        return buttonText_;
-    }
-
-    public void SetButtonText(string text)
-    {
-        buttonText_ = text;
+        parentPosition_ = parent;
     }
 }

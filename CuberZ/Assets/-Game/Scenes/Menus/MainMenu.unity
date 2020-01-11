@@ -363,10 +363,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   buttonPrefab_: {fileID: 7810712108745177025, guid: c9e7972db2aa88640a8c2381a265a2bc,
     type: 3}
-  disableButtonPrefab_: {fileID: 7810712108745177025, guid: c9e7972db2aa88640a8c2381a265a2bc,
+  disableButtonPrefab_: {fileID: 9078290909330587540, guid: c79681e491e92c049b5fdd5b3eb49dac,
     type: 3}
-  initialSpaceButtons: 20
-  spaceBetweenButtons: 40
+  initialSpace: 20
+  spaceBetween: 40
 --- !u!114 &2025944222
 MonoBehaviour:
   m_ObjectHideFlags: 0

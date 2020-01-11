@@ -6,29 +6,6 @@ using UnityEngine.SceneManagement;
 
 public class MenuManeger : MonoBehaviour
 {
-    // Menu Principal
-    // Single Player
-    // Multi Player
-    // Opções
-    // Sair
-
-    // Single Player
-    // Novo Jogo
-    // Continuar
-    // Voltar
-
-    // Multi Player
-    // Arena
-    // Mundo Aberto
-    // Voltar
-
-    // Opções
-    // Gráficos
-    // Som
-    // Legenda
-    // Controles
-    // Voltar
-
     private ButtonManager button;
 
     [SerializeField] private GameObject buttonPrefab_;
@@ -43,6 +20,7 @@ public class MenuManeger : MonoBehaviour
     {
         button = new ButtonManager();
 
+        button.SetParentPosition(this.transform);
         button.SetSpaceBetweenButtons(spaceBetween, initialSpace);
 
         MainMenu(); 
@@ -50,26 +28,72 @@ public class MenuManeger : MonoBehaviour
 
     private void MainMenu()
     {
-        button.SetButtonPositon(3);
-        button.SetButtonText("Solo");
+        ClearMenu();
+
+        button.SetButton("Solo", 3);
+        button.CreateButton(buttonPrefab_);
+        button.GetCurrentButton().GetComponent<Button>().onClick.AddListener(
+            () => SinglePlayerMenu());
+
+        button.SetButton("Multijogador", 1);
+        button.CreateButton(disableButtonPrefab_);
+
+        button.SetButton("Opções", 2);
+        button.CreateButton(buttonPrefab_);
+        button.GetCurrentButton().GetComponent<Button>().onClick.AddListener(
+            () => OptionsMenu());
+
+        button.SetButton("Sair", 4);
+        button.CreateButton(buttonPrefab_);
+        button.GetCurrentButton().GetComponent<Button>().onClick.AddListener(QuitGame);
+    }
+
+    private void SinglePlayerMenu()
+    {
+        ClearMenu();
+
+        button.SetButton("Novo Jogo", 3);
         button.CreateButton(buttonPrefab_);
         button.GetCurrentButton().GetComponent<Button>().onClick.AddListener(
             () => LoadScene("SiglePlayer"));
 
-        button.SetButtonPositon(1);
-        button.SetButtonText("Multijogador");
-        button.CreateButton(disableButtonPrefab_);
+        button.SetButton("Continuar", 1);
+        button.CreateButton(disableButtonPrefab_); // Verificar se existe um save
 
-        button.SetButtonPositon(2);
-        button.SetButtonText("Opções");
+        button.SetButton("Voltar", 2);
         button.CreateButton(buttonPrefab_);
         button.GetCurrentButton().GetComponent<Button>().onClick.AddListener(
-            () => LoadScene("Options"));
+            () => MainMenu());
+    }
 
-        button.SetButtonPositon(4);
-        button.SetButtonText("Sair");
+    private void OptionsMenu()
+    {
+        ClearMenu();
+
+        button.SetButton("Gráficos", 3);
+        button.CreateButton(disableButtonPrefab_);
+
+        button.SetButton("Som", 1);
+        button.CreateButton(disableButtonPrefab_);
+
+        button.SetButton("Legenda", 2);
+        button.CreateButton(disableButtonPrefab_);
+
+        button.SetButton("Controles", 4);
+        button.CreateButton(disableButtonPrefab_);
+
+        button.SetButton("Volar", 6);
         button.CreateButton(buttonPrefab_);
-        button.GetCurrentButton().GetComponent<Button>().onClick.AddListener(QuitGame);
+        button.GetCurrentButton().GetComponent<Button>().onClick.AddListener(
+            ()=> MainMenu());
+    }
+
+    void ClearMenu()
+    {
+        foreach (Transform child in transform)
+        {
+            Destroy(child.gameObject);
+        }
     }
 
     public void LoadScene(string scene)
