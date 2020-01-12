@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class GraphicsMenu : SubMenuAbstraction
 {
+    private DataPresetOptions data;
+
     public Button applyButton;
     public Dropdown resolutionsBox, graphicsBox;
 
@@ -13,8 +15,11 @@ public class GraphicsMenu : SubMenuAbstraction
 
     private void Awake()
     {
+        data = new DataPresetOptions();
+        data.LoadPreset();
+
         resolutionsSupport = Screen.resolutions;
-        applyButton.onClick.AddListener(SavePreferencces);
+        applyButton.onClick.AddListener(SavePreferences);
     }
 
     // Start is called before the first frame update
@@ -23,31 +28,8 @@ public class GraphicsMenu : SubMenuAbstraction
         SetResolutionsDropdown();
         SetQualityDropdown();
 
-        if (PlayerPrefs.HasKey("RESOLUTION"))
-        {
-            SetResolution(PlayerPrefs.GetInt("RESOLUTION"));
-            resolutionsBox.value = resolutionsIndex;
-        }
-        else
-        {
-            SetResolution(GetCurrentResolutionIndex());
-            PlayerPrefs.SetInt("RESOLUTION", resolutionsIndex);
-            resolutionsBox.value = resolutionsIndex;
-        }
-
-        if (PlayerPrefs.HasKey("QUALITY"))
-        {
-            graphicQuality = PlayerPrefs.GetInt("QUALITY");
-            QualitySettings.SetQualityLevel(graphicQuality);
-            graphicsBox.value = graphicQuality;
-        }
-        else
-        {
-            QualitySettings.SetQualityLevel(QualitySettings.GetQualityLevel());
-            graphicQuality = (QualitySettings.names.Length);
-            PlayerPrefs.SetInt("QUALITY", graphicQuality);
-            graphicsBox.value = graphicQuality;
-        }
+        resolutionsBox.value = data.resolution;
+        graphicsBox.value = data.quality;
     }
 
     private void SetQualityDropdown()
@@ -76,45 +58,24 @@ public class GraphicsMenu : SubMenuAbstraction
         resolutionsBox.captionText.text = "Resolução";
     }
 
-    private int GetCurrentResolutionIndex()
+    private void SetResolution()
     {
-        for (int i = 0; i < Screen.resolutions.Length; i++)
-        {
-            if (Screen.resolutions[i].height == Screen.currentResolution.height)
-                if (Screen.resolutions[i].width == Screen.currentResolution.width)
-                    return i;
-        }
-
-        return Screen.resolutions.Length;
+        Screen.SetResolution(resolutionsSupport[data.resolution].width, 
+            resolutionsSupport[data.resolution].height, true);
     }
 
-    private void SetResolution(int index)
+    private void SetQuality()
     {
-        resolutionsIndex = index;
-        Screen.SetResolution(resolutionsSupport[resolutionsIndex].width, 
-            resolutionsSupport[resolutionsIndex].height, true);
+        QualitySettings.SetQualityLevel(data.quality);
     }
 
-    public void SavePreferencces()
+    public void SavePreferences()
     {
-        PlayerPrefs.SetInt("QUALITY", graphicsBox.value);
-        PlayerPrefs.SetInt("RESOLUTION", resolutionsBox.value);
+        data.quality = graphicsBox.value;
+        data.resolution = resolutionsBox.value;
+        data.SavePreset();
 
-        SetResolution(resolutionsBox.value);
-        QualitySettings.SetQualityLevel(PlayerPrefs.GetInt("QUALITY"));
-
-        resolutionsBox.captionText.text = "Resolução";
-        graphicsBox.captionText.text = "Gráficos";
-    }
-
-    public static void LoadGraphicOptions()
-    {
-        if (PlayerPrefs.HasKey("RESOLUTION"))
-            Screen.SetResolution(
-                Screen.resolutions[PlayerPrefs.GetInt("RESOLUTION")].width,
-                Screen.resolutions[PlayerPrefs.GetInt("RESOLUTION")].height, 
-                true);
-        if (PlayerPrefs.HasKey("QUALITY"))
-            QualitySettings.SetQualityLevel(PlayerPrefs.GetInt("QUALITY"));
+        SetResolution();
+        SetQuality();
     }
 }

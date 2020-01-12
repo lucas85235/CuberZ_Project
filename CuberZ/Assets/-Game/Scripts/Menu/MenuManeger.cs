@@ -20,8 +20,6 @@ public class MenuManeger : MonoBehaviour
     // Start is called before the first frame update
     private void Start()
     {
-        GraphicsMenu.LoadGraphicOptions();
-
         button = new ButtonManager();
 
         button.SetParentPosition(this.transform);
