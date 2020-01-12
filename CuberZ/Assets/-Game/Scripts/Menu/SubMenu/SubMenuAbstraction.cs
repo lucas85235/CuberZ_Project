@@ -5,7 +5,11 @@ using UnityEngine.UI;
 
 public abstract class SubMenuAbstraction : MonoBehaviour
 {
-    public Button returnButton;
+    protected DataPresetOptions data;
+
+    [Header("Abstract Components")]
+    [SerializeField] protected Button applyButton;
+    [SerializeField] protected Button returnButton;
 
     public virtual Button GetReturnButton()
     {

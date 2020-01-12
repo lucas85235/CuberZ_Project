@@ -114,7 +114,7 @@ public class MenuManeger : MonoBehaviour
             () => OptionsMenu());
     }
 
-    public void ClearMenu()
+    private void ClearMenu()
     {
         foreach (Transform child in transform)
         {

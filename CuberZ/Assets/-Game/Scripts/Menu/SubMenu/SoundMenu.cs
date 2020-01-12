@@ -5,10 +5,8 @@ using UnityEngine.UI;
 
 public class SoundMenu : SubMenuAbstraction
 {
-    private DataPresetOptions data;
-
+    [Header("Implemented Components")]
     public Slider volumeSlider;
-    public Button applyButton;
 
     // Start is called before the first frame update
     void Start()

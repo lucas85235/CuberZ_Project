@@ -5,13 +5,12 @@ using UnityEngine.UI;
 
 public class GraphicsMenu : SubMenuAbstraction
 {
-    private DataPresetOptions data;
-
-    public Button applyButton;
-    public Dropdown resolutionsBox, graphicsBox;
-
-    private int graphicQuality, resolutionsIndex;
     private Resolution[] resolutionsSupport;
+    private int graphicQuality, resolutionsIndex;
+
+    [Header("Implemented Components")]
+    public Dropdown resolutionsBox;
+    public Dropdown graphicsBox;
 
     private void Awake()
     {
