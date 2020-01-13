@@ -30,6 +30,10 @@ public class DataPresetOptions : MonoBehaviour
         PlayerPrefs.SetFloat(volume_, volume);
     }
 
+    public void SaveResolution() { PlayerPrefs.SetInt(resolutions_, resolution); }
+    public void SaveQuality() { PlayerPrefs.SetInt(quality_, quality); }
+    public void SaveFullScreen() { PlayerPrefs.SetInt(fullScreen_, fullScreen); }
+
     public bool ExistResolutionSave() { return PlayerPrefs.HasKey(resolutions_); }
     public bool ExistQualitySave() { return PlayerPrefs.HasKey(quality_); }
     public bool ExistFullScreenSave() { return PlayerPrefs.HasKey(fullScreen_); }
