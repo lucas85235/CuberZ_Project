@@ -21,17 +21,17 @@ public class SetPresetOptions : MonoBehaviour
             data.SavePreset();
         }
 
-        if (data.resolution != GetCurrentResolutionIndex) {
-            data.resolution = GetCurrentResolutionIndex;
-            SaveResolution();
+        if (data.resolution != GetCurrentResolutionIndex()) {
+            data.resolution = GetCurrentResolutionIndex();
+            data.SaveResolution();
         }
         if (data.quality != QualitySettings.GetQualityLevel()) {
             data.quality = QualitySettings.GetQualityLevel();
-            SaveQuality();
+            data.SaveQuality();
         }
-        if (data.fullScreen != Screen.fullScreen ? 1 : 0) {
+        if (data.fullScreen != (Screen.fullScreen ? 1 : 0)) {
             data.fullScreen = Screen.fullScreen ? 1 : 0;
-            SaveFullScreen();
+            data.SaveFullScreen();
         }
 
         data.LoadPreset();
