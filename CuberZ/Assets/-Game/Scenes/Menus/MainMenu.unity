@@ -362,9 +362,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05a2d472328fa734f8a7079db4769ce3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  graphicMenu: {fileID: 8219163997392843423, guid: 359da085911e92245944bc0936a71d53,
+  graphicMenu_: {fileID: 8219163997392843423, guid: 359da085911e92245944bc0936a71d53,
     type: 3}
-  soundMenu: {fileID: 5000275985548627864, guid: 96b771256dc78dc4aa2af21c104b0b6f,
+  soundMenu_: {fileID: 5000275985548627864, guid: 96b771256dc78dc4aa2af21c104b0b6f,
     type: 3}
   buttonPrefab_: {fileID: 7810712108745177025, guid: c9e7972db2aa88640a8c2381a265a2bc,
     type: 3}

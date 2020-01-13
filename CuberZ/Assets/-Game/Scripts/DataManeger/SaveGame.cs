@@ -21,7 +21,7 @@ public class SaveGame : MonoBehaviour
             PlayerPrefs.SetInt("SaveGame", 1);
 
             saveText.SetActive(true);
-            Destroy(saveText, 4.0f);
+            Destroy(saveText, 3.0f);
         }
     }
 

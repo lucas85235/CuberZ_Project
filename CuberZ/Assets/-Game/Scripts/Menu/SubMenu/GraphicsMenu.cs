@@ -5,19 +5,20 @@ using UnityEngine.UI;
 
 public class GraphicsMenu : SubMenuAbstraction
 {
-    private Resolution[] resolutionsSupport;
-    private int graphicQuality, resolutionsIndex;
+    private Resolution[] resolutionsSupport_;
+    private int graphicQuality_, resolutionsIndex_;
 
     [Header("Implemented Components")]
     public Dropdown resolutionsBox;
     public Dropdown graphicsBox;
+    public Toggle fullScreenToggle;
 
     private void Awake()
     {
         data = new DataPresetOptions();
         data.LoadPreset();
 
-        resolutionsSupport = Screen.resolutions;
+        resolutionsSupport_ = Screen.resolutions;
         applyButton.onClick.AddListener(SavePreferences);
     }
 
@@ -27,6 +28,7 @@ public class GraphicsMenu : SubMenuAbstraction
         SetResolutionsDropdown();
         SetQualityDropdown();
 
+        fullScreenToggle.isOn = data.fullScreen != 0 ? true : false;
         resolutionsBox.value = data.resolution;
         graphicsBox.value = data.quality;
     }
@@ -59,8 +61,8 @@ public class GraphicsMenu : SubMenuAbstraction
 
     private void SetResolution()
     {
-        Screen.SetResolution(resolutionsSupport[data.resolution].width, 
-            resolutionsSupport[data.resolution].height, true);
+        Screen.SetResolution(resolutionsSupport_[data.resolution].width, 
+            resolutionsSupport_[data.resolution].height, fullScreenToggle.isOn);
     }
 
     private void SetQuality()
@@ -72,6 +74,7 @@ public class GraphicsMenu : SubMenuAbstraction
     {
         data.quality = graphicsBox.value;
         data.resolution = resolutionsBox.value;
+        data.fullScreen = fullScreenToggle ? 1 : 0;
         data.SavePreset();
 
         SetResolution();

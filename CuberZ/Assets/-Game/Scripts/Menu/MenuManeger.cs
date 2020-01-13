@@ -8,7 +8,9 @@ public class MenuManeger : MonoBehaviour
 {
     private ButtonManager button;
 
-    [SerializeField] private GameObject graphicMenu, soundMenu;
+    [Header("Set Sub Menus")]
+    [SerializeField] private GameObject graphicMenu_;
+    [SerializeField] private GameObject soundMenu_;
 
     [Header("Set Buttons")]
     [SerializeField] private GameObject buttonPrefab_;
@@ -84,12 +86,12 @@ public class MenuManeger : MonoBehaviour
         button.SetButton("Gráficos", 3);
         button.CreateButton(buttonPrefab_);
         button.GetCurrentButton().GetComponent<Button>().onClick.AddListener(
-            () => DrawSubMenu(graphicMenu));
+            () => DrawSubMenu(graphicMenu_));
 
         button.SetButton("Som", 1);
         button.CreateButton(buttonPrefab_);
         button.GetCurrentButton().GetComponent<Button>().onClick.AddListener(
-            () => DrawSubMenu(soundMenu));
+            () => DrawSubMenu(soundMenu_));
 
         button.SetButton("Legenda", 2);
         button.CreateButton(disableButtonPrefab_);

@@ -11,11 +11,13 @@ public class SetPresetOptions : MonoBehaviour
     {
         data = new DataPresetOptions();
 
-        if (!data.ExistResolutionSave() || !data.ExistQualitySave() || !data.ExistVolumeSave())
+        if (!data.ExistResolutionSave() || !data.ExistQualitySave() || !data.ExistVolumeSave() || !data.ExistFullScreenSave())
         {
             data.resolution = GetCurrentResolutionIndex();
             data.quality = QualitySettings.GetQualityLevel();
+            data.fullScreen = Screen.fullScreen ? 1 : 0;
             data.volume = 1.0f;
+
             data.SavePreset();
         }
 
@@ -32,7 +34,7 @@ public class SetPresetOptions : MonoBehaviour
     {
         QualitySettings.SetQualityLevel(data.quality);
         Screen.SetResolution(Screen.resolutions[data.resolution].width, 
-            Screen.resolutions[data.resolution].height, true);  
+            Screen.resolutions[data.resolution].height, data.fullScreen != 0 ? true : false);  
     }
 
     private void SetSoundOptions()
