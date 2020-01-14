@@ -60,3 +60,6 @@ crashlytics-build.properties
 
 .vscode
 /CuberZ/Temp/UnityLockfile
+
+/CuberZ/Assets/Import
+/CuberZ/Assets/Import.meta
