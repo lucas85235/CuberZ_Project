@@ -8,9 +8,8 @@ public class CameraController : MonoBehaviour
     [SerializeField] private float angleMin = -80.0f;
     [SerializeField] private float angleMax = -1.0f;
 
-
     private RaycastHit hit_ = new RaycastHit();
-    private LayerMask layer_;
+    private LayerMask inputLayer_;
     private Transform target_;
 
     private float currentX = 0.0f;
@@ -24,7 +23,7 @@ public class CameraController : MonoBehaviour
     void Start()
     {
         target_ = GameObject.Find("LOOK").transform;
-        layer_ = LayerMask.GetMask("Default");
+        inputLayer_ = LayerMask.GetMask("Default");
     }
 
     void Update()
@@ -44,7 +43,7 @@ public class CameraController : MonoBehaviour
 
         transform.position = target_.position - transform.forward * zoonInPosition;
 
-        if (Physics.Linecast(target_.position, transform.position, out hit_, layer_))
+        if (Physics.Linecast(target_.position, transform.position, out hit_, inputLayer_))
         {
             transform.position = hit_.point + transform.forward * cameraPosition;
         }
