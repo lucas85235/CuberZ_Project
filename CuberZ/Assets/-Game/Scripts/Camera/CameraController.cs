@@ -34,9 +34,11 @@ public class CameraController : MonoBehaviour
             currentY -= Input.GetAxis("Vertical") * mouseY + Input.GetAxis("Mouse Y") * mouseY;
 
             currentY = Mathf.Clamp(currentY, angleMin, angleMax);
-            Vector3 dir = new Vector3(0, 0, zoonInPosition);
+
+            Vector3 zoon = new Vector3(0, 0, zoonInPosition);
             Quaternion rotation = Quaternion.Euler(currentY, currentX, 0);
-            transform.position = target_.position + rotation * dir;
+            
+            transform.position = target_.position + rotation * zoon;
             transform.LookAt(target_.position);
 
         }
