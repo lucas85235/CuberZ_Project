@@ -13,6 +13,12 @@ public class CameraController : MonoBehaviour
     public float sensibility = 125.0f;
     public float cameraDistance = 16.0f;
     public float adjustCollisionForward = 0.1f;
+    public float smooth = 4.0f;
+
+    private float distanceUp;
+    private float minAngle = 0.9f;
+    private float maxAngle = 1.1f;
+    private Vector3 cameraPosition;
 
     void Start()
     {
@@ -32,7 +38,10 @@ public class CameraController : MonoBehaviour
             transform.eulerAngles = rotation;
         }
 
-        transform.position = target_.position - transform.forward * cameraDistance;
+        cameraPosition = target_.position - transform.forward * cameraDistance * distanceUp;
+        transform.position = Vector3.Lerp(transform.position, cameraPosition, Time.deltaTime * smooth);
+
+        distanceUp = Mathf.Clamp(distanceUp += Input.GetAxis("Vertical"), minAngle, maxAngle);
 
         if(Physics.Linecast(target_.position, transform.position, out hit)) {
             transform.position = hit.point + transform.forward * adjustCollisionForward;

@@ -122,7 +122,7 @@ GameObject:
   m_Component:
   - component: {fileID: 97543554}
   m_Layer: 0
-  m_Name: LOOK
+  m_Name: CameraTarget
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -246,8 +246,6 @@ GameObject:
   - component: {fileID: 844924613}
   - component: {fileID: 844924612}
   - component: {fileID: 844924611}
-  - component: {fileID: 844924615}
-  - component: {fileID: 844924616}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -269,8 +267,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target_: {fileID: 97543554}
   sensibility: 125
-  cameraDistance: 15
+  cameraDistance: 16
   adjustCollisionForward: 0.1
+  distanceUp: 0
+  minAngle: 0.9
+  maxAngle: 1.1
+  cameraPosition: {x: 0, y: 0, z: 0}
 --- !u!81 &844924612
 AudioListener:
   m_ObjectHideFlags: 0
@@ -335,58 +337,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 30, y: 0, z: 0}
---- !u!114 &844924615
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 844924610}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 90345d4043768f5488e61ce4be145c4c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  distanceAway: 9
-  distanceUp: 25
-  smooth: 4
-  rotateAround: 70
-  target: {fileID: 1992255492}
-  camOcclusion:
-    serializedVersion: 2
-    m_Bits: 1
-  cameraHeight: 55
-  cameraPan: 0
-  camRotateSpeed: 180
---- !u!114 &844924616
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 844924610}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a9df9b85f8125014c99e87a96a974daf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  target: {fileID: 1992255492}
-  CamOcclusion:
-    serializedVersion: 2
-    m_Bits: 1
-  DistanceAway: 10
-  DistanceUp: 1
-  smooth: 4
-  rotateAround: 70
-  cameraHeight: 55
-  cameraForward: 0
-  cameraRotateSpeed: 180
-  cameraPosition: {x: 0, y: 0, z: 0}
-  cameraMask: {x: 0, y: 0, z: 0}
-  currentX: 0
-  currentY: 0
-  HorizontalAxis: 0
-  VerticalAxis: 0
 --- !u!1 &1243931829
 GameObject:
   m_ObjectHideFlags: 0
