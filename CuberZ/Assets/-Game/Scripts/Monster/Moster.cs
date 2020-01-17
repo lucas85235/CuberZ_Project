@@ -8,12 +8,17 @@ public class Moster : MonoBehaviour
     private Animator animator_;
     private GameObject collider_;
     private GameObject camera_;
+    private CameraController cameraController_;
 
     private float smooth_;
 
+    private float attackTime_;
+    private float countAttackTime = 0;
+    public float attackDecrementTime = 0.3f;
+    public float attackSpeed = 30.0f;
+
     public float speed = 15.0f;
     public float smoothTime = 0.3f;
-    public float attackSpeed = 30.0f;
     public float attackDistance = 5.0f;
 
     void Start()
@@ -21,11 +26,15 @@ public class Moster : MonoBehaviour
         boby_ = GetComponent<Rigidbody>();
         animator_ = GetComponent<Animator>();
         camera_ = Camera.main.gameObject;
+        cameraController_ = Camera.main.GetComponent<CameraController>();
 
         // mudar
         // collider_ = transform.Find("COLISOR").gameObject;
 
         boby_.freezeRotation = true;
+
+        attackTime_ = animator_.GetCurrentAnimatorStateInfo(0).length;
+        attackTime_ -= attackDecrementTime;
     }
 
     void Update()
@@ -35,12 +44,12 @@ public class Moster : MonoBehaviour
         float X = Input.GetAxis("Horizontal");
         float Z = Input.GetAxis("Vertical");
 
-        if (!PlayAttackAnimation())
+        if (!IsPlayAttackAnimation())
         {
             Walk(X, Z);
             AnimationSpeed(X, Z);
         }
-
+        
         if (Input.GetMouseButtonDown(0))
             AttackDirection();
 
@@ -48,24 +57,28 @@ public class Moster : MonoBehaviour
 
         if (currentAnimation.IsName("Attack"))
         {
-            boby_.AddForce(transform.forward * attackSpeed);
+            if(countAttackTime < attackTime_)
+            {
+                boby_.velocity = transform.forward * attackSpeed;
+                countAttackTime += Time.deltaTime;
+            }
         }
         else
         {
             if (ExistGround())
-                boby_.velocity = Vector3.zero;       
+                boby_.velocity = Vector3.zero;
+            countAttackTime = 0;
         }
     }
 
-    bool ExistGround()
+    private bool ExistGround()
     {
         return Physics.Raycast(transform.position, (-1 * transform.up), 1f);
     }
 
-    private bool PlayAttackAnimation()
+    private bool IsPlayAttackAnimation()
     {
-        var animation = animator_.GetCurrentAnimatorStateInfo(0);
-        return animation.IsName("Attack");
+        return animator_.GetCurrentAnimatorStateInfo(0).IsName("Attack");
     }
 
     void AttackDirection()
