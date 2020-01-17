@@ -6,42 +6,40 @@ public class EyeAnimation : MonoBehaviour
 {
 	private SkinnedMeshRenderer skinnedMesh_;
 
-	[SerializeField] private int index_;
-	private public float countTime_;
-    public float secondCountTime_;
-
-	public float waitTime;
-	public float MORPH;
+	private int index_;
+	private float countTime_;
+    private float secondCountTime_;
+    private float waitTime_;
+    private float morph_;
 
 
 	void Start () 
     {
-
 		skinnedMesh_ = GetComponent<SkinnedMeshRenderer> ();
-		MORPH = 0;
+		morph_ = 0;
 	}
 
 	void Update () 
     {
-		skinnedMesh_.SetBlendShapeWeight (0, Mathf.Lerp (skinnedMesh_.GetBlendShapeWeight (0), MORPH,0.4f));
+		skinnedMesh_.SetBlendShapeWeight (0, Mathf.Lerp (skinnedMesh_.GetBlendShapeWeight (0), morph_, 0.4f) );
 
 		if (index_ < 2) 
         {
-			if (countTime_ < waitTime) 
+			if (countTime_ < waitTime_) 
             {
 				countTime_ += 1f;
 			} 
             else 
             {
-				if (MORPH <=1) 
+				if (morph_ <=1) 
                 {
-					MORPH = 100;
-					waitTime = 3;
+					morph_ = 100;
+					waitTime_ = 3;
 				} 
                 else 
                 {
-					MORPH = 0;
-					waitTime = 50;
+					morph_ = 0;
+					waitTime_ = 50;
 				}
 				index_++;
 				countTime_ = 0;
@@ -49,7 +47,7 @@ public class EyeAnimation : MonoBehaviour
 		}
 		if (index_ >= 2) 
         {
-			if (secondCountTime_ < waitTime * 2) 
+			if (secondCountTime_ < waitTime_ * 2) 
             {
 				secondCountTime_ += 1;
 			} 

@@ -1,36 +1,36 @@
 using UnityEngine;
 using System.Collections;
- 
-public class RealCamera : MonoBehaviour
-{   
+
+public class ThirdCamera : MonoBehaviour
+{
     [Header("Player to follow")]
-    private Transform target;                    
-    
+    [SerializeField] private Transform target;
+
     [Header("Layer(s) to include")]
-    private LayerMask CamOcclusion;                             // the layers that will be affected by collision
-    
+    [SerializeField] private LayerMask CamOcclusion;                             // the layers that will be affected by collision
+
     [Header("Camera Properties")]
     public float DistanceAway;                                  // how far the camera is from the player.
     public float DistanceUp;                                    // how high the camera is above the player
-            
+
     [SerializeField] private float smooth = 4.0f;               // how smooth the camera moves into place
     [SerializeField] private float rotateAround = 70f;          // the angle at which you will rotate the camera (on an axis)
-    // [SerializeField] private float cameraHeight = 55f;
-    // [SerializeField] private float cameraForward = 0f;
+    [SerializeField] private float cameraHeight = 55f;
+    [SerializeField] private float cameraForward = 0f;
     [SerializeField] private float cameraRotateSpeed = 180f;
     [SerializeField] private Vector3 cameraPosition;
     [SerializeField] private Vector3 cameraMask;
-    
-    private float currentX = 0.0f;
-    private float currentY = 0.0f;
+
+    [SerializeField] private float currentX = 0.0f;
+    [SerializeField] private float currentY = 0.0f;
     // public float minDistance = 1;               
     // public float maxDistance = 2; 
     // DistanceAway = Mathf.Clamp(DistanceAway += VerticalAxis, minDistance, maxDistance);
 
-    private float HorizontalAxis;
-    private float VerticalAxis;
+    [SerializeField] private float HorizontalAxis;
+    [SerializeField] private float VerticalAxis;
 
-    void Start () 
+    void Start()
     {
         // position the camera behind the target
         rotateAround = target.eulerAngles.y - 45f;
@@ -38,27 +38,27 @@ public class RealCamera : MonoBehaviour
 
     void Update()
     {
- 
+
     }
- 
-    void LateUpdate () 
+
+    void LateUpdate()
     {
         HorizontalAxis = Input.GetAxis("Horizontal");
         VerticalAxis = Input.GetAxis("Vertical");
 
         if (Input.GetMouseButton(1))
         {
-            Vector3 targetOffset = new Vector3(target.position.x, target.position.y, target.position.z);
+            Vector3 targetOffset = new Vector3(target.position.x, target.position.y + 2, target.position.z);
 
             currentX += HorizontalAxis * 10 + Input.GetAxis("Mouse X") * 10;
             currentY -= VerticalAxis * 10 + Input.GetAxis("Mouse Y") * 10;
 
-            currentY = Mathf.Clamp(currentY, angleMin, angleMax);
+            // currentY = Mathf.Clamp(currentY, angleMin, angleMax);
 
             Quaternion rotation = Quaternion.Euler(currentY, currentX, 0);
-            
-            cameraPosition = targetOffset + rotation * DistanceAway;
-            cameraMask = targetOffset + rotation * DistanceAway;
+
+            cameraPosition = targetOffset + rotation * Vector3.one * DistanceAway;
+            cameraMask = targetOffset + rotation * Vector3.one * DistanceAway;
             // transform.position = target_.position + rotation * zoon;
             // cameraPosition = targetOffset + Vector3.up * DistanceUp /*- rotateVector*/ * DistanceAway;
 
@@ -67,32 +67,34 @@ public class RealCamera : MonoBehaviour
 
             transform.LookAt(target);
         }
-        else 
+        else
         {
             // Offset of the targets transform (Since the pivot point is usually at the feet)
-            Vector3 targetOffset = new Vector3(target.position.x, target.position.y, target.position.z);
+            Vector3 targetOffset = new Vector3(target.position.x, target.position.y + 2, target.position.z);
 
-            /* Quaternion rotation = Quaternion.Euler(cameraHeight, rotateAround, cameraForward);
+            Quaternion rotation = Quaternion.Euler(cameraHeight, rotateAround, cameraForward);
             Vector3 vectorMask = Vector3.one;
-            Vector3 rotateVector = rotation * vectorMask; */
+            Vector3 rotateVector = rotation * vectorMask; 
 
             // this determines where both the camera and it's mask will be.
             // the camMask is for forcing the camera to push away from walls.
-            cameraPosition = targetOffset + Vector3.up * DistanceUp /*- rotateVector*/ * DistanceAway;
-            cameraMask = targetOffset + Vector3.up * DistanceUp /*- rotateVector*/ * DistanceAway; // cameraMask = cameraPosition;
-    
+            cameraPosition = targetOffset + Vector3.up * DistanceUp /*- rotateVector */ * DistanceAway;
+            cameraMask = cameraPosition;
+
             DetectWall(ref targetOffset);
-            SmoothCameraPosition();
-    
+
+            transform.position = target.position - transform.forward * 8;
+
+
             // transform.LookAt(target);            
         }
 
         #region wrap the camera orbit rotation
-        if(rotateAround > 360)
+        if (rotateAround > 360)
         {
             rotateAround = 0f;
         }
-        else if(rotateAround < 0f)
+        else if (rotateAround < 0f)
         {
             rotateAround = (rotateAround + 360f);
         }
@@ -115,7 +117,7 @@ public class RealCamera : MonoBehaviour
         RaycastHit wallHit = new RaycastHit();
 
         // linecast from your player (targetFollow) to your cameras mask (camMask) to find collisions.
-        if(Physics.Linecast(targetFollow, cameraMask, out wallHit, CamOcclusion))
+        if (Physics.Linecast(targetFollow, cameraMask, out wallHit, CamOcclusion))
         {
             // the smooth is increased so you detect geometry collisions faster.
             smooth = 10f;
@@ -123,8 +125,8 @@ public class RealCamera : MonoBehaviour
             // the x and z coordinates are pushed away from the wall by hit.normal.
             // the y coordinate stays the same.
             cameraPosition = new Vector3(
-                wallHit.point.x + wallHit.normal.x * 0.5f, 
-                cameraPosition.y, 
+                wallHit.point.x + wallHit.normal.x * 0.5f,
+                cameraPosition.y,
                 wallHit.point.z + wallHit.normal.z * 0.5f);
         }
 

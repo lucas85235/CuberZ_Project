@@ -4,50 +4,48 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
+    private RaycastHit hit;
 
-    [SerializeField] private float angleMin = -80.0f;
-    [SerializeField] private float angleMax = -1.0f;
+    [Header("Player to follow")]
+    [SerializeField] private Transform target_;
 
-    private RaycastHit hit_ = new RaycastHit();
-    private LayerMask inputLayer_;
-    private Transform target_;
-
-    private float currentX = 0.0f;
-    private float currentY = 0.0f;
-
-    public float mouseX = 10.0f;
-    public float mouseY = 10.0f;
-    public float zoonInPosition = 8.0f;
-    public float cameraPosition = -18.0f;
+    [Header("Camera Properties")]
+    public float sensibility = 125.0f;
+    public float cameraDistance = 16.0f;
+    public float adjustCollisionForward = 0.1f;
 
     void Start()
     {
-        target_ = GameObject.Find("LOOK").transform;
-        inputLayer_ = LayerMask.GetMask("Default");
+        // O target deve ser um pivo no meio do personagem e não nos pés
     }
 
-    void Update()
+    void LateUpdate()
     {
-        if (Input.GetMouseButton(1))
+        if(Input.GetMouseButton(1))
         {
-            currentX += Input.GetAxis("Horizontal") * mouseX + Input.GetAxis("Mouse X") * mouseX;
-            currentY -= Input.GetAxis("Vertical") * mouseY + Input.GetAxis("Mouse Y") * mouseY;
+            transform.RotateAround(target_.position, transform.up, Input.GetAxis("Mouse X") * sensibility * Time.deltaTime);
+            transform.RotateAround(target_.position, transform.right, Input.GetAxis("Mouse Y") * sensibility * Time.deltaTime);
 
-            currentY = Mathf.Clamp(currentY, angleMin, angleMax);
+            Vector3 rotation = transform.eulerAngles;
+            rotation.z = 0;
 
-            Vector3 zoon = new Vector3(0, 0, zoonInPosition);
-            Quaternion rotation = Quaternion.Euler(currentY, currentX, 0);
-            
-            transform.position = target_.position + rotation * zoon;
-            transform.LookAt(target_.position);
-
+            transform.eulerAngles = rotation;
         }
 
-        transform.position = target_.position - transform.forward * zoonInPosition;
+        transform.position = target_.position - transform.forward * cameraDistance;
 
-        if (Physics.Linecast(target_.position, transform.position, out hit_, inputLayer_))
-        {
-            transform.position = hit_.point + transform.forward * cameraPosition;
+        if(Physics.Linecast(target_.position, transform.position, out hit)) {
+            transform.position = hit.point + transform.forward * adjustCollisionForward;
         }
+    }
+
+    public void SetTarget(Transform newTarget)
+    {
+        target_ = newTarget;
+    }
+
+    public void SetCameraDistance(float newDistance)
+    {
+        cameraDistance = newDistance;
     }
 }
