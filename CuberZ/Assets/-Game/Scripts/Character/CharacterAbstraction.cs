@@ -15,7 +15,7 @@ public abstract class CharacterAbstraction : MonoBehaviour
     protected float axisY;
 
     [Header("Adjust Camera Propeties")]
-    public float cameraDistance = 16.0;
+    public float cameraDistance = 16.0f;
 
     [Header("Walk Stats")]
     public float characterSpeed = 15.0f;
@@ -60,12 +60,12 @@ public abstract class CharacterAbstraction : MonoBehaviour
         // no metodo Start
     }
 
-    private override void Update() 
+    protected virtual void Update() 
     {
         var currentAnimation = animator_.GetCurrentAnimatorStateInfo(0);
 
         axisX = Input.GetAxis("Horizontal");
-        axisZ = Input.GetAxis("Vertical");
+        axisY = Input.GetAxis("Vertical");
 
         if (!IsPlayAttackAnimation())
         {
@@ -165,7 +165,7 @@ public abstract class CharacterAbstraction : MonoBehaviour
 
     protected void SetCameraPropeties() 
     {
-        cameraController_.SetTarget(this.transform.position);
+        cameraController_.SetTarget(this.transform);
         cameraController_.SetCameraDistance(cameraDistance);
     }
 }

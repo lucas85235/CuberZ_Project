@@ -7,9 +7,8 @@ public class Moster : CharacterAbstraction
     private float attackTime_;
     private float countAttackTime = 0;
     public float attackDecrementTime = 0.3f;
-    public float attackSpeed = 30.0f;
 
-    private override void Start()
+    protected override void Start()
     {
         boby_ = GetComponent<Rigidbody>();
         animator_ = GetComponent<Animator>();
@@ -30,7 +29,7 @@ public class Moster : CharacterAbstraction
         characterLife = maxLife;
     }
 
-    private override void Update()
+    protected override void Update()
     {
         var currentAnimation = animator_.GetCurrentAnimatorStateInfo(0);
 
