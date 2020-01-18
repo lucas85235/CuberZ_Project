@@ -53,4 +53,3 @@ public class PlayerController : CharacterAbstraction
         SetCameraPropeties(transform.Find("CameraTarget"));
     }
 }
-
