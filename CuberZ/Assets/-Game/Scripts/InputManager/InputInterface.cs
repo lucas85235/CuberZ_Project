@@ -15,5 +15,6 @@ public interface IInput
     bool RescueKubberInput(); //Padrão- Control
     bool RunInput(); //Padrão- Shift
     bool ExitInput(); //Padrão- Esc
+    bool CaptureKubberInput(); //Padrão- Backspace
 }
 
