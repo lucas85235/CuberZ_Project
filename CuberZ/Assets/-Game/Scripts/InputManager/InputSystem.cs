@@ -21,6 +21,7 @@ public class InputSystem : MonoBehaviour, IInput
     public KeyCode rescueKubberKey_;
     public KeyCode runKey_;
     public KeyCode exitKey_;
+    public KeyCode captureKubberkey_;
 
     #region Variáveis PlayerPrefs
     private const string moveCameraPlayerPref_ = "moveCameraPlayerPref_";
@@ -35,6 +36,7 @@ public class InputSystem : MonoBehaviour, IInput
     private const string rescueKubberPlayerPref_ = "rescueKubberPlayerPref_";
     private const string runPlayerPref_ = "runPlayerPref_";
     private const string exitPlayerPref_ = "exitPlayerPref_";
+    private const string captureKubberPref_ = "captureKubberPref_";
 
     #endregion
 
@@ -52,6 +54,7 @@ public class InputSystem : MonoBehaviour, IInput
     public bool RescueKubberInput() { return Input.GetKeyDown(rescueKubberKey_); }
     public bool RunInput() { return Input.GetKey(runKey_); }
     public bool ExitInput() { return Input.GetKeyDown(exitKey_); }
+    public bool CaptureKubberInput() { return Input.GetKeyDown(captureKubberkey_); }
 
 
     #endregion
@@ -73,6 +76,7 @@ public class InputSystem : MonoBehaviour, IInput
         PlayerPrefs.SetString(rescueKubberPlayerPref_, rescueKubberKey_.ToString());
         PlayerPrefs.SetString(runPlayerPref_, runKey_.ToString());
         PlayerPrefs.SetString(exitPlayerPref_, exitKey_.ToString());
+        PlayerPrefs.SetString(captureKubberPref_, captureKubberkey_.ToString());
         Debug.Log("Todas as Keys Foram Salvas");
     }
 
@@ -90,6 +94,7 @@ public class InputSystem : MonoBehaviour, IInput
         exitKey_ = (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString(exitPlayerPref_));
         getAxisHorizontal_ = PlayerPrefs.GetString(getAxisHorizontalPlayerPref_);
         getAxisVertical_ = PlayerPrefs.GetString(getAxisVerticalPlayerPref_);
+        captureKubberkey_ = (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString(captureKubberPref_));
         Debug.Log("Todas as Keys Foram Carregadas");
     }
 
