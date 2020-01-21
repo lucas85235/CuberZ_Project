@@ -23,18 +23,18 @@ public class InputSystem : MonoBehaviour, IInput
     public KeyCode exitKey_;
 
     #region Variáveis PlayerPrefs
-    protected string moveCameraPlayerPref_ = "moveCameraPlayerPref_";
-    protected string goToBattlePlayerPref_ = "goToBattlePlayerPref_";
-    protected string kubberAtk1PlayerPref_ = "kubberAtk1PlayerPref_";
-    protected string kubberAtk2PlayerPref_ = "kubberAtk2PlayerPref_";
-    protected string kubberAtk3PlayerPref_ = "kubberAtk3PlayerPref_";
-    protected string kubberAtk4PlayerPref_ = "kubberAtk4PlayerPref_";
-    protected string getAxisHorizontalPlayerPref_ = "getAxisHorizontalPlayerPref_";
-    protected string getAxisVerticalPlayerPref_ = "getAxisVerticalPlayerPref_";
-    protected string fixCameraOnMyKubberPlayerPref_ = "fixCameraOnMyKubberPlayerPref_";
-    protected string rescueKubberPlayerPref_ = "rescueKubberPlayerPref_";
-    protected string runPlayerPref_ = "runPlayerPref_";
-    protected string exitPlayerPref_ = "exitPlayerPref_";
+    private const string moveCameraPlayerPref_ = "moveCameraPlayerPref_";
+    private const string goToBattlePlayerPref_ = "goToBattlePlayerPref_";
+    private const string kubberAtk1PlayerPref_ = "kubberAtk1PlayerPref_";
+    private const string kubberAtk2PlayerPref_ = "kubberAtk2PlayerPref_";
+    private const string kubberAtk3PlayerPref_ = "kubberAtk3PlayerPref_";
+    private const string kubberAtk4PlayerPref_ = "kubberAtk4PlayerPref_";
+    private const string getAxisHorizontalPlayerPref_ = "getAxisHorizontalPlayerPref_";
+    private const string getAxisVerticalPlayerPref_ = "getAxisVerticalPlayerPref_";
+    private const string fixCameraOnMyKubberPlayerPref_ = "fixCameraOnMyKubberPlayerPref_";
+    private const string rescueKubberPlayerPref_ = "rescueKubberPlayerPref_";
+    private const string runPlayerPref_ = "runPlayerPref_";
+    private const string exitPlayerPref_ = "exitPlayerPref_";
 
     #endregion
 
