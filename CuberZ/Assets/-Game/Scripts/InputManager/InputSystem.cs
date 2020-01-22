@@ -8,20 +8,26 @@ public class InputSystem : MonoBehaviour, IInput
     static InputSystem instance_;
     public static InputSystem Instance_ { get { return instance_; } }
 
+   
     [Header("Teclas Configuráveis")]
-    public KeyCode moveCameraKey_;
-    public KeyCode goToBattleKey_;
-    public KeyCode kubberAtk1Key_;
-    public KeyCode kubberAtk2Key_;
-    public KeyCode kubberAtk3Key_;
-    public KeyCode kubberAtk4Key_;
-    public string getAxisHorizontal_;
-    public string getAxisVertical_;
-    public KeyCode fixCameraOnMyKubberKey_;
+    public KeyCode moveCameraKey_ = KeyCode.Mouse1;
+    public KeyCode goToBattleKey_ = KeyCode.Mouse0;
+    public KeyCode kubberAtk1Key_ = KeyCode.Alpha1;
+    public KeyCode kubberAtk2Key_ = KeyCode.Alpha2;
+    public KeyCode kubberAtk3Key_ = KeyCode.Alpha3;
+    public KeyCode kubberAtk4Key_ = KeyCode.Alpha4;
+    public string getAxisHorizontal_ = "Horizontal";
+    public string getAxisVertical_ = "Vertical";
+    public KeyCode fixCameraOnMyKubberKey_ = KeyCode.Tab;
     public KeyCode rescueKubberKey_;
-    public KeyCode runKey_;
-    public KeyCode exitKey_;
-    public KeyCode captureKubberkey_;
+    public KeyCode runKey_ = KeyCode.LeftShift;
+    public KeyCode exitKey_ = KeyCode.Escape;
+    public KeyCode captureKubberkey_ = KeyCode.Backspace;
+
+    private void Awake()
+    {
+        instance_ = this;
+    }
 
     #region Variáveis PlayerPrefs
     private const string moveCameraPlayerPref_ = "moveCameraPlayerPref_";
