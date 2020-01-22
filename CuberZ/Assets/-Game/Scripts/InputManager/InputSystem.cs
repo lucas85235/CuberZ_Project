@@ -19,7 +19,7 @@ public class InputSystem : MonoBehaviour, IInput
     public string getAxisHorizontal_ = "Horizontal";
     public string getAxisVertical_ = "Vertical";
     public KeyCode fixCameraOnMyKubberKey_ = KeyCode.Tab;
-    public KeyCode rescueKubberKey_;
+    public KeyCode rescueKubberKey_ = KeyCode.LeftControl;
     public KeyCode runKey_ = KeyCode.LeftShift;
     public KeyCode exitKey_ = KeyCode.Escape;
     public KeyCode captureKubberkey_ = KeyCode.Backspace;
