@@ -1,0 +1,2 @@
+C:\Users\Matheus Cardoso\Documents\GitHub\CuberZ_Project\CuberZ\obj\Debug\GameReference.csprojAssemblyReference.cache
+C:\Users\Matheus Cardoso\Documents\GitHub\CuberZ_Project\CuberZ\obj\Debug\GameReference.csproj.CoreCompileInputs.cache
