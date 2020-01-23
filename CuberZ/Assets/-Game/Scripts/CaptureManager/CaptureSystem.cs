@@ -10,14 +10,15 @@ public class CaptureSystem : MonoBehaviour
     public LayerMask layermask_;
 
     [Header("Variaveis de Captura")]
-    public float impulseForce_;
-    public float impulseY_;
-    public float gravityIntensity_;
+    public float impulseForce_ = 30;
+    public float impulseY_ = 20;
+    public float gravityIntensity_ = 30;
+    [Range(0, 10f)]
+    public float distanceMultiplier_ = 1;
 
     [Header("Variaveis de Feedback")]
-    public int cuboQuantidade_ = 10;
-    [Range(-50, 50)]
-    public float MouseZ = 10;
+    public int cuboQuantidade_ = 1000;
+
 
     //Variaveis Privadas
     private GameObject captureCubeTemp_;
@@ -61,9 +62,12 @@ public class CaptureSystem : MonoBehaviour
         if (cuboQuantidade_ > 0)
         {
             captureCubeTemp_.transform.SetParent(null);
+            captureCubeTemp_.transform.GetChild(0).GetComponent<Animator>().Play("DiminuirCuboPequeno", -1, 0);
+            captureCubeTemp_.transform.GetChild(1).gameObject.SetActive(true);
             captureCubeTemp_.GetComponent<Rigidbody>().useGravity = true;
-            captureCubeTemp_.GetComponent<Rigidbody>().AddForce((-new Vector3(CubeDirection().x, -CubeDirection().y, CubeDirection().z)
-                * (distance_ / 0.1334f)) + new Vector3(0, impulseY_, 0), ForceMode.Impulse);
+            captureCubeTemp_.GetComponent<CaptureCube>().target_ = MiraCube();
+            captureCubeTemp_.GetComponent<CaptureCube>().speed_ = impulseForce_ + (distance_ * distanceMultiplier_);
+
             captureCubeTemp_ = null;
             cuboQuantidade_--;
 
@@ -106,6 +110,7 @@ public class CaptureSystem : MonoBehaviour
             captureCubeTemp_ = Pooling.InstantiatePooling(captureCube_, hand_.position, Quaternion.identity);
             captureCubeTemp_.transform.SetParent(hand_.transform);
             captureCubeTemp_.GetComponent<CaptureCube>().gravityImpact_ = gravityIntensity_;
+            captureCubeTemp_.GetComponent<CaptureCube>().impulseY_ = impulseY_;
             captureCube_.GetComponent<Rigidbody>().useGravity = false;
             captureCube_.GetComponent<Rigidbody>().velocity = Vector3.zero;
         }
@@ -130,9 +135,9 @@ public class CaptureSystem : MonoBehaviour
 
 
         Vector3 FinalPos = hitPointV3_;
-        distance_ = Vector3.Distance(FinalPos, hand_.transform.position);
-        GameObject t = Pooling.InstantiatePooling(captureCube_, FinalPos, Quaternion.identity);
-        return FinalPos;
+        distance_ = Vector3.Distance(transform.position, FinalPos);
+
+        return FinalPos; 
     }
 
 
