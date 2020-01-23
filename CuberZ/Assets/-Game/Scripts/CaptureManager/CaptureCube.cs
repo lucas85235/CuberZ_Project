@@ -4,86 +4,140 @@ using UnityEngine;
 
 public class CaptureCube : MonoBehaviour
 {
-    public GameObject fakeCube_;
-    public Transform[] allcubes_;
-    Rigidbody rb_;
+    [Header("Variaveis de Alocação")]
+    public GameObject fakeCube;
+    public Transform[] allcubes;
+    Rigidbody rigibody_;
+
     [HideInInspector]
-    public float gravityImpact_;
+    public Vector3 target { get { return target_; } set { target_ = value; } }
+    private Vector3 target_;
+
     [HideInInspector]
-    public Vector3 target_;
+    public float speed { get { return speed_; } set { speed_ = value; } }
+    private float speed_;
+    private bool moviment_;
+
     [HideInInspector]
-    public float speed_;
-    [HideInInspector]
-    bool moviment_ = true;
-    [HideInInspector]
-    public float impulseY_;
-    bool break_;
-    bool capture_;
-    bool moveCapture_;
-    Vector3 point_;
-    Collider col2;
+    public float impulseY { get { return impulseY_; } set { impulseY_ = value; } }
+    private float impulseY_;
+    private bool break_;
+    private bool capture_;
+    private bool moveCapture_;
+    private Vector3 point_;
+    private Collider col2_;
+    private Collider mycollider_;
+    private Transform bigcube_,smallcube_;
+
+
+
+    #region Funções MonoBehaviour de Execução
 
     private void Awake()
     {
-        moviment_ = true;
-        rb_ = GetComponent<Rigidbody>();
-        transform.GetChild(0).localScale = Vector3.one;
-        rb_.useGravity = false;
-        rb_.velocity = Vector3.zero;
+        InitializingAwake();
     }
 
     private void OnEnable()
     {
-        rb_ = GetComponent<Rigidbody>();
-        transform.GetChild(0).localScale = Vector3.one;
-        transform.GetChild(0).gameObject.SetActive(true);
-        transform.GetChild(1).gameObject.SetActive(false);
-        rb_.useGravity = false;
-        break_ = false;
-        rb_.velocity = Vector3.zero;
-        moviment_ = true;
-
+        InitializaingOnEnable();
     }
 
     private void OnDisable()
     {
-        rb_.useGravity = false;
-        rb_.velocity = Vector3.zero;
-
+        rigibody_.useGravity = false;
+        rigibody_.velocity = Vector3.zero;
     }
 
     private void Update()
     {
-        Abduction(col2);
+        Abduction(col2_);
         StopDistanceControl();
     }
-
-    protected void PhysicsControl()
-    {
-        if (rb_.useGravity && moviment_ && !capture_)
-        {
-            rb_.velocity = (target_ - transform.position).normalized * speed_ + new Vector3(0, impulseY_, 0);
-            transform.Rotate(-900 * Time.deltaTime, 0, 0, Space.Self);
-        }
-    }
-
 
     private void FixedUpdate()
     {
         PhysicsControl();
     }
 
-    protected void StopDistanceControl()
+    #endregion
+
+
+
+    #region Funções de Inicialização 
+
+    private void InitializingAwake()
+    {
+        moviment_ = true;
+        rigibody_ = GetComponent<Rigidbody>();
+        mycollider_ = GetComponent<Collider>();
+        rigibody_.useGravity = false;
+        rigibody_.velocity = Vector3.zero;
+        bigcube_ = transform.GetChild(1);
+        smallcube_ = transform.GetChild(0);
+        smallcube_.localScale = Vector3.one;
+    }
+
+    private void InitializaingOnEnable()
+    {
+        rigibody_ = GetComponent<Rigidbody>();
+        smallcube_.localScale = Vector3.one;
+        smallcube_.gameObject.SetActive(true);
+        bigcube_.gameObject.SetActive(false);
+        rigibody_.useGravity = false;
+        break_ = false;
+        rigibody_.velocity = Vector3.zero;
+        moviment_ = true;
+    }
+
+    #endregion
+
+
+
+
+    #region Movimentação do Cubo Antes das Colisões
+
+    private void StopDistanceControl() // Verifica a distância do Cubo até seu Alvo
     {
         if (Vector3.Distance(transform.position, target_) <= 1.5f && moviment_ && !capture_)
         {
             moviment_ = false;
-            rb_.useGravity = false;
+            rigibody_.useGravity = false;
         }
-
     }
 
-    protected void Abduction(Collider coll)
+    private void PhysicsControl() // Física no FixedUpdate sobre a Movimentação do Cubo até o alvo;
+    {
+        if (rigibody_.useGravity && moviment_ && !capture_)
+        {
+            rigibody_.velocity = (target_ - transform.position).normalized * speed_ + new Vector3(0, impulseY_, 0);
+            transform.Rotate(-900 * Time.deltaTime, 0, 0, Space.Self);
+        }
+    }
+
+    #endregion
+
+
+
+
+    #region Interação com o Cubo após Colisões
+
+    private IEnumerator StopCube(Collider col) //Função que controla a Execução do Cubo e puxa a Abudação do Monstro
+    {
+        mycollider_.enabled = false;
+        yield return new WaitForSeconds(1f);
+        rigibody_.useGravity = false;
+        rigibody_.velocity = Vector3.zero;
+        rigibody_.freezeRotation = true;
+        transform.forward = point_ - transform.position;
+        Debug.Log("Toca Animação");
+        moveCapture_ = false;
+        capture_ = true;
+        col2_ = col;
+        yield break;
+    }
+
+    private void Abduction(Collider coll)
     {
         if (capture_)
         {
@@ -99,54 +153,44 @@ public class CaptureCube : MonoBehaviour
                 coll.transform.SetParent(transform);
                 capture_ = false;
                 coll.transform.gameObject.SetActive(false);
-                transform.GetChild(1).GetComponent<Animator>().Play("DissolveCubo", -1, 0);
+                bigcube_.GetComponent<Animator>().Play("DissolveCubo", -1, 0);
 
             }
         }
 
-    }
+    } // Função que controla a interação Cubo/Monstro
+
+    private void BreakCube()
+    {
+        rigibody_.velocity = Vector3.zero;
+        rigibody_.useGravity = true;
+        moviment_ = false;
+        GameObject t = Pooling.InstantiatePooling(fakeCube, bigcube_.transform.position,
+         bigcube_.transform.rotation);
+        transform.gameObject.SetActive(false);
+        break_ = true;
+    } //Função que controla a interação Cubo/(Chão e Parede)
 
     private void OnTriggerStay(Collider col)
     {
-        col2 = col;
+        col2_ = col;
 
         if (col.gameObject.name == "Ground" || col.gameObject.name == "Wall" && !break_)
         {
 
-            rb_.velocity = Vector3.zero;
-            rb_.useGravity = true;
-            moviment_ = false;
-            GameObject t = Pooling.InstantiatePooling(fakeCube_, transform.GetChild(1).transform.position,
-             transform.GetChild(1).transform.rotation);
-            transform.gameObject.SetActive(false);
-            break_ = true;
+            BreakCube();
         }
 
         else if (col.gameObject.tag == "Monster" && !capture_)
         {
             moviment_ = false;
-            rb_.velocity = Vector3.zero;
-            rb_.AddForce(-(col.transform.position - transform.position) * 10 + new Vector3(0, 3, 0), ForceMode.Impulse);
-            rb_.AddTorque(Vector3.forward * 5, ForceMode.Impulse);
+            rigibody_.velocity = Vector3.zero;
+            rigibody_.AddForce(-(col.transform.position - transform.position) * 10 + new Vector3(0, 3, 0), ForceMode.Impulse);
+            rigibody_.AddTorque(Vector3.forward * 5, ForceMode.Impulse);
             StartCoroutine(StopCube(col));
 
         }
-    }
+    }  //Verifica Onde o Cubo bateu
 
-    IEnumerator StopCube(Collider col)
-    {
-        GetComponent<Collider>().enabled = false;
-        yield return new WaitForSeconds(1f);
-        rb_.useGravity = false;
-        rb_.velocity = Vector3.zero;
-        rb_.freezeRotation = true;
-        transform.forward = point_ - transform.position;
-        Debug.Log("Toca Animação");
-        moveCapture_ = false;
-        capture_ = true;
-        col2 = col;
-
-        yield break;
-    }
-
+    #endregion
 }

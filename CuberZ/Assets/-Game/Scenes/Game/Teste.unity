@@ -1103,17 +1103,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a40d50f1ee53559458bfd23cb091e4b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  captureCube_: {fileID: 2145423973509888249, guid: 3d60572e299637b4d9067cdd3c2f31c8,
+  captureCube: {fileID: 2145423973509888249, guid: 3d60572e299637b4d9067cdd3c2f31c8,
     type: 3}
-  hand_: {fileID: 634857164}
-  layermask_:
-    serializedVersion: 2
-    m_Bits: 512
-  impulseForce_: 20
-  impulseY_: 10
-  gravityIntensity_: 20
+  hand: {fileID: 634857164}
+  impulseForce: 30
+  impulseY: 20
   distanceMultiplier_: 1
-  cuboQuantidade_: 10777
+  cuboQuantidade: 1000
 --- !u!4 &3723957974375340318 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8723477792150609018, guid: 02e164f74e0e9cb489dfdf390ed702fc,

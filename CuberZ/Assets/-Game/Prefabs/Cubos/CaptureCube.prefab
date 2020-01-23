@@ -1022,39 +1022,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48832c35998d98946a780e7f4fdb1c7f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fakeCube_: {fileID: 6500537494581273465, guid: 5c62ecc897e5ccc47aee0a9b6bb9bc54,
+  fakeCube: {fileID: 6500537494581273465, guid: 5c62ecc897e5ccc47aee0a9b6bb9bc54,
     type: 3}
-  allcubes_:
-  - {fileID: 2145423974152463253}
-  - {fileID: 2145423974686441918}
-  - {fileID: 2145423973485383646}
-  - {fileID: 2145423973095728762}
-  - {fileID: 2145423973350285481}
-  - {fileID: 2145423972843725276}
-  - {fileID: 2145423972927997191}
-  - {fileID: 2145423973190172380}
-  - {fileID: 2145423972873008403}
-  - {fileID: 2145423973668000300}
-  - {fileID: 2145423974498429164}
-  - {fileID: 2145423974932720506}
-  - {fileID: 2145423974388431940}
-  - {fileID: 2145423973613920526}
-  - {fileID: 2145423973012488752}
-  - {fileID: 2145423973336692286}
-  - {fileID: 2145423974922875245}
-  - {fileID: 2145423973104801647}
-  - {fileID: 2145423974116454124}
-  - {fileID: 2145423974590540619}
-  - {fileID: 2145423973541711021}
-  - {fileID: 2145423973925228657}
-  - {fileID: 2145423974104376952}
-  - {fileID: 2145423973065419025}
-  - {fileID: 2145423974929240446}
-  - {fileID: 2145423973728627015}
-  gravityImpact_: 0
-  target_: {x: 0, y: 0, z: 0}
-  speed_: 0
-  impulseY_: 0
+  allcubes: []
 --- !u!1 &2145423973513594112
 GameObject:
   m_ObjectHideFlags: 0

@@ -5,38 +5,39 @@ using UnityEngine;
 public class CaptureSystem : MonoBehaviour
 {
     [Header("Variaveis de Alocação")]
-    public GameObject captureCube_;
-    public Transform hand_;
-    public LayerMask layermask_;
+    public GameObject captureCube;
+    public Transform hand;
+    private LayerMask layermask;
 
     [Header("Variaveis de Captura")]
-    public float impulseForce_ = 30;
-    public float impulseY_ = 20;
-    public float gravityIntensity_ = 30;
+    public float impulseForce = 20;
+    public float impulseY = 10;
     [Range(0, 10f)]
     public float distanceMultiplier_ = 1;
 
     [Header("Variaveis de Feedback")]
-    public int cuboQuantidade_ = 1000;
+    public int cuboQuantidade = 1000;
 
 
     //Variaveis Privadas
     private GameObject captureCubeTemp_;
     private bool capturing_;
     private Vector3 raycastPosition_;
-    Vector3 hitPointV3_;
-    float xv3_, yv3_, zv3_;
-    float distance_;
+    private Vector3 hitPointV3_;
+    private float xv3_, yv3_, zv3_;
+    private float distance_;
 
     //Singleton
-    public static CaptureSystem instance_;
-    private CaptureSystem Instance_ { get { return instance_; } }
+    public static CaptureSystem instance;
+    private CaptureSystem Instance_ { get { return instance; } }
 
 
 
     private void Awake()
     {
-        instance_ = this;
+        instance = this;
+        layermask = LayerMask.GetMask("Input");
+        
     }
 
     private void Update()
@@ -55,23 +56,25 @@ public class CaptureSystem : MonoBehaviour
         }
     }
 
+
+
     #region Funções usaveis/Publicas
 
     public void ThrowCube()
     {
-        if (cuboQuantidade_ > 0)
+        if (cuboQuantidade > 0)
         {
             captureCubeTemp_.transform.SetParent(null);
             captureCubeTemp_.transform.GetChild(0).GetComponent<Animator>().Play("DiminuirCuboPequeno", -1, 0);
             captureCubeTemp_.transform.GetChild(1).gameObject.SetActive(true);
             captureCubeTemp_.GetComponent<Rigidbody>().useGravity = true;
-            captureCubeTemp_.GetComponent<CaptureCube>().target_ = MiraCube();
-            captureCubeTemp_.GetComponent<CaptureCube>().speed_ = impulseForce_ + (distance_ * distanceMultiplier_);
+            captureCubeTemp_.GetComponent<CaptureCube>().target = MiraCube();
+            captureCubeTemp_.GetComponent<CaptureCube>().speed = impulseForce + (distance_ * distanceMultiplier_);
 
             captureCubeTemp_ = null;
-            cuboQuantidade_--;
+            cuboQuantidade--;
 
-            if (cuboQuantidade_ > 0) CaptureInstantiate();
+            if (cuboQuantidade > 0) CaptureInstantiate();
             else Debug.Log("Você não possui mais cubos para jogar!");
         }
 
@@ -101,28 +104,29 @@ public class CaptureSystem : MonoBehaviour
 
     #endregion
 
+
+
     #region Funções Protegidas/Privadas
 
-    protected void CaptureInstantiate() //Função para instanciar o Cubo que estará selecionado (Não tem seleção ainda).
+    private void CaptureInstantiate() //Função para instanciar o Cubo que estará selecionado (Não tem seleção ainda).
     {
         if (!captureCubeTemp_)
         {
-            captureCubeTemp_ = Pooling.InstantiatePooling(captureCube_, hand_.position, Quaternion.identity);
-            captureCubeTemp_.transform.SetParent(hand_.transform);
-            captureCubeTemp_.GetComponent<CaptureCube>().gravityImpact_ = gravityIntensity_;
-            captureCubeTemp_.GetComponent<CaptureCube>().impulseY_ = impulseY_;
-            captureCube_.GetComponent<Rigidbody>().useGravity = false;
-            captureCube_.GetComponent<Rigidbody>().velocity = Vector3.zero;
+            captureCubeTemp_ = Pooling.InstantiatePooling(captureCube, hand.position, Quaternion.identity);
+            captureCubeTemp_.transform.SetParent(hand.transform);
+            captureCubeTemp_.GetComponent<CaptureCube>().impulseY = impulseY;
+            captureCube.GetComponent<Rigidbody>().useGravity = false;
+            captureCube.GetComponent<Rigidbody>().velocity = Vector3.zero;
         }
     }
 
-    protected Vector3 MiraCube()
+    private Vector3 MiraCube()
     {
         RaycastHit hit;
         Ray mousePosition_ = Camera.main.ScreenPointToRay(Input.mousePosition);
         Vector3 mouseposV3_ = Camera.main.ScreenToViewportPoint(Input.mousePosition);
 
-        if (Physics.Raycast(mousePosition_, out hit, Mathf.Infinity, layermask_))
+        if (Physics.Raycast(mousePosition_, out hit, Mathf.Infinity, layermask))
         {
             Debug.Log(hit.transform.name);
             hitPointV3_ = new Vector3(hit.point.x, mouseposV3_.y, hit.point.z);
@@ -137,11 +141,10 @@ public class CaptureSystem : MonoBehaviour
         Vector3 FinalPos = hitPointV3_;
         distance_ = Vector3.Distance(transform.position, FinalPos);
 
-        return FinalPos; 
+        return FinalPos;
     }
 
-
-    protected Vector3 CubeDirection()
+    private Vector3 CubeDirection()
     {
         Vector3 v1_ = MiraCube();
         Vector3 v2_ = captureCubeTemp_.transform.position;
@@ -149,7 +152,6 @@ public class CaptureSystem : MonoBehaviour
         return dirFinal_;
 
     }
-
 
     #endregion
 }
