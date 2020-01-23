@@ -479,7 +479,7 @@ Light:
   serializedVersion: 8
   m_Type: 1
   m_Color: {r: 1, g: 0.95686275, b: 0.8392157, a: 1}
-  m_Intensity: 1
+  m_Intensity: 1.52
   m_Range: 10
   m_SpotAngle: 30
   m_CookieSize: 10
@@ -1106,8 +1106,8 @@ MonoBehaviour:
   captureCube: {fileID: 2145423973509888249, guid: 3d60572e299637b4d9067cdd3c2f31c8,
     type: 3}
   hand: {fileID: 634857164}
-  impulseForce: 30
-  impulseY: 20
+  impulseForce: 20
+  impulseY: 10
   distanceMultiplier_: 1
   cuboQuantidade: 1000
 --- !u!4 &3723957974375340318 stripped

@@ -131,6 +131,8 @@ public class CaptureCube : MonoBehaviour
         rigibody_.freezeRotation = true;
         transform.forward = point_ - transform.position;
         Debug.Log("Toca Animação");
+        bigcube_.GetComponent<Animator>().Play("Capturing", -1, 0);
+        yield return new WaitUntil(() => bigcube_.GetComponent<CaptureHelper>().canGo);
         moveCapture_ = false;
         capture_ = true;
         col2_ = col;
