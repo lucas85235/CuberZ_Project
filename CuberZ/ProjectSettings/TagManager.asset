@@ -18,8 +18,8 @@ TagManager:
   - Input
   - CaptureCubes
   - Player
-  - 
-  - 
+  - NoPlayerInteraction
+  - Monster
   - 
   - 
   - 
