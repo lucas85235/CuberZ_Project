@@ -27,10 +27,11 @@ public class CaptureCube : MonoBehaviour
     private Vector3 point_;
     private Collider col2_;
     private Collider mycollider_;
-    private Transform bigcube_,smallcube_;
-
-
-
+    private Transform bigcube_, smallcube_;
+    private Vector3 monsterPositionCap_;
+    private Quaternion monsterRotationCap_;
+    private Vector3 monsterScaleCap_;
+    private bool afterCapture_;
     #region Funções MonoBehaviour de Execução
 
     private void Awake()
@@ -52,6 +53,7 @@ public class CaptureCube : MonoBehaviour
     private void Update()
     {
         Abduction(col2_);
+        AfterCaptureMonster();
         StopDistanceControl();
     }
 
@@ -76,6 +78,7 @@ public class CaptureCube : MonoBehaviour
         bigcube_ = transform.GetChild(1);
         smallcube_ = transform.GetChild(0);
         smallcube_.localScale = Vector3.one;
+
     }
 
     private void InitializaingOnEnable()
@@ -139,10 +142,27 @@ public class CaptureCube : MonoBehaviour
         yield break;
     }
 
+    void AfterCaptureMonster()
+    {
+        if (afterCapture_)
+        {
+
+            Quaternion tempRotation_ = Quaternion.Euler(0, transform.rotation.eulerAngles.y, 0);
+            transform.rotation = Quaternion.Lerp(transform.rotation, tempRotation_, 5f * Time.deltaTime);
+
+        }
+
+    }
+
+
     private void Abduction(Collider coll)
     {
         if (capture_)
         {
+            monsterPositionCap_ = coll.transform.position;
+            monsterRotationCap_ = coll.transform.rotation;
+            monsterScaleCap_ = coll.transform.localScale;
+
             coll.GetComponent<Rigidbody>().useGravity = false;
 
             coll.transform.localScale = Vector3.Lerp(coll.transform.localScale, Vector3.zero, 8f * Time.deltaTime);
@@ -155,8 +175,13 @@ public class CaptureCube : MonoBehaviour
                 coll.transform.SetParent(transform);
                 capture_ = false;
                 coll.transform.gameObject.SetActive(false);
-                bigcube_.GetComponent<Animator>().Play("DissolveCubo", -1, 0);
+                rigibody_.useGravity = true;
+                mycollider_.enabled = true;
+                mycollider_.isTrigger = false;
+                afterCapture_ = true;
+                //   
 
+                //   bigcube_.GetComponent<Animator>().Play("DissolveCubo", -1, 0);
             }
         }
 
@@ -177,18 +202,18 @@ public class CaptureCube : MonoBehaviour
     {
         col2_ = col;
 
-        if (col.gameObject.name == "Ground" || col.gameObject.name == "Wall" && !break_)
+        if ((col.gameObject.name == "Ground" || col.gameObject.name == "Wall") && !break_ && !capture_)
         {
-
-            BreakCube();
+            if(!afterCapture_)  BreakCube();
+            //else Programação de Mexer o cubo
         }
 
         else if (col.gameObject.tag == "Monster" && !capture_)
         {
             moviment_ = false;
             rigibody_.velocity = Vector3.zero;
-            rigibody_.AddForce(-(col.transform.position - transform.position) * 10 + new Vector3(0, 3, 0), ForceMode.Impulse);
-            rigibody_.AddTorque(Vector3.forward * 5, ForceMode.Impulse);
+            rigibody_.AddForce(-(col.transform.position - transform.position) * 7 + new Vector3(0, 35, 0), ForceMode.Impulse);
+            rigibody_.AddTorque(Vector3.forward * -5, ForceMode.Impulse);
             StartCoroutine(StopCube(col));
 
         }
