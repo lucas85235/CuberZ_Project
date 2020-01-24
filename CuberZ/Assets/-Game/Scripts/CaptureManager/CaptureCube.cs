@@ -17,6 +17,8 @@ public class CaptureCube : MonoBehaviour
     public float speed { get { return speed_; } set { speed_ = value; } }
     private float speed_;
     private bool moviment_;
+    public float sucessPercentage { get { return sucessPercentage_; } set { sucessPercentage_ = value; } }
+    private float sucessPercentage_;
 
     [HideInInspector]
     public float impulseY { get { return impulseY_; } set { impulseY_ = value; } }
@@ -25,10 +27,16 @@ public class CaptureCube : MonoBehaviour
     private bool capture_;
     private bool moveCapture_;
     private Vector3 point_;
-    private Collider col2_;
+    private Collider col2_, coliderMonster_;
     private Collider mycollider_;
-    private Transform bigcube_,smallcube_;
-
+    private Transform bigcube_, smallcube_;
+    private Vector3 monsterPositionCap_;
+    private Quaternion monsterRotationCap_;
+    private Vector3 monsterScaleCap_;
+    private bool afterCapture_;
+    private bool canCollide_ = true;
+    private bool monsterBreakFree_;
+    private float shakeValue_ = 1;
 
 
     #region Funções MonoBehaviour de Execução
@@ -52,6 +60,8 @@ public class CaptureCube : MonoBehaviour
     private void Update()
     {
         Abduction(col2_);
+        AfterCaptureMonster();
+        MonsterGetOut();
         StopDistanceControl();
     }
 
@@ -69,6 +79,7 @@ public class CaptureCube : MonoBehaviour
     private void InitializingAwake()
     {
         moviment_ = true;
+        canCollide_ = true;
         rigibody_ = GetComponent<Rigidbody>();
         mycollider_ = GetComponent<Collider>();
         rigibody_.useGravity = false;
@@ -76,15 +87,18 @@ public class CaptureCube : MonoBehaviour
         bigcube_ = transform.GetChild(1);
         smallcube_ = transform.GetChild(0);
         smallcube_.localScale = Vector3.one;
+
     }
 
     private void InitializaingOnEnable()
     {
+        shakeValue_ = 1;
         rigibody_ = GetComponent<Rigidbody>();
         smallcube_.localScale = Vector3.one;
         smallcube_.gameObject.SetActive(true);
         bigcube_.gameObject.SetActive(false);
         rigibody_.useGravity = false;
+        canCollide_ = true;
         break_ = false;
         rigibody_.velocity = Vector3.zero;
         moviment_ = true;
@@ -129,7 +143,7 @@ public class CaptureCube : MonoBehaviour
         rigibody_.useGravity = false;
         rigibody_.velocity = Vector3.zero;
         rigibody_.freezeRotation = true;
-        transform.forward = point_ - transform.position;
+        transform.LookAt(coliderMonster_.transform);
         Debug.Log("Toca Animação");
         bigcube_.GetComponent<Animator>().Play("Capturing", -1, 0);
         yield return new WaitUntil(() => bigcube_.GetComponent<CaptureHelper>().canGo);
@@ -143,6 +157,7 @@ public class CaptureCube : MonoBehaviour
     {
         if (capture_)
         {
+
             coll.GetComponent<Rigidbody>().useGravity = false;
 
             coll.transform.localScale = Vector3.Lerp(coll.transform.localScale, Vector3.zero, 8f * Time.deltaTime);
@@ -155,8 +170,12 @@ public class CaptureCube : MonoBehaviour
                 coll.transform.SetParent(transform);
                 capture_ = false;
                 coll.transform.gameObject.SetActive(false);
-                bigcube_.GetComponent<Animator>().Play("DissolveCubo", -1, 0);
+                rigibody_.useGravity = true;
+                mycollider_.enabled = true;
+                afterCapture_ = true;
+                //   
 
+                //   
             }
         }
 
@@ -173,26 +192,157 @@ public class CaptureCube : MonoBehaviour
         break_ = true;
     } //Função que controla a interação Cubo/(Chão e Parede)
 
+    private void FalseBreakCube()
+    {
+
+        rigibody_.velocity = Vector3.zero;
+        rigibody_.useGravity = true;
+        moviment_ = false;
+        GameObject t = Pooling.InstantiatePooling(fakeCube, bigcube_.transform.position,
+        bigcube_.transform.rotation);
+        mycollider_.enabled = false;
+        bigcube_.gameObject.SetActive(false);
+        break_ = true;
+
+
+    }
+
+
+
     private void OnTriggerStay(Collider col)
     {
         col2_ = col;
 
-        if (col.gameObject.name == "Ground" || col.gameObject.name == "Wall" && !break_)
+        if (canCollide_)
         {
 
-            BreakCube();
-        }
+            if ((col.gameObject.name == "Ground" || col.gameObject.name == "Wall") && !break_ && !capture_)
+            {
+                if (!afterCapture_) BreakCube();
 
-        else if (col.gameObject.tag == "Monster" && !capture_)
-        {
-            moviment_ = false;
-            rigibody_.velocity = Vector3.zero;
-            rigibody_.AddForce(-(col.transform.position - transform.position) * 10 + new Vector3(0, 3, 0), ForceMode.Impulse);
-            rigibody_.AddTorque(Vector3.forward * 5, ForceMode.Impulse);
-            StartCoroutine(StopCube(col));
+                else
+                {
+                    Debug.Log("Oi");
+                    mycollider_.isTrigger = false;
+                    StartCoroutine(ShakeItOff(coliderMonster_));
+                }
+            }
 
+            else if (col.gameObject.tag == "Monster" && !capture_)
+            {
+                monsterScaleCap_ = col.transform.localScale;
+                monsterRotationCap_ = col.transform.rotation;
+                monsterPositionCap_ = col.transform.position;
+                coliderMonster_ = col;
+                moviment_ = false;
+                rigibody_.velocity = Vector3.zero;
+                rigibody_.AddForce(-(col.transform.position - transform.position) * 7 + new Vector3(0, 35, 0), ForceMode.Impulse);
+                rigibody_.AddTorque(Vector3.forward * -5, ForceMode.Impulse);
+                StartCoroutine(StopCube(col));
+
+            }
         }
     }  //Verifica Onde o Cubo bateu
 
     #endregion
+
+
+
+    #region Interação com o Cubo Pós Captura
+
+
+    private void AfterCaptureMonster()
+    {
+        if (afterCapture_)
+        {
+
+            Quaternion tempRotation_ = Quaternion.Euler(0, transform.rotation.eulerAngles.y, 0);
+            transform.rotation = Quaternion.Lerp(transform.rotation, tempRotation_, 5f * Time.deltaTime);
+
+        }
+    }
+
+    private void MonsterGetOut()
+    {
+        if (monsterBreakFree_ && coliderMonster_)
+        {
+            Debug.Log("Hmmmm");
+            coliderMonster_.transform.localScale = Vector3.Lerp(coliderMonster_.transform.localScale, Vector3.one,
+                5 * Time.deltaTime);
+
+            coliderMonster_.transform.position =
+                new Vector3(coliderMonster_.transform.position.x, monsterPositionCap_.y, coliderMonster_.transform.position.z);
+
+            Quaternion tempRotation_ = Quaternion.Euler(0, coliderMonster_.transform.rotation.eulerAngles.y, 0);
+
+            coliderMonster_.transform.rotation = tempRotation_;
+
+            if (coliderMonster_.transform.localScale == monsterScaleCap_)
+            {
+                monsterBreakFree_ = false;
+                coliderMonster_ = null;
+            }
+        }
+    }
+
+
+    private IEnumerator ShakeItOff(Collider col)
+    {
+        afterCapture_ = false;
+        capture_ = false;
+        canCollide_ = false;
+        bool feedbackBool_;
+
+
+        yield return new WaitForSeconds(1);
+        feedbackBool_ = GetInOrOutMonsterChance(sucessPercentage_);
+        bigcube_.GetComponent<Animator>().Play("ShakeCube", -1, 0);
+        yield return new WaitForSeconds(1);
+
+        if (feedbackBool_ && shakeValue_ <= 2)
+        {
+            shakeValue_++;
+            StartCoroutine(ShakeItOff(coliderMonster_));
+
+        }
+
+        else if (feedbackBool_ && shakeValue_ > 2)
+        {
+            bigcube_.GetComponent<Animator>().Play("DissolveCubo", -1, 0);
+            yield break;
+        }
+
+        if (!feedbackBool_)
+        {
+            shakeValue_ = 1;
+            col.GetComponent<Rigidbody>().useGravity = true;
+            col.transform.parent = null;
+            col.gameObject.SetActive(true);
+            monsterBreakFree_ = true;
+            Debug.Log("Work" + col.name);
+            FalseBreakCube();
+            yield return new WaitUntil(() => !monsterBreakFree_);
+            yield break;
+        }
+
+
+    }
+
+
+    private bool GetInOrOutMonsterChance(float chance_)
+    {
+
+        float randomValue_ = Random.Range(1, 101);
+
+        if (randomValue_ > chance_) return false;
+        else return true;
+
+
+    }
+
+
+    #endregion
+
+
+
 }

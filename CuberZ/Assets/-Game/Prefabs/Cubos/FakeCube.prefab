@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 6500537492644652998}
   - component: {fileID: 6346330598133557012}
   - component: {fileID: 6500537492644653003}
-  m_Layer: 10
+  m_Layer: 12
   m_Name: cubolateral (8)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -117,7 +117,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6500537492730325452}
-  m_Layer: 10
+  m_Layer: 12
   m_Name: "CruzDin\xE2mica"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -156,7 +156,7 @@ GameObject:
   - component: {fileID: 6500537492896169466}
   - component: {fileID: 3496612980537469229}
   - component: {fileID: 6500537492896169471}
-  m_Layer: 10
+  m_Layer: 12
   m_Name: cubolateral (5)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -264,7 +264,7 @@ GameObject:
   - component: {fileID: 6500537492908242286}
   - component: {fileID: 4923128292064472431}
   - component: {fileID: 6500537492908242195}
-  m_Layer: 10
+  m_Layer: 12
   m_Name: cubolateral (9)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -372,7 +372,7 @@ GameObject:
   - component: {fileID: 6500537492939274263}
   - component: {fileID: 7666680196835466154}
   - component: {fileID: 6500537492939274249}
-  m_Layer: 10
+  m_Layer: 12
   m_Name: cubolateral (0)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -480,7 +480,7 @@ GameObject:
   - component: {fileID: 6500537493117307891}
   - component: {fileID: 2875030820661428881}
   - component: {fileID: 6500537493117307893}
-  m_Layer: 10
+  m_Layer: 12
   m_Name: cubolateral (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -588,7 +588,7 @@ GameObject:
   - component: {fileID: 6500537493175429871}
   - component: {fileID: 4667284837820500982}
   - component: {fileID: 6500537493175429857}
-  m_Layer: 10
+  m_Layer: 12
   m_Name: cubolateral (7)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -696,7 +696,7 @@ GameObject:
   - component: {fileID: 6500537493183443140}
   - component: {fileID: 3669909202997864364}
   - component: {fileID: 6500537493183443193}
-  m_Layer: 10
+  m_Layer: 12
   m_Name: cubolateral (7)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -804,7 +804,7 @@ GameObject:
   - component: {fileID: 6500537493185989368}
   - component: {fileID: 6385245537319905330}
   - component: {fileID: 6500537493185989373}
-  m_Layer: 10
+  m_Layer: 12
   m_Name: cubolateral (7)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -908,7 +908,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6500537493265265297}
-  m_Layer: 10
+  m_Layer: 12
   m_Name: CubosSoltos
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -946,7 +946,7 @@ GameObject:
   - component: {fileID: 6500537493480069688}
   - component: {fileID: 5434483190491120221}
   - component: {fileID: 6500537493480069693}
-  m_Layer: 10
+  m_Layer: 12
   m_Name: cubolateral (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1054,7 +1054,7 @@ GameObject:
   - component: {fileID: 6500537493516284117}
   - component: {fileID: 5677559704891082776}
   - component: {fileID: 6500537493516284111}
-  m_Layer: 10
+  m_Layer: 12
   m_Name: cubolateral (10)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1162,7 +1162,7 @@ GameObject:
   - component: {fileID: 6500537493558129518}
   - component: {fileID: 1170455810320371606}
   - component: {fileID: 6500537493558129427}
-  m_Layer: 10
+  m_Layer: 12
   m_Name: cubolateral (6)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1270,7 +1270,7 @@ GameObject:
   - component: {fileID: 6500537493738302904}
   - component: {fileID: 6772965383365602028}
   - component: {fileID: 6500537493738302909}
-  m_Layer: 10
+  m_Layer: 12
   m_Name: cubolateral (6)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1378,7 +1378,7 @@ GameObject:
   - component: {fileID: 6500537493860738398}
   - component: {fileID: 9010852443743333390}
   - component: {fileID: 6500537493860738371}
-  m_Layer: 10
+  m_Layer: 12
   m_Name: cubolateral (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1486,7 +1486,7 @@ GameObject:
   - component: {fileID: 6500537493896330692}
   - component: {fileID: 5769938178686677431}
   - component: {fileID: 6500537493896330745}
-  m_Layer: 10
+  m_Layer: 12
   m_Name: cubolateral (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1594,7 +1594,7 @@ GameObject:
   - component: {fileID: 6500537493911424233}
   - component: {fileID: 1243545956394603210}
   - component: {fileID: 6500537493911424147}
-  m_Layer: 10
+  m_Layer: 12
   m_Name: cubolateral (8)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1702,7 +1702,7 @@ GameObject:
   - component: {fileID: 6500537493953337778}
   - component: {fileID: 7276534420074995453}
   - component: {fileID: 6500537493953337783}
-  m_Layer: 10
+  m_Layer: 12
   m_Name: cubolateral (5)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1810,7 +1810,7 @@ GameObject:
   - component: {fileID: 6500537494002332307}
   - component: {fileID: 1388772998003416045}
   - component: {fileID: 6500537494002332309}
-  m_Layer: 10
+  m_Layer: 12
   m_Name: cubolateral (6)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1916,7 +1916,7 @@ GameObject:
   - component: {fileID: 6500537494018275450}
   - component: {fileID: 6500537494018275449}
   - component: {fileID: 6500537494018275448}
-  m_Layer: 10
+  m_Layer: 12
   m_Name: CaptureCubeCaptureStage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1973,6 +1973,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa46e998c74ee904e906f4c219ae8012, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canGo: 0
 --- !u!1 &6500537494131252868
 GameObject:
   m_ObjectHideFlags: 0
@@ -1986,7 +1987,7 @@ GameObject:
   - component: {fileID: 6500537494131252865}
   - component: {fileID: 4012955554321953307}
   - component: {fileID: 6500537494131252875}
-  m_Layer: 10
+  m_Layer: 12
   m_Name: cubolateral (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2094,7 +2095,7 @@ GameObject:
   - component: {fileID: 6500537494180936286}
   - component: {fileID: 8741136769677882098}
   - component: {fileID: 6500537494180936259}
-  m_Layer: 10
+  m_Layer: 12
   m_Name: cubolateral (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2202,7 +2203,7 @@ GameObject:
   - component: {fileID: 6500537494210473629}
   - component: {fileID: 3516544533811612934}
   - component: {fileID: 6500537494210473623}
-  m_Layer: 10
+  m_Layer: 12
   m_Name: cubolateral (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2306,7 +2307,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6500537494321248536}
-  m_Layer: 10
+  m_Layer: 12
   m_Name: CubosSoltos2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2344,7 +2345,7 @@ GameObject:
   - component: {fileID: 6500537494395007681}
   - component: {fileID: 3721879598027335645}
   - component: {fileID: 6500537494395007691}
-  m_Layer: 10
+  m_Layer: 12
   m_Name: cubolateral (8)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2452,7 +2453,7 @@ GameObject:
   - component: {fileID: 6500537494472264110}
   - component: {fileID: 9000205186426642449}
   - component: {fileID: 6500537494472263763}
-  m_Layer: 10
+  m_Layer: 12
   m_Name: cubolateral (5)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2560,7 +2561,7 @@ GameObject:
   - component: {fileID: 6500537494552672904}
   - component: {fileID: 1963791678221287762}
   - component: {fileID: 6500537494552672909}
-  m_Layer: 10
+  m_Layer: 12
   m_Name: cubolateral (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2668,7 +2669,7 @@ GameObject:
   - component: {fileID: 6500537494554154072}
   - component: {fileID: 3859111695967132293}
   - component: {fileID: 6500537494554154077}
-  m_Layer: 10
+  m_Layer: 12
   m_Name: cubolateral (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2773,7 +2774,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6500537494581273464}
   - component: {fileID: 6500537494581273471}
-  m_Layer: 10
+  m_Layer: 12
   m_Name: FakeCube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2839,7 +2840,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6500537494584729219}
-  m_Layer: 10
+  m_Layer: 12
   m_Name: MidleSquare
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2877,7 +2878,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6500537494598105623}
-  m_Layer: 10
+  m_Layer: 12
   m_Name: CruzFixa
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2916,7 +2917,7 @@ GameObject:
   - component: {fileID: 6500537494616512303}
   - component: {fileID: 8551258877038943482}
   - component: {fileID: 6500537494616512289}
-  m_Layer: 10
+  m_Layer: 12
   m_Name: cubolateral (11)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3024,7 +3025,7 @@ GameObject:
   - component: {fileID: 6500537494689332011}
   - component: {fileID: 7195242342709827636}
   - component: {fileID: 6500537494689332013}
-  m_Layer: 10
+  m_Layer: 12
   m_Name: cubolateral (0)
   m_TagString: Untagged
   m_Icon: {fileID: 0}

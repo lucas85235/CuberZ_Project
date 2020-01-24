@@ -12,6 +12,9 @@ public class CaptureSystem : MonoBehaviour
     [Header("Variaveis de Captura")]
     public float impulseForce = 20;
     public float impulseY = 10;
+    [Range(0,100)]
+    public float sucessPercentage;
+
     [Range(0, 10f)]
     public float distanceMultiplier_ = 1;
 
@@ -115,6 +118,7 @@ public class CaptureSystem : MonoBehaviour
             captureCubeTemp_ = Pooling.InstantiatePooling(captureCube, hand.position, Quaternion.identity);
             captureCubeTemp_.transform.SetParent(hand.transform);
             captureCubeTemp_.GetComponent<CaptureCube>().impulseY = impulseY;
+            captureCubeTemp_.GetComponent<CaptureCube>().sucessPercentage = sucessPercentage;
             captureCube.GetComponent<Rigidbody>().useGravity = false;
             captureCube.GetComponent<Rigidbody>().velocity = Vector3.zero;
         }
