@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
+[RequireComponent(typeof(NavMesh))]
+[RequireComponent(typeof(AttackManager))]
+
 public abstract class MonsterBase : CharacterAbstraction
 {
     protected CharacterAbstraction player_;

@@ -4,31 +4,24 @@ using UnityEngine;
 
 public class CaptureCube : MonoBehaviour
 {
+    private Rigidbody rigibody_;
+    private Collider mycollider_;
+
     [Header("Variaveis de Alocação")]
     public GameObject fakeCube;
     public Transform[] allcubes;
-    Rigidbody rigibody_;
 
-    [HideInInspector]
-    public Vector3 target { get { return target_; } set { target_ = value; } }
-    private Vector3 target_;
-
-    [HideInInspector]
-    public float speed { get { return speed_; } set { speed_ = value; } }
-    private float speed_;
-    private bool moviment_;
-    public float sucessPercentage { get { return sucessPercentage_; } set { sucessPercentage_ = value; } }
     private float sucessPercentage_;
-
-    [HideInInspector]
-    public float impulseY { get { return impulseY_; } set { impulseY_ = value; } }
+    private Vector3 target_;
     private float impulseY_;
+    private float speed_;
+    
+    private bool moviment_;
     private bool break_;
     private bool capture_;
     private bool moveCapture_;
-    private Vector3 point_;
+
     private Collider col2_, coliderMonster_;
-    private Collider mycollider_;
     private Transform bigcube_, smallcube_;
     private Vector3 monsterPositionCap_;
     private Quaternion monsterRotationCap_;
@@ -38,23 +31,18 @@ public class CaptureCube : MonoBehaviour
     private bool monsterBreakFree_;
     private float shakeValue_ = 1;
 
+    #region propties getter and setter
+    // Esconder causa comportamento indefinido
+    public float sucessPercentage { get { return sucessPercentage_; } set { sucessPercentage_ = value; } }
+    [HideInInspector] public Vector3 target { get { return target_; } set { target_ = value; } }
+    [HideInInspector] public float impulseY { get { return impulseY_; } set { impulseY_ = value; } }
+    [HideInInspector] public float speed { get { return speed_; } set { speed_ = value; } }
+    #endregion
 
     #region Funções MonoBehaviour de Execução
-
     private void Awake()
     {
         InitializingAwake();
-    }
-
-    private void OnEnable()
-    {
-        InitializaingOnEnable();
-    }
-
-    private void OnDisable()
-    {
-        rigibody_.useGravity = false;
-        rigibody_.velocity = Vector3.zero;
     }
 
     private void Update()
@@ -70,12 +58,19 @@ public class CaptureCube : MonoBehaviour
         PhysicsControl();
     }
 
+    private void OnEnable()
+    {
+        InitializaingOnEnable();
+    }
+
+    private void OnDisable()
+    {
+        rigibody_.useGravity = false;
+        rigibody_.velocity = Vector3.zero;
+    }    
     #endregion
 
-
-
     #region Funções de Inicialização 
-
     private void InitializingAwake()
     {
         moviment_ = true;
@@ -87,7 +82,6 @@ public class CaptureCube : MonoBehaviour
         bigcube_ = transform.GetChild(1);
         smallcube_ = transform.GetChild(0);
         smallcube_.localScale = Vector3.one;
-
     }
 
     private void InitializaingOnEnable()
@@ -103,14 +97,9 @@ public class CaptureCube : MonoBehaviour
         rigibody_.velocity = Vector3.zero;
         moviment_ = true;
     }
-
     #endregion
 
-
-
-
     #region Movimentação do Cubo Antes das Colisões
-
     private void StopDistanceControl() // Verifica a distância do Cubo até seu Alvo
     {
         if (Vector3.Distance(transform.position, target_) <= 1.5f && moviment_ && !capture_)
@@ -128,14 +117,9 @@ public class CaptureCube : MonoBehaviour
             transform.Rotate(-900 * Time.deltaTime, 0, 0, Space.Self);
         }
     }
-
     #endregion
 
-
-
-
     #region Interação com o Cubo após Colisões
-
     private IEnumerator StopCube(Collider col) //Função que controla a Execução do Cubo e puxa a Abudação do Monstro
     {
         mycollider_.enabled = false;
@@ -157,28 +141,20 @@ public class CaptureCube : MonoBehaviour
     {
         if (capture_)
         {
-
             coll.GetComponent<Rigidbody>().useGravity = false;
-
             coll.transform.localScale = Vector3.Lerp(coll.transform.localScale, Vector3.zero, 8f * Time.deltaTime);
-
             coll.transform.position = Vector3.Lerp(coll.transform.position, transform.position, 5f * Time.deltaTime);
 
             if (coll.transform.localScale == Vector3.zero)
             {
-
                 coll.transform.SetParent(transform);
                 capture_ = false;
                 coll.transform.gameObject.SetActive(false);
                 rigibody_.useGravity = true;
                 mycollider_.enabled = true;
-                afterCapture_ = true;
-                //   
-
-                //   
+                afterCapture_ = true; 
             }
         }
-
     } // Função que controla a interação Cubo/Monstro
 
     private void BreakCube()
@@ -187,14 +163,13 @@ public class CaptureCube : MonoBehaviour
         rigibody_.useGravity = true;
         moviment_ = false;
         GameObject t = Pooling.InstantiatePooling(fakeCube, bigcube_.transform.position,
-         bigcube_.transform.rotation);
+            bigcube_.transform.rotation);
         transform.gameObject.SetActive(false);
         break_ = true;
     } //Função que controla a interação Cubo/(Chão e Parede)
 
     private void FalseBreakCube()
     {
-
         rigibody_.velocity = Vector3.zero;
         rigibody_.useGravity = true;
         moviment_ = false;
@@ -203,11 +178,7 @@ public class CaptureCube : MonoBehaviour
         mycollider_.enabled = false;
         bigcube_.gameObject.SetActive(false);
         break_ = true;
-
-
     }
-
-
 
     private void OnTriggerStay(Collider col)
     {
@@ -215,11 +186,10 @@ public class CaptureCube : MonoBehaviour
 
         if (canCollide_)
         {
-
             if ((col.gameObject.name == "Ground" || col.gameObject.name == "Wall") && !break_ && !capture_)
             {
-                if (!afterCapture_) BreakCube();
-
+                if (!afterCapture_) 
+                    BreakCube();
                 else
                 {
                     Debug.Log("Oi");
@@ -227,7 +197,6 @@ public class CaptureCube : MonoBehaviour
                     StartCoroutine(ShakeItOff(coliderMonster_));
                 }
             }
-
             else if (col.gameObject.tag == "Monster" && !capture_)
             {
                 monsterScaleCap_ = col.transform.localScale;
@@ -239,26 +208,18 @@ public class CaptureCube : MonoBehaviour
                 rigibody_.AddForce(-(col.transform.position - transform.position) * 7 + new Vector3(0, 35, 0), ForceMode.Impulse);
                 rigibody_.AddTorque(Vector3.forward * -5, ForceMode.Impulse);
                 StartCoroutine(StopCube(col));
-
             }
         }
     }  //Verifica Onde o Cubo bateu
-
     #endregion
 
-
-
     #region Interação com o Cubo Pós Captura
-
-
     private void AfterCaptureMonster()
     {
         if (afterCapture_)
         {
-
             Quaternion tempRotation_ = Quaternion.Euler(0, transform.rotation.eulerAngles.y, 0);
             transform.rotation = Quaternion.Lerp(transform.rotation, tempRotation_, 5f * Time.deltaTime);
-
         }
     }
 
@@ -285,14 +246,12 @@ public class CaptureCube : MonoBehaviour
         }
     }
 
-
     private IEnumerator ShakeItOff(Collider col)
     {
         afterCapture_ = false;
         capture_ = false;
         canCollide_ = false;
         bool feedbackBool_;
-
 
         yield return new WaitForSeconds(1);
         feedbackBool_ = GetInOrOutMonsterChance(sucessPercentage_);
@@ -303,9 +262,7 @@ public class CaptureCube : MonoBehaviour
         {
             shakeValue_++;
             StartCoroutine(ShakeItOff(coliderMonster_));
-
         }
-
         else if (feedbackBool_ && shakeValue_ > 2)
         {
             bigcube_.GetComponent<Animator>().Play("DissolveCubo", -1, 0);
@@ -324,25 +281,16 @@ public class CaptureCube : MonoBehaviour
             yield return new WaitUntil(() => !monsterBreakFree_);
             yield break;
         }
-
-
     }
-
 
     private bool GetInOrOutMonsterChance(float chance_)
     {
-
         float randomValue_ = Random.Range(1, 101);
 
-        if (randomValue_ > chance_) return false;
-        else return true;
-
-
+        if (randomValue_ > chance_) 
+            return false;
+        else 
+            return true;
     }
-
-
     #endregion
-
-
-
 }

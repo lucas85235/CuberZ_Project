@@ -48,8 +48,8 @@ public class LavaBehaviuor : MonsterBase
         {
             var currentAnimation = animator_.GetCurrentAnimatorStateInfo(0);
 
-            axisX = Input.GetAxis("Horizontal");
-            axisY = Input.GetAxis("Vertical");
+            axisX = input_.GetAxisHorizontal();
+            axisY = input_.GetAxisVertical();
 
             if (!IsPlayAttackAnimation())
             {
@@ -75,24 +75,27 @@ public class LavaBehaviuor : MonsterBase
             }
 
             #region Get Inputs
+
             //Colocar AttackDirection no attack de investida
             //if (Input.GetMouseButtonDown(0))
             //    AttackDirection();
 
+            // Usado para testes romover na versão final
             if (Input.GetKeyDown(KeyCode.T) /*&& !inBattleMode*/)
                 SwitchCharacterController(player_);
 
-            if (Input.GetMouseButtonDown(0))
+            if (input_.ExecuteActionInput())
                 StartCoroutine(GetAttackName(currentAttackIndex));
 
-            if (Input.GetKeyDown(KeyCode.Alpha1))
+            if (input_.KubberAttack1Input())
                 currentAttackIndex = 0;
-            if (Input.GetKeyDown(KeyCode.Alpha2))
+            if (input_.KubberAttack2Input())
                 currentAttackIndex = 1;
-            if (Input.GetKeyDown(KeyCode.Alpha3))
+            if (input_.KubberAttack3Input())
                 currentAttackIndex = 2;
-            if (Input.GetKeyDown(KeyCode.Alpha4))
+            if (input_.KubberAttack4Input())
                 currentAttackIndex = 3;
+            
             #endregion
         }
         else

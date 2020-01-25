@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class FakeCube : MonoBehaviour
 {
-
     public Transform[] allcubes_;
     List<Vector3> cubesPositionList_ = new List<Vector3>();
     List<Quaternion> cubesRotationList_ = new List<Quaternion>();
@@ -17,9 +16,7 @@ public class FakeCube : MonoBehaviour
 
     protected void OnEnable()
     {
-
         StartCoroutine(WaitToDissolve());
-
     }
 
     private IEnumerator RememberCubesPositionAndRotation()
@@ -68,6 +65,4 @@ public class FakeCube : MonoBehaviour
         StartCoroutine(ResetCubesPositionAndRotation());
         yield break;
     }
-
 }
-

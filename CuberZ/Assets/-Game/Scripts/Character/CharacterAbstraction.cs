@@ -2,12 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody))]
+[RequireComponent(typeof(Animator))]
+
 public abstract class CharacterAbstraction : MonoBehaviour
 {
     [Header("Basic Components")]
     protected Rigidbody boby_;
     protected Animator animator_;
     protected CameraController cameraController_;
+    protected IInput input_;
 
     protected const string animationSpeed = "SPEED";
 
@@ -23,6 +27,16 @@ public abstract class CharacterAbstraction : MonoBehaviour
     private float smooth_;
 
     public bool isEnabled { get; set; }
+
+    protected virtual void Construt(IInput newInputInterface) 
+    {
+        input_ = newInputInterface;
+    }
+
+    protected virtual void Awake() 
+    {
+        Construt(Object.FindObjectOfType<InputSystem>());
+    }
 
     protected virtual void Walk() 
     {
