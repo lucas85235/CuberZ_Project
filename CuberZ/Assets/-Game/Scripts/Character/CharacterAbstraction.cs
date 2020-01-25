@@ -7,9 +7,9 @@ public abstract class CharacterAbstraction : MonoBehaviour
     [Header("Basic Components")]
     protected Rigidbody boby_;
     protected Animator animator_;
-    protected GameObject collider_;
-    protected GameObject camera_;
     protected CameraController cameraController_;
+
+    protected const string animationSpeed = "SPEED";
 
     protected float axisX;
     protected float axisY;
@@ -22,35 +22,7 @@ public abstract class CharacterAbstraction : MonoBehaviour
     public float smoothTime = 0.3f;
     private float smooth_;
 
-    [Header("Life Stats")]
-    protected float characterLife;
-    protected float maxLife = 100;
-    protected bool isDead = false;
-
-    protected virtual void Start() 
-    {
-        boby_ = GetComponent<Rigidbody>();
-        animator_ = GetComponent<Animator>();
-        camera_ = Camera.main.gameObject;
-        cameraController_ = Camera.main.GetComponent<CameraController>();
-
-        // mudar
-        // collider_ = transform.Find("COLISOR").gameObject; AttackCollider
-
-        boby_.freezeRotation = true;
-
-        isDead = false;
-        characterLife = maxLife;
-    }
-
-    protected virtual void Update() 
-    {
-        axisX = Input.GetAxis("Horizontal");
-        axisY = Input.GetAxis("Vertical");
-
-        Walk();
-        AnimationSpeed();
-    }
+    public bool isEnabled { get; set; }
 
     protected virtual void Walk() 
     {
@@ -61,36 +33,18 @@ public abstract class CharacterAbstraction : MonoBehaviour
             float targetrotation = Mathf.Atan2(input.x, input.y) * Mathf.Rad2Deg;
             transform.eulerAngles = Vector3.up * Mathf.SmoothDampAngle(
                 transform.eulerAngles.y, 
-                targetrotation + camera_.transform.eulerAngles.y, 
+                targetrotation + Camera.main.transform.eulerAngles.y, 
                 ref smooth_, 
                 smoothTime);
             transform.position += transform.forward * characterSpeed * Time.deltaTime;
         }
     }
 
-    protected virtual void AnimationSpeed() 
+    public virtual void AnimationSpeed() 
     {
-        animator_.SetFloat("SPEED", axisX * axisX + axisY * axisY);
+        animator_.SetFloat(animationSpeed, axisX * axisX + axisY * axisY);
     }
 
-    protected void IncrementLife(float increment) 
-    {
-        characterLife += increment;
-
-        if (characterLife > maxLife) {
-            characterLife = maxLife;
-        }
-    }
-
-    protected void DecrementLife(float decrement) 
-    {
-        characterLife -= decrement;
-
-        if (characterLife <= 0) {
-            isDead = true;
-            Debug.Log("Life < 0, You Are Dead!");
-        }
-    }
 
     protected void SwitchCharacterController(CharacterAbstraction switchCharacter) 
     {
@@ -99,25 +53,30 @@ public abstract class CharacterAbstraction : MonoBehaviour
 
         foreach(CharacterAbstraction currentCharacter in allCharacters)
         {
-            if (currentCharacter != thisCharacter)
-                currentCharacter.enabled = false;
-            if (currentCharacter == switchCharacter) { }
-                currentCharacter.enabled = true;
+            if (currentCharacter != switchCharacter)
+                currentCharacter.isEnabled = false;
         }
 
-        #region stop walk
+        #region stop character walk
         thisCharacter.axisX = 0;
         thisCharacter.axisY = 0;
         AnimationSpeed();
         #endregion
 
         SetCameraPropeties(switchCharacter.transform.Find("CameraTarget"));
-        thisCharacter.enabled = false;
+        StartCoroutine(WaitTime(switchCharacter));
     }
 
     protected virtual void SetCameraPropeties(Transform target) 
     {
         cameraController_.SetTarget(target);
         cameraController_.SetCameraDistance(cameraDistance);
+    }
+
+    private IEnumerator WaitTime(CharacterAbstraction switchCharacter)
+    {
+        // chamar para nao trocar 2 vezes seguidas
+        yield return new WaitForSeconds(0.2f);
+        switchCharacter.isEnabled = true;
     }
 }

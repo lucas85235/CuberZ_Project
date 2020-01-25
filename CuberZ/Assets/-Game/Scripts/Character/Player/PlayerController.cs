@@ -4,52 +4,56 @@ using UnityEngine;
 
 public class PlayerController : CharacterAbstraction
 {
-    public CharacterAbstraction moster;
+    public MonsterBase moster;
 
-    protected override void Start()
+    private void Start()
     {
+        #region Get Components
         boby_ = GetComponent<Rigidbody>();
         animator_ = GetComponent<Animator>();
-        camera_ = Camera.main.gameObject;
         cameraController_ = Camera.main.GetComponent<CameraController>();
-        // collider_ = transform.Find("COLISOR").gameObject;
+        #endregion
 
-        boby_.freezeRotation = true;
-        isDead = false;
+        boby_.constraints = RigidbodyConstraints.FreezeAll;
 
-        characterLife = maxLife;
-        SetStartCharacter();
+        SetInitialCharacter();
     }
 
-    protected override void Update()
+    private void Update()
     {
-        axisX = Input.GetAxis("Horizontal");
-        axisY = Input.GetAxis("Vertical");
-
-        Walk();
-        AnimationSpeed();
-
-        if (Input.GetKeyDown(KeyCode.T))
+        if (isEnabled)
         {
-            if (moster != null)
-                SwitchCharacterController(moster);
+            axisX = Input.GetAxis("Horizontal");
+            axisY = Input.GetAxis("Vertical");
+
+            Walk();
+            AnimationSpeed();
+
+            #region Get Inputs
+            if (Input.GetKeyDown(KeyCode.T))
+            {
+                if (moster != null)
+                {
+                    SwitchCharacterController(moster);
+                    StartCoroutine(moster.StopFollow());
+                }
+            }
+            #endregion
         }
     }
 
-    private void SetStartCharacter()
+    private void SetInitialCharacter()
     {
         CharacterAbstraction thisCharacter = GetComponent<CharacterAbstraction>();
         CharacterAbstraction[] allCharacters = FindObjectsOfType<CharacterAbstraction>();
 
         foreach (CharacterAbstraction currentCharacter in allCharacters)
         {
-            Debug.Log("Loop");
-
             if (currentCharacter != thisCharacter)
-                currentCharacter.enabled = false;
+                currentCharacter.isEnabled = false;
         }
 
-        thisCharacter.enabled = true;
+        thisCharacter.isEnabled = true;
         SetCameraPropeties(transform.Find("CameraTarget"));
     }
 }
