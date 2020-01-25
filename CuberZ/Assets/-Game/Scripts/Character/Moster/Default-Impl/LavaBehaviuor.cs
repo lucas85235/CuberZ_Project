@@ -15,8 +15,17 @@ public class LavaBehaviuor : MonsterBase
 
     private bool canMove;
 
-    protected virtual void Start()
+    private void Start()
     {
+        #region Get Components
+        boby_ = GetComponent<Rigidbody>();
+        animator_ = GetComponent<Animator>();
+        cameraController_ = Camera.main.GetComponent<CameraController>();
+        nav_ = GetComponent<NavMeshAgent>();
+        player_ = GameObject.FindGameObjectWithTag("Player").GetComponent<CharacterAbstraction>();
+        attack_ = GetComponent<AttackManager>();
+        #endregion   
+
         boby_.constraints = RigidbodyConstraints.FreezeAll;
         nav_.speed = followSpeed;
 

@@ -33,18 +33,6 @@ public abstract class MonsterBase : CharacterAbstraction
     public float followSpeed = 10.0f;
     protected bool isFollowState = true;
 
-    protected virtual void Awake() 
-    {
-        #region Get Components
-        boby_ = GetComponent<Rigidbody>();
-        animator_ = GetComponent<Animator>();
-        cameraController_ = Camera.main.GetComponent<CameraController>();
-        nav_ = GetComponent<NavMeshAgent>();
-        player_ = GameObject.FindGameObjectWithTag("Player").GetComponent<CharacterAbstraction>();
-        attack_ = GetComponent<AttackManager>();
-        #endregion      
-    }
-
     #region AI Behaviour
     protected void FollowPlayer()
     {

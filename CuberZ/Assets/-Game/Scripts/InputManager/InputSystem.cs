@@ -25,7 +25,7 @@ public class InputSystem : MonoBehaviour, IInput
 
     private void Awake()
     {
-        instance = this;
+        instance_ = this;
     }
 
     #region Variáveis PlayerPrefs
