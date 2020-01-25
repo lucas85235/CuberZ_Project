@@ -23,46 +23,43 @@ public class CaptureSystem : MonoBehaviour
 
 
     //Variaveis Privadas
+    private IInput input_;
     private GameObject captureCubeTemp_;
     private bool capturing_;
-    private Vector3 raycastPosition_;
     private Vector3 hitPointV3_;
     private float xv3_, yv3_, zv3_;
     private float distance_;
 
     //Singleton
-    public static CaptureSystem instance;
-    private CaptureSystem Instance_ { get { return instance; } }
+    private static CaptureSystem instance_;
+    public static CaptureSystem instance { get { return instance_; } }
 
-
+    protected virtual void Construt(IInput newInputInterface) 
+    {
+        input_ = newInputInterface;
+    }
 
     private void Awake()
     {
-        instance = this;
-        layermask = LayerMask.GetMask("Input");
-        
+        instance_ = this;
+        layermask = LayerMask.GetMask("Input");    
+
+        Construt(Object.FindObjectOfType<InputSystem>());    
     }
 
     private void Update()
     {
+        if (input_.CaptureKubberInput() && !capturing_) 
+            EnterCaptureMode();
 
+        else if (input_.CaptureKubberInput() && capturing_) 
+            ExitCaptureMode();
 
-        if (Input.GetKeyDown(KeyCode.Backspace) && !capturing_) EnterCaptureMode();
-
-        else if (Input.GetKeyDown(KeyCode.Backspace) && capturing_) ExitCaptureMode();
-
-
-        if (capturing_ && Input.GetKeyDown(KeyCode.Mouse0))
-        {
+        if (input_.ExecuteActionInput() && capturing_)
             ThrowCube();
-
-        }
     }
 
-
-
     #region Funções usaveis/Publicas
-
     public void ThrowCube()
     {
         if (cuboQuantidade > 0)
@@ -102,15 +99,10 @@ public class CaptureSystem : MonoBehaviour
             captureCubeTemp_ = null;
 
         }
-
     }
-
     #endregion
 
-
-
     #region Funções Protegidas/Privadas
-
     private void CaptureInstantiate() //Função para instanciar o Cubo que estará selecionado (Não tem seleção ainda).
     {
         if (!captureCubeTemp_)
@@ -138,9 +130,7 @@ public class CaptureSystem : MonoBehaviour
             yv3_ = hitPointV3_.y;
             zv3_ = hitPointV3_.z;
         }
-
         else hitPointV3_ = new Vector3(xv3_, yv3_, zv3_);
-
 
         Vector3 FinalPos = hitPointV3_;
         distance_ = Vector3.Distance(transform.position, FinalPos);
@@ -156,6 +146,5 @@ public class CaptureSystem : MonoBehaviour
         return dirFinal_;
 
     }
-
     #endregion
 }
