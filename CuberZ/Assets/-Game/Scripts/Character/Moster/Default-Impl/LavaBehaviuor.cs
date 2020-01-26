@@ -15,6 +15,12 @@ public class LavaBehaviuor : MonsterBase
 
     private bool canMove;
 
+    public enum MinitiAttacks
+    {
+        ToHeadButt,
+        FireBall
+    }
+
     private void Start()
     {
         #region Get Components
@@ -39,7 +45,14 @@ public class LavaBehaviuor : MonsterBase
         isDead = false;
         #endregion
 
-        attack_.SetRandomAttackTier(11);
+        //attack_.SetRandomAttackTier(11);
+        attack_.attackTier[0] = (int)MinitiAttacks.ToHeadButt;
+        attack_.attackTier[1] = (int)MinitiAttacks.FireBall;
+
+        for (int i = 0; i < (int)MinitiAttacks.FireBall+1; i++) 
+        {
+            attack_.SetAttackNamesInStats((MinitiAttacks)i, i);
+        }
     }
 
     protected virtual void Update()
@@ -91,10 +104,10 @@ public class LavaBehaviuor : MonsterBase
                 currentAttackIndex = 0;
             if (input_.KubberAttack2Input())
                 currentAttackIndex = 1;
-            if (input_.KubberAttack3Input())
+            /* if (input_.KubberAttack3Input())
                 currentAttackIndex = 2;
             if (input_.KubberAttack4Input())
-                currentAttackIndex = 3;
+                currentAttackIndex = 3; */
             
             #endregion
         }
@@ -104,88 +117,30 @@ public class LavaBehaviuor : MonsterBase
                 FollowPlayer();
         }
     }
-
     protected override string GetAttackName(int index)
     {
         currentAttackIndex = index;
-        return ((AttackManager.DefaultLavaAttacks)attack_.attackTier[index]).ToString();
+        return ((MinitiAttacks)attack_.attackTier[index]).ToString();
     }
 
-    public virtual IEnumerator FlameOfFire() 
+    public virtual IEnumerator ToHeadButt() 
     {
+        animator_.SetBool("CAN-MOVE", false);
+        animator_.SetTrigger("ATTACK");
+        animator_.SetInteger("CHOICE-ATTACK", 0);
         yield return new WaitForSeconds(attack_.GetAttackCoolDown(currentAttackIndex));
-        Debug.Log(((AttackManager.DefaultLavaAttacks)attack_.attackTier[currentAttackIndex]).ToString());
+        Debug.Log(((MinitiAttacks)attack_.attackTier[currentAttackIndex]).ToString());
         Debug.Log(attack_.GetCanMove(currentAttackIndex));
     }
 
     public virtual IEnumerator FireBall() 
     {
+        animator_.SetBool("CAN-MOVE", true);
+        animator_.SetTrigger("ATTACK");
+        animator_.SetInteger("CHOICE-ATTACK", 1);
         yield return null;
-        Debug.Log(((AttackManager.DefaultLavaAttacks)attack_.attackTier[currentAttackIndex]).ToString());
+        Debug.Log(((MinitiAttacks)attack_.attackTier[currentAttackIndex]).ToString());
         Debug.Log(attack_.GetCanMove(currentAttackIndex));
 
-    }
-
-    public virtual IEnumerator FireVortex() 
-    {
-        yield return null;
-        Debug.Log(((AttackManager.DefaultLavaAttacks)attack_.attackTier[currentAttackIndex]).ToString());
-        Debug.Log(attack_.GetCanMove(currentAttackIndex));
-    }
-
-    public virtual IEnumerator SpitsFire() 
-    {
-        yield return null;
-        Debug.Log(((AttackManager.DefaultLavaAttacks)attack_.attackTier[currentAttackIndex]).ToString());
-        Debug.Log(attack_.GetCanMove(currentAttackIndex));
-    }
-
-    public virtual IEnumerator FireBearing() 
-    {
-        yield return null;
-        Debug.Log(((AttackManager.DefaultLavaAttacks)attack_.attackTier[currentAttackIndex]).ToString());
-        Debug.Log(attack_.GetCanMove(currentAttackIndex));
-    }
-
-    public IEnumerator FirePunch()
-    {
-        yield return null;
-        Debug.Log(((AttackManager.DefaultLavaAttacks)attack_.attackTier[currentAttackIndex]).ToString());
-        Debug.Log(attack_.GetCanMove(currentAttackIndex));
-    }
-
-    public virtual IEnumerator OnslaughtOfFire()
-    {
-        yield return null;
-        Debug.Log(((AttackManager.DefaultLavaAttacks)attack_.attackTier[currentAttackIndex]).ToString());
-        Debug.Log(attack_.GetCanMove(currentAttackIndex));
-    }
-
-    public virtual IEnumerator LavaRain()
-    {
-        yield return new WaitForSeconds(1);
-        Debug.Log(((AttackManager.DefaultLavaAttacks)attack_.attackTier[currentAttackIndex]).ToString());
-        Debug.Log(attack_.GetCanMove(currentAttackIndex));
-    }
-
-    public virtual IEnumerator LivingFire()
-    {
-        yield return null;
-        Debug.Log(((AttackManager.DefaultLavaAttacks)attack_.attackTier[currentAttackIndex]).ToString());
-        Debug.Log(attack_.GetCanMove(currentAttackIndex));
-    }
-
-    public virtual IEnumerator FireRay()
-    {
-        yield return null;
-        Debug.Log(((AttackManager.DefaultLavaAttacks)attack_.attackTier[currentAttackIndex]).ToString());
-        Debug.Log(attack_.GetCanMove(currentAttackIndex));
-    }
-
-    public virtual IEnumerator VolcanicAttack()
-    {
-        yield return null;
-        Debug.Log(((AttackManager.DefaultLavaAttacks)attack_.attackTier[currentAttackIndex]).ToString());
-        Debug.Log(attack_.GetCanMove(currentAttackIndex));
     }
 }
