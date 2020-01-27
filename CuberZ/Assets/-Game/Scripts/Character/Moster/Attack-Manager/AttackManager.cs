@@ -12,8 +12,8 @@ public class AttackManager : MonoBehaviour
 
     private void Start() 
     {
-        SetAttackNamesInStats();
-        SetRandomStats();      
+        //SetAttackNamesInStats();
+        //SetRandomStats();      
     }
 
     public enum Lineage
@@ -97,12 +97,9 @@ public class AttackManager : MonoBehaviour
         return types;
     }
 
-    public void SetAttackNamesInStats()
+    public void SetAttackNamesInStats(System.Enum getName, int statsIndex)
     {
-        for (int i = 0; i <= (int)DefaultLavaAttacks.VolcanicAttack; i++)
-        {
-            attackStats[i].attackName = ((DefaultLavaAttacks)i).ToString();
-        }
+        attackStats[statsIndex].attackName = getName.ToString();
     }
 
     public void SetRandomStats()
@@ -112,8 +109,10 @@ public class AttackManager : MonoBehaviour
             attackStats[i].baseDamage = Random.Range(10, 25);
             attackStats[i].staminaCost = Random.Range(5, 15);
             attackStats[i].attackCoolDown = Random.Range(0f, 3f);
+
             int random = Random.Range(0, 2);
             attackStats[i].canMove = random == 1 ? true : false;
+            
             attackStats[i].attackType = new Lineage[1];
             attackStats[i].attackType[0] = Lineage.Lava;
         }

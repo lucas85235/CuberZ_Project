@@ -15,11 +15,16 @@ public class LavaBehaviuor : MonsterBase
 
     private bool canMove;
 
+    public enum MinitiAttacks
+    {
+        ToHeadButt,
+        FireBall
+    }
+
     private void Start()
     {
         #region Get Components
         boby_ = GetComponent<Rigidbody>();
-        animator_ = GetComponent<Animator>();
         cameraController_ = Camera.main.GetComponent<CameraController>();
         nav_ = GetComponent<NavMeshAgent>();
         player_ = GameObject.FindGameObjectWithTag("Player").GetComponent<CharacterAbstraction>();
@@ -31,7 +36,7 @@ public class LavaBehaviuor : MonsterBase
 
         inputLayer = LayerMask.GetMask("Input");
 
-        attackTime_ = animator_.GetCurrentAnimatorStateInfo(0).length;
+        attackTime_ = animation_.GetCurrentAnimation().length;
         attackTime_ -= attackDecrementTime;
 
         #region Set Life And Stats
@@ -39,62 +44,57 @@ public class LavaBehaviuor : MonsterBase
         isDead = false;
         #endregion
 
-        attack_.SetRandomAttackTier(11);
+        #region Setar attacks 
+        attack_.attackTier[0] = (int)MinitiAttacks.ToHeadButt;
+        attack_.attackTier[1] = (int)MinitiAttacks.FireBall;
+
+        for (int i = 0; i < (int)MinitiAttacks.FireBall+1; i++) 
+        {
+            attack_.SetAttackNamesInStats((MinitiAttacks)i, i);
+        }
+        #endregion    
     }
 
     protected virtual void Update()
     {
         if (isEnabled)
         {
-            var currentAnimation = animator_.GetCurrentAnimatorStateInfo(0);
-
             axisX = input_.GetAxisHorizontal();
             axisY = input_.GetAxisVertical();
 
-            if (!IsPlayAttackAnimation())
+            if (!animation_.IsPlayAttackAnimation())
             {
-                Walk();
-                AnimationSpeed();
+                Movement();
+                animation_.AnimationSpeed(axisX, axisY);
             }
 
             // collider_.SetActive(currentAnimation.IsName("Attack"));
 
-            if (currentAnimation.IsName("Attack"))
+            if (animation_.GetCurrentAnimation().IsName("ToHeadButt"))
             {
-                if (countAttackTime < attackTime_)
-                {
-                    boby_.velocity = transform.forward * attackSpeed;
-                    countAttackTime += Time.deltaTime;
-                }
+                boby_.constraints = RigidbodyConstraints.None;
+                boby_.freezeRotation = true;
+                boby_.velocity = transform.forward * attackSpeed;
             }
             else
-            {
                 if (ExistGround())
+                {
+                    boby_.constraints = RigidbodyConstraints.FreezeAll;
                     boby_.velocity = Vector3.zero;
-                countAttackTime = 0;
-            }
+                }
 
             #region Get Inputs
-
-            //Colocar AttackDirection no attack de investida
-            //if (Input.GetMouseButtonDown(0))
-            //    AttackDirection();
-
-            // Usado para testes romover na versão final
-            if (Input.GetKeyDown(KeyCode.T) /*&& !inBattleMode*/)
+            
+            if (Input.GetKeyDown(KeyCode.T)) // Usado para testes romover na versão final
                 SwitchCharacterController(player_);
 
             if (input_.ExecuteActionInput())
                 StartCoroutine(GetAttackName(currentAttackIndex));
 
-            if (input_.KubberAttack1Input())
-                currentAttackIndex = 0;
+            if (input_.KubberAttack1Input()) 
+                currentAttackIndex = (int)MinitiAttacks.ToHeadButt;
             if (input_.KubberAttack2Input())
-                currentAttackIndex = 1;
-            if (input_.KubberAttack3Input())
-                currentAttackIndex = 2;
-            if (input_.KubberAttack4Input())
-                currentAttackIndex = 3;
+                currentAttackIndex = (int)MinitiAttacks.FireBall;
             
             #endregion
         }
@@ -108,84 +108,34 @@ public class LavaBehaviuor : MonsterBase
     protected override string GetAttackName(int index)
     {
         currentAttackIndex = index;
-        return ((AttackManager.DefaultLavaAttacks)attack_.attackTier[index]).ToString();
+        return ((MinitiAttacks)attack_.attackTier[index]).ToString();
     }
 
-    public virtual IEnumerator FlameOfFire() 
+    public virtual IEnumerator ToHeadButt() 
     {
+        Ray ray = Camera.main.GetComponent<Camera>().ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
+
+        if (Physics.Raycast(ray, out hit, 1000f, inputLayer))
+        {
+            if (Vector3.Distance(transform.position, hit.point) > attackDistance)
+            {
+                animation_.NoMovableAttack((int)MinitiAttacks.ToHeadButt);
+            }
+        }
+        else yield break;
+    
         yield return new WaitForSeconds(attack_.GetAttackCoolDown(currentAttackIndex));
-        Debug.Log(((AttackManager.DefaultLavaAttacks)attack_.attackTier[currentAttackIndex]).ToString());
+        Debug.Log(((MinitiAttacks)attack_.attackTier[currentAttackIndex]).ToString());
         Debug.Log(attack_.GetCanMove(currentAttackIndex));
     }
 
     public virtual IEnumerator FireBall() 
     {
+        animation_.MovableAttack((int)MinitiAttacks.FireBall);
+
         yield return null;
-        Debug.Log(((AttackManager.DefaultLavaAttacks)attack_.attackTier[currentAttackIndex]).ToString());
-        Debug.Log(attack_.GetCanMove(currentAttackIndex));
-
-    }
-
-    public virtual IEnumerator FireVortex() 
-    {
-        yield return null;
-        Debug.Log(((AttackManager.DefaultLavaAttacks)attack_.attackTier[currentAttackIndex]).ToString());
-        Debug.Log(attack_.GetCanMove(currentAttackIndex));
-    }
-
-    public virtual IEnumerator SpitsFire() 
-    {
-        yield return null;
-        Debug.Log(((AttackManager.DefaultLavaAttacks)attack_.attackTier[currentAttackIndex]).ToString());
-        Debug.Log(attack_.GetCanMove(currentAttackIndex));
-    }
-
-    public virtual IEnumerator FireBearing() 
-    {
-        yield return null;
-        Debug.Log(((AttackManager.DefaultLavaAttacks)attack_.attackTier[currentAttackIndex]).ToString());
-        Debug.Log(attack_.GetCanMove(currentAttackIndex));
-    }
-
-    public IEnumerator FirePunch()
-    {
-        yield return null;
-        Debug.Log(((AttackManager.DefaultLavaAttacks)attack_.attackTier[currentAttackIndex]).ToString());
-        Debug.Log(attack_.GetCanMove(currentAttackIndex));
-    }
-
-    public virtual IEnumerator OnslaughtOfFire()
-    {
-        yield return null;
-        Debug.Log(((AttackManager.DefaultLavaAttacks)attack_.attackTier[currentAttackIndex]).ToString());
-        Debug.Log(attack_.GetCanMove(currentAttackIndex));
-    }
-
-    public virtual IEnumerator LavaRain()
-    {
-        yield return new WaitForSeconds(1);
-        Debug.Log(((AttackManager.DefaultLavaAttacks)attack_.attackTier[currentAttackIndex]).ToString());
-        Debug.Log(attack_.GetCanMove(currentAttackIndex));
-    }
-
-    public virtual IEnumerator LivingFire()
-    {
-        yield return null;
-        Debug.Log(((AttackManager.DefaultLavaAttacks)attack_.attackTier[currentAttackIndex]).ToString());
-        Debug.Log(attack_.GetCanMove(currentAttackIndex));
-    }
-
-    public virtual IEnumerator FireRay()
-    {
-        yield return null;
-        Debug.Log(((AttackManager.DefaultLavaAttacks)attack_.attackTier[currentAttackIndex]).ToString());
-        Debug.Log(attack_.GetCanMove(currentAttackIndex));
-    }
-
-    public virtual IEnumerator VolcanicAttack()
-    {
-        yield return null;
-        Debug.Log(((AttackManager.DefaultLavaAttacks)attack_.attackTier[currentAttackIndex]).ToString());
+        Debug.Log(((MinitiAttacks)attack_.attackTier[currentAttackIndex]).ToString());
         Debug.Log(attack_.GetCanMove(currentAttackIndex));
     }
 }

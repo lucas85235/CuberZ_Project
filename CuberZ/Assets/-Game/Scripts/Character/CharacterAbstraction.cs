@@ -9,56 +9,55 @@ public abstract class CharacterAbstraction : MonoBehaviour
 {
     [Header("Basic Components")]
     protected Rigidbody boby_;
-    protected Animator animator_;
+    protected AnimationBase animation_;
     protected CameraController cameraController_;
     protected IInput input_;
-
-    protected const string animationSpeed = "SPEED";
 
     protected float axisX;
     protected float axisY;
 
     [Header("Adjust Camera Propeties")]
-    public float cameraDistance = 16.0f;
+    public float cameraDistance = 14.0f;
 
     [Header("Walk Stats")]
-    public float characterSpeed = 15.0f;
+    public float walkSpeed = 15.0f;
+    public float runSpeed = 22.0f;
     public float smoothTime = 0.3f;
     private float smooth_;
 
     public bool isEnabled { get; set; }
 
-    protected virtual void Construt(IInput newInputInterface) 
+    protected virtual void Construt(IInput newInputInterface, AnimationBase newAnimation) 
     {
         input_ = newInputInterface;
+        animation_ = newAnimation;
     }
 
     protected virtual void Awake() 
     {
-        Construt(Object.FindObjectOfType<InputSystem>());
+        Construt(Object.FindObjectOfType<InputSystem>(), GetComponent<AnimationBase>());
     }
 
-    protected virtual void Walk() 
+    protected virtual void Movement() 
     {
         Vector2 input = new Vector2(axisX, axisY);
 
         if (input != Vector2.zero)
         {
-            float targetrotation = Mathf.Atan2(input.x, input.y) * Mathf.Rad2Deg;
+            float targetrotation = Mathf.Atan2(input.x, input.y) * Mathf.Rad2Deg;;
+
             transform.eulerAngles = Vector3.up * Mathf.SmoothDampAngle(
                 transform.eulerAngles.y, 
                 targetrotation + Camera.main.transform.eulerAngles.y, 
                 ref smooth_, 
                 smoothTime);
-            transform.position += transform.forward * characterSpeed * Time.deltaTime;
+                
+            if (!input_.RunInput())
+                transform.position += transform.forward * walkSpeed * Time.deltaTime;
+            else
+                transform.position += transform.forward * runSpeed * Time.deltaTime;
         }
     }
-
-    public virtual void AnimationSpeed() 
-    {
-        animator_.SetFloat(animationSpeed, axisX * axisX + axisY * axisY);
-    }
-
 
     protected void SwitchCharacterController(CharacterAbstraction switchCharacter) 
     {
@@ -74,7 +73,7 @@ public abstract class CharacterAbstraction : MonoBehaviour
         #region stop character walk
         thisCharacter.axisX = 0;
         thisCharacter.axisY = 0;
-        AnimationSpeed();
+        animation_.AnimationSpeed(axisX, axisY);
         #endregion
 
         SetCameraPropeties(switchCharacter.transform.Find("CameraTarget"));
