@@ -46,7 +46,7 @@ public abstract class MonsterBase : CharacterAbstraction
             nav_.SetDestination(player_.transform.position);
             #region Set moster walk animation  
             axisX = followSpeed / 2;
-            AnimationSpeed();
+            animation_.AnimationSpeed(axisX, axisY);
             #endregion
         }
         else
@@ -63,33 +63,13 @@ public abstract class MonsterBase : CharacterAbstraction
         #region stop moster walk animation
         axisX = 0;
         axisY = 0;
-        AnimationSpeed();
+        animation_.AnimationSpeed(axisX, axisY);
         #endregion
         isFollowState = false;
         yield return new WaitForSeconds(0.4f);
         isFollowState = true;
     }
     #endregion
-
-    protected virtual void AttackDirection()
-    {
-        Ray ray = Camera.main.GetComponent<Camera>().ScreenPointToRay(Input.mousePosition);
-        RaycastHit hit;
-
-        if (Physics.Raycast(ray, out hit, 1000f, inputLayer))
-        {
-            if (Vector3.Distance(transform.position, hit.point) > attackDistance)
-            {
-                transform.LookAt(hit.point);
-                animator_.SetTrigger("ATTACK");
-            }
-        }
-    }
-
-    protected virtual bool IsPlayAttackAnimation()
-    {
-        return animator_.GetCurrentAnimatorStateInfo(0).IsName("Attack");
-    }
 
     protected virtual bool ExistGround()
     {

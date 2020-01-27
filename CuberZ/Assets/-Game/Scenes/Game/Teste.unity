@@ -112,6 +112,24 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 23800000, guid: 847937ded98cdcf48a0f215cd26eb42c, type: 2}
+--- !u!1 &421750189 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8723477792150437978, guid: 02e164f74e0e9cb489dfdf390ed702fc,
+    type: 3}
+  m_PrefabInstance: {fileID: 3723957974375340309}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &421750190
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 421750189}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2204da1780ec9434da48aef5e9a45f40, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &474362874
 GameObject:
   m_ObjectHideFlags: 0
@@ -318,13 +336,31 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 30, y: 0, z: 0}
+--- !u!1 &959797566 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4226352699985348986, guid: 4aa93782742d1ad47b7cd1c7efffa009,
+    type: 3}
+  m_PrefabInstance: {fileID: 4226352698324329822}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &959797567
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 959797566}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2204da1780ec9434da48aef5e9a45f40, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &987072444 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4226352698975789794, guid: 4aa93782742d1ad47b7cd1c7efffa009,
     type: 3}
   m_PrefabInstance: {fileID: 4226352698324329822}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 959797566}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0d7ec9e99a7ec494e99538b403b04688, type: 3}
@@ -666,6 +702,11 @@ PrefabInstance:
       propertyPath: moster
       value: 
       objectReference: {fileID: 987072444}
+    - target: {fileID: 3723957974228297641, guid: 02e164f74e0e9cb489dfdf390ed702fc,
+        type: 3}
+      propertyPath: walkSpeed
+      value: 14
+      objectReference: {fileID: 0}
     - target: {fileID: 3723957974375340311, guid: 02e164f74e0e9cb489dfdf390ed702fc,
         type: 3}
       propertyPath: sucessPercentage
@@ -740,6 +781,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 579477711284367244, guid: 4aa93782742d1ad47b7cd1c7efffa009,
+        type: 3}
+      propertyPath: attackStats.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4226352698975789794, guid: 4aa93782742d1ad47b7cd1c7efffa009,
+        type: 3}
+      propertyPath: walkSpeed
+      value: 14
+      objectReference: {fileID: 0}
     - target: {fileID: 4226352699985348986, guid: 4aa93782742d1ad47b7cd1c7efffa009,
         type: 3}
       propertyPath: m_Name

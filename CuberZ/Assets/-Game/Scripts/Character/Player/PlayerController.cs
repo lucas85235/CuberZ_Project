@@ -10,7 +10,6 @@ public class PlayerController : CharacterAbstraction
     {
         #region Get Components
         boby_ = GetComponent<Rigidbody>();
-        animator_ = GetComponent<Animator>();
         cameraController_ = Camera.main.GetComponent<CameraController>();
         #endregion
 
@@ -23,11 +22,11 @@ public class PlayerController : CharacterAbstraction
     {
         if (isEnabled)
         {
-            axisX = Input.GetAxis("Horizontal");
-            axisY = Input.GetAxis("Vertical");
+            axisX = input_.GetAxisHorizontal();
+            axisY = input_.GetAxisVertical();
 
-            Walk();
-            AnimationSpeed();
+            Movement();
+            animation_.AnimationSpeed(axisX, axisY);
 
             #region Get Inputs
             if (Input.GetKeyDown(KeyCode.T))
