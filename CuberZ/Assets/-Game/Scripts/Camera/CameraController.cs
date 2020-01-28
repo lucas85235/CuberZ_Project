@@ -15,6 +15,7 @@ public class CameraController : MonoBehaviour
     public float cameraDistance = 16.0f;
     public float adjustCollisionForward = 0.1f;
     public float smooth = 4.0f;
+    public LayerMask excludeLayer;
 
     private float distanceUp;
     private float minAngle = 0.9f;
@@ -45,7 +46,8 @@ public class CameraController : MonoBehaviour
 
         distanceUp = Mathf.Clamp(distanceUp += input_.GetAxisVertical(), minAngle, maxAngle);
 
-        if(Physics.Linecast(target_.position, transform.position, out hit)) {
+        if(Physics.Linecast(target_.position, transform.position, out hit, excludeLayer)) 
+        {
             transform.position = hit.point + transform.forward * adjustCollisionForward;
         }
     }
