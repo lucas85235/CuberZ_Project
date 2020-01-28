@@ -51,7 +51,7 @@ public abstract class MonsterBase : CharacterAbstraction
         }
         else
         {
-            if(isFollowState && nav_.isStopped == false)
+            if (isFollowState && nav_.isStopped == false)
                 StartCoroutine(StopFollow());
         }
     }
@@ -71,6 +71,7 @@ public abstract class MonsterBase : CharacterAbstraction
     }
     #endregion
 
+ 
     protected virtual bool ExistGround()
     {
         return Physics.Raycast(transform.position, (-1 * transform.up), 1f);
@@ -90,6 +91,9 @@ public abstract class MonsterBase : CharacterAbstraction
         {
             mosterLife = maxLife;
         }
+
+        HudEnemySystem.instance.HudUpdateVida(transform, mosterLife, maxLife); // Singleton Recebe um valor e divide por outro vida/vidamax
+
     }
 
     public void DecrementLife(float decrement)
@@ -101,6 +105,8 @@ public abstract class MonsterBase : CharacterAbstraction
             isDead = true;
             Debug.Log("Life < 0, You Are Dead!");
         }
+
+        HudEnemySystem.instance.HudUpdateVida(transform, mosterLife, maxLife); // Singleton Recebe um valor e divide por outro vida/vidamax
     }
 
     public void IncrementStamina(float increment)
@@ -111,6 +117,8 @@ public abstract class MonsterBase : CharacterAbstraction
         {
             mosterStamina = maxStamina;
         }
+
+        HudEnemySystem.instance.HudUpdateStamina(transform, mosterStamina, maxStamina); // Singleton Recebe um valor e divide por outro stamina/staminamax
     }
 
     public void DecrementStamina(float decrement)
@@ -122,6 +130,8 @@ public abstract class MonsterBase : CharacterAbstraction
             mosterStamina = 0;
             Debug.Log("You not have stamina!");
         }
+
+        HudEnemySystem.instance.HudUpdateStamina(transform, mosterStamina, maxStamina); // Singleton Recebe um valor e divide por outro stamina/staminamax
     }
 
     public bool HaveStamina()

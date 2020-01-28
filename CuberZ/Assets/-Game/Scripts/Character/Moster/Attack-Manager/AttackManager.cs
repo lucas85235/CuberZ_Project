@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class AttackManager : MonoBehaviour
 {
+    public bool kubberPlayer;
     // Esconder do Inspector quando não estiver usando para teste
-    public int[] attackTier = { -1, -1, -1, -1 };
+    public int[] attackTier = { -1, -1, -1, -1};
 
     // setar manualmente no inspector
     public AttackStats[] attackStats;
@@ -13,7 +14,10 @@ public class AttackManager : MonoBehaviour
     private void Start() 
     {
         //SetAttackNamesInStats();
-        //SetRandomStats();      
+       // SetRandomStats();
+        SetRandomAttackTier(attackTier.Length);
+        HudPlayerKubber.instance.HudUpdateSkillAttackStats(kubberPlayer,attackStats);
+
     }
 
     public enum Lineage
@@ -30,7 +34,12 @@ public class AttackManager : MonoBehaviour
         while (!exitLoop)
         {
             if (i >= attackTier.Length)
+            {
+                //Armazena o attackTier em uma variavel do HudSystem.
+                HudPlayerKubber.instance.HudUpdateSkillAttackTier(kubberPlayer,attackTier);
                 return;
+
+            }
 
             int random = Random.Range(0, range);
             bool diferentNumber = true;
@@ -44,7 +53,9 @@ public class AttackManager : MonoBehaviour
             if (diferentNumber)
             {
                 attackTier[i] = random;
+              
                 i++;
+                
             }
         }
     }
@@ -104,8 +115,9 @@ public class AttackManager : MonoBehaviour
 
     public void SetRandomStats()
     {
-        for (int i = 0; i <= (int)DefaultLavaAttacks.VolcanicAttack; i++)
+        for (int i = 0; i <= (int)DefaultLavaAttacks.VolcanicAttack; i++) // <=  ->   <
         {
+            Debug.Log(i);
             attackStats[i].baseDamage = Random.Range(10, 25);
             attackStats[i].staminaCost = Random.Range(5, 15);
             attackStats[i].attackCoolDown = Random.Range(0f, 3f);
@@ -116,6 +128,7 @@ public class AttackManager : MonoBehaviour
             attackStats[i].attackType = new Lineage[1];
             attackStats[i].attackType[0] = Lineage.Lava;
         }
+        //Armazena o attackStats em uma variavel do HudSystem.
     }   
     #endregion
 
