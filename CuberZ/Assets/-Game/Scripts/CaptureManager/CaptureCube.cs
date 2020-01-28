@@ -8,6 +8,7 @@ public class CaptureCube : MonoBehaviour
     private Collider mycollider_;
 
     [Header("Variaveis de Alocação")]
+    public string animação;
     public GameObject fakeCube;
     public Transform[] allcubes;
 
@@ -255,8 +256,9 @@ public class CaptureCube : MonoBehaviour
 
         yield return new WaitForSeconds(1);
         feedbackBool_ = GetInOrOutMonsterChance(sucessPercentage_);
-        bigcube_.GetComponent<Animator>().Play("ShakeCube", -1, 0);
-        yield return new WaitForSeconds(1);
+        bigcube_.GetComponent<Animator>().Play(animação, -1, 0);
+
+        yield return new WaitForSeconds(1.5f);
 
         if (feedbackBool_ && shakeValue_ <= 2)
         {
