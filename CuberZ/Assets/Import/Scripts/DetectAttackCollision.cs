@@ -4,37 +4,74 @@ using UnityEngine;
 
 public class DetectAttackCollision : MonoBehaviour 
 {
-	void OnTriggerEnter (Collider collider) 
+	private GameObject hitPrefab;
+	private float hitCoolDown = 1.2f;
+	private bool initAttack = false;
+
+	public float attackForce = 5.0f;
+	public float upHitPosition = 3.0f;
+
+
+	private void Start() 
 	{
-		if (collider.gameObject.tag == "enemy")
+		hitPrefab = Resources.Load<GameObject>("FX/HIT");
+	
+	}
+	
+	void OnTriggerEnter (Collider other) 
+	{
+		if (other.tag == "Enemy")
 		{
-			collider.gameObject.GetComponent<Rigidbody> ().AddForce (GameObject.Find ("J1").transform.forward * 150);
-			collider.gameObject.GetComponent<Animator> ().SetTrigger ("HIT");
-			collider.gameObject.transform.LookAt (transform);
-			HitEffect (collider.gameObject.transform);
+			if (!initAttack && IsAttacking())
+				StartCoroutine(DamageBehaviour(other));
 		}
 	}
 
-	void OnTriggerStay (Collider collider) 
+	void OnTriggerStay (Collider other) 
 	{
-		if (collider.gameObject.tag == "enemy") 
+		if (other.tag == "Enemy") 
 		{
-			collider.gameObject.GetComponent<Rigidbody> ().AddForce (GameObject.Find ("J1").transform.forward * 150);
-			collider.gameObject.GetComponent<Animator> ().SetTrigger ("HIT");
-			collider.gameObject.transform.LookAt (transform);
-			HitEffect (collider.gameObject.transform);
+			if (!initAttack && IsAttacking())
+				StartCoroutine(DamageBehaviour(other));
 		}
+	}
+
+	IEnumerator DamageBehaviour(Collider other) 
+	{
+		initAttack = true;
+
+		other.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
+		other.GetComponent<Rigidbody>().freezeRotation = true;
+		//other.GetComponent<Rigidbody>().AddForce(this.transform.parent.forward * attackForce);
+		
+		other.GetComponent<Animator> ().SetTrigger ("HIT");
+		other.transform.LookAt (transform);
+		
+		HitEffect (other.transform);
+		Debug.Log(other.name);
+		transform.parent.GetComponent<MonsterBase>().DecrementLife(
+			transform.parent.GetComponent<AttackManager>().attackStats[
+				transform.parent.GetComponent<MonsterBase>().currentAttackIndex
+					].baseDamage);
+		yield return new WaitForSeconds(hitCoolDown);
+
+		initAttack = false;
 	}
 
 	void HitEffect(Transform objectTransform) 
 	{
-		if (!GameObject.Find ("FX")) 
+		if (!GameObject.Find("Hit_FX")) 
 		{
-			GameObject hitEffect = Instantiate (Resources.Load<GameObject> ("FX/HIT"));
-			hitEffect.transform.position = objectTransform.position + Vector3.up * 5;
+			GameObject hitEffect = Instantiate(hitPrefab);
+			hitEffect.transform.position = objectTransform.position + (Vector3.up * upHitPosition);
 			hitEffect.transform.parent = objectTransform;
-			hitEffect.name = "FX";
+			hitEffect.name = "Hit_FX";
 			Destroy (hitEffect, 1);
 		}
+	}
+
+	private bool IsAttacking() 
+	{
+		return transform.parent.GetComponent<MonsterBase>().isAttacking;
 	}
 }

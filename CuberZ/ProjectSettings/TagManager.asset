@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Monster
   - InputDI
+  - Enemy
   layers:
   - Default
   - TransparentFX

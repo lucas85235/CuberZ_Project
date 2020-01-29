@@ -13,10 +13,7 @@ public class MinitiBehaviuor : MonsterBase
 
     public GameObject detectCollision;
 
-    private int currentAttackIndex;
-
     private bool canFollowPlayer = true;
-    private bool isAttacking = false;
 
     private float toHeadButtLenght_ = 1.208333f;
 
@@ -76,7 +73,7 @@ public class MinitiBehaviuor : MonsterBase
                 }                
             }
 
-            detectCollision.SetActive(!animation_.GetCurrentAnimation().IsName("Blend Tree"));
+            //detectCollision.SetActive(!animation_.GetCurrentAnimation().IsName("Blend Tree"));
 
             #region Get Inputs
             
@@ -85,7 +82,6 @@ public class MinitiBehaviuor : MonsterBase
 
             if (input_.ExecuteActionInput() && !isAttacking) 
             {
-                isAttacking = true;
                 StartCoroutine(GetAttackName(currentAttackIndex));
             }
 
@@ -123,6 +119,7 @@ public class MinitiBehaviuor : MonsterBase
         isEnabled = true;
         canFollowPlayer = true;
         isAttacking = false;
+        //detectCollision.SetActive(false);
     }
 
     private void DebugAttack() 
@@ -156,6 +153,7 @@ public class MinitiBehaviuor : MonsterBase
                 animation_.NoMovableAttack((int)MinitiAttacks.ToHeadButt);
                 boby_.constraints = RigidbodyConstraints.None;
                 boby_.freezeRotation = true;
+                isAttacking = true;
             }
         }
         else  

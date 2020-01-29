@@ -245,11 +245,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 712982926}
+  - component: {fileID: 712982929}
   - component: {fileID: 712982927}
   - component: {fileID: 712982928}
   m_Layer: 13
   m_Name: DetectCollision
-  m_TagString: Untagged
+  m_TagString: Monster
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -276,7 +277,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 712982925}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 2.4, y: 4.5, z: 4}
@@ -293,6 +294,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5c3d4f2a790bb940aaaaf37aff1f9c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  attackForce: 20
+  upHitPosition: 2.5
+--- !u!54 &712982929
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 712982925}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 126
+  m_CollisionDetection: 0
 --- !u!1 &794114408 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4194336824235674972, guid: 8fdc7321d638daf409d3a7d53a22874f,
@@ -311,6 +330,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5c3d4f2a790bb940aaaaf37aff1f9c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  attackForce: 5
+  upHitPosition: 3
 --- !u!1 &844924610
 GameObject:
   m_ObjectHideFlags: 0
@@ -885,6 +906,26 @@ PrefabInstance:
       propertyPath: attackStats.Array.data[1].canMove
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 579477711284367244, guid: 4aa93782742d1ad47b7cd1c7efffa009,
+        type: 3}
+      propertyPath: attackStats.Array.data[0].baseDamage
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 579477711284367244, guid: 4aa93782742d1ad47b7cd1c7efffa009,
+        type: 3}
+      propertyPath: attackStats.Array.data[0].staminaCost
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 579477711284367244, guid: 4aa93782742d1ad47b7cd1c7efffa009,
+        type: 3}
+      propertyPath: attackStats.Array.data[1].baseDamage
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 579477711284367244, guid: 4aa93782742d1ad47b7cd1c7efffa009,
+        type: 3}
+      propertyPath: attackStats.Array.data[1].staminaCost
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 4226352698975789794, guid: 4aa93782742d1ad47b7cd1c7efffa009,
         type: 3}
       propertyPath: walkSpeed
@@ -899,6 +940,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Constraints
       value: 126
+      objectReference: {fileID: 0}
+    - target: {fileID: 4226352699985252311, guid: 4aa93782742d1ad47b7cd1c7efffa009,
+        type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4226352699985348986, guid: 4aa93782742d1ad47b7cd1c7efffa009,
         type: 3}
@@ -969,6 +1015,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4194336824235674972, guid: 8fdc7321d638daf409d3a7d53a22874f,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4194336824235674972, guid: 8fdc7321d638daf409d3a7d53a22874f,
+        type: 3}
+      propertyPath: m_TagString
+      value: Enemy
+      objectReference: {fileID: 0}
     - target: {fileID: 6352917805934960614, guid: 8fdc7321d638daf409d3a7d53a22874f,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1029,10 +1085,25 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy
       objectReference: {fileID: 0}
+    - target: {fileID: 6352917805935248326, guid: 8fdc7321d638daf409d3a7d53a22874f,
+        type: 3}
+      propertyPath: m_TagString
+      value: Enemy
+      objectReference: {fileID: 0}
     - target: {fileID: 6352917805935347050, guid: 8fdc7321d638daf409d3a7d53a22874f,
         type: 3}
       propertyPath: m_Constraints
       value: 126
+      objectReference: {fileID: 0}
+    - target: {fileID: 6352917805935347051, guid: 8fdc7321d638daf409d3a7d53a22874f,
+        type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6352917805935347051, guid: 8fdc7321d638daf409d3a7d53a22874f,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8fdc7321d638daf409d3a7d53a22874f, type: 3}

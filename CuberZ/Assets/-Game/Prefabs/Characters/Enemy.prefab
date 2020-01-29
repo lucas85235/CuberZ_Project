@@ -2229,7 +2229,7 @@ GameObject:
   - component: {fileID: 292059799721184919}
   m_Layer: 13
   m_Name: Enemy
-  m_TagString: Monster
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2373,6 +2373,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec5bb9d83347ad24b9641295d8490942, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  target_: {fileID: 0}
+  minDistance: 2.2
 --- !u!1 &6352917805935248328
 GameObject:
   m_ObjectHideFlags: 0

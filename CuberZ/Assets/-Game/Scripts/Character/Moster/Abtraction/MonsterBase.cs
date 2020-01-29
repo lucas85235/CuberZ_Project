@@ -17,6 +17,10 @@ public abstract class MonsterBase : CharacterAbstraction
 
     protected LayerMask inputLayer;
 
+    [SerializeField] public bool isAttacking { get; set; }
+    [SerializeField] public int currentAttackIndex;
+
+
     [Header("Attack Stats")]
     public float attackSpeed = 20.0f;
     public float attackDistance = 5.0f;
@@ -85,6 +89,7 @@ public abstract class MonsterBase : CharacterAbstraction
     public void IncrementLife(float increment)
     {
         mosterLife += increment;
+        Debug.Log(gameObject.name + ": " + mosterLife);
 
         if (mosterLife > maxLife)
         {
@@ -95,6 +100,7 @@ public abstract class MonsterBase : CharacterAbstraction
     public void DecrementLife(float decrement)
     {
         mosterLife -= decrement;
+        Debug.Log(gameObject.name + ": " + mosterLife);
 
         if (mosterLife <= 0)
         {
@@ -106,6 +112,7 @@ public abstract class MonsterBase : CharacterAbstraction
     public void IncrementStamina(float increment)
     {
         mosterStamina += increment;
+        Debug.Log(gameObject.name + ": " + mosterStamina);
 
         if (mosterStamina > maxStamina)
         {
@@ -116,6 +123,7 @@ public abstract class MonsterBase : CharacterAbstraction
     public void DecrementStamina(float decrement)
     {
         mosterStamina -= decrement;
+        Debug.Log(gameObject.name + ": " + mosterStamina);
 
         if (!HaveStamina())
         {
