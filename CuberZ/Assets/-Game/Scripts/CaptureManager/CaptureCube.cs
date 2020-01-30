@@ -16,7 +16,7 @@ public class CaptureCube : MonoBehaviour
     private Vector3 target_;
     private float impulseY_;
     private float speed_;
-    
+
     private bool moviment_;
     private bool break_;
     private bool capture_;
@@ -30,7 +30,9 @@ public class CaptureCube : MonoBehaviour
     private bool afterCapture_;
     private bool canCollide_ = true;
     private bool monsterBreakFree_;
+    private bool onGround_;
     private float shakeValue_ = 1;
+    private Transform previewTarget_;
 
     #region propties getter and setter
     // Esconder causa comportamento indefinido
@@ -68,7 +70,7 @@ public class CaptureCube : MonoBehaviour
     {
         rigibody_.useGravity = false;
         rigibody_.velocity = Vector3.zero;
-    }    
+    }
     #endregion
 
     #region Funções de Inicialização 
@@ -88,6 +90,7 @@ public class CaptureCube : MonoBehaviour
     private void InitializaingOnEnable()
     {
         shakeValue_ = 1;
+        onGround_ = false;
         rigibody_ = GetComponent<Rigidbody>();
         smallcube_.localScale = Vector3.one;
         smallcube_.gameObject.SetActive(true);
@@ -97,6 +100,8 @@ public class CaptureCube : MonoBehaviour
         break_ = false;
         rigibody_.velocity = Vector3.zero;
         moviment_ = true;
+        afterCapture_ = false;
+
     }
     #endregion
 
@@ -153,7 +158,7 @@ public class CaptureCube : MonoBehaviour
                 coll.transform.gameObject.SetActive(false);
                 rigibody_.useGravity = true;
                 mycollider_.enabled = true;
-                afterCapture_ = true; 
+                afterCapture_ = true;
             }
         }
     } // Função que controla a interação Cubo/Monstro
@@ -189,12 +194,21 @@ public class CaptureCube : MonoBehaviour
         {
             if ((col.gameObject.name == "Ground" || col.gameObject.name == "Wall") && !break_ && !capture_)
             {
-                if (!afterCapture_) 
+                if (!afterCapture_)
                     BreakCube();
                 else
                 {
                     Debug.Log("Oi");
                     mycollider_.isTrigger = false;
+                    onGround_ = true;
+
+                    if (CameraController.instance.GetTarget() != transform)
+                    {
+                        CameraController.instance.cameraStyle = CameraController.CameraStyle.Capturing;
+                        previewTarget_ = CameraController.instance.GetTarget();
+                        CameraController.instance.SetTarget(transform);
+                    }
+
                     StartCoroutine(ShakeItOff(coliderMonster_));
                 }
             }
@@ -217,12 +231,19 @@ public class CaptureCube : MonoBehaviour
     #region Interação com o Cubo Pós Captura
     private void AfterCaptureMonster()
     {
-        if (afterCapture_)
+        Quaternion tempRotation_ = Quaternion.Euler(0, transform.rotation.eulerAngles.y, 0); ;
+
+        //  if (afterCapture_) transform.rotation = Quaternion.Lerp(transform.rotation, tempRotation_, 8f * Time.deltaTime);
+        if (afterCapture_ || onGround_)
         {
-            Quaternion tempRotation_ = Quaternion.Euler(0, transform.rotation.eulerAngles.y, 0);
-            transform.rotation = Quaternion.Lerp(transform.rotation, tempRotation_, 5f * Time.deltaTime);
+            Vector3 v3temp1_ = new Vector3(CameraController.instance.transform.position.x, 0, CameraController.instance.transform.position.z);
+            Vector3 v3temp2_ = new Vector3(transform.position.x, 0, transform.position.x);
+            Vector3 resultTemps_ = v3temp1_ - v3temp2_;
+            transform.forward = Vector3.Lerp(transform.forward, resultTemps_, 0.8f * Time.deltaTime);
         }
     }
+
+ 
 
     private void MonsterGetOut()
     {
@@ -268,6 +289,9 @@ public class CaptureCube : MonoBehaviour
         else if (feedbackBool_ && shakeValue_ > 2)
         {
             bigcube_.GetComponent<Animator>().Play("DissolveCubo", -1, 0);
+            yield return new WaitForSeconds(1);
+            CameraController.instance.cameraStyle = CameraController.CameraStyle.FollowPlayer;
+            CameraController.instance.SetTarget(previewTarget_);
             yield break;
         }
 
@@ -280,6 +304,8 @@ public class CaptureCube : MonoBehaviour
             monsterBreakFree_ = true;
             Debug.Log("Work" + col.name);
             FalseBreakCube();
+            CameraController.instance.cameraStyle = CameraController.CameraStyle.FollowPlayer;
+            CameraController.instance.SetTarget(previewTarget_);
             yield return new WaitUntil(() => !monsterBreakFree_);
             yield break;
         }
@@ -289,9 +315,9 @@ public class CaptureCube : MonoBehaviour
     {
         float randomValue_ = Random.Range(1, 101);
 
-        if (randomValue_ > chance_) 
+        if (randomValue_ > chance_)
             return false;
-        else 
+        else
             return true;
     }
     #endregion
