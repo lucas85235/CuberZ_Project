@@ -3,16 +3,23 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class AI : MonoBehaviour {
+public class AI : MonoBehaviour 
+{
+	private NavMeshAgent nav_;
 
-	NavMeshAgent NAV;
+	[SerializeField] private Transform target_;
 
-	void Start () {
-		NAV = GetComponent<NavMeshAgent> ();
+	public float minDistance = 2.2f;
+
+	void Start () 
+	{
+		nav_ = GetComponent<NavMeshAgent> ();
+		target_ = GameObject.Find ("001").transform;
 	}
-
-	// Update is called once per frame
-	void Update () {
-		NAV.destination = GameObject.Find ("J1").transform.position;
+	
+	void Update () 
+	{
+		if (Vector3.Distance(target_.position, transform.position) < minDistance)
+		nav_.destination = target_.position;
 	}
 }

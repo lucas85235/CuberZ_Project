@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class LavaBehaviuor : MonsterBase
+public class MinitiBehaviuor : MonsterBase
 {
     // se tiver ataques de outros tipos setar um novo enum
     // que recebera ataques personalizados
@@ -11,9 +11,11 @@ public class LavaBehaviuor : MonsterBase
 
     // private AttackManager attackManager_;
 
-    private int currentAttackIndex;
+    public GameObject detectCollision;
 
-    private bool canMove;
+    private bool canFollowPlayer = true;
+
+    private float toHeadButtLenght_ = 1.208333f;
 
     public enum MinitiAttacks
     {
@@ -52,44 +54,36 @@ public class LavaBehaviuor : MonsterBase
         {
             attack_.SetAttackNamesInStats((MinitiAttacks)i, i);
         }
-        #endregion    
+        #endregion   
     }
 
     protected virtual void Update()
     {
         if (isEnabled)
         {
-            axisX = input_.GetAxisHorizontal();
-            axisY = input_.GetAxisVertical();
-
-            if (!animation_.IsPlayAttackAnimation())
+            if (!isAttacking || !attack_.GetCanMove(currentAttackIndex)) 
             {
-                Movement();
-                animation_.AnimationSpeed(axisX, axisY);
-            }
+                axisX = input_.GetAxisHorizontal();
+                axisY = input_.GetAxisVertical();
 
-            // collider_.SetActive(currentAnimation.IsName("Attack"));
-
-            if (animation_.GetCurrentAnimation().IsName("ToHeadButt"))
-            {
-                boby_.constraints = RigidbodyConstraints.None;
-                boby_.freezeRotation = true;
-                boby_.velocity = transform.forward * attackSpeed;
-            }
-            else
-                if (ExistGround())
+                if (!animation_.IsPlayAttackAnimation())
                 {
-                    boby_.constraints = RigidbodyConstraints.FreezeAll;
-                    boby_.velocity = Vector3.zero;
-                }
+                    Movement();
+                    animation_.AnimationSpeed(axisX, axisY);
+                }                
+            }
+
+            //detectCollision.SetActive(!animation_.GetCurrentAnimation().IsName("Blend Tree"));
 
             #region Get Inputs
             
             if (Input.GetKeyDown(KeyCode.T)) // Usado para testes romover na versão final
                 SwitchCharacterController(player_);
 
-            if (input_.ExecuteActionInput())
+            if (input_.ExecuteActionInput() && !isAttacking) 
+            {
                 StartCoroutine(GetAttackName(currentAttackIndex));
+            }
 
             if (input_.KubberAttack1Input()) 
                 currentAttackIndex = (int)MinitiAttacks.ToHeadButt;
@@ -98,10 +92,17 @@ public class LavaBehaviuor : MonsterBase
             
             #endregion
         }
-        else
+        else if (!isEnabled && canFollowPlayer)
         {
             if (isFollowState)
                 FollowPlayer();
+        }
+        else 
+        {
+            if (animation_.GetCurrentAnimation().IsName("ToHeadButt"))
+                boby_.velocity = transform.forward * attackSpeed;
+            else
+                boby_.velocity = Vector3.zero;
         }
     }
 
@@ -111,8 +112,36 @@ public class LavaBehaviuor : MonsterBase
         return ((MinitiAttacks)attack_.attackTier[index]).ToString();
     }
 
+    private void MovableSetting() 
+    {
+        boby_.constraints = RigidbodyConstraints.FreezeAll;
+        boby_.velocity = Vector3.zero;
+        isEnabled = true;
+        canFollowPlayer = true;
+        isAttacking = false;
+        //detectCollision.SetActive(false);
+    }
+
+    private void DebugAttack() 
+    {
+        Debug.Log("Attack: " + ((MinitiAttacks)attack_.attackTier[currentAttackIndex]).ToString());
+        Debug.Log("Pode Mover: " + attack_.GetCanMove(currentAttackIndex));
+    }
+
     public virtual IEnumerator ToHeadButt() 
     {
+        canFollowPlayer = false;
+        isEnabled = false;
+
+        #region stop character walk
+        while (axisX > 0 && axisY > 0) 
+        {
+            axisX -= Time.deltaTime * 2;
+            axisY -= Time.deltaTime * 2;
+            animation_.AnimationSpeed(axisX, axisY);            
+        }
+        #endregion
+
         Ray ray = Camera.main.GetComponent<Camera>().ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
 
@@ -120,14 +149,23 @@ public class LavaBehaviuor : MonsterBase
         {
             if (Vector3.Distance(transform.position, hit.point) > attackDistance)
             {
+                transform.LookAt(hit.point);
                 animation_.NoMovableAttack((int)MinitiAttacks.ToHeadButt);
+                boby_.constraints = RigidbodyConstraints.None;
+                boby_.freezeRotation = true;
+                isAttacking = true;
             }
         }
-        else yield break;
-    
-        yield return new WaitForSeconds(attack_.GetAttackCoolDown(currentAttackIndex));
-        Debug.Log(((MinitiAttacks)attack_.attackTier[currentAttackIndex]).ToString());
-        Debug.Log(attack_.GetCanMove(currentAttackIndex));
+        else  
+        {   
+            MovableSetting();
+            yield break;
+        }
+        
+        yield return new WaitForSeconds(toHeadButtLenght_);
+        DebugAttack();
+
+        MovableSetting();
     }
 
     public virtual IEnumerator FireBall() 
@@ -135,7 +173,8 @@ public class LavaBehaviuor : MonsterBase
         animation_.MovableAttack((int)MinitiAttacks.FireBall);
 
         yield return null;
-        Debug.Log(((MinitiAttacks)attack_.attackTier[currentAttackIndex]).ToString());
-        Debug.Log(attack_.GetCanMove(currentAttackIndex));
+        DebugAttack();
+
+        isAttacking = false;
     }
 }
