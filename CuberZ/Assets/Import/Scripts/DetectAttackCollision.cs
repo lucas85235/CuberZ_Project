@@ -5,12 +5,11 @@ using UnityEngine;
 public class DetectAttackCollision : MonoBehaviour 
 {
 	private GameObject hitPrefab;
-	private float hitCoolDown = 1.2f;
+	private float hitCoolDown = 1.2f; // ajustar dependendo do attack
 	private bool initAttack = false;
+	private bool canLookAt = true;
 
-	public float attackForce = 5.0f;
-	public float upHitPosition = 3.0f;
-
+	public float adjustHitPosition = 2.5f;
 
 	private void Start() 
 	{
@@ -31,6 +30,8 @@ public class DetectAttackCollision : MonoBehaviour
 	{
 		if (other.tag == "Enemy") 
 		{
+			Debug.Log(other.name);
+
 			if (!initAttack && IsAttacking())
 				StartCoroutine(DamageBehaviour(other));
 		}
@@ -39,31 +40,34 @@ public class DetectAttackCollision : MonoBehaviour
 	IEnumerator DamageBehaviour(Collider other) 
 	{
 		initAttack = true;
-
-		other.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
-		other.GetComponent<Rigidbody>().freezeRotation = true;
-		//other.GetComponent<Rigidbody>().AddForce(this.transform.parent.forward * attackForce);
+		
+		if (canLookAt) 
+		{
+			other.transform.LookAt (transform);
+			canLookAt = false;
+		}
 		
 		other.GetComponent<Animator> ().SetTrigger ("HIT");
-		other.transform.LookAt (transform);
-		
-		HitEffect (other.transform);
-		Debug.Log(other.name);
+
+		// mudar para decrementar a vida do enemy ista decrementa a vida do player
 		transform.parent.GetComponent<MonsterBase>().DecrementLife(
 			transform.parent.GetComponent<AttackManager>().attackStats[
 				transform.parent.GetComponent<MonsterBase>().currentAttackIndex
 					].baseDamage);
+
+		SpawHitEffect (other.transform);
 		yield return new WaitForSeconds(hitCoolDown);
 
 		initAttack = false;
+		canLookAt = true;
 	}
 
-	void HitEffect(Transform objectTransform) 
+	void SpawHitEffect(Transform objectTransform) 
 	{
 		if (!GameObject.Find("Hit_FX")) 
 		{
 			GameObject hitEffect = Instantiate(hitPrefab);
-			hitEffect.transform.position = objectTransform.position + (Vector3.up * upHitPosition);
+			hitEffect.transform.position = objectTransform.position + (Vector3.up * adjustHitPosition);
 			hitEffect.transform.parent = objectTransform;
 			hitEffect.name = "Hit_FX";
 			Destroy (hitEffect, 1);
