@@ -42,7 +42,7 @@ public class MinitiAnimation : AnimationBase
         animator_.SetTrigger("HIT");
     }
 
-    public override AnimatorStateInfo GetCurrentAnimation() 
+    public override AnimatorStateInfo GetCurrentAnimationInLayerOne() 
     {
         return animator_.GetCurrentAnimatorStateInfo(0);
     }

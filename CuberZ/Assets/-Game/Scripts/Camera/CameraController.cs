@@ -4,45 +4,35 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
-    private RaycastHit hit;
+    // O target deve ser um pivo no meio do personagem
+
+    private RaycastHit hit_;
     private IInput input_;
 
     [Header("Player to follow")]
-    [SerializeField] private Transform target_;
+    [SerializeField] private Transform target_; 
 
     [Header("Camera Properties")]
     public float sensibility = 125.0f;
     public float cameraDistance = 16.0f;
+    public float captureDistance = 12.0f;
     public float adjustCollisionForward = 0.1f;
     public float smooth = 4.0f;
-    public LayerMask excludeLayer;
-    public bool invert;
-    public CameraStyle cameraStyle;
+    public bool invertVerticalMouseInput;
+
+    public LayerMask excludeLayer;    
+    public CameraMode cameraStyle;
 
     private float distanceUp;
-    private float minAngle = 0.9f;
-    private float maxAngle = 1.1f;
+    private float minAngle = 0.95f;
+    private float maxAngle = 1.05f;
     private Vector3 cameraPosition;
 
-
-    // O target deve ser um pivo no meio do personagem e não nos pés
-
     #region Singleton
-
-    public static CameraController instance {get{ return instance_; }}
+    public static CameraController instance { get { return instance_; } }
     private static CameraController instance_;
-
     #endregion
-
-
-
-    public enum CameraStyle
-    {
-        FollowPlayer,
-        Capturing,
-    }
     
-
     protected virtual void Construt(IInput newInputInterface)
     {
         input_ = newInputInterface;
@@ -57,7 +47,7 @@ public class CameraController : MonoBehaviour
 
     void LateUpdate()
     {
-        if (cameraStyle == CameraStyle.FollowPlayer) // Câmera Padrão
+        if (cameraStyle == CameraMode.FollowPlayer) // Câmera Padrão
         {
             if (input_.MoveCameraInput())
             {
@@ -68,20 +58,22 @@ public class CameraController : MonoBehaviour
             transform.position = Vector3.Lerp(transform.position, cameraPosition, Time.deltaTime * smooth);
 
             distanceUp = Mathf.Clamp(distanceUp += input_.GetAxisVertical(), minAngle, maxAngle);
-
-        if(Physics.Linecast(target_.position, transform.position, out hit, excludeLayer)) 
-        {
-            transform.position = hit.point + transform.forward * adjustCollisionForward;
         }
-        
-
-        if(cameraStyle == CameraStyle.Capturing)
+        else
         {
-            cameraPosition = target_.position - transform.forward * cameraDistance/1.25f;
+            cameraPosition = target_.position - transform.forward * captureDistance;
             transform.position = Vector3.Lerp(transform.position, cameraPosition, Time.deltaTime * smooth);
-            Quaternion tempRotation_ =  Quaternion.Euler(transform.rotation.eulerAngles.x, transform.rotation.eulerAngles.y, 0); ;
+
+            Quaternion tempRotation_ =  Quaternion.Euler(transform.rotation.eulerAngles.x, transform.rotation.eulerAngles.y, 0);
             transform.rotation = Quaternion.Lerp(transform.rotation, tempRotation_, Time.deltaTime * smooth);
-        }
+        }        
+
+        if(Physics.Linecast(target_.position, transform.position, out hit_, excludeLayer)) 
+        {
+            transform.position = hit_.point + transform.forward * adjustCollisionForward;
+        } 
+
+
 
     }
 
@@ -89,8 +81,10 @@ public class CameraController : MonoBehaviour
     {
         transform.RotateAround(target_.position, transform.up, input_.GetAxisMouseX() * sensibility * Time.deltaTime);
 
-        if (invert) transform.RotateAround(target_.position, transform.right, -input_.GetAxisMouseY() * sensibility * Time.deltaTime);
-        else transform.RotateAround(target_.position, transform.right, input_.GetAxisMouseY() * sensibility * Time.deltaTime);
+        if (invertVerticalMouseInput)
+            transform.RotateAround(target_.position, transform.right, -input_.GetAxisMouseY() * sensibility * Time.deltaTime);
+        else 
+            transform.RotateAround(target_.position, transform.right, input_.GetAxisMouseY() * sensibility * Time.deltaTime);
 
         Vector3 rotation = transform.eulerAngles;
         rotation.z = 0;
@@ -111,5 +105,11 @@ public class CameraController : MonoBehaviour
     public void SetCameraDistance(float newDistance)
     {
         cameraDistance = newDistance;
+    }
+
+    public enum CameraMode
+    {
+        FollowPlayer,
+        Capturing
     }
 }

@@ -14,16 +14,25 @@ public class AttackManager : MonoBehaviour
     private void Start() 
     {
         //SetAttackNamesInStats();
-       // SetRandomStats();
+        //SetRandomStats();
+        
         SetRandomAttackTier(attackTier.Length);
-        HudPlayerKubber.instance.HudUpdateSkillAttackStats(kubberPlayer,attackStats);
-
+        HUDKubberAttacks.instance.HudUpdateSkillAttackTier(kubberPlayer, attackTier);  
     }
 
     public enum Lineage
     {
         Lava,
         Original
+    }
+
+    public enum AttackType 
+    {
+        Physical,
+        LongDistance,
+        InArea,
+        ChangeStatus,
+        Relative
     }
 
     public void SetRandomAttackTier(int range)
@@ -36,9 +45,8 @@ public class AttackManager : MonoBehaviour
             if (i >= attackTier.Length)
             {
                 //Armazena o attackTier em uma variavel do HudSystem.
-                HudPlayerKubber.instance.HudUpdateSkillAttackTier(kubberPlayer,attackTier);
+                HUDKubberAttacks.instance.HudUpdateSkillAttackTier(kubberPlayer, attackTier);  
                 return;
-
             }
 
             int random = Random.Range(0, range);
@@ -52,10 +60,8 @@ public class AttackManager : MonoBehaviour
 
             if (diferentNumber)
             {
-                attackTier[i] = random;
-              
-                i++;
-                
+                attackTier[i] = random;  
+                i++;  
             }
         }
     }
@@ -69,7 +75,8 @@ public class AttackManager : MonoBehaviour
         public int staminaCost;
         public float attackCoolDown;
         public bool canMove;
-        public Lineage[] attackType;
+        public Lineage[] attackEffect;
+        //public AttackType attackType;
     }
     
     public string GetAttackName(int index)
@@ -102,11 +109,17 @@ public class AttackManager : MonoBehaviour
         return can;
     }
 
-    public Lineage[] GetAttackType(int index)
+    public Lineage[] GetAttackEffects(int index)
     {
-        Lineage[] types = attackStats[index].attackType;
+        Lineage[] types = attackStats[index].attackEffect;
         return types;
     }
+
+    /*public AttackType GetAttackType(int index)
+    {
+        AttackType type = attackStats[index].attackType;
+        return type;
+    }*/
 
     public void SetAttackNamesInStats(System.Enum getName, int statsIndex)
     {
@@ -125,8 +138,8 @@ public class AttackManager : MonoBehaviour
             int random = Random.Range(0, 2);
             attackStats[i].canMove = random == 1 ? true : false;
             
-            attackStats[i].attackType = new Lineage[1];
-            attackStats[i].attackType[0] = Lineage.Lava;
+            attackStats[i].attackEffect = new Lineage[1];
+            attackStats[i].attackEffect[0] = Lineage.Lava;
         }
         //Armazena o attackStats em uma variavel do HudSystem.
     }   

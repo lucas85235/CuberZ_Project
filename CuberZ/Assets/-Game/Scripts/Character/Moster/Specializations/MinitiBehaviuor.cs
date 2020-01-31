@@ -14,6 +14,7 @@ public class MinitiBehaviuor : MonsterBase
     public GameObject detectCollision;
 
     private bool canFollowPlayer = true;
+    private bool canMove = true;
 
     private float toHeadButtLenght_ = 1.208333f;
 
@@ -38,11 +39,9 @@ public class MinitiBehaviuor : MonsterBase
 
         inputLayer = LayerMask.GetMask("Input");
 
-        attackTime_ = animation_.GetCurrentAnimation().length;
-        attackTime_ -= attackDecrementTime;
-
         #region Set Life And Stats
         IncrementLife(maxLife);
+        IncrementStamina(maxStamina);
         isDead = false;
         #endregion
 
@@ -61,7 +60,7 @@ public class MinitiBehaviuor : MonsterBase
     {
         if (isEnabled)
         {
-            if (!isAttacking || !attack_.GetCanMove(currentAttackIndex)) 
+            if (!isAttacking || canMove) 
             {
                 axisX = input_.GetAxisHorizontal();
                 axisY = input_.GetAxisVertical();
@@ -81,15 +80,13 @@ public class MinitiBehaviuor : MonsterBase
                 SwitchCharacterController(player_);
 
             if (input_.ExecuteActionInput() && !isAttacking) 
-            {
                 StartCoroutine(GetAttackName(currentAttackIndex));
-            }
 
-            if (input_.KubberAttack1Input()) 
+            if (input_.KubberAttack1Input())
                 currentAttackIndex = (int)MinitiAttacks.ToHeadButt;
             if (input_.KubberAttack2Input())
                 currentAttackIndex = (int)MinitiAttacks.FireBall;
-            
+
             #endregion
         }
         else if (!isEnabled && canFollowPlayer)
@@ -99,7 +96,7 @@ public class MinitiBehaviuor : MonsterBase
         }
         else 
         {
-            if (animation_.GetCurrentAnimation().IsName("ToHeadButt"))
+            if (animation_.GetCurrentAnimationInLayerOne().IsName("ToHeadButt"))
                 boby_.velocity = transform.forward * attackSpeed;
             else
                 boby_.velocity = Vector3.zero;
@@ -132,15 +129,8 @@ public class MinitiBehaviuor : MonsterBase
     {
         canFollowPlayer = false;
         isEnabled = false;
-
-        #region stop character walk
-        while (axisX > 0 && axisY > 0) 
-        {
-            axisX -= Time.deltaTime * 2;
-            axisY -= Time.deltaTime * 2;
-            animation_.AnimationSpeed(axisX, axisY);            
-        }
-        #endregion
+        isAttacking = true;
+        canMove = attack_.GetCanMove(currentAttackIndex);
 
         Ray ray = Camera.main.GetComponent<Camera>().ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
@@ -149,11 +139,23 @@ public class MinitiBehaviuor : MonsterBase
         {
             if (Vector3.Distance(transform.position, hit.point) > attackDistance)
             {
+                #region stop character walk
+                axisX = 0;
+                axisY = 0;
+                animation_.AnimationSpeed(axisX, axisY);            
+                #endregion
+
                 transform.LookAt(hit.point);
                 animation_.NoMovableAttack((int)MinitiAttacks.ToHeadButt);
                 boby_.constraints = RigidbodyConstraints.None;
                 boby_.freezeRotation = true;
-                isAttacking = true;
+
+                DecrementStamina(attack_.GetStaminaCost(currentAttackIndex));
+            }
+            else  
+            {   
+                MovableSetting();
+                yield break;
             }
         }
         else  
@@ -170,11 +172,13 @@ public class MinitiBehaviuor : MonsterBase
 
     public virtual IEnumerator FireBall() 
     {
+        canMove = attack_.GetCanMove(currentAttackIndex);
+
         animation_.MovableAttack((int)MinitiAttacks.FireBall);
+        DecrementStamina(attack_.GetStaminaCost(currentAttackIndex));
 
-        yield return null;
+        yield return new WaitForSeconds(toHeadButtLenght_);
+
         DebugAttack();
-
-        isAttacking = false;
     }
 }
