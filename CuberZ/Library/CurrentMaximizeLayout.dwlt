@@ -20,17 +20,10 @@ MonoBehaviour:
     y: 30
     width: 1360
     height: 635
-<<<<<<< develop
-  m_MinSize: {x: 711, y: 498}
-  m_MaxSize: {x: 18008, y: 14048}
+  m_MinSize: {x: 613, y: 498}
+  m_MaxSize: {x: 18010, y: 14048}
   vertical: 1
-  controlID: 19267
-=======
-  m_MinSize: {x: 713, y: 498}
-  m_MaxSize: {x: 18008, y: 14048}
-  vertical: 1
-  controlID: 26753
->>>>>>> Atualizado animação tremida cubo
+  controlID: 44373
 --- !u!114 &2
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -39,11 +32,11 @@ MonoBehaviour:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
-  m_EditorHideFlags: 1
+  m_EditorHideFlags: 0
   m_Script: {fileID: 12015, guid: 0000000000000000e000000000000000, type: 0}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_MinSize: {x: 200, y: 200}
+  m_MinSize: {x: 100, y: 100}
   m_MaxSize: {x: 4000, y: 4000}
   m_TitleContent:
     m_Text: Game
@@ -53,9 +46,9 @@ MonoBehaviour:
   m_Pos:
     serializedVersion: 2
     x: 0
-    y: 385
+    y: 386
     width: 730
-    height: 303
+    height: 302
   m_PersistentViewDataDictionary: {fileID: 0}
   m_MaximizeOnPlay: 0
   m_Gizmos: 0
@@ -67,10 +60,10 @@ MonoBehaviour:
     m_VRangeLocked: 0
     hZoomLockedByDefault: 0
     vZoomLockedByDefault: 0
-    m_HBaseRangeMin: -254
-    m_HBaseRangeMax: 254
-    m_VBaseRangeMin: -143
-    m_VBaseRangeMax: 143
+    m_HBaseRangeMin: -253.5
+    m_HBaseRangeMax: 253.5
+    m_VBaseRangeMin: -142.5
+    m_VBaseRangeMax: 142.5
     m_HAllowExceedBaseRangeMin: 1
     m_HAllowExceedBaseRangeMax: 1
     m_VAllowExceedBaseRangeMin: 1
@@ -89,9 +82,9 @@ MonoBehaviour:
       x: 0
       y: 17
       width: 730
-      height: 286
+      height: 285
     m_Scale: {x: 1, y: 1}
-    m_Translation: {x: 365, y: 143}
+    m_Translation: {x: 365, y: 142.5}
     m_MarginLeft: 0
     m_MarginRight: 0
     m_MarginTop: 0
@@ -99,14 +92,14 @@ MonoBehaviour:
     m_LastShownAreaInsideMargins:
       serializedVersion: 2
       x: -365
-      y: -143
+      y: -142.5
       width: 730
-      height: 286
+      height: 285
     m_MinimalGUI: 1
   m_defaultScale: 1
   m_TargetTexture: {fileID: 0}
   m_CurrentColorSpace: 0
-  m_LastWindowPixelSize: {x: 730, y: 303}
+  m_LastWindowPixelSize: {x: 730, y: 302}
   m_ClearInEditMode: 1
   m_NoCameraWarning: 1
   m_LowResolutionForAspectRatios: 01000000000000000000
@@ -133,17 +126,10 @@ MonoBehaviour:
     y: 0
     width: 1360
     height: 635
-<<<<<<< develop
-  m_MinSize: {x: 711, y: 498}
-  m_MaxSize: {x: 18008, y: 14048}
+  m_MinSize: {x: 613, y: 498}
+  m_MaxSize: {x: 18010, y: 14048}
   vertical: 0
-  controlID: 19268
-=======
-  m_MinSize: {x: 713, y: 498}
-  m_MaxSize: {x: 18008, y: 14048}
-  vertical: 0
-  controlID: 26754
->>>>>>> Atualizado animação tremida cubo
+  controlID: 44374
 --- !u!114 &4
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -165,17 +151,10 @@ MonoBehaviour:
     y: 0
     width: 732
     height: 635
-<<<<<<< develop
-  m_MinSize: {x: 200, y: 324}
+  m_MinSize: {x: 102, y: 224}
   m_MaxSize: {x: 4002, y: 8024}
   vertical: 1
-  controlID: 19269
-=======
-  m_MinSize: {x: 202, y: 324}
-  m_MaxSize: {x: 4002, y: 8024}
-  vertical: 1
-  controlID: 26755
->>>>>>> Atualizado animação tremida cubo
+  controlID: 44375
 --- !u!114 &5
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -194,7 +173,7 @@ MonoBehaviour:
     x: 0
     y: 0
     width: 732
-    height: 312
+    height: 313
   m_MinSize: {x: 102, y: 124}
   m_MaxSize: {x: 4002, y: 4024}
   m_ActualView: {fileID: 6}
@@ -228,7 +207,7 @@ MonoBehaviour:
     x: 0
     y: 73
     width: 730
-    height: 292
+    height: 293
   m_PersistentViewDataDictionary: {fileID: 0}
   m_WindowGUID: b02a244f4a167764b8b7f1a889536ea6
   m_SceneLighting: 1
@@ -236,15 +215,9 @@ MonoBehaviour:
   m_isRotationLocked: 0
   m_AudioPlay: 0
   m_Position:
-<<<<<<< develop
-    m_Target: {x: -13.835176, y: 0, z: 15.175045}
+    m_Target: {x: -48.249134, y: 3.4579797, z: 45.823997}
     speed: 2
-    m_Value: {x: -13.835176, y: 0, z: 15.175045}
-=======
-    m_Target: {x: -0.43706667, y: -11784.876, z: 3.8390474}
-    speed: 2
-    m_Value: {x: -0.43706667, y: -11784.876, z: 3.8390474}
->>>>>>> Atualizado animação tremida cubo
+    m_Value: {x: -48.249134, y: 3.4579797, z: 45.823997}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -272,29 +245,19 @@ MonoBehaviour:
       speed: 2
       m_Value: 0
   m_Rotation:
-<<<<<<< develop
-    m_Target: {x: 0.01593755, y: -0.9766883, z: 0.19931664, w: 0.07809687}
+    m_Target: {x: -0.12627283, y: 0.8715303, z: -0.3002862, w: -0.36649477}
     speed: 2
-    m_Value: {x: 0.015937548, y: -0.9766882, z: 0.1993166, w: 0.07809686}
+    m_Value: {x: -0.12627283, y: 0.8715303, z: -0.3002862, w: -0.36649477}
   m_Size:
-    m_Target: 22.204935
+    m_Target: 15.252792
     speed: 2
-    m_Value: 22.204935
-=======
-    m_Target: {x: 0.27634844, y: -0.15484452, z: 0.04516558, w: 0.9474254}
-    speed: 2
-    m_Value: {x: 0.27634844, y: -0.15484452, z: 0.04516558, w: 0.9474254}
-  m_Size:
-    m_Target: 22
-    speed: 2
-    m_Value: 22
->>>>>>> Atualizado animação tremida cubo
+    m_Value: 15.252792
   m_Ortho:
     m_Target: 0
     speed: 2
     m_Value: 0
   m_ShowGlobalGrid: 1
-  m_LastSceneViewRotation: {x: -0.08717229, y: 0.89959055, z: -0.21045254, w: -0.3726226}
+  m_LastSceneViewRotation: {x: 0.18216497, y: -0.6399569, z: 0.15987559, w: 0.7291851}
   m_LastSceneViewOrtho: 0
   m_ReplacementShader: {fileID: 0}
   m_ReplacementString: 
@@ -324,7 +287,7 @@ MonoBehaviour:
     x: 0
     y: 73
     width: 730
-    height: 292
+    height: 293
   m_PersistentViewDataDictionary: {fileID: 0}
   m_ViewTransforms:
     m_KeySerializationHelper:
@@ -333,30 +296,28 @@ MonoBehaviour:
     - {fileID: 1107184862301134520, guid: da170c939f5832a4a90271f176750bc9, type: 2}
     - {fileID: 1107501460609818050, guid: 36827172bc4158c489c00963fb340fec, type: 2}
     - {fileID: 1102487644891316832, guid: 36827172bc4158c489c00963fb340fec, type: 2}
-<<<<<<< develop
     - {fileID: 1107038920575758022, guid: 36827172bc4158c489c00963fb340fec, type: 2}
     - {fileID: 1107931405589297022, guid: 36827172bc4158c489c00963fb340fec, type: 2}
     - {fileID: 1107085065081887364, guid: 36827172bc4158c489c00963fb340fec, type: 2}
     - {fileID: 1107040919090687586, guid: 36827172bc4158c489c00963fb340fec, type: 2}
+    - {fileID: 1107124364574942354, guid: f9c9b72b3ae61fa459cf74b769232c0b, type: 2}
+    - {fileID: 1107273844340126672, guid: f9c9b72b3ae61fa459cf74b769232c0b, type: 2}
+    - {fileID: 1107036729310701598, guid: f9c9b72b3ae61fa459cf74b769232c0b, type: 2}
+    - {fileID: 1107043686664513040, guid: f9c9b72b3ae61fa459cf74b769232c0b, type: 2}
+    - {fileID: 1107701040061551484, guid: f9c9b72b3ae61fa459cf74b769232c0b, type: 2}
+    - {fileID: 1102819558157944398, guid: f9c9b72b3ae61fa459cf74b769232c0b, type: 2}
+    - {fileID: 1102459777483778272, guid: f9c9b72b3ae61fa459cf74b769232c0b, type: 2}
+    - {fileID: 1102839957881633938, guid: f9c9b72b3ae61fa459cf74b769232c0b, type: 2}
+    - {fileID: 1102225558805451850, guid: f9c9b72b3ae61fa459cf74b769232c0b, type: 2}
     m_ValueSerializationHelper:
-    - e00: 0.6161056
+    - e00: 0.42631578
       e01: 0
       e02: 0
-      e03: 72.38646
+      e03: -6.3157806
       e10: 0
-      e11: 0.6161056
+      e11: 0.42631578
       e12: 0
-      e13: -7.99897
-=======
-    m_ValueSerializationHelper:
-    - e00: 0.6161056
-      e01: 0
-      e02: 0
-      e03: 72.38646
-      e10: 0
-      e11: 0.6161056
-      e12: 0
-      e13: -7.99897
+      e13: 90.26315
       e20: 0
       e21: 0
       e22: 1
@@ -365,15 +326,14 @@ MonoBehaviour:
       e31: 0
       e32: 0
       e33: 1
-    - e00: 0.4336842
+    - e00: 0.42631578
       e01: 0
       e02: 0
-      e03: -6.684204
+      e03: -6.3157806
       e10: 0
-      e11: 0.4336842
+      e11: 0.42631578
       e12: 0
-      e13: 16.41
->>>>>>> Atualizado animação tremida cubo
+      e13: 71.85449
       e20: 0
       e21: 0
       e22: 1
@@ -382,25 +342,14 @@ MonoBehaviour:
       e31: 0
       e32: 0
       e33: 1
-<<<<<<< develop
-    - e00: 0.4336842
+    - e00: 0.3804655
       e01: 0
       e02: 0
-      e03: -6.684204
+      e03: 26.003418
       e10: 0
-      e11: 0.4336842
+      e11: 0.3804655
       e12: 0
-      e13: 16.41
-=======
-    - e00: 0.42537314
-      e01: 0
-      e02: 0
-      e03: -2.3208923
-      e10: 0
-      e11: 0.42537314
-      e12: 0
-      e13: 6.4925385
->>>>>>> Atualizado animação tremida cubo
+      e13: 55.914078
       e20: 0
       e21: 0
       e22: 1
@@ -409,42 +358,14 @@ MonoBehaviour:
       e31: 0
       e32: 0
       e33: 1
-<<<<<<< develop
-    - e00: 0.42537314
+    - e00: 0.7020512
       e01: 0
       e02: 0
-      e03: -2.3208923
+      e03: -18.7686
       e10: 0
-      e11: 0.42537314
+      e11: 0.7020512
       e12: 0
-      e13: 6.4925385
-=======
-    - e00: 0.4562623
-      e01: 0
-      e02: 0
-      e03: -9.838432
-      e10: 0
-      e11: 0.4562623
-      e12: 0
-      e13: -3.2846146
->>>>>>> Atualizado animação tremida cubo
-      e20: 0
-      e21: 0
-      e22: 1
-      e23: 0
-      e30: 0
-      e31: 0
-      e32: 0
-      e33: 1
-<<<<<<< develop
-    - e00: 0.4562623
-      e01: 0
-      e02: 0
-      e03: -9.838432
-      e10: 0
-      e11: 0.4562623
-      e12: 0
-      e13: -3.2846146
+      e13: 21.361008
       e20: 0
       e21: 0
       e22: 1
@@ -469,14 +390,14 @@ MonoBehaviour:
       e31: 0
       e32: 0
       e33: 1
-    - e00: 0.24414004
+    - e00: 0.35592988
       e01: 0
       e02: 0
-      e03: 209.48456
+      e03: 91.238
       e10: 0
-      e11: 0.24414004
+      e11: 0.35592988
       e12: 0
-      e13: 84.50895
+      e13: 54.70149
       e20: 0
       e21: 0
       e22: 1
@@ -501,14 +422,14 @@ MonoBehaviour:
       e31: 0
       e32: 0
       e33: 1
-    - e00: 0.24414004
+    - e00: 0.6494173
       e01: 0
       e02: 0
-      e03: 209.48456
+      e03: -29.085484
       e10: 0
-      e11: 0.24414004
+      e11: 0.6494173
       e12: 0
-      e13: 84.50895
+      e13: 87.75712
       e20: 0
       e21: 0
       e22: 1
@@ -525,16 +446,150 @@ MonoBehaviour:
       e11: 0.45666668
       e12: 0
       e13: 20.289993
-=======
-    - e00: 0.6719814
+      e20: 0
+      e21: 0
+      e22: 1
+      e23: 0
+      e30: 0
+      e31: 0
+      e32: 0
+      e33: 1
+    - e00: 0.46523908
       e01: 0
       e02: 0
-      e03: 1.2771759
+      e03: 80.08439
       e10: 0
-      e11: 0.6719814
+      e11: 0.46523908
       e12: 0
-      e13: 28.317123
->>>>>>> Atualizado animação tremida cubo
+      e13: -3.7237
+      e20: 0
+      e21: 0
+      e22: 1
+      e23: 0
+      e30: 0
+      e31: 0
+      e32: 0
+      e33: 1
+    - e00: 0.5112846
+      e01: 0
+      e02: 0
+      e03: 4.129776
+      e10: 0
+      e11: 0.5112846
+      e12: 0
+      e13: 61.223434
+      e20: 0
+      e21: 0
+      e22: 1
+      e23: 0
+      e30: 0
+      e31: 0
+      e32: 0
+      e33: 1
+    - e00: 0.8086904
+      e01: 0
+      e02: 0
+      e03: -110.09813
+      e10: 0
+      e11: 0.8086904
+      e12: 0
+      e13: -107.026306
+      e20: 0
+      e21: 0
+      e22: 1
+      e23: 0
+      e30: 0
+      e31: 0
+      e32: 0
+      e33: 1
+    - e00: 0.6500831
+      e01: 0
+      e02: 0
+      e03: 201.6915
+      e10: 0
+      e11: 0.6500831
+      e12: 0
+      e13: 26.105118
+      e20: 0
+      e21: 0
+      e22: 1
+      e23: 0
+      e30: 0
+      e31: 0
+      e32: 0
+      e33: 1
+    - e00: 0.15285899
+      e01: 0
+      e02: 0
+      e03: 68.24999
+      e10: 0
+      e11: 0.15285899
+      e12: 0
+      e13: 91.660385
+      e20: 0
+      e21: 0
+      e22: 1
+      e23: 0
+      e30: 0
+      e31: 0
+      e32: 0
+      e33: 1
+    - e00: 0.36036876
+      e01: 0
+      e02: 0
+      e03: 163.41896
+      e10: 0
+      e11: 0.36036876
+      e12: 0
+      e13: 99.8594
+      e20: 0
+      e21: 0
+      e22: 1
+      e23: 0
+      e30: 0
+      e31: 0
+      e32: 0
+      e33: 1
+    - e00: 0.6244054
+      e01: 0
+      e02: 0
+      e03: -40.65689
+      e10: 0
+      e11: 0.6244054
+      e12: 0
+      e13: 113.804504
+      e20: 0
+      e21: 0
+      e22: 1
+      e23: 0
+      e30: 0
+      e31: 0
+      e32: 0
+      e33: 1
+    - e00: 0.88083786
+      e01: 0
+      e02: 0
+      e03: -77.14326
+      e10: 0
+      e11: 0.88083786
+      e12: 0
+      e13: 51.682922
+      e20: 0
+      e21: 0
+      e22: 1
+      e23: 0
+      e30: 0
+      e31: 0
+      e32: 0
+      e33: 1
+    - e00: 0.22327152
+      e01: 0
+      e02: 0
+      e03: 116.13014
+      e10: 0
+      e11: 0.22327152
+      e12: 0
+      e13: 161.87447
       e20: 0
       e21: 0
       e22: 1
@@ -544,10 +599,16 @@ MonoBehaviour:
       e32: 0
       e33: 1
   m_PreviewAnimator: {fileID: 0}
-  m_AnimatorController: {fileID: 9100000, guid: 36827172bc4158c489c00963fb340fec,
+  m_AnimatorController: {fileID: 9100000, guid: f9c9b72b3ae61fa459cf74b769232c0b,
     type: 2}
   m_BreadCrumbs:
-  - m_Target: {fileID: 1107038920575758022, guid: 36827172bc4158c489c00963fb340fec,
+  - m_Target: {fileID: 1107124364574942354, guid: f9c9b72b3ae61fa459cf74b769232c0b,
+      type: 2}
+    m_ScrollPosition: {x: 0, y: 0}
+  - m_Target: {fileID: 1107043686664513040, guid: f9c9b72b3ae61fa459cf74b769232c0b,
+      type: 2}
+    m_ScrollPosition: {x: 0, y: 0}
+  - m_Target: {fileID: 1102459777483778272, guid: f9c9b72b3ae61fa459cf74b769232c0b,
       type: 2}
     m_ScrollPosition: {x: 0, y: 0}
   stateMachineGraph: {fileID: 0}
@@ -558,13 +619,9 @@ MonoBehaviour:
   m_MiniTool: 0
   m_LockTracker:
     m_IsLocked: 0
-  m_CurrentEditor: 0
+  m_CurrentEditor: 1
   m_LayerEditor:
-<<<<<<< develop
-    m_SelectedLayerIndex: 2
-=======
     m_SelectedLayerIndex: 0
->>>>>>> Atualizado animação tremida cubo
 --- !u!114 &8
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -588,8 +645,8 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 73
-    width: 694
-    height: 346
+    width: 730
+    height: 292
   m_PersistentViewDataDictionary: {fileID: 0}
 --- !u!114 &9
 MonoBehaviour:
@@ -607,17 +664,17 @@ MonoBehaviour:
   m_Position:
     serializedVersion: 2
     x: 0
-    y: 312
+    y: 313
     width: 732
-    height: 323
-  m_MinSize: {x: 202, y: 224}
+    height: 322
+  m_MinSize: {x: 102, y: 124}
   m_MaxSize: {x: 4002, y: 4024}
   m_ActualView: {fileID: 2}
   m_Panes:
-  - {fileID: 2}
   - {fileID: 10}
-  m_Selected: 0
-  m_LastSelected: 1
+  - {fileID: 2}
+  m_Selected: 1
+  m_LastSelected: 0
 --- !u!114 &10
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -640,17 +697,13 @@ MonoBehaviour:
   m_Pos:
     serializedVersion: 2
     x: 0
-    y: 385
+    y: 386
     width: 730
-    height: 303
+    height: 302
   m_PersistentViewDataDictionary: {fileID: 0}
   m_LockTracker:
     m_IsLocked: 0
-<<<<<<< develop
-  m_LastSelectedObjectID: 10848
-=======
-  m_LastSelectedObjectID: 48496
->>>>>>> Atualizado animação tremida cubo
+  m_LastSelectedObjectID: -36442
 --- !u!114 &11
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -670,16 +723,12 @@ MonoBehaviour:
     serializedVersion: 2
     x: 732
     y: 0
-    width: 321
+    width: 269
     height: 635
   m_MinSize: {x: 234, y: 498}
   m_MaxSize: {x: 10004, y: 14048}
   vertical: 1
-<<<<<<< develop
-  controlID: 19289
-=======
-  controlID: 26815
->>>>>>> Atualizado animação tremida cubo
+  controlID: 45917
 --- !u!114 &12
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -697,7 +746,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 321
+    width: 269
     height: 321
   m_MinSize: {x: 234, y: 274}
   m_MaxSize: {x: 10004, y: 10024}
@@ -729,7 +778,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 732
     y: 73
-    width: 317
+    width: 265
     height: 301
   m_PersistentViewDataDictionary: {fileID: 0}
   m_SearchFilter:
@@ -743,7 +792,8 @@ MonoBehaviour:
     m_SceneHandles: 
     m_ShowAllHits: 0
     m_SearchArea: 1
-    m_Folders: []
+    m_Folders:
+    - Assets/-Game/Animations/Player
   m_ViewMode: 0
   m_StartGridSize: 64
   m_LastFolders: []
@@ -755,11 +805,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: d82d0000
     m_LastClickedID: 11736
-<<<<<<< develop
-    m_ExpandedIDs: ffffffff000000009e260000d42600000e2700004e270000582700007227000090270000a427000042280000782800007c28000080280000842800008c280000b82800003a290000442900007429000084290000be290000c4290000ca290000e829000036300000383000001e450000
-=======
-    m_ExpandedIDs: ffffffff000000009e260000d42600000e2700004e270000582700007227000090270000a427000042280000782800007c28000080280000842800008c280000b8280000d82800003a290000442900007429000084290000be290000c4290000ca290000e2290000e829000036300000383000001e450000
->>>>>>> Atualizado animação tremida cubo
+    m_ExpandedIDs: ffffffff00000000f0260000be2d0000f62d0000302e0000702e00007a2e0000942e0000b62e0000182f0000202f0000282f00007a2f0000a42f0000a82f0000ae2f0000bc2f0000e82f0000083000000a3000006c3000007a300000aa300000ba300000f6300000fc300000023100000631000020310000243100008038000082380000943800005c560000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -784,17 +830,10 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
   m_AssetTreeState:
-<<<<<<< develop
-    scrollPos: {x: 0, y: 425}
-    m_SelectedIDs: 2cdeffff
+    scrollPos: {x: 0, y: 60}
+    m_SelectedIDs: a671ffff
     m_LastClickedID: 0
-    m_ExpandedIDs: ffffffff000000009e260000d42600000e2700004e270000582700007227000090270000a427000042280000782800007c28000080280000842800008c280000b82800003a290000442900007429000084290000be290000c4290000ca290000e829000036300000383000001e450000
-=======
-    scrollPos: {x: 0, y: 240}
-    m_SelectedIDs: 70bd0000
-    m_LastClickedID: 0
-    m_ExpandedIDs: ffffffff000000009e260000d42600000e2700004e270000582700007227000090270000a427000042280000782800007c28000080280000842800008c280000b8280000d82800003a290000442900007429000084290000be290000c4290000ca290000e2290000e829000036300000383000001e450000
->>>>>>> Atualizado animação tremida cubo
+    m_ExpandedIDs: ffffffff00000000f0260000be2d0000f62d0000302e0000702e00007a2e0000942e0000b62e0000182f0000202f0000282f00007a2f0000a42f0000a82f0000ae2f0000bc2f0000e82f0000083000000a3000006c3000007a300000aa300000ba300000f6300000fc300000023100000631000020310000243100008038000082380000943800005c560000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -819,13 +858,8 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
   m_ListAreaState:
-<<<<<<< develop
-    m_SelectedInstanceIDs: 2cdeffff
-    m_LastClickedInstanceID: -8660
-=======
-    m_SelectedInstanceIDs: 70bd0000
-    m_LastClickedInstanceID: 48496
->>>>>>> Atualizado animação tremida cubo
+    m_SelectedInstanceIDs: a671ffff
+    m_LastClickedInstanceID: -36442
     m_HadKeyboardFocusLastEvent: 0
     m_ExpandedInstanceIDs: c6230000
     m_RenameOverlay:
@@ -871,7 +905,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 321
-    width: 321
+    width: 269
     height: 314
   m_MinSize: {x: 202, y: 224}
   m_MaxSize: {x: 4002, y: 4024}
@@ -903,22 +937,15 @@ MonoBehaviour:
     serializedVersion: 2
     x: 732
     y: 394
-    width: 317
+    width: 265
     height: 294
   m_PersistentViewDataDictionary: {fileID: 0}
   m_SceneHierarchy:
     m_TreeViewState:
-<<<<<<< develop
-      scrollPos: {x: 0, y: 27}
-      m_SelectedIDs: 2cdeffff
-      m_LastClickedID: -8660
-      m_ExpandedIDs: 40ceffff9cceffff18cfffffacd1ffffaed2ffffa6efffffdefbffff602a00007a2a0000
-=======
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: 70bd0000
-      m_LastClickedID: 48496
-      m_ExpandedIDs: bc26ffff40ceffff9cceffff18cfffffacd1ffffaed2ffffa6efffffdefbffff602a00007a2a0000
->>>>>>> Atualizado animação tremida cubo
+      m_SelectedIDs: a671ffff
+      m_LastClickedID: -36442
+      m_ExpandedIDs: 4405f8ff606fffff686fffff6c6fffff706fffff726fffff746fffff766fffff786fffff7a6fffff7c6fffffee6ffffff26ffffff46ffffff66ffffff86fffffb070ffffe670fffff070fffff270ffff8271ffff8471ffff8671ffff8871ffff8a71ffff8c71ffff8e71ffff9071ffff70e1ffff4ce6ffffa8310000
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -959,18 +986,14 @@ MonoBehaviour:
   - {fileID: 22}
   m_Position:
     serializedVersion: 2
-    x: 1053
+    x: 1001
     y: 0
-    width: 307
+    width: 359
     height: 635
-  m_MinSize: {x: 277, y: 174}
-  m_MaxSize: {x: 4002, y: 8024}
+  m_MinSize: {x: 277, y: 198}
+  m_MaxSize: {x: 4004, y: 8048}
   vertical: 1
-<<<<<<< develop
-  controlID: 19387
-=======
-  controlID: 26839
->>>>>>> Atualizado animação tremida cubo
+  controlID: 45954
 --- !u!114 &17
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -988,8 +1011,8 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 307
-    height: 364
+    width: 359
+    height: 472
   m_MinSize: {x: 277, y: 74}
   m_MaxSize: {x: 4002, y: 4024}
   m_ActualView: {fileID: 18}
@@ -1021,17 +1044,17 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 1053
+    x: 1001
     y: 73
-    width: 305
-    height: 344
+    width: 357
+    height: 452
   m_PersistentViewDataDictionary: {fileID: 0}
   m_ObjectsLockedBeforeSerialization: []
   m_InstanceIDsLockedBeforeSerialization: 
   m_LockTracker:
     m_IsLocked: 0
   m_PreviewResizer:
-    m_CachedPref: -244
+    m_CachedPref: -137
     m_ControlHash: 1412526313
     m_PrefName: Preview_InspectorPreview
   m_PreviewWindow: {fileID: 0}
@@ -1134,9 +1157,9 @@ MonoBehaviour:
   m_Position:
     serializedVersion: 2
     x: 0
-    y: 364
-    width: 307
-    height: 271
+    y: 472
+    width: 359
+    height: 163
   m_MinSize: {x: 102, y: 124}
   m_MaxSize: {x: 4002, y: 4024}
   m_ActualView: {fileID: 23}
@@ -1152,7 +1175,7 @@ MonoBehaviour:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
-  m_EditorHideFlags: 1
+  m_EditorHideFlags: 0
   m_Script: {fileID: 12003, guid: 0000000000000000e000000000000000, type: 0}
   m_Name: 
   m_EditorClassIdentifier: 
@@ -1165,8 +1188,8 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 1053
-    y: 437
-    width: 305
-    height: 251
+    x: 1001
+    y: 545
+    width: 357
+    height: 143
   m_PersistentViewDataDictionary: {fileID: 0}

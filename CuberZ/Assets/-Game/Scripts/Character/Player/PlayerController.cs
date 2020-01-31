@@ -26,7 +26,9 @@ public class PlayerController : CharacterAbstraction
             axisY = input_.GetAxisVertical();
 
             Movement();
-            animation_.AnimationSpeed(axisX, axisY);
+            PlayerAnimation.instance.SpeedBlendTree(PlayerVelocity());
+            
+          //  animation_.AnimationSpeed(axisX, axisY);
 
             #region Get Inputs
             if (Input.GetKeyDown(KeyCode.T))
@@ -40,6 +42,7 @@ public class PlayerController : CharacterAbstraction
             #endregion
         }
     }
+    
 
     private void SetInitialCharacter()
     {

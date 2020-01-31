@@ -15,6 +15,7 @@ public abstract class CharacterAbstraction : MonoBehaviour
 
     protected float axisX;
     protected float axisY;
+    protected Vector3 previousVelocity_;
 
     [Header("Adjust Camera Propeties")]
     public float cameraDistance = 14.0f;
@@ -36,6 +37,15 @@ public abstract class CharacterAbstraction : MonoBehaviour
     protected virtual void Awake() 
     {
         Construt(Object.FindObjectOfType<InputSystem>(), GetComponent<AnimationBase>());
+    }
+
+    protected float PlayerVelocity()
+    {
+        Vector3 speed_ = (transform.position - previousVelocity_) / Time.deltaTime;
+        previousVelocity_ = transform.position;
+        Debug.Log(speed_.magnitude);
+        return speed_.magnitude;
+
     }
 
     protected virtual void Movement() 
