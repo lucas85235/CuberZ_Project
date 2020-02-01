@@ -8,6 +8,6 @@ public abstract class AnimationBase : MonoBehaviour
     public abstract void MovableAttack(int attackindex);
     public abstract void NoMovableAttack(int attackindex);
     public abstract void ActiveHit();
-    public abstract AnimatorStateInfo GetCurrentAnimation();
+    public abstract AnimatorStateInfo GetCurrentAnimationInLayerOne();
     public abstract bool IsPlayAttackAnimation();
 }

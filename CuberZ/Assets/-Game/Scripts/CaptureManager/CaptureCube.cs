@@ -204,7 +204,7 @@ public class CaptureCube : MonoBehaviour
 
                     if (CameraController.instance.GetTarget() != transform)
                     {
-                        CameraController.instance.cameraStyle = CameraController.CameraStyle.Capturing;
+                        CameraController.instance.cameraStyle = CameraController.CameraMode.Capturing;
                         previewTarget_ = CameraController.instance.GetTarget();
                         CameraController.instance.SetTarget(transform);
                     }
@@ -290,7 +290,7 @@ public class CaptureCube : MonoBehaviour
         {
             bigcube_.GetComponent<Animator>().Play("DissolveCubo", -1, 0);
             yield return new WaitForSeconds(1);
-            CameraController.instance.cameraStyle = CameraController.CameraStyle.FollowPlayer;
+            CameraController.instance.cameraStyle = CameraController.CameraMode.FollowPlayer;
             CameraController.instance.SetTarget(previewTarget_);
             yield break;
         }
@@ -304,7 +304,7 @@ public class CaptureCube : MonoBehaviour
             monsterBreakFree_ = true;
             Debug.Log("Work" + col.name);
             FalseBreakCube();
-            CameraController.instance.cameraStyle = CameraController.CameraStyle.FollowPlayer;
+            CameraController.instance.cameraStyle = CameraController.CameraMode.FollowPlayer;
             CameraController.instance.SetTarget(previewTarget_);
             yield return new WaitUntil(() => !monsterBreakFree_);
             yield break;
