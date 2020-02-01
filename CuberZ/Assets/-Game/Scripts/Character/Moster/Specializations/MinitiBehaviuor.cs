@@ -21,7 +21,10 @@ public class MinitiBehaviuor : MonsterBase
     public enum MinitiAttacks
     {
         ToHeadButt,
-        FireBall
+        FireBall,
+        RotatoryAttack,
+        Bite,
+        FireBall2
     }
 
     private void Start()
@@ -48,8 +51,10 @@ public class MinitiBehaviuor : MonsterBase
         #region Setar attacks 
         attack_.attackTier[0] = (int)MinitiAttacks.ToHeadButt;
         attack_.attackTier[1] = (int)MinitiAttacks.FireBall;
+        attack_.attackTier[2] = (int)MinitiAttacks.RotatoryAttack;
+        attack_.attackTier[3] = (int)MinitiAttacks.Bite;
 
-        for (int i = 0; i < (int)MinitiAttacks.FireBall+1; i++) 
+        for (int i = 0; i < (int)MinitiAttacks.FireBall2+1; i++) 
         {
             attack_.SetAttackNamesInStats((MinitiAttacks)i, i);
         }
@@ -86,7 +91,10 @@ public class MinitiBehaviuor : MonsterBase
                 currentAttackIndex = (int)MinitiAttacks.ToHeadButt;
             if (input_.KubberAttack2Input())
                 currentAttackIndex = (int)MinitiAttacks.FireBall;
-
+            if (input_.KubberAttack3Input())
+                currentAttackIndex = (int)MinitiAttacks.RotatoryAttack;
+            if (input_.KubberAttack4Input())
+                currentAttackIndex = (int)MinitiAttacks.Bite;
             #endregion
         }
         else if (!isEnabled && canFollowPlayer)
@@ -125,7 +133,7 @@ public class MinitiBehaviuor : MonsterBase
         Debug.Log("Pode Mover: " + attack_.GetCanMove(currentAttackIndex));
     }
 
-    public virtual IEnumerator ToHeadButt() 
+    public IEnumerator ToHeadButt() 
     {
         canFollowPlayer = false;
         isEnabled = false;
@@ -170,11 +178,35 @@ public class MinitiBehaviuor : MonsterBase
         MovableSetting();
     }
 
-    public virtual IEnumerator FireBall() 
+    public IEnumerator FireBall() 
     {
         canMove = attack_.GetCanMove(currentAttackIndex);
 
         animation_.MovableAttack((int)MinitiAttacks.FireBall);
+        DecrementStamina(attack_.GetStaminaCost(currentAttackIndex));
+
+        yield return new WaitForSeconds(toHeadButtLenght_);
+
+        DebugAttack();
+    }
+
+    public IEnumerator RotatoryAttack() 
+    {
+        canMove = attack_.GetCanMove(currentAttackIndex);
+
+        animation_.MovableAttack((int)MinitiAttacks.RotatoryAttack);
+        DecrementStamina(attack_.GetStaminaCost(currentAttackIndex));
+
+        yield return new WaitForSeconds(toHeadButtLenght_);
+
+        DebugAttack();
+    }
+
+    public IEnumerator Bite() 
+    {
+        canMove = attack_.GetCanMove(currentAttackIndex);
+
+        animation_.MovableAttack((int)MinitiAttacks.Bite);
         DecrementStamina(attack_.GetStaminaCost(currentAttackIndex));
 
         yield return new WaitForSeconds(toHeadButtLenght_);

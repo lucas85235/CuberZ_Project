@@ -15,9 +15,10 @@ public class AttackManager : MonoBehaviour
     {
         //SetAttackNamesInStats();
         //SetRandomStats();
-        
-        SetRandomAttackTier(attackTier.Length);
-        HUDKubberAttacks.instance.HudUpdateSkillAttackTier(kubberPlayer, attackTier);  
+        //SetRandomAttackTier(attackTier.Length);
+
+        if (HUDKubberAttacks.instance != null)
+            HUDKubberAttacks.instance.HudUpdateSkillAttackTier(kubberPlayer, attackTier);  
     }
 
     public enum Lineage
@@ -45,7 +46,8 @@ public class AttackManager : MonoBehaviour
             if (i >= attackTier.Length)
             {
                 //Armazena o attackTier em uma variavel do HudSystem.
-                HUDKubberAttacks.instance.HudUpdateSkillAttackTier(kubberPlayer, attackTier);  
+                if (HUDKubberAttacks.instance != null)
+                    HUDKubberAttacks.instance.HudUpdateSkillAttackTier(kubberPlayer, attackTier);  
                 return;
             }
 

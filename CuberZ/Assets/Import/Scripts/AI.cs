@@ -14,12 +14,12 @@ public class AI : MonoBehaviour
 	void Start () 
 	{
 		nav_ = GetComponent<NavMeshAgent> ();
-		target_ = GameObject.Find ("001").transform;
+		target_ = GameObject.FindGameObjectWithTag("Monster").transform;
 	}
 	
 	void Update () 
 	{
 		if (Vector3.Distance(target_.position, transform.position) < minDistance)
-		nav_.destination = target_.position;
+			nav_.destination = target_.position;
 	}
 }
