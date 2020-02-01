@@ -23,6 +23,7 @@ public class InputSystem : MonoBehaviour, IInput
     public KeyCode runKey = KeyCode.LeftShift;
     public KeyCode exitKey = KeyCode.Escape;
     public KeyCode captureKubberkey = KeyCode.Backspace;
+    public KeyCode jumpkey = KeyCode.Space;
 
     private void Awake()
     {
@@ -45,6 +46,7 @@ public class InputSystem : MonoBehaviour, IInput
     private const string runPlayerPref = "RUN-PLAYER";
     private const string exitPlayerPref = "EXIT-PLAYER";
     private const string captureKubberPref = "CAPTURE-KUBBER";
+    private const string jumpPref = "JUMP-PLAYER";
     #endregion
 
     #region Funções Singleton
@@ -63,6 +65,7 @@ public class InputSystem : MonoBehaviour, IInput
     public bool RunInput() { return Input.GetKey(runKey); }
     public bool ExitInput() { return Input.GetKeyDown(exitKey); }
     public bool CaptureKubberInput() { return Input.GetKeyDown(captureKubberkey); }
+    public bool JumpInput() { return Input.GetKeyDown(jumpkey); }
     #endregion
 
     #region Funções PlayerPrefs
@@ -83,6 +86,7 @@ public class InputSystem : MonoBehaviour, IInput
         PlayerPrefs.SetString(runPlayerPref, runKey.ToString());
         PlayerPrefs.SetString(exitPlayerPref, exitKey.ToString());
         PlayerPrefs.SetString(captureKubberPref, captureKubberkey.ToString());
+        PlayerPrefs.SetString(jumpPref, jumpkey.ToString());
 
         Debug.Log("Todas as Keys Foram Salvas");
     }
@@ -104,6 +108,7 @@ public class InputSystem : MonoBehaviour, IInput
         getAxisHorizontal = PlayerPrefs.GetString(getAxisMouseXPlayerPref);
         getAxisVertical = PlayerPrefs.GetString(getAxisMouseYPlayerPref);
         captureKubberkey = (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString(captureKubberPref));
+        jumpkey = (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString(jumpPref));
         
         Debug.Log("Todas as Keys Foram Carregadas");
     }

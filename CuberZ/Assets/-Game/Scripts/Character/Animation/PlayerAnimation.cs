@@ -4,11 +4,12 @@ using UnityEngine;
 
 public class PlayerAnimation : MonoBehaviour
 {
+    public RuntimeAnimatorController[] playerAllAnimators;
     private Animator playerAnimator_;
-    
+
     #region Singleton
 
-    public static  PlayerAnimation instance { get { return instance_; } }
+    public static PlayerAnimation instance { get { return instance_; } }
     private static PlayerAnimation instance_;
 
     private void Awake()
@@ -19,44 +20,60 @@ public class PlayerAnimation : MonoBehaviour
     #endregion
 
 
-    
+
     public void SpeedBlendTree(float speed)
     {
         playerAnimator_.SetFloat("Speed", speed);
     }
-
-    public void SetSubstateAndAnimation(string substate, string animation)
+    public void GoToWalkAnimator()
     {
-        playerAnimator_.ResetTrigger("startjump");
-        playerAnimator_.ResetTrigger("idlejump");
-        playerAnimator_.ResetTrigger("falljump");
-        playerAnimator_.ResetTrigger("throwcubenear");
-        playerAnimator_.ResetTrigger("throwcubefar");
-        playerAnimator_.ResetTrigger("bringbackmonster");
-        playerAnimator_.ResetTrigger("swin");
-        playerAnimator_.ResetTrigger("jump");
-        playerAnimator_.ResetTrigger("cube");
-        playerAnimator_.ResetTrigger("player");
-
-        playerAnimator_.SetTrigger(substate);
-        playerAnimator_.SetTrigger(animation);
-
+        CaptureSystem.instance.throwbool = false;
+        SetAnimatorAndAnimation(0);
     }
 
-    public void SetAnimationOnly(string animation)
-    {
-        playerAnimator_.ResetTrigger("startjump");
-        playerAnimator_.ResetTrigger("idlejump");
-        playerAnimator_.ResetTrigger("falljump");
-        playerAnimator_.ResetTrigger("throwcubenear");
-        playerAnimator_.ResetTrigger("throwcubefar");
-        playerAnimator_.ResetTrigger("bringbackmonster");
-        playerAnimator_.ResetTrigger("swin");
-        playerAnimator_.ResetTrigger("jump");
-        playerAnimator_.ResetTrigger("cube");
-        playerAnimator_.ResetTrigger("player");
 
-        playerAnimator_.SetTrigger(animation);
+    public void SetAnimatorAndAnimation(int animatornumber, string animation = null)
+    {
+        /// <summary>
+        /// animatornumber = 0 -> Walk
+        /// animatornumber = 1 -> Capture
+        /// animatornumber = 2 -> Jump
+        /// animatornumber = 3 -> Swin
+        /// </summary>
+
+        switch (animatornumber)
+        {
+
+            case 0:
+                playerAnimator_.runtimeAnimatorController = playerAllAnimators[animatornumber];
+                break;
+
+            case 1:
+                playerAnimator_.runtimeAnimatorController = playerAllAnimators[animatornumber];
+                playerAnimator_.ResetTrigger("throwfar");
+                playerAnimator_.ResetTrigger("thrownear");
+                playerAnimator_.ResetTrigger("bringback");
+                playerAnimator_.SetTrigger(animation);
+                break;
+
+            case 2:
+                playerAnimator_.runtimeAnimatorController = playerAllAnimators[animatornumber];
+                playerAnimator_.ResetTrigger("startjump");
+                playerAnimator_.ResetTrigger("idlejump");
+                playerAnimator_.ResetTrigger("falljump");
+                playerAnimator_.SetTrigger(animation);
+                break;
+
+            case 3:
+                //depois faz  o do swin
+
+                break;
+
+
+        }
+
+
+
 
     }
 

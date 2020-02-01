@@ -24,14 +24,14 @@ public class LavaBehaviuor : MonsterBase
     private void Start()
     {
         #region Get Components
-        boby_ = GetComponent<Rigidbody>();
+        bory_ = GetComponent<Rigidbody>();
         cameraController_ = Camera.main.GetComponent<CameraController>();
         nav_ = GetComponent<NavMeshAgent>();
         player_ = GameObject.FindGameObjectWithTag("Player").GetComponent<CharacterAbstraction>();
         attack_ = GetComponent<AttackManager>();
         #endregion   
 
-        boby_.constraints = RigidbodyConstraints.FreezeAll;
+        bory_.constraints = RigidbodyConstraints.FreezeAll;
         nav_.speed = followSpeed;
 
         inputLayer = LayerMask.GetMask("Input");
@@ -72,15 +72,15 @@ public class LavaBehaviuor : MonsterBase
 
             if (animation_.GetCurrentAnimation().IsName("ToHeadButt"))
             {
-                boby_.constraints = RigidbodyConstraints.None;
-                boby_.freezeRotation = true;
-                boby_.velocity = transform.forward * attackSpeed;
+                bory_.constraints = RigidbodyConstraints.None;
+                bory_.freezeRotation = true;
+                bory_.velocity = transform.forward * attackSpeed;
             }
             else
                 if (ExistGround())
                 {
-                    boby_.constraints = RigidbodyConstraints.FreezeAll;
-                    boby_.velocity = Vector3.zero;
+                    bory_.constraints = RigidbodyConstraints.FreezeAll;
+                    bory_.velocity = Vector3.zero;
                 }
 
             #region Get Inputs

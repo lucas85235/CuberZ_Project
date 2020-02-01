@@ -18,5 +18,7 @@ public interface IInput
     bool RunInput(); //Padrão- Shift
     bool ExitInput(); //Padrão- Esc
     bool CaptureKubberInput(); //Padrão- Backspace
+    bool JumpInput(); //Padrão- SpaceBar
+
 }
 

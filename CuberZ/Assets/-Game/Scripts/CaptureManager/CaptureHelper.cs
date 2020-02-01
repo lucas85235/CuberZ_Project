@@ -17,6 +17,11 @@ public class CaptureHelper : MonoBehaviour
         transform.gameObject.SetActive(false);
     }
 
+    public void ThrowCube()
+    {
+        CaptureSystem.instance.ThrowCube();
+    }
+
     public void CanGo()
     {
         canGo = true;
@@ -25,5 +30,5 @@ public class CaptureHelper : MonoBehaviour
     public void CantGo()
     {
         canGo = false;
-    } 
+    }
 }
