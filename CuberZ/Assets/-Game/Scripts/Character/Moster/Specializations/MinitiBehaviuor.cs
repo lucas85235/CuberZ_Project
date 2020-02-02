@@ -9,25 +9,10 @@ public class MinitiBehaviuor : MonsterBase
     // que recebera ataques personalizados
     // setar os novos ataques e dar mu override no GetAttackName
 
-    // private AttackManager attackManager_;
-
-    public GameObject detectCollision;
-
     private bool canFollowPlayer = true;
     private bool canMove = true;
-    public bool isSwimMode = false;
 
     private float toHeadButtLenght_ = 1.208333f;
-
-    #region Jump Config
-    public float initialJumpImpulse = 8.0f;
-    public float jumpForce = 0.03f;
-    public float jumpTime = 0.3f;
-
-    private float countJumpTime = 0;
-    private bool isJump = false;
-    private bool startJumpTime = false;
-    #endregion
 
     public enum MinitiAttacks
     {
@@ -91,40 +76,38 @@ public class MinitiBehaviuor : MonsterBase
 
             Jump();
 
-            //detectCollision.SetActive(!animation_.GetCurrentAnimation().IsName("Blend Tree"));
-
             #region Get Inputs
-            if (Input.GetKeyDown(KeyCode.N))
+            if (Input.GetKeyDown(KeyCode.N)) // Key de Teste
             {
                 isSwimMode = !isSwimMode;
+
+                if (isSwimMode) 
+                {
+                    animation_.EnterInSwimMode();
+                    GameObject.Find("Ground").GetComponent<MeshRenderer>().enabled = false;
+                }
+                else 
+                {
+                    animation_.ExitInSwimMode();
+                    GameObject.Find("Ground").GetComponent<MeshRenderer>().enabled = true;
+                }               
             }
 
-            if (isSwimMode) 
-            {
-                animation_.EnterInSwimMode();
-                GameObject.Find("Ground").GetComponent<MeshRenderer>().enabled = false;
-            }
-            else 
-            {
-                animation_.ExitInSwimMode();
-                GameObject.Find("Ground").GetComponent<MeshRenderer>().enabled = true;
-            }
-
-            if (Input.GetKeyDown(KeyCode.F) && !isDead)
+            if (Input.GetKeyDown(KeyCode.F) && !isDead) // Key de Teste
             {
                 StartCoroutine(animation_.PlayDeathState());
                 isDead = true;
             }
 
-            if (Input.GetKeyDown(KeyCode.R) && isDead) 
+            if (Input.GetKeyDown(KeyCode.R) && isDead) // Key de Teste
             {
                 animation_.ExitDeathState();
                 isDead = false;
             }
 
-            if (Input.GetKeyDown(KeyCode.F1))
+            if (Input.GetKeyDown(KeyCode.F1)) // Key de Teste
                 animation_.ExtraAnimationOne();
-            if (Input.GetKeyDown(KeyCode.F2))
+            if (Input.GetKeyDown(KeyCode.F2)) // Key de Teste
                 animation_.ExtraAnimationTwo();
 
             if (Input.GetKeyDown(KeyCode.T)) // Usado para testes romover na versão final
@@ -157,35 +140,6 @@ public class MinitiBehaviuor : MonsterBase
         }
     }
 
-    private void Jump() 
-    {
-        if (Input.GetKeyDown(KeyCode.Space) && !isJump) 
-        {
-            boby_.constraints = RigidbodyConstraints.None;
-            boby_.freezeRotation = true;
-            boby_.AddForce(Vector3.up * initialJumpImpulse, ForceMode.Impulse);
-            startJumpTime = true;
-            isJump = true;
-            animation_.EnterJump();
-        }
-
-        if (Input.GetKey(KeyCode.Space) && isJump) 
-            boby_.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
-
-        if (startJumpTime && countJumpTime < jumpTime)
-            countJumpTime += Time.deltaTime;
-
-        if (ExistGround() && countJumpTime >= jumpTime)
-        {
-            countJumpTime = 0;
-            startJumpTime = false;
-            boby_.constraints = RigidbodyConstraints.FreezeAll;
-            isJump = false;
-            Debug.Log("ExistGround");
-            animation_.ExitJump();
-        }
-    }
-
     protected override string GetAttackName(int index)
     {
         currentAttackIndex = index;
@@ -199,7 +153,6 @@ public class MinitiBehaviuor : MonsterBase
         isEnabled = true;
         canFollowPlayer = true;
         isAttacking = false;
-        //detectCollision.SetActive(false);
     }
 
     private void DebugAttack() 
