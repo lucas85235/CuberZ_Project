@@ -33,11 +33,14 @@ public abstract class MonsterBase : CharacterAbstraction
     [Header("IA config")]
     public float minDistance = 12.0f;
     public float followSpeed = 10.0f;
-    protected bool isFollowState = true;
+    protected bool canFollowState = true;
 
     #region AI Behaviour
     protected void FollowPlayer()
     {
+        if (!nav_.enabled)
+            nav_.enabled = true;
+
         if (Vector3.Distance(player_.transform.position, transform.position) > minDistance)
         {
             nav_.isStopped = false;
@@ -50,7 +53,7 @@ public abstract class MonsterBase : CharacterAbstraction
         }
         else
         {
-            if (isFollowState && nav_.isStopped == false)
+            if (canFollowState && nav_.isStopped == false)
                 StartCoroutine(StopFollow());
         }
     }
@@ -59,20 +62,21 @@ public abstract class MonsterBase : CharacterAbstraction
     {
         nav_.speed = 0;
         nav_.isStopped = true;
+        nav_.enabled = false;
         #region stop moster walk animation
         axisX = 0;
         axisY = 0;
         animation_.AnimationSpeed(axisX, axisY);
         #endregion
-        isFollowState = false;
+        canFollowState = false;
         yield return new WaitForSeconds(0.4f);
-        isFollowState = true;
+        canFollowState = true;
     }
     #endregion
 
     protected virtual bool ExistGround()
     {
-        return Physics.Raycast(transform.position, (-1 * transform.up), 1f);
+        return Physics.Raycast(transform.position, (-1 * transform.up), 0.25f);
     }
 
     protected virtual string GetAttackName(int index)

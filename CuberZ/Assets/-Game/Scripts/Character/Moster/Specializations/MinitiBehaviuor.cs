@@ -15,8 +15,19 @@ public class MinitiBehaviuor : MonsterBase
 
     private bool canFollowPlayer = true;
     private bool canMove = true;
+    public bool isSwimMode = false;
 
     private float toHeadButtLenght_ = 1.208333f;
+
+    #region Jump Config
+    public float initialJumpImpulse = 8.0f;
+    public float jumpForce = 0.03f;
+    public float jumpTime = 0.3f;
+
+    private float countJumpTime = 0;
+    private bool isJump = false;
+    private bool startJumpTime = false;
+    #endregion
 
     public enum MinitiAttacks
     {
@@ -39,6 +50,7 @@ public class MinitiBehaviuor : MonsterBase
 
         boby_.constraints = RigidbodyConstraints.FreezeAll;
         nav_.speed = followSpeed;
+        nav_.enabled = false;
 
         inputLayer = LayerMask.GetMask("Input");
 
@@ -77,10 +89,42 @@ public class MinitiBehaviuor : MonsterBase
                 }                
             }
 
+            Jump();
+
             //detectCollision.SetActive(!animation_.GetCurrentAnimation().IsName("Blend Tree"));
 
             #region Get Inputs
-            
+            if (Input.GetKeyDown(KeyCode.N))
+            {
+                isSwimMode = !isSwimMode;
+            }
+
+            if (isSwimMode) 
+            {
+                GetComponent<Animator>().SetBool("SWIM", true);
+                GameObject.Find("Ground").GetComponent<MeshRenderer>().enabled = false;
+            }
+            else 
+            {
+                GetComponent<Animator>().SetBool("SWIM", false);
+                GameObject.Find("Ground").GetComponent<MeshRenderer>().enabled = true;
+            }
+
+            if (Input.GetKeyDown(KeyCode.F) && !isDead) 
+                StartCoroutine(Death());
+
+            if (Input.GetKeyDown(KeyCode.R) && isDead) 
+            {
+                GetComponent<Animator>().SetBool("PLAY-DEAD", false);
+                GetComponent<Animator>().SetBool("DEAD", false);
+                isDead = false;
+            }
+
+            if (Input.GetKeyDown(KeyCode.F1))
+                GetComponent<Animator>().SetTrigger("EXTRA-1");
+            if (Input.GetKeyDown(KeyCode.F2))
+                GetComponent<Animator>().SetTrigger("EXTRA-2");
+
             if (Input.GetKeyDown(KeyCode.T)) // Usado para testes romover na versão final
                 SwitchCharacterController(player_);
 
@@ -99,7 +143,7 @@ public class MinitiBehaviuor : MonsterBase
         }
         else if (!isEnabled && canFollowPlayer)
         {
-            if (isFollowState)
+            if (canFollowState)
                 FollowPlayer();
         }
         else 
@@ -108,6 +152,46 @@ public class MinitiBehaviuor : MonsterBase
                 boby_.velocity = transform.forward * attackSpeed;
             else
                 boby_.velocity = Vector3.zero;
+        }
+    }
+
+    IEnumerator Death() 
+    {
+        isDead = true;
+        GetComponent<Animator>().SetBool("DEAD", true);
+        yield return new WaitForSeconds(0.1f);
+        GetComponent<Animator>().SetBool("PLAY-DEAD", true);
+    }
+
+    private void Jump() 
+    {
+        if (Input.GetKeyDown(KeyCode.Space) && !isJump) 
+        {
+            boby_.constraints = RigidbodyConstraints.None;
+            boby_.freezeRotation = true;
+            boby_.AddForce(Vector3.up * initialJumpImpulse, ForceMode.Impulse);
+            startJumpTime = true;
+            isJump = true;
+            GetComponent<Animator>().SetBool("ENTER-JUMP", true);
+        }
+
+        if (Input.GetKey(KeyCode.Space) && isJump) 
+        {
+            boby_.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+            Debug.Log("PULANDO");
+        }
+
+        if (startJumpTime && countJumpTime < jumpTime)
+            countJumpTime += Time.deltaTime;
+
+        if (ExistGround() && countJumpTime >= jumpTime)
+        {
+            countJumpTime = 0;
+            startJumpTime = false;
+            boby_.constraints = RigidbodyConstraints.FreezeAll;
+            isJump = false;
+            Debug.Log("ExistGround");
+            GetComponent<Animator>().SetBool("ENTER-JUMP", false);
         }
     }
 

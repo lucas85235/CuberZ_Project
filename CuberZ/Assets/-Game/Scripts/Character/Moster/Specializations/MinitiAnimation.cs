@@ -50,7 +50,11 @@ public class MinitiAnimation : AnimationBase
     public override bool IsPlayAttackAnimation()
     {
         if (!animator_.GetCurrentAnimatorStateInfo(0).IsName("Blend Tree") &&  
-            !animator_.GetCurrentAnimatorStateInfo(0).IsName("Hit"))
+            !animator_.GetCurrentAnimatorStateInfo(0).IsName("Hit") &&
+            !animator_.GetCurrentAnimatorStateInfo(0).IsName("EnterJump") &&
+            !animator_.GetCurrentAnimatorStateInfo(0).IsName("IdleJump") &&
+            !animator_.GetCurrentAnimatorStateInfo(0).IsName("ExitJump") &&
+            !animator_.GetCurrentAnimatorStateInfo(0).IsName("ExitWater"))
             return true;
         else
             return false;
