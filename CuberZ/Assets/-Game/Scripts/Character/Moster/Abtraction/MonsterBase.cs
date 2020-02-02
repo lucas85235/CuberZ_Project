@@ -60,14 +60,19 @@ public abstract class MonsterBase : CharacterAbstraction
 
     public IEnumerator StopFollow()
     {
-        nav_.speed = 0;
-        nav_.isStopped = true;
-        nav_.enabled = false;
+        if (nav_.enabled) 
+        {
+            nav_.speed = 0;
+            nav_.isStopped = true;
+            nav_.enabled = false;
+        }
+
         #region stop moster walk animation
         axisX = 0;
         axisY = 0;
         animation_.AnimationSpeed(axisX, axisY);
         #endregion
+        
         canFollowState = false;
         yield return new WaitForSeconds(0.4f);
         canFollowState = true;

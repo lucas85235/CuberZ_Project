@@ -101,29 +101,31 @@ public class MinitiBehaviuor : MonsterBase
 
             if (isSwimMode) 
             {
-                GetComponent<Animator>().SetBool("SWIM", true);
+                animation_.EnterInSwimMode();
                 GameObject.Find("Ground").GetComponent<MeshRenderer>().enabled = false;
             }
             else 
             {
-                GetComponent<Animator>().SetBool("SWIM", false);
+                animation_.ExitInSwimMode();
                 GameObject.Find("Ground").GetComponent<MeshRenderer>().enabled = true;
             }
 
-            if (Input.GetKeyDown(KeyCode.F) && !isDead) 
-                StartCoroutine(Death());
+            if (Input.GetKeyDown(KeyCode.F) && !isDead)
+            {
+                StartCoroutine(animation_.PlayDeathState());
+                isDead = true;
+            }
 
             if (Input.GetKeyDown(KeyCode.R) && isDead) 
             {
-                GetComponent<Animator>().SetBool("PLAY-DEAD", false);
-                GetComponent<Animator>().SetBool("DEAD", false);
+                animation_.ExitDeathState();
                 isDead = false;
             }
 
             if (Input.GetKeyDown(KeyCode.F1))
-                GetComponent<Animator>().SetTrigger("EXTRA-1");
+                animation_.ExtraAnimationOne();
             if (Input.GetKeyDown(KeyCode.F2))
-                GetComponent<Animator>().SetTrigger("EXTRA-2");
+                animation_.ExtraAnimationTwo();
 
             if (Input.GetKeyDown(KeyCode.T)) // Usado para testes romover na versão final
                 SwitchCharacterController(player_);
@@ -155,14 +157,6 @@ public class MinitiBehaviuor : MonsterBase
         }
     }
 
-    IEnumerator Death() 
-    {
-        isDead = true;
-        GetComponent<Animator>().SetBool("DEAD", true);
-        yield return new WaitForSeconds(0.1f);
-        GetComponent<Animator>().SetBool("PLAY-DEAD", true);
-    }
-
     private void Jump() 
     {
         if (Input.GetKeyDown(KeyCode.Space) && !isJump) 
@@ -172,14 +166,11 @@ public class MinitiBehaviuor : MonsterBase
             boby_.AddForce(Vector3.up * initialJumpImpulse, ForceMode.Impulse);
             startJumpTime = true;
             isJump = true;
-            GetComponent<Animator>().SetBool("ENTER-JUMP", true);
+            animation_.EnterJump();
         }
 
         if (Input.GetKey(KeyCode.Space) && isJump) 
-        {
             boby_.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
-            Debug.Log("PULANDO");
-        }
 
         if (startJumpTime && countJumpTime < jumpTime)
             countJumpTime += Time.deltaTime;
@@ -191,7 +182,7 @@ public class MinitiBehaviuor : MonsterBase
             boby_.constraints = RigidbodyConstraints.FreezeAll;
             isJump = false;
             Debug.Log("ExistGround");
-            GetComponent<Animator>().SetBool("ENTER-JUMP", false);
+            animation_.ExitJump();
         }
     }
 
