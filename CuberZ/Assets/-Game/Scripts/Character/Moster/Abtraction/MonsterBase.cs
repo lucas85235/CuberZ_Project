@@ -68,7 +68,7 @@ public abstract class MonsterBase : CharacterAbstraction
             }
             else
             {
-                if (isFollowState && nav_.isStopped == false)
+                if (canFollowState && nav_.isStopped == false)
                     StartCoroutine(StopFollow());
             }
         }
@@ -118,16 +118,16 @@ public abstract class MonsterBase : CharacterAbstraction
     {
         if (Input.GetKeyDown(KeyCode.Space) && !isJump) 
         {
-            boby_.constraints = RigidbodyConstraints.None;
-            boby_.freezeRotation = true;
-            boby_.AddForce(Vector3.up * initialJumpImpulse, ForceMode.Impulse);
+            bory_.constraints = RigidbodyConstraints.None;
+            bory_.freezeRotation = true;
+            bory_.AddForce(Vector3.up * initialJumpImpulse, ForceMode.Impulse);
             startJumpTime = true;
             isJump = true;
             animation_.EnterJump();
         }
 
-        if (Input.GetKey(KeyCode.Space) && isJump) 
-            boby_.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+        if (Input.GetKey(KeyCode.Space) && isJump)
+            bory_.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
 
         if (startJumpTime && countJumpTime < jumpTime)
             countJumpTime += Time.deltaTime;
@@ -136,7 +136,7 @@ public abstract class MonsterBase : CharacterAbstraction
         {
             countJumpTime = 0;
             startJumpTime = false;
-            boby_.constraints = RigidbodyConstraints.FreezeAll;
+            bory_.constraints = RigidbodyConstraints.FreezeAll;
             isJump = false;
             Debug.Log("ExistGround");
             animation_.ExitJump();

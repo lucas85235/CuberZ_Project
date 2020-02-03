@@ -134,9 +134,9 @@ public class MinitiBehaviuor : MonsterBase
         else 
         {
             if (animation_.GetCurrentAnimationInLayerOne().IsName("ToHeadButt"))
-                boby_.velocity = transform.forward * attackSpeed;
+                bory_.velocity = transform.forward * attackSpeed;
             else
-                boby_.velocity = Vector3.zero;
+                bory_.velocity = Vector3.zero;
         }
     }
 
@@ -148,8 +148,8 @@ public class MinitiBehaviuor : MonsterBase
 
     private void MovableSetting() 
     {
-        boby_.constraints = RigidbodyConstraints.FreezeAll;
-        boby_.velocity = Vector3.zero;
+        bory_.constraints = RigidbodyConstraints.FreezeAll;
+        bory_.velocity = Vector3.zero;
         isEnabled = true;
         canFollowPlayer = true;
         isAttacking = false;
@@ -183,8 +183,8 @@ public class MinitiBehaviuor : MonsterBase
 
                 transform.LookAt(hit.point);
                 animation_.NoMovableAttack((int)MinitiAttacks.ToHeadButt);
-                boby_.constraints = RigidbodyConstraints.None;
-                boby_.freezeRotation = true;
+                bory_.constraints = RigidbodyConstraints.None;
+                bory_.freezeRotation = true;
 
                 DecrementStamina(attack_.GetStaminaCost(currentAttackIndex));
             }

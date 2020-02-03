@@ -233,7 +233,7 @@ public class CaptureCube : MonoBehaviour
                     StartCoroutine(ShakeItOff(coliderMonster_));
                 }
             }
-            else if (col.gameObject.tag == "Monster" && !capture_)
+            else if (col.gameObject.tag == "Enemy" && !capture_)
             {
                 monsterScaleCap_ = col.transform.localScale;
                 monsterRotationCap_ = col.transform.rotation;

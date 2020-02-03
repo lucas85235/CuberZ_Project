@@ -65,9 +65,9 @@ public class CameraController : MonoBehaviour
             transform.position = Vector3.Lerp(transform.position, cameraPosition, Time.deltaTime * smooth);
 
 
-            if (Physics.Linecast(target_.position, transform.position, out hit))
+            if (Physics.Linecast(target_.position, transform.position, out hit_))
             {
-                transform.position = hit.point + transform.forward * adjustCollisionForward;
+                transform.position = hit_.point + transform.forward * adjustCollisionForward;
             }
         }
 
