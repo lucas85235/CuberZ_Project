@@ -1,5 +1,9 @@
 {
+<<<<<<< HEAD
 	"process_id" : 1840,
+=======
+	"process_id" : 22088,
+>>>>>>> player-set
 	"version" : "2018.4.15f1",
 	"app_path" : "C:/Program Files/Unity Editors/2018.4.15f1/Editor/Unity.exe",
 	"app_contents_path" : "C:/Program Files/Unity Editors/2018.4.15f1/Editor/Data"

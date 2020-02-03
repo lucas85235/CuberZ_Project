@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(Animator))]
@@ -8,13 +9,14 @@ using UnityEngine;
 public abstract class CharacterAbstraction : MonoBehaviour
 {
     [Header("Basic Components")]
-    protected Rigidbody boby_;
+    protected Rigidbody bory_;
     protected AnimationBase animation_;
     protected CameraController cameraController_;
     protected IInput input_;
 
     protected float axisX;
     protected float axisY;
+    protected Vector3 previousVelocity_;
 
     [Header("Adjust Camera Propeties")]
     public float cameraDistance = 14.0f;
@@ -24,6 +26,11 @@ public abstract class CharacterAbstraction : MonoBehaviour
     public float runSpeed = 22.0f;
     public float smoothTime = 0.3f;
     private float smooth_;
+
+    [Header("Jump Stats")]
+    public float jumpforce;
+    public bool jump;
+    
 
     public bool isEnabled { get; set; }
 
@@ -38,6 +45,22 @@ public abstract class CharacterAbstraction : MonoBehaviour
         Construt(Object.FindObjectOfType<InputSystem>(), GetComponent<AnimationBase>());
     }
 
+    protected float PlayerVelocity()
+    {
+        Vector3 speed_ = (transform.position - previousVelocity_) / Time.deltaTime;
+        previousVelocity_ = transform.position;
+        Debug.Log(speed_.magnitude);
+        return speed_.magnitude;
+
+    }
+
+    protected virtual void Jump()
+    {
+        jump = true;
+        bory_.AddForce(Vector3.up * jumpforce,ForceMode.Impulse);
+    }
+
+
     protected virtual void Movement() 
     {
         Vector2 input = new Vector2(axisX, axisY);
@@ -51,11 +74,20 @@ public abstract class CharacterAbstraction : MonoBehaviour
                 targetrotation + Camera.main.transform.eulerAngles.y, 
                 ref smooth_, 
                 smoothTime);
-                
-            if (!input_.RunInput())
-                transform.position += transform.forward * walkSpeed * Time.deltaTime;
+
+            if (!CaptureSystem.instance.capturing_)
+            {
+                if (!input_.RunInput())
+                    transform.position += transform.forward * walkSpeed * Time.deltaTime;
+                else
+                    transform.position += transform.forward * runSpeed * Time.deltaTime;
+            }
+
             else
-                transform.position += transform.forward * runSpeed * Time.deltaTime;
+            {
+              transform.position += transform.forward * walkSpeed/3f * Time.deltaTime;
+            }
+
         }
     }
 

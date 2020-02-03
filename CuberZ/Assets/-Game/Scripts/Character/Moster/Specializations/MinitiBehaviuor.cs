@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
@@ -26,14 +26,14 @@ public class MinitiBehaviuor : MonsterBase
     private void Start()
     {
         #region Get Components
-        boby_ = GetComponent<Rigidbody>();
+        bory_ = GetComponent<Rigidbody>();
         cameraController_ = Camera.main.GetComponent<CameraController>();
         nav_ = GetComponent<NavMeshAgent>();
         player_ = GameObject.FindGameObjectWithTag("Player").GetComponent<CharacterAbstraction>();
         attack_ = GetComponent<AttackManager>();
         #endregion   
 
-        boby_.constraints = RigidbodyConstraints.FreezeAll;
+        bory_.constraints = RigidbodyConstraints.FreezeAll;
         nav_.speed = followSpeed;
         nav_.enabled = false;
 

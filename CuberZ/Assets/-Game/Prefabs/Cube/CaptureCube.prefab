@@ -1023,7 +1023,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48832c35998d98946a780e7f4fdb1c7f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  "anima\xE7\xE3o": ShakeCube
   fakeCube: {fileID: 6500537494581273465, guid: 5c62ecc897e5ccc47aee0a9b6bb9bc54,
     type: 3}
   allcubes: []

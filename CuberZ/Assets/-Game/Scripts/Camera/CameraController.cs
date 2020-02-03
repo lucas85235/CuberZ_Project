@@ -61,12 +61,15 @@ public class CameraController : MonoBehaviour
         }
         else
         {
-            cameraPosition = target_.position - transform.forward * captureDistance;
+            cameraPosition = target_.position - transform.forward * (cameraDistance/2);
             transform.position = Vector3.Lerp(transform.position, cameraPosition, Time.deltaTime * smooth);
 
-            Quaternion tempRotation_ =  Quaternion.Euler(transform.rotation.eulerAngles.x, transform.rotation.eulerAngles.y, 0);
-            transform.rotation = Quaternion.Lerp(transform.rotation, tempRotation_, Time.deltaTime * smooth);
-        }        
+
+            if (Physics.Linecast(target_.position, transform.position, out hit))
+            {
+                transform.position = hit.point + transform.forward * adjustCollisionForward;
+            }
+        }
 
         if(Physics.Linecast(target_.position, transform.position, out hit_, excludeLayer)) 
         {

@@ -43,29 +43,55 @@ public abstract class MonsterBase : CharacterAbstraction
     public float minDistance = 12.0f;
     public float followSpeed = 10.0f;
     protected bool canFollowState = true;
+    [HideInInspector]
+    public bool beenCapture { get { return beenCapture_; } set { beenCapture_ = value; } }
+    private bool beenCapture_;
+
 
     #region AI Behaviour
     protected void FollowPlayer()
     {
-        if (!nav_.enabled)
-            nav_.enabled = true;
-
         if (Vector3.Distance(player_.transform.position, transform.position) > minDistance)
         {
-            nav_.isStopped = false;
-            nav_.speed = followSpeed;
-            nav_.SetDestination(player_.transform.position);
-            #region Set moster walk animation  
-            axisX = followSpeed / 2;
-            animation_.AnimationSpeed(axisX, axisY);
-            #endregion
+            nav_.enabled = true;
+
+            if (Vector3.Distance(player_.transform.position, transform.position) > minDistance)
+            {
+
+                nav_.isStopped = false;
+                nav_.speed = followSpeed;
+                nav_.SetDestination(player_.transform.position);
+                #region Set moster walk animation  
+                axisX = followSpeed / 2;
+                animation_.AnimationSpeed(axisX, axisY);
+                #endregion
+            }
+            else
+            {
+                if (isFollowState && nav_.isStopped == false)
+                    StartCoroutine(StopFollow());
+            }
         }
+
         else
         {
             if (canFollowState && nav_.isStopped == false)
                 StartCoroutine(StopFollow());
         }
     }
+
+
+    private void StopFollowFunction()
+    {
+        nav_.speed = 0;
+        #region stop moster walk animation
+        axisX = 0;
+        axisY = 0;
+        animation_.AnimationSpeed(axisX, axisY);
+        #endregion
+
+    }
+
 
     public IEnumerator StopFollow()
     {
