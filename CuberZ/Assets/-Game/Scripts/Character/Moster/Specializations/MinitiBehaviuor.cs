@@ -9,10 +9,6 @@ public class MinitiBehaviuor : MonsterBase
     // que recebera ataques personalizados
     // setar os novos ataques e dar mu override no GetAttackName
 
-    // private AttackManager attackManager_;
-
-    public GameObject detectCollision;
-
     private bool canFollowPlayer = true;
     private bool canMove = true;
 
@@ -21,7 +17,10 @@ public class MinitiBehaviuor : MonsterBase
     public enum MinitiAttacks
     {
         ToHeadButt,
-        FireBall
+        FireBall,
+        RotatoryAttack,
+        Bite,
+        FireBall2
     }
 
     private void Start()
@@ -36,6 +35,7 @@ public class MinitiBehaviuor : MonsterBase
 
         boby_.constraints = RigidbodyConstraints.FreezeAll;
         nav_.speed = followSpeed;
+        nav_.enabled = false;
 
         inputLayer = LayerMask.GetMask("Input");
 
@@ -48,8 +48,10 @@ public class MinitiBehaviuor : MonsterBase
         #region Setar attacks 
         attack_.attackTier[0] = (int)MinitiAttacks.ToHeadButt;
         attack_.attackTier[1] = (int)MinitiAttacks.FireBall;
+        attack_.attackTier[2] = (int)MinitiAttacks.RotatoryAttack;
+        attack_.attackTier[3] = (int)MinitiAttacks.Bite;
 
-        for (int i = 0; i < (int)MinitiAttacks.FireBall+1; i++) 
+        for (int i = 0; i < (int)MinitiAttacks.FireBall2+1; i++) 
         {
             attack_.SetAttackNamesInStats((MinitiAttacks)i, i);
         }
@@ -72,10 +74,42 @@ public class MinitiBehaviuor : MonsterBase
                 }                
             }
 
-            //detectCollision.SetActive(!animation_.GetCurrentAnimation().IsName("Blend Tree"));
+            Jump();
 
             #region Get Inputs
-            
+            if (Input.GetKeyDown(KeyCode.N)) // Key de Teste
+            {
+                isSwimMode = !isSwimMode;
+
+                if (isSwimMode) 
+                {
+                    animation_.EnterInSwimMode();
+                    GameObject.Find("Ground").GetComponent<MeshRenderer>().enabled = false;
+                }
+                else 
+                {
+                    animation_.ExitInSwimMode();
+                    GameObject.Find("Ground").GetComponent<MeshRenderer>().enabled = true;
+                }               
+            }
+
+            if (Input.GetKeyDown(KeyCode.F) && !isDead) // Key de Teste
+            {
+                StartCoroutine(animation_.PlayDeathState());
+                isDead = true;
+            }
+
+            if (Input.GetKeyDown(KeyCode.R) && isDead) // Key de Teste
+            {
+                animation_.ExitDeathState();
+                isDead = false;
+            }
+
+            if (Input.GetKeyDown(KeyCode.F1)) // Key de Teste
+                animation_.ExtraAnimationOne();
+            if (Input.GetKeyDown(KeyCode.F2)) // Key de Teste
+                animation_.ExtraAnimationTwo();
+
             if (Input.GetKeyDown(KeyCode.T)) // Usado para testes romover na versão final
                 SwitchCharacterController(player_);
 
@@ -86,12 +120,15 @@ public class MinitiBehaviuor : MonsterBase
                 currentAttackIndex = (int)MinitiAttacks.ToHeadButt;
             if (input_.KubberAttack2Input())
                 currentAttackIndex = (int)MinitiAttacks.FireBall;
-
+            if (input_.KubberAttack3Input())
+                currentAttackIndex = (int)MinitiAttacks.RotatoryAttack;
+            if (input_.KubberAttack4Input())
+                currentAttackIndex = (int)MinitiAttacks.Bite;
             #endregion
         }
         else if (!isEnabled && canFollowPlayer)
         {
-            if (isFollowState)
+            if (canFollowState)
                 FollowPlayer();
         }
         else 
@@ -116,7 +153,6 @@ public class MinitiBehaviuor : MonsterBase
         isEnabled = true;
         canFollowPlayer = true;
         isAttacking = false;
-        //detectCollision.SetActive(false);
     }
 
     private void DebugAttack() 
@@ -125,7 +161,7 @@ public class MinitiBehaviuor : MonsterBase
         Debug.Log("Pode Mover: " + attack_.GetCanMove(currentAttackIndex));
     }
 
-    public virtual IEnumerator ToHeadButt() 
+    public IEnumerator ToHeadButt() 
     {
         canFollowPlayer = false;
         isEnabled = false;
@@ -170,11 +206,35 @@ public class MinitiBehaviuor : MonsterBase
         MovableSetting();
     }
 
-    public virtual IEnumerator FireBall() 
+    public IEnumerator FireBall() 
     {
         canMove = attack_.GetCanMove(currentAttackIndex);
 
         animation_.MovableAttack((int)MinitiAttacks.FireBall);
+        DecrementStamina(attack_.GetStaminaCost(currentAttackIndex));
+
+        yield return new WaitForSeconds(toHeadButtLenght_);
+
+        DebugAttack();
+    }
+
+    public IEnumerator RotatoryAttack() 
+    {
+        canMove = attack_.GetCanMove(currentAttackIndex);
+
+        animation_.MovableAttack((int)MinitiAttacks.RotatoryAttack);
+        DecrementStamina(attack_.GetStaminaCost(currentAttackIndex));
+
+        yield return new WaitForSeconds(toHeadButtLenght_);
+
+        DebugAttack();
+    }
+
+    public IEnumerator Bite() 
+    {
+        canMove = attack_.GetCanMove(currentAttackIndex);
+
+        animation_.MovableAttack((int)MinitiAttacks.Bite);
         DecrementStamina(attack_.GetStaminaCost(currentAttackIndex));
 
         yield return new WaitForSeconds(toHeadButtLenght_);
