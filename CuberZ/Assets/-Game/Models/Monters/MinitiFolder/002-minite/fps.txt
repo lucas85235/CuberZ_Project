@@ -1,0 +1,9 @@
+pulo- 25fps
+
+corrida- 30fps
+
+idle, andando e bola de fogo, boiando- 25 fps
+
+CABEÇADA 25
+
+hit 25

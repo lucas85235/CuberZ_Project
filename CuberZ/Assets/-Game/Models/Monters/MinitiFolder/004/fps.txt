@@ -1,0 +1,13 @@
+idle-25
+andando-25
+correndo-25
+ataque 1-35
+ataque 2-25
+ataque 3-30
+ataque 4-25
+
+idle agua-25
+nadando lento-25
+nadando rápido-40
+
+animação de quando fica parado-25
