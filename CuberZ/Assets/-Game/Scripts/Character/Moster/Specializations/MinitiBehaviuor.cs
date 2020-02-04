@@ -29,7 +29,8 @@ public class MinitiBehaviuor : MonsterBase
         bory_ = GetComponent<Rigidbody>();
         cameraController_ = Camera.main.GetComponent<CameraController>();
         nav_ = GetComponent<NavMeshAgent>();
-        player_ = GameObject.FindGameObjectWithTag("Player").GetComponent<CharacterAbstraction>();
+        if (GameObject.FindGameObjectWithTag("Player") != null)
+            player_ = GameObject.FindGameObjectWithTag("Player").GetComponent<CharacterAbstraction>();
         attack_ = GetComponent<AttackManager>();
         #endregion   
 
@@ -37,7 +38,7 @@ public class MinitiBehaviuor : MonsterBase
         nav_.speed = followSpeed;
         nav_.enabled = false;
 
-        inputLayer = LayerMask.GetMask("Input");
+        inputLayer_ = LayerMask.GetMask("Input");
 
         #region Set Life And Stats
         IncrementLife(maxLife);
@@ -55,7 +56,12 @@ public class MinitiBehaviuor : MonsterBase
         {
             attack_.SetAttackNamesInStats((MinitiAttacks)i, i);
         }
-        #endregion   
+        #endregion
+
+        // Deletar
+        isEnabled = true;
+        SetCameraPropeties(transform.Find("CameraTarget"));
+        // Deletar
     }
 
     protected virtual void Update()
@@ -110,7 +116,7 @@ public class MinitiBehaviuor : MonsterBase
             if (Input.GetKeyDown(KeyCode.F2)) // Key de Teste
                 animation_.ExtraAnimationTwo();
 
-            if (Input.GetKeyDown(KeyCode.T)) // Usado para testes romover na versão final
+            if (Input.GetKeyDown(KeyCode.T) && player_ != null) // Usado para testes romover na versão final
                 SwitchCharacterController(player_);
 
             if (input_.ExecuteActionInput() && !isAttacking) 
@@ -171,7 +177,7 @@ public class MinitiBehaviuor : MonsterBase
         Ray ray = Camera.main.GetComponent<Camera>().ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
 
-        if (Physics.Raycast(ray, out hit, 1000f, inputLayer))
+        if (Physics.Raycast(ray, out hit, 1000f, inputLayer_))
         {
             if (Vector3.Distance(transform.position, hit.point) > attackDistance)
             {

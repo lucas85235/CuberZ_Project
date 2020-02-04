@@ -42,7 +42,6 @@ public class CameraController : MonoBehaviour
     {
         instance_ = this;
         Construt(Object.FindObjectOfType<InputSystem>());
-
     }
 
     void LateUpdate()
@@ -50,9 +49,7 @@ public class CameraController : MonoBehaviour
         if (cameraStyle == CameraMode.FollowPlayer) // Câmera Padrão
         {
             if (input_.MoveCameraInput())
-            {
                 CameraRotate();
-            }
 
             cameraPosition = target_.position - transform.forward * cameraDistance * distanceUp;
             transform.position = Vector3.Lerp(transform.position, cameraPosition, Time.deltaTime * smooth);
@@ -63,21 +60,12 @@ public class CameraController : MonoBehaviour
         {
             cameraPosition = target_.position - transform.forward * (cameraDistance/2);
             transform.position = Vector3.Lerp(transform.position, cameraPosition, Time.deltaTime * smooth);
-
-
-            if (Physics.Linecast(target_.position, transform.position, out hit_))
-            {
-                transform.position = hit_.point + transform.forward * adjustCollisionForward;
-            }
         }
 
         if(Physics.Linecast(target_.position, transform.position, out hit_, excludeLayer)) 
         {
             transform.position = hit_.point + transform.forward * adjustCollisionForward;
         } 
-
-
-
     }
 
     private void CameraRotate()

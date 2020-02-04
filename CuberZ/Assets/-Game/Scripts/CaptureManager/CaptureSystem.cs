@@ -54,7 +54,7 @@ public class CaptureSystem : MonoBehaviour
     private void Update()
     {
         if (input_.CaptureKubberInput() && !capturing_ && !capturingProcess_ && cuboQuantidade > 0 && 
-            !GetComponent<PlayerController>().jump && GetComponent<PlayerController>().canMove_) 
+            !GetComponent<PlayerController>().jump && GetComponent<PlayerController>().isEnabled) 
             EnterCaptureMode();
 
         else if (input_.CaptureKubberInput() && capturing_ && !capturingProcess_ && !captured_) 
