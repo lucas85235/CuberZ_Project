@@ -26,25 +26,22 @@ public class LookAtMonsterByClick : MonoBehaviour
     private float defaultMaxAngle_;
 
     private int countTimes; // Para quando o código estiver completo
-    CameraController camControl_;
+    private CameraController camControl_;
+    private MonsterDataBase dataBase_;
     private Transform previousCamTarget_;
     private Transform placeOfTransform_;
     private bool findMonster_;
-
-    private void Awake()
-    {
-        camControl_ = CameraController.instance;
-    }
+    private bool findSomeone_;
 
     private void Start()
     {
         camControl_ = CameraController.instance;
+        dataBase_ = MonsterDataBase.instance;
     }
-
 
     private void Update()
     {
-        if (InputSystem.instance.ExecuteActionInput())
+        if (InputSystem.instance.ExecuteActionInput() && !findMonster_)
         {
             RayCastMonster();
             Counting();
@@ -57,7 +54,6 @@ public class LookAtMonsterByClick : MonoBehaviour
         }
     }
 
-
     private void RayCastMonster()
     {
         RaycastHit hit;
@@ -67,11 +63,9 @@ public class LookAtMonsterByClick : MonoBehaviour
         {
             if (hit.transform.tag == "Monster")
             {
-              
-                Debug.Log("O Monster " + hit.transform.name + " Foi encontrado!");
-                findMonster_ = true;
-                placeOfTransform_ = hit.transform;
-                CameraZoom();
+
+                StartCoroutine(FindInDatabase(hit.transform));
+               
             }
         }
     }
@@ -109,7 +103,6 @@ public class LookAtMonsterByClick : MonoBehaviour
         findMonster_ = false;
     }
 
-
     private void Counting()
     {
         countTimes++;
@@ -130,5 +123,38 @@ public class LookAtMonsterByClick : MonoBehaviour
                 break;
 
         }
+    }
+
+    IEnumerator FindInDatabase(Transform t)
+    {
+        for (int i = 0; i < dataBase_.monster.Length; i++)
+        {
+
+            if (t == dataBase_.monster[i].monster.transform && dataBase_.monster[i].beenSeen)
+            {
+                Debug.Log("O Monster " + t.transform.name + " ja existe, e é o Nº" + i + 1 + " no seu DataBase!");
+                findSomeone_ = true;
+            }
+
+
+            if (t == dataBase_.monster[i].monster.transform && !dataBase_.monster[i].beenSeen)
+            {
+                dataBase_.monster[i].beenSeen = true;
+                Debug.Log("O Monster " + t.transform.name + " nunca foi visto antes e agora foi adicionado!");
+                findSomeone_ = true;
+            }
+
+
+            if(i == dataBase_.monster.Length-1 && !findSomeone_)
+            {
+                Debug.Log("O Monster " + t.transform.name + " não existe no DataBase!");
+            }
+        }
+
+        findMonster_ = true;
+        placeOfTransform_ = t.transform;
+        CameraZoom();
+
+        yield break;
     }
 }
