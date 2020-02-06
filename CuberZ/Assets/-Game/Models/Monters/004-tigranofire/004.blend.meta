@@ -1,0 +1,261 @@
+fileFormatVersion: 2
+guid: 65871b7eb6c4b414aaa860f95fcec28f
+ModelImporter:
+  serializedVersion: 23
+  fileIDToRecycleName:
+    100000: //RootNode
+    100002: Armature
+    100004: Bone
+    100006: Bone.001
+    100008: Bone.002
+    100010: Bone.003
+    100012: Bone.003_L.001
+    100014: Bone.003_L.001_end
+    100016: Bone.003_R.001
+    100018: Bone.003_R.001_end
+    100020: Bone.004
+    100022: Bone.004_end
+    100024: Bone.005
+    100026: Bone.006
+    100028: Bone.007
+    100030: Bone.008
+    100032: Bone.009
+    100034: Bone.010
+    100036: Bone.011
+    100038: Bone.012
+    100040: Bone.013
+    100042: Bone.014
+    100044: Bone.015
+    100046: Bone.015_end
+    100048: Bone.016
+    100050: Bone.017
+    100052: Bone.018
+    100054: Bone.018_end
+    100056: Bone.019
+    100058: Bone.020
+    100060: Bone.020_end
+    100062: Bone.021
+    100064: Bone.021_end
+    100066: Bone.022
+    100068: Bone.022_end
+    100070: Bone.023
+    100072: Bone.023_end
+    100074: control1_dianteira_L
+    100076: control1_dianteira_R
+    100078: control1_L
+    100080: control1_R
+    100082: control2_dianteira_L
+    100084: control2_dianteira_L_end
+    100086: control2_dianteira_R
+    100088: control2_dianteira_R_end
+    100090: control2_L
+    100092: control2_L_end
+    100094: control2_R
+    100096: control2_R_end
+    100098: control_dianteira_L
+    100100: control_dianteira_R
+    100102: control_L
+    100104: control_R
+    100106: coxa_dianteira_L
+    100108: coxa_dianteira_R
+    100110: coxa_L
+    100112: coxa_R
+    100114: Cube
+    100116: "C\xE2mera"
+    100118: ombro_L
+    100120: ombro_R
+    100122: perna_dianteira_L
+    100124: perna_dianteira_L_end
+    100126: perna_dianteira_R
+    100128: perna_dianteira_R_end
+    100130: perna_L
+    100132: perna_L_end
+    100134: perna_R
+    100136: perna_R_end
+    100138: quadril_dianteira_L
+    100140: quadril_dianteira_R
+    400000: //RootNode
+    400002: Armature
+    400004: Bone
+    400006: Bone.001
+    400008: Bone.002
+    400010: Bone.003
+    400012: Bone.003_L.001
+    400014: Bone.003_L.001_end
+    400016: Bone.003_R.001
+    400018: Bone.003_R.001_end
+    400020: Bone.004
+    400022: Bone.004_end
+    400024: Bone.005
+    400026: Bone.006
+    400028: Bone.007
+    400030: Bone.008
+    400032: Bone.009
+    400034: Bone.010
+    400036: Bone.011
+    400038: Bone.012
+    400040: Bone.013
+    400042: Bone.014
+    400044: Bone.015
+    400046: Bone.015_end
+    400048: Bone.016
+    400050: Bone.017
+    400052: Bone.018
+    400054: Bone.018_end
+    400056: Bone.019
+    400058: Bone.020
+    400060: Bone.020_end
+    400062: Bone.021
+    400064: Bone.021_end
+    400066: Bone.022
+    400068: Bone.022_end
+    400070: Bone.023
+    400072: Bone.023_end
+    400074: control1_dianteira_L
+    400076: control1_dianteira_R
+    400078: control1_L
+    400080: control1_R
+    400082: control2_dianteira_L
+    400084: control2_dianteira_L_end
+    400086: control2_dianteira_R
+    400088: control2_dianteira_R_end
+    400090: control2_L
+    400092: control2_L_end
+    400094: control2_R
+    400096: control2_R_end
+    400098: control_dianteira_L
+    400100: control_dianteira_R
+    400102: control_L
+    400104: control_R
+    400106: coxa_dianteira_L
+    400108: coxa_dianteira_R
+    400110: coxa_L
+    400112: coxa_R
+    400114: Cube
+    400116: "C\xE2mera"
+    400118: ombro_L
+    400120: ombro_R
+    400122: perna_dianteira_L
+    400124: perna_dianteira_L_end
+    400126: perna_dianteira_R
+    400128: perna_dianteira_R_end
+    400130: perna_L
+    400132: perna_L_end
+    400134: perna_R
+    400136: perna_R_end
+    400138: quadril_dianteira_L
+    400140: quadril_dianteira_R
+    2000000: "C\xE2mera"
+    2100000: Material.005
+    4300000: Cube
+    7400000: "C\xE2mera|Sem t\xEDtulo"
+    7400002: "C\xE2mera|Sem t\xEDtulo.001"
+    7400004: Armature|01-idle
+    7400006: Armature|01.2-idle na agua
+    7400008: Armature|02-andando
+    7400010: Armature|02.2-nadando lento
+    7400012: Armature|03-correndo
+    7400014: Armature|03.2-nadando rapido
+    7400016: Armature|04-pulo 1- saindo do chao
+    7400018: Armature|04-pulo 2-idle
+    7400020: Armature|04-pulo 3-caindo
+    7400022: Armature|05-ataque 1
+    7400024: Armature|06-ataque 2
+    7400026: Armature|07-ataque 3
+    7400028: Armature|08-ataque 4
+    7400030: Armature|09-hit
+    7400032: Armature|10-caindo
+    7400034: Armature|11-levantando
+    7400036: "Armature|12-anima\xE7\xE3o extra"
+    7400038: "Armature|Sem t\xEDtulo"
+    7400040: "Armature|Sem t\xEDtulo.001"
+    7400042: "Cube|Sem t\xEDtulo"
+    7400044: "Cube|Sem t\xEDtulo.001"
+    9500000: //RootNode
+    13700000: Cube
+  externalObjects: {}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 2.2
+    meshCompression: 0
+    addColliders: 0
+    useSRGBMaterialColor: 1
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+    previousCalculatedGlobalScale: 2
+    hasPreviousCalculatedGlobalScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
