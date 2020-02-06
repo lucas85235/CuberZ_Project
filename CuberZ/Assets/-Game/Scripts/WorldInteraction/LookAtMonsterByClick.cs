@@ -125,34 +125,34 @@ public class LookAtMonsterByClick : MonoBehaviour
         }
     }
 
-    IEnumerator FindInDatabase(Transform t)
+    private IEnumerator FindInDatabase(Transform MonsterHitted)
     {
         for (int i = 0; i < dataBase_.monster.Length; i++)
         {
 
-            if (t == dataBase_.monster[i].monster.transform && dataBase_.monster[i].beenSeen)
+            if (MonsterHitted == dataBase_.monster[i].monster.transform && dataBase_.monster[i].beenSeen)
             {
-                Debug.Log("O Monster " + t.transform.name + " ja existe, e é o Nº" + i + 1 + " no seu DataBase!");
+                Debug.Log("O Monster " + MonsterHitted.transform.name + " ja existe, e é o Nº" + i + 1 + " no seu DataBase!");
                 findSomeone_ = true;
             }
 
 
-            if (t == dataBase_.monster[i].monster.transform && !dataBase_.monster[i].beenSeen)
+            if (MonsterHitted == dataBase_.monster[i].monster.transform && !dataBase_.monster[i].beenSeen)
             {
                 dataBase_.monster[i].beenSeen = true;
-                Debug.Log("O Monster " + t.transform.name + " nunca foi visto antes e agora foi adicionado!");
+                Debug.Log("O Monster " + MonsterHitted.transform.name + " nunca foi visto antes e agora foi adicionado!");
                 findSomeone_ = true;
             }
 
 
             if(i == dataBase_.monster.Length-1 && !findSomeone_)
             {
-                Debug.Log("O Monster " + t.transform.name + " não existe no DataBase!");
+                Debug.Log("O Monster " + MonsterHitted.transform.name + " não existe no DataBase!");
             }
         }
 
         findMonster_ = true;
-        placeOfTransform_ = t.transform;
+        placeOfTransform_ = MonsterHitted.transform;
         CameraZoom();
 
         yield break;

@@ -21,7 +21,7 @@ public class MonsterDataBase : MonoBehaviour
 }
 
 [System.Serializable]
-public class MonsterIndividual
+public struct MonsterIndividual
 {
     public string monsterName;
     public MonsterBase monster;
