@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7825828790931696604}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: HUD
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -44,7 +44,7 @@ GameObject:
   - component: {fileID: 7825828792315997143}
   - component: {fileID: 7825828792315997140}
   - component: {fileID: 1377746613}
-  m_Layer: 5
+  m_Layer: 13
   m_Name: HUD_WorldSpace
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -155,7 +155,7 @@ GameObject:
   - component: {fileID: 7825828792338597399}
   - component: {fileID: 7825828792338597401}
   - component: {fileID: 7825828792338597398}
-  m_Layer: 5
+  m_Layer: 13
   m_Name: StaminaFillAmount
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -207,8 +207,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10911, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
+  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+  m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 0
@@ -227,7 +227,7 @@ GameObject:
   - component: {fileID: 7825828792483283217}
   - component: {fileID: 7825828792483283219}
   - component: {fileID: 7825828792483283216}
-  m_Layer: 5
+  m_Layer: 13
   m_Name: LifeFillAmount
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -280,7 +280,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_Sprite: {fileID: 10911, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
+  m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 0
