@@ -1,0 +1,11 @@
+idle-25
+andar-25
+corrida-40
+pulo-35
+ataques de 5 a 8 -40fps
+
+
+ataque rápido-50
+
+boiando-15
+nadando lento/rápido-25

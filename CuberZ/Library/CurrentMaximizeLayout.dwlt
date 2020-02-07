@@ -23,7 +23,11 @@ MonoBehaviour:
   m_MinSize: {x: 613, y: 498}
   m_MaxSize: {x: 18008, y: 14048}
   vertical: 1
+<<<<<<< HEAD
   controlID: 3433
+=======
+  controlID: 256
+>>>>>>> monster-database
 --- !u!114 &2
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -46,9 +50,15 @@ MonoBehaviour:
   m_Pos:
     serializedVersion: 2
     x: 0
+<<<<<<< HEAD
     y: 383
     width: 670
     height: 305
+=======
+    y: 385
+    width: 730
+    height: 303
+>>>>>>> monster-database
   m_PersistentViewDataDictionary: {fileID: 0}
   m_MaximizeOnPlay: 0
   m_Gizmos: 0
@@ -60,10 +70,17 @@ MonoBehaviour:
     m_VRangeLocked: 0
     hZoomLockedByDefault: 0
     vZoomLockedByDefault: 0
+<<<<<<< HEAD
     m_HBaseRangeMin: -256
     m_HBaseRangeMax: 256
     m_VBaseRangeMin: -144
     m_VBaseRangeMax: 144
+=======
+    m_HBaseRangeMin: -254
+    m_HBaseRangeMax: 254
+    m_VBaseRangeMin: -143
+    m_VBaseRangeMax: 143
+>>>>>>> monster-database
     m_HAllowExceedBaseRangeMin: 1
     m_HAllowExceedBaseRangeMax: 1
     m_VAllowExceedBaseRangeMin: 1
@@ -81,25 +98,43 @@ MonoBehaviour:
       serializedVersion: 2
       x: 0
       y: 17
+<<<<<<< HEAD
       width: 670
       height: 288
     m_Scale: {x: 1, y: 1}
     m_Translation: {x: 335, y: 144}
+=======
+      width: 730
+      height: 286
+    m_Scale: {x: 1, y: 1}
+    m_Translation: {x: 365, y: 143}
+>>>>>>> monster-database
     m_MarginLeft: 0
     m_MarginRight: 0
     m_MarginTop: 0
     m_MarginBottom: 0
     m_LastShownAreaInsideMargins:
       serializedVersion: 2
+<<<<<<< HEAD
       x: -335
       y: -144
       width: 670
       height: 288
+=======
+      x: -365
+      y: -143
+      width: 730
+      height: 286
+>>>>>>> monster-database
     m_MinimalGUI: 1
   m_defaultScale: 1
   m_TargetTexture: {fileID: 0}
   m_CurrentColorSpace: 0
+<<<<<<< HEAD
   m_LastWindowPixelSize: {x: 670, y: 305}
+=======
+  m_LastWindowPixelSize: {x: 730, y: 303}
+>>>>>>> monster-database
   m_ClearInEditMode: 1
   m_NoCameraWarning: 1
   m_LowResolutionForAspectRatios: 01000000000000000000
@@ -129,7 +164,11 @@ MonoBehaviour:
   m_MinSize: {x: 613, y: 498}
   m_MaxSize: {x: 18008, y: 14048}
   vertical: 0
+<<<<<<< HEAD
   controlID: 3434
+=======
+  controlID: 257
+>>>>>>> monster-database
 --- !u!114 &4
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -154,7 +193,11 @@ MonoBehaviour:
   m_MinSize: {x: 102, y: 248}
   m_MaxSize: {x: 4002, y: 8048}
   vertical: 1
+<<<<<<< HEAD
   controlID: 3435
+=======
+  controlID: 258
+>>>>>>> monster-database
 --- !u!114 &5
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -172,8 +215,13 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 0
+<<<<<<< HEAD
     width: 672
     height: 310
+=======
+    width: 732
+    height: 312
+>>>>>>> monster-database
   m_MinSize: {x: 102, y: 124}
   m_MaxSize: {x: 4002, y: 4024}
   m_ActualView: {fileID: 7}
@@ -181,7 +229,11 @@ MonoBehaviour:
   - {fileID: 6}
   - {fileID: 7}
   - {fileID: 8}
+<<<<<<< HEAD
   m_Selected: 1
+=======
+  m_Selected: 0
+>>>>>>> monster-database
   m_LastSelected: 0
 --- !u!114 &6
 MonoBehaviour:
@@ -206,8 +258,13 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 73
+<<<<<<< HEAD
     width: 947
     height: 443
+=======
+    width: 730
+    height: 292
+>>>>>>> monster-database
   m_PersistentViewDataDictionary: {fileID: 0}
   m_WindowGUID: b02a244f4a167764b8b7f1a889536ea6
   m_SceneLighting: 1
@@ -215,9 +272,15 @@ MonoBehaviour:
   m_isRotationLocked: 0
   m_AudioPlay: 0
   m_Position:
+<<<<<<< HEAD
     m_Target: {x: -8.7741375, y: 6.6998105, z: 50.79252}
     speed: 2
     m_Value: {x: -8.7741375, y: 6.6998105, z: 50.79252}
+=======
+    m_Target: {x: 2.7529478, y: 10.317062, z: 46.514687}
+    speed: 2
+    m_Value: {x: 2.7529478, y: 10.317062, z: 46.514687}
+>>>>>>> monster-database
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -245,6 +308,7 @@ MonoBehaviour:
       speed: 2
       m_Value: 0
   m_Rotation:
+<<<<<<< HEAD
     m_Target: {x: 0.1747856, y: -0.78504974, z: 0.25580445, w: 0.5363871}
     speed: 2
     m_Value: {x: -0.1747856, y: 0.78504974, z: -0.25580445, w: -0.5363871}
@@ -252,6 +316,15 @@ MonoBehaviour:
     m_Target: 10.8234
     speed: 2
     m_Value: 10.8234
+=======
+    m_Target: {x: 0.059022468, y: -0.9409768, z: 0.23626496, w: 0.23507002}
+    speed: 2
+    m_Value: {x: 0.059022468, y: -0.9409768, z: 0.23626496, w: 0.23507002}
+  m_Size:
+    m_Target: 28.10544
+    speed: 2
+    m_Value: 28.10544
+>>>>>>> monster-database
   m_Ortho:
     m_Target: 0
     speed: 2
@@ -286,8 +359,13 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 73
+<<<<<<< HEAD
     width: 670
     height: 290
+=======
+    width: 734
+    height: 176
+>>>>>>> monster-database
   m_PersistentViewDataDictionary: {fileID: 0}
   m_ViewTransforms:
     m_KeySerializationHelper:
@@ -300,6 +378,7 @@ MonoBehaviour:
     - {fileID: 1107931405589297022, guid: 36827172bc4158c489c00963fb340fec, type: 2}
     - {fileID: 1107085065081887364, guid: 36827172bc4158c489c00963fb340fec, type: 2}
     - {fileID: 1107040919090687586, guid: 36827172bc4158c489c00963fb340fec, type: 2}
+<<<<<<< HEAD
     - {fileID: 1107124364574942354, guid: 6f480f8b222ebf347baa91adf071f342, type: 2}
     - {fileID: 1107501460609818050, guid: a2ea822c3411a2444bdc79be0b0f7697, type: 2}
     - {fileID: 1107124364574942354, guid: f9c9b72b3ae61fa459cf74b769232c0b, type: 2}
@@ -313,6 +392,8 @@ MonoBehaviour:
     - {fileID: 1102487644891316832, guid: 7b6abce548dbd4b45b9876fe9c539c5e, type: 2}
     - {fileID: 1102473054990209248, guid: 7b6abce548dbd4b45b9876fe9c539c5e, type: 2}
     - {fileID: 1107038920575758022, guid: a2ea822c3411a2444bdc79be0b0f7697, type: 2}
+=======
+>>>>>>> monster-database
     m_ValueSerializationHelper:
     - e00: 0.6161056
       e01: 0
@@ -458,6 +539,7 @@ MonoBehaviour:
       e31: 0
       e32: 0
       e33: 1
+<<<<<<< HEAD
     - e00: 1
       e01: 0
       e02: 0
@@ -674,6 +756,13 @@ MonoBehaviour:
       type: 2}
     m_ScrollPosition: {x: 0, y: 0}
   - m_Target: {fileID: 1102487644891316832, guid: 7b6abce548dbd4b45b9876fe9c539c5e,
+=======
+  m_PreviewAnimator: {fileID: 0}
+  m_AnimatorController: {fileID: 9100000, guid: 36827172bc4158c489c00963fb340fec,
+    type: 2}
+  m_BreadCrumbs:
+  - m_Target: {fileID: 1107038920575758022, guid: 36827172bc4158c489c00963fb340fec,
+>>>>>>> monster-database
       type: 2}
     m_ScrollPosition: {x: 0, y: 0}
   stateMachineGraph: {fileID: 0}
@@ -686,7 +775,7 @@ MonoBehaviour:
     m_IsLocked: 0
   m_CurrentEditor: 0
   m_LayerEditor:
-    m_SelectedLayerIndex: 0
+    m_SelectedLayerIndex: 2
 --- !u!114 &8
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -729,11 +818,19 @@ MonoBehaviour:
   m_Position:
     serializedVersion: 2
     x: 0
+<<<<<<< HEAD
     y: 310
     width: 672
     height: 325
   m_MinSize: {x: 102, y: 124}
   m_MaxSize: {x: 4002, y: 4024}
+=======
+    y: 312
+    width: 732
+    height: 323
+  m_MinSize: {x: 200, y: 200}
+  m_MaxSize: {x: 4000, y: 4000}
+>>>>>>> monster-database
   m_ActualView: {fileID: 2}
   m_Panes:
   - {fileID: 2}
@@ -762,6 +859,7 @@ MonoBehaviour:
   m_Pos:
     serializedVersion: 2
     x: 0
+<<<<<<< HEAD
     y: 536
     width: 947
     height: 464
@@ -769,6 +867,15 @@ MonoBehaviour:
   m_LockTracker:
     m_IsLocked: 0
   m_LastSelectedObjectID: 13104
+=======
+    y: 385
+    width: 730
+    height: 303
+  m_PersistentViewDataDictionary: {fileID: 0}
+  m_LockTracker:
+    m_IsLocked: 0
+  m_LastSelectedObjectID: 17002
+>>>>>>> monster-database
 --- !u!114 &11
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -793,7 +900,11 @@ MonoBehaviour:
   m_MinSize: {x: 234, y: 498}
   m_MaxSize: {x: 10004, y: 14048}
   vertical: 1
+<<<<<<< HEAD
   controlID: 3489
+=======
+  controlID: 219
+>>>>>>> monster-database
 --- !u!114 &12
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -811,7 +922,11 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 0
+<<<<<<< HEAD
     width: 381
+=======
+    width: 321
+>>>>>>> monster-database
     height: 321
   m_MinSize: {x: 234, y: 274}
   m_MaxSize: {x: 10004, y: 10024}
@@ -843,7 +958,11 @@ MonoBehaviour:
     serializedVersion: 2
     x: 672
     y: 73
+<<<<<<< HEAD
     width: 377
+=======
+    width: 317
+>>>>>>> monster-database
     height: 301
   m_PersistentViewDataDictionary: {fileID: 0}
   m_SearchFilter:
@@ -858,7 +977,11 @@ MonoBehaviour:
     m_ShowAllHits: 0
     m_SearchArea: 1
     m_Folders:
+<<<<<<< HEAD
     - Assets/-Game/Models/Monters/004-tigranofire/Animator
+=======
+    - Assets/-Game/Models/Olds/001/Materiais
+>>>>>>> monster-database
   m_ViewMode: 0
   m_StartGridSize: 64
   m_LastFolders: []
@@ -870,7 +993,11 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: d82d0000
     m_LastClickedID: 11736
+<<<<<<< HEAD
     m_ExpandedIDs: ffffffff00000000cc2d0000082e00001a2e0000562e00009a2e0000aa2e0000c02e0000cc2e0000f82e0000362f0000622f00006a2f0000a42f0000bc2f0000ee2f0000f82f0000fe2f00000830000010300000123000002c300000a4300000ac300000ba300000ca3000001e3100002c31000072310000aa310000b0310000d2310000d4310000d83100002e3f0000303f0000323f0000343f0000
+=======
+    m_ExpandedIDs: ffffffff00000000a82a0000aa3c0000963e0000d83e0000183f0000543f0000763f0000a63f00004e400000584000008a4000009c400000e64000003c4100007e410000ca410000ec4100001442000018420000304a0000324a0000344a0000364a0000384a0000
+>>>>>>> monster-database
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -895,10 +1022,17 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
   m_AssetTreeState:
+<<<<<<< HEAD
     scrollPos: {x: 0, y: 60}
     m_SelectedIDs: be2a0000
     m_LastClickedID: 0
     m_ExpandedIDs: ffffffff00000000cc2d0000082e00001a2e0000562e00009a2e0000aa2e0000c02e0000cc2e0000f82e0000362f0000622f00006a2f0000a42f0000bc2f0000ee2f0000f82f0000fe2f00000830000010300000123000002c300000a4300000ac300000ba300000ca3000001e3100002c31000072310000aa310000b0310000d2310000d4310000d83100002e3f0000303f0000323f0000343f0000
+=======
+    scrollPos: {x: 0, y: 121}
+    m_SelectedIDs: 58a5ffff
+    m_LastClickedID: 0
+    m_ExpandedIDs: ffffffff00000000a82a0000aa3c0000963e0000d83e0000103f0000183f00006c3f0000763f0000a63f0000fa3f00000a4000003a4000004e400000584000008a4000009c400000e6400000ca410000ec410000f24100001442000018420000304a0000324a0000344a0000364a0000384a00008e4a0000
+>>>>>>> monster-database
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -923,9 +1057,15 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
   m_ListAreaState:
+<<<<<<< HEAD
     m_SelectedInstanceIDs: be2a0000
     m_LastClickedInstanceID: 10942
     m_HadKeyboardFocusLastEvent: 1
+=======
+    m_SelectedInstanceIDs: 58a5ffff
+    m_LastClickedInstanceID: -23208
+    m_HadKeyboardFocusLastEvent: 0
+>>>>>>> monster-database
     m_ExpandedInstanceIDs: c6230000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
@@ -970,10 +1110,17 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 321
+<<<<<<< HEAD
     width: 381
     height: 314
   m_MinSize: {x: 202, y: 224}
   m_MaxSize: {x: 4002, y: 4024}
+=======
+    width: 321
+    height: 314
+  m_MinSize: {x: 200, y: 200}
+  m_MaxSize: {x: 4000, y: 4000}
+>>>>>>> monster-database
   m_ActualView: {fileID: 15}
   m_Panes:
   - {fileID: 15}
@@ -1000,17 +1147,29 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
+<<<<<<< HEAD
     x: 672
     y: 394
     width: 377
+=======
+    x: 732
+    y: 394
+    width: 317
+>>>>>>> monster-database
     height: 294
   m_PersistentViewDataDictionary: {fileID: 0}
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
+<<<<<<< HEAD
       m_SelectedIDs: be2a0000
       m_LastClickedID: 0
       m_ExpandedIDs: 1eefffff
+=======
+      m_SelectedIDs: 58a5ffff
+      m_LastClickedID: -23208
+      m_ExpandedIDs: 80e3ffffa6efffffdefbffff
+>>>>>>> monster-database
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -1055,10 +1214,14 @@ MonoBehaviour:
     y: 0
     width: 307
     height: 635
-  m_MinSize: {x: 277, y: 198}
-  m_MaxSize: {x: 4002, y: 8048}
+  m_MinSize: {x: 277, y: 174}
+  m_MaxSize: {x: 4002, y: 8024}
   vertical: 1
+<<<<<<< HEAD
   controlID: 3516
+=======
+  controlID: 296
+>>>>>>> monster-database
 --- !u!114 &17
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -1119,7 +1282,11 @@ MonoBehaviour:
   m_LockTracker:
     m_IsLocked: 0
   m_PreviewResizer:
+<<<<<<< HEAD
     m_CachedPref: 194
+=======
+    m_CachedPref: -302
+>>>>>>> monster-database
     m_ControlHash: 1412526313
     m_PrefName: Preview_InspectorPreview
   m_PreviewWindow: {fileID: 0}
@@ -1225,8 +1392,13 @@ MonoBehaviour:
     y: 423
     width: 307
     height: 212
+<<<<<<< HEAD
   m_MinSize: {x: 102, y: 124}
   m_MaxSize: {x: 4002, y: 4024}
+=======
+  m_MinSize: {x: 100, y: 100}
+  m_MaxSize: {x: 4000, y: 4000}
+>>>>>>> monster-database
   m_ActualView: {fileID: 23}
   m_Panes:
   - {fileID: 23}

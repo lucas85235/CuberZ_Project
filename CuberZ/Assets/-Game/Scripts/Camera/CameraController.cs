@@ -23,10 +23,10 @@ public class CameraController : MonoBehaviour
     public LayerMask excludeLayer;    
     public CameraMode cameraStyle;
 
-    private float distanceUp;
-    private float minAngle = 0.95f;
-    private float maxAngle = 1.05f;
-    private Vector3 cameraPosition;
+    private float distanceUp_;
+    private float minAngle_ = 0.95f;
+    private float maxAngle_ = 1.05f;
+    private Vector3 cameraPosition_;
 
     #region Singleton
     public static CameraController instance { get { return instance_; } }
@@ -51,21 +51,52 @@ public class CameraController : MonoBehaviour
             if (input_.MoveCameraInput())
                 CameraRotate();
 
-            cameraPosition = target_.position - transform.forward * cameraDistance * distanceUp;
-            transform.position = Vector3.Lerp(transform.position, cameraPosition, Time.deltaTime * smooth);
+            cameraPosition_ = target_.position - transform.forward * cameraDistance * distanceUp_;
+            transform.position = Vector3.Lerp(transform.position, cameraPosition_, Time.deltaTime * smooth);
 
-            distanceUp = Mathf.Clamp(distanceUp += input_.GetAxisVertical(), minAngle, maxAngle);
+            distanceUp_ = Mathf.Clamp(distanceUp_ += input_.GetAxisVertical(), minAngle_, maxAngle_);
         }
         else
         {
-            cameraPosition = target_.position - transform.forward * (cameraDistance/2);
-            transform.position = Vector3.Lerp(transform.position, cameraPosition, Time.deltaTime * smooth);
+            cameraPosition_ = target_.position - transform.forward * (cameraDistance/2);
+            transform.position = Vector3.Lerp(transform.position, cameraPosition_, Time.deltaTime * smooth);
         }
 
         if(Physics.Linecast(target_.position, transform.position, out hit_, excludeLayer)) 
         {
             transform.position = hit_.point + transform.forward * adjustCollisionForward;
         } 
+    }
+
+    public void SetDistanceUpMinAngleMaxAngle(float distanceUp, float minAngle, float maxAngle)
+    {
+        distanceUp_ = distanceUp;
+        minAngle_ = minAngle;
+        maxAngle_ = maxAngle;
+    }
+
+    public float GetCameraDistance()
+    {
+        return cameraDistance;
+    }
+
+    public float GetDistanceUp()
+    {
+        return distanceUp_;
+    }
+
+    public float GetMinAngle()
+    {
+        return minAngle_;
+    }
+    public float GetMaxAngle()
+    {
+        return maxAngle_;
+    }
+
+    public float GetSmooth()
+    {
+        return smooth;
     }
 
     private void CameraRotate()

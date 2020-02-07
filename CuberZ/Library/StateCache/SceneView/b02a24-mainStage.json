@@ -1,1 +1,5 @@
+<<<<<<< HEAD
 ﻿{"cameraMode":{"drawMode":0,"name":"Shaded","section":"Shading Mode"},"sceneLighting":true,"audioPlay":false,"sceneViewState":{"showFog":true,"showMaterialUpdate":false,"showSkybox":true,"showFlares":true,"showImageEffects":true,"showParticleSystems":true},"in2DMode":false,"pivot":{"x":-13.974677085876465,"y":4.453749656677246,"z":27.11406707763672},"rotation":{"x":0.024198777973651887,"y":-0.9487611651420593,"z":0.3060068190097809,"w":0.07501041144132614},"size":12.392205238342286,"orthographic":false}
+=======
+﻿{"cameraMode":{"drawMode":0,"name":"Shaded","section":"Shading Mode"},"sceneLighting":true,"audioPlay":false,"sceneViewState":{"showFog":true,"showMaterialUpdate":false,"showSkybox":true,"showFlares":true,"showImageEffects":true,"showParticleSystems":true},"in2DMode":false,"pivot":{"x":2.7529478073120119,"y":10.317062377929688,"z":46.514686584472659},"rotation":{"x":0.11191243678331375,"y":-0.8867717981338501,"z":0.2904256582260132,"w":0.3417080342769623},"size":41.346168518066409,"orthographic":false}
+>>>>>>> monster-database
