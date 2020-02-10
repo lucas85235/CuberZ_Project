@@ -1,0 +1,770 @@
+fileFormatVersion: 2
+guid: 340883ae2b7383a4490022df53f00fdd
+ModelImporter:
+  serializedVersion: 23
+  fileIDToRecycleName:
+    100000: //RootNode
+    100002: Armature
+    100004: Bone
+    100006: Bone.001
+    100008: Bone.001_L
+    100010: Bone.001_L.001
+    100012: Bone.001_L.002
+    100014: Bone.001_L.002_end
+    100016: Bone.001_L.003
+    100018: Bone.001_L.004
+    100020: Bone.001_L.004_end
+    100022: Bone.001_L.005
+    100024: Bone.001_L.005_end
+    100026: Bone.001_L.006
+    100028: Bone.001_L.007
+    100030: Bone.001_L.008
+    100032: Bone.001_L.009
+    100034: Bone.001_L.010
+    100036: Bone.001_L.011
+    100038: Bone.001_L.012
+    100040: Bone.001_L.013
+    100042: Bone.001_L.013_end
+    100044: Bone.001_L.014
+    100046: Bone.001_L.015
+    100048: Bone.001_L.015_end
+    100050: Bone.001_L.016
+    100052: Bone.001_L.017
+    100054: Bone.001_L.017_end
+    100056: Bone.001_L.018
+    100058: Bone.001_L.019
+    100060: Bone.001_L.020
+    100062: Bone.001_L.020_end
+    100064: Bone.001_L.021
+    100066: Bone.001_L.021_end
+    100068: Bone.001_L.022
+    100070: Bone.001_L.023
+    100072: Bone.001_L.024
+    100074: Bone.001_L.025
+    100076: Bone.001_L.026
+    100078: Bone.001_L.027
+    100080: Bone.001_L.028
+    100082: Bone.001_L.028_end
+    100084: Bone.001_L.029
+    100086: Bone.001_L.030
+    100088: Bone.001_L.031
+    100090: Bone.001_L.031_end
+    100092: Bone.001_L.032
+    100094: Bone.001_L.033
+    100096: Bone.001_L.033_end
+    100098: Bone.001_L.034
+    100100: Bone.001_L.035
+    100102: Bone.001_L.036
+    100104: Bone.001_L.036_end
+    100106: Bone.001_L.037
+    100108: Bone.001_L.038
+    100110: Bone.001_L.039
+    100112: Bone.001_L.040
+    100114: Bone.001_L.040_end
+    100116: Bone.001_L.041
+    100118: Bone.001_L.041_end
+    100120: Bone.002
+    100122: Bone.003
+    100124: Bone.004
+    100126: Bone.005
+    100128: Bone.005_end
+    100130: Bone.006
+    100132: Bone.007
+    100134: Bone.008
+    100136: Bone.008_end
+    100138: Bone.009
+    100140: Bone.010
+    100142: Bone.011
+    100144: Bone.012
+    100146: Bone.013
+    100148: Bone.013_end
+    100150: Bone.014
+    100152: Bone.015
+    100154: Circle
+    100156: "C\xE2mera"
+    400000: //RootNode
+    400002: Armature
+    400004: Bone
+    400006: Bone.001
+    400008: Bone.001_L
+    400010: Bone.001_L.001
+    400012: Bone.001_L.002
+    400014: Bone.001_L.002_end
+    400016: Bone.001_L.003
+    400018: Bone.001_L.004
+    400020: Bone.001_L.004_end
+    400022: Bone.001_L.005
+    400024: Bone.001_L.005_end
+    400026: Bone.001_L.006
+    400028: Bone.001_L.007
+    400030: Bone.001_L.008
+    400032: Bone.001_L.009
+    400034: Bone.001_L.010
+    400036: Bone.001_L.011
+    400038: Bone.001_L.012
+    400040: Bone.001_L.013
+    400042: Bone.001_L.013_end
+    400044: Bone.001_L.014
+    400046: Bone.001_L.015
+    400048: Bone.001_L.015_end
+    400050: Bone.001_L.016
+    400052: Bone.001_L.017
+    400054: Bone.001_L.017_end
+    400056: Bone.001_L.018
+    400058: Bone.001_L.019
+    400060: Bone.001_L.020
+    400062: Bone.001_L.020_end
+    400064: Bone.001_L.021
+    400066: Bone.001_L.021_end
+    400068: Bone.001_L.022
+    400070: Bone.001_L.023
+    400072: Bone.001_L.024
+    400074: Bone.001_L.025
+    400076: Bone.001_L.026
+    400078: Bone.001_L.027
+    400080: Bone.001_L.028
+    400082: Bone.001_L.028_end
+    400084: Bone.001_L.029
+    400086: Bone.001_L.030
+    400088: Bone.001_L.031
+    400090: Bone.001_L.031_end
+    400092: Bone.001_L.032
+    400094: Bone.001_L.033
+    400096: Bone.001_L.033_end
+    400098: Bone.001_L.034
+    400100: Bone.001_L.035
+    400102: Bone.001_L.036
+    400104: Bone.001_L.036_end
+    400106: Bone.001_L.037
+    400108: Bone.001_L.038
+    400110: Bone.001_L.039
+    400112: Bone.001_L.040
+    400114: Bone.001_L.040_end
+    400116: Bone.001_L.041
+    400118: Bone.001_L.041_end
+    400120: Bone.002
+    400122: Bone.003
+    400124: Bone.004
+    400126: Bone.005
+    400128: Bone.005_end
+    400130: Bone.006
+    400132: Bone.007
+    400134: Bone.008
+    400136: Bone.008_end
+    400138: Bone.009
+    400140: Bone.010
+    400142: Bone.011
+    400144: Bone.012
+    400146: Bone.013
+    400148: Bone.013_end
+    400150: Bone.014
+    400152: Bone.015
+    400154: Circle
+    400156: "C\xE2mera"
+    2000000: "C\xE2mera"
+    2100000: Material.006
+    2100002: Material
+    4300000: Circle
+    7400000: parado
+    7400002: bola_fogo
+    7400004: ocioso
+    7400006: "cabe\xE7ada"
+    7400008: run
+    7400010: hit
+    7400012: Armature|01-idle
+    7400014: Armature|01.2-idle na agua
+    7400016: Armature|02-andando
+    7400018: Armature|02.1-nadando lento
+    7400020: Armature|03-correndo
+    7400022: "Armature|03.1-nadando r\xE1pido"
+    7400024: "Armature|04-pulando 1-saindo do ch\xE3o"
+    7400026: Armature|04-pulando 2-idle no ar
+    7400028: Armature|05- bola de fogo
+    7400030: Armature|06- bola de fogo 2
+    7400032: "Armature|07-cabe\xE7ada"
+    7400034: Armature|08-mordida
+    7400036: Armature|10- hit
+    7400038: "Armature|11-anima\xE7\xE3o extra 1"
+    7400040: "Armature|12-anima\xE7\xE3o extra 2"
+    7400042: Armature|13-caindo
+    7400044: Armature|14-levantando
+    7400046: "Armature|Sem t\xEDtulo.002"
+    7400048: "Armature|Sem t\xEDtulo.003"
+    7400050: Armature|zzzzzz
+    7400052: "C\xE2mera|Sem t\xEDtulo.002"
+    7400054: "C\xE2mera|Sem t\xEDtulo.003"
+    7400056: "C\xE2mera|zzzzzz"
+    9500000: //RootNode
+    13700000: Circle
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material
+    second: {fileID: 2100000, guid: 3b9b2aedbce6e474e8867eac99c27a97, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material.006
+    second: {fileID: 2100000, guid: aba18266fa2a14448bf6392602a9f933, type: 2}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Armature|01-idle
+      takeName: Armature|01-idle
+      firstFrame: 0
+      lastFrame: 39
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 1
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Armature|01.2-idle na agua
+      takeName: Armature|01.2-idle na agua
+      firstFrame: 0
+      lastFrame: 38
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 1
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Armature|02-andando
+      takeName: Armature|02-andando
+      firstFrame: 0
+      lastFrame: 27
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 1
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Armature|02.1-nadando lento
+      takeName: Armature|02.1-nadando lento
+      firstFrame: 0
+      lastFrame: 30
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 1
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Armature|03-correndo
+      takeName: Armature|03-correndo
+      firstFrame: 0
+      lastFrame: 11
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 1
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: "Armature|03.1-nadando r\xE1pido"
+      takeName: "Armature|03.1-nadando r\xE1pido"
+      firstFrame: 0
+      lastFrame: 16
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 1
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: "Armature|04-pulando 1-saindo do ch\xE3o"
+      takeName: "Armature|04-pulando 1-saindo do ch\xE3o"
+      firstFrame: 0
+      lastFrame: 12
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Armature|04-pulando 2-idle no ar
+      takeName: Armature|04-pulando 2-idle no ar
+      firstFrame: 0
+      lastFrame: 9
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 1
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Armature|05- bola de fogo
+      takeName: Armature|05- bola de fogo
+      firstFrame: 0
+      lastFrame: 32
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Armature|06- bola de fogo 2
+      takeName: Armature|06- bola de fogo 2
+      firstFrame: 0
+      lastFrame: 32
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: "Armature|07-cabe\xE7ada"
+      takeName: "Armature|07-cabe\xE7ada"
+      firstFrame: 0
+      lastFrame: 53
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Armature|08-mordida
+      takeName: Armature|08-mordida
+      firstFrame: 0
+      lastFrame: 30
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Armature|10- hit
+      takeName: Armature|10- hit
+      firstFrame: 0
+      lastFrame: 55
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: "Armature|11-anima\xE7\xE3o extra 1"
+      takeName: "Armature|11-anima\xE7\xE3o extra 1"
+      firstFrame: 0
+      lastFrame: 43
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: "Armature|12-anima\xE7\xE3o extra 2"
+      takeName: "Armature|12-anima\xE7\xE3o extra 2"
+      firstFrame: 0
+      lastFrame: 90
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Armature|13-caindo
+      takeName: Armature|13-caindo
+      firstFrame: 0
+      lastFrame: 10
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Armature|14-levantando
+      takeName: Armature|14-levantando
+      firstFrame: 0
+      lastFrame: 10
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    useSRGBMaterialColor: 1
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+    previousCalculatedGlobalScale: 0.01
+    hasPreviousCalculatedGlobalScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
