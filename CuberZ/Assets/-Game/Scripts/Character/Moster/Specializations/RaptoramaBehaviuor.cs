@@ -12,7 +12,9 @@ public class RaptoramaBehaviuor : MonsterBase
     private bool canFollowPlayer = true;
     private bool canMove = true;
 
-    private float toHeadButtLenght_ = 1.208333f;
+    private float defaultAnimationTime_ = 1.208333f;
+
+    private RapdoramaAnimation attackAnimations_;
 
     public enum RaptoramaAttacks
     {
@@ -33,6 +35,7 @@ public class RaptoramaBehaviuor : MonsterBase
         if (GameObject.FindGameObjectWithTag("Player") != null)
             player_ = GameObject.FindGameObjectWithTag("Player").GetComponent<CharacterAbstraction>();
         attack_ = GetComponent<AttackManager>();
+        attackAnimations_ = GetComponent<RapdoramaAnimation>();
         #endregion   
 
         bory_.constraints = RigidbodyConstraints.FreezeAll;
@@ -58,11 +61,6 @@ public class RaptoramaBehaviuor : MonsterBase
             attack_.SetAttackNamesInStats((RaptoramaAttacks)i, i);
         }
         #endregion
-
-        // Deletar
-        isEnabled = true;
-        SetCameraPropeties(transform.Find("CameraTarget"));
-        // Deletar
     }
 
     protected virtual void Update()
@@ -140,7 +138,7 @@ public class RaptoramaBehaviuor : MonsterBase
         }
         else
         {
-            if (animation_.GetCurrentAnimationInLayerOne().IsName("ToHeadButt"))
+            if (animation_.GetCurrentAnimationInLayerOne().IsName("FlyAttack"))
                 bory_.velocity = transform.forward * attackSpeed;
             else
                 bory_.velocity = Vector3.zero;
@@ -189,7 +187,7 @@ public class RaptoramaBehaviuor : MonsterBase
                 #endregion
 
                 transform.LookAt(hit.point);
-                animation_.NoMovableAttack((int)RaptoramaAttacks.FlyAttack);
+                AttackAnimation(false, false, (int)RaptoramaAttacks.FlyAttack);
                 bory_.constraints = RigidbodyConstraints.None;
                 bory_.freezeRotation = true;
 
@@ -207,7 +205,7 @@ public class RaptoramaBehaviuor : MonsterBase
             yield break;
         }
 
-        yield return new WaitForSeconds(toHeadButtLenght_);
+        yield return new WaitForSeconds(defaultAnimationTime_);
         DebugAttack();
 
         MovableSetting();
@@ -216,11 +214,12 @@ public class RaptoramaBehaviuor : MonsterBase
     public IEnumerator Flamethrower()
     {
         canMove = attack_.GetCanMove(currentAttackIndex);
+        bool overrideAnimation = false;
 
-        animation_.MovableAttack((int)RaptoramaAttacks.Flamethrower);
+        AttackAnimation(canMove, overrideAnimation, (int)RaptoramaAttacks.Flamethrower);
         DecrementStamina(attack_.GetStaminaCost(currentAttackIndex));
 
-        yield return new WaitForSeconds(toHeadButtLenght_);
+        yield return new WaitForSeconds(defaultAnimationTime_);
 
         DebugAttack();
     }
@@ -228,11 +227,12 @@ public class RaptoramaBehaviuor : MonsterBase
     public IEnumerator Bite()
     {
         canMove = attack_.GetCanMove(currentAttackIndex);
+        bool overrideAnimation = false;
 
-        animation_.MovableAttack((int)RaptoramaAttacks.Bite);
+        AttackAnimation(canMove, overrideAnimation, (int)RaptoramaAttacks.Bite);
         DecrementStamina(attack_.GetStaminaCost(currentAttackIndex));
 
-        yield return new WaitForSeconds(toHeadButtLenght_);
+        yield return new WaitForSeconds(defaultAnimationTime_);
 
         DebugAttack();
     }
@@ -240,11 +240,12 @@ public class RaptoramaBehaviuor : MonsterBase
     public IEnumerator Rollout()
     {
         canMove = attack_.GetCanMove(currentAttackIndex);
+        bool overrideAnimation = true;
 
-        animation_.MovableAttack((int)RaptoramaAttacks.Rollout);
+        AttackAnimation(canMove, overrideAnimation, (int)RaptoramaAttacks.Rollout);
         DecrementStamina(attack_.GetStaminaCost(currentAttackIndex));
 
-        yield return new WaitForSeconds(toHeadButtLenght_);
+        yield return new WaitForSeconds(defaultAnimationTime_);
 
         DebugAttack();
     }
@@ -252,11 +253,12 @@ public class RaptoramaBehaviuor : MonsterBase
     public IEnumerator TripleAttack()
     {
         canMove = attack_.GetCanMove(currentAttackIndex);
+        bool overrideAnimation = false;
 
-        animation_.MovableAttack((int)RaptoramaAttacks.TripleAttack);
+        AttackAnimation(canMove, overrideAnimation, (int)RaptoramaAttacks.TripleAttack);
         DecrementStamina(attack_.GetStaminaCost(currentAttackIndex));
 
-        yield return new WaitForSeconds(toHeadButtLenght_);
+        yield return new WaitForSeconds(defaultAnimationTime_);
 
         DebugAttack();
     }
@@ -264,12 +266,23 @@ public class RaptoramaBehaviuor : MonsterBase
     public IEnumerator FireBlast()
     {
         canMove = attack_.GetCanMove(currentAttackIndex);
+        bool overrideAnimation = false;
 
-        animation_.MovableAttack((int)RaptoramaAttacks.FireBlast);
+        AttackAnimation(canMove, overrideAnimation, (int)RaptoramaAttacks.FireBlast);
         DecrementStamina(attack_.GetStaminaCost(currentAttackIndex));
 
-        yield return new WaitForSeconds(toHeadButtLenght_);
+        yield return new WaitForSeconds(defaultAnimationTime_);
 
         DebugAttack();
+    }
+
+    private void AttackAnimation(bool movable, bool overrideAnimation, int animation)
+    {
+        if (overrideAnimation)
+            attackAnimations_.OverrideMovableAttack(animation);
+        else if (movable)
+            attackAnimations_.MovableAttack(animation);
+        else
+            attackAnimations_.NoMovableAttack(animation);
     }
 }
