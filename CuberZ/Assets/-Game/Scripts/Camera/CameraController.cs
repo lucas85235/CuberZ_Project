@@ -10,7 +10,7 @@ public class CameraController : MonoBehaviour
     private IInput input_;
 
     [Header("Player to follow")]
-    [SerializeField] private Transform target_; 
+    [SerializeField] private Transform target_;
 
     [Header("Camera Properties")]
     public float sensibility = 125.0f;
@@ -20,7 +20,7 @@ public class CameraController : MonoBehaviour
     public float smooth = 4.0f;
     public bool invertVerticalMouseInput;
 
-    public LayerMask excludeLayer;    
+    public LayerMask excludeLayer;
     public CameraMode cameraStyle;
 
     private float distanceUp_;
@@ -32,7 +32,7 @@ public class CameraController : MonoBehaviour
     public static CameraController instance { get { return instance_; } }
     private static CameraController instance_;
     #endregion
-    
+
     protected virtual void Construt(IInput newInputInterface)
     {
         input_ = newInputInterface;
@@ -46,26 +46,23 @@ public class CameraController : MonoBehaviour
 
     void LateUpdate()
     {
-        if (cameraStyle == CameraMode.FollowPlayer) // Câmera Padrão
+        if (cameraStyle == CameraMode.FollowPlayer)
         {
-            if (input_.MoveCameraInput())
-                CameraRotate();
-
             cameraPosition_ = target_.position - transform.forward * cameraDistance * distanceUp_;
-            transform.position = Vector3.Lerp(transform.position, cameraPosition_, Time.deltaTime * smooth);
-
             distanceUp_ = Mathf.Clamp(distanceUp_ += input_.GetAxisVertical(), minAngle_, maxAngle_);
-        }
-        else
-        {
-            cameraPosition_ = target_.position - transform.forward * (cameraDistance/2);
             transform.position = Vector3.Lerp(transform.position, cameraPosition_, Time.deltaTime * smooth);
         }
-
-        if(Physics.Linecast(target_.position, transform.position, out hit_, excludeLayer)) 
+        else 
         {
-            transform.position = hit_.point + transform.forward * adjustCollisionForward;
+            cameraPosition_ = target_.position - transform.forward * (cameraDistance / 2);
+            transform.position = Vector3.Lerp(transform.position, cameraPosition_, Time.deltaTime * smooth);
         } 
+
+        if (input_.MoveCameraInput()) 
+            CameraRotate();
+
+        if (Physics.Linecast(target_.position, transform.position, out hit_, excludeLayer)) 
+            transform.position = hit_.point + transform.forward * adjustCollisionForward;
     }
 
     public void SetDistanceUpMinAngleMaxAngle(float distanceUp, float minAngle, float maxAngle)
@@ -105,7 +102,7 @@ public class CameraController : MonoBehaviour
 
         if (invertVerticalMouseInput)
             transform.RotateAround(target_.position, transform.right, -input_.GetAxisMouseY() * sensibility * Time.deltaTime);
-        else 
+        else
             transform.RotateAround(target_.position, transform.right, input_.GetAxisMouseY() * sensibility * Time.deltaTime);
 
         Vector3 rotation = transform.eulerAngles;
