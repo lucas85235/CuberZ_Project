@@ -8,16 +8,11 @@ public class LookAtMonsterByClick : MonoBehaviour
     public LayerMask mask;
 
     [Header("Zoom Config")]
-    [Range(0, 50)]
-    public float cameraDistance;
-    [Range(0, 20)]
-    public float smooth;
-    [Range(0, 20)]
-    public float distanceUp;
-    [Range(0, 2f)]
-    public float minAngle;
-    [Range(0, 2f)]
-    public float maxAngle;
+    [Range(0, 50)] public float cameraDistance;
+    [Range(0, 20)] public float smooth;
+    [Range(0, 20)] public float distanceUp;
+    [Range(0, 2f)] public float minAngle;
+    [Range(0, 2f)] public float maxAngle;
 
     private float defaultCameraDistance_;
     private float defaultSmooth_;
@@ -26,29 +21,40 @@ public class LookAtMonsterByClick : MonoBehaviour
     private float defaultMaxAngle_;
 
     private int countTimes; // Para quando o código estiver completo
-    private CameraController camControl_;
+    private ICameraProperties camera_;
+    private IInput input_;
     private MonsterDataBase dataBase_;
     private Transform previousCamTarget_;
     private Transform placeOfTransform_;
     private bool findMonster_;
     private bool findSomeone_;
 
+    private void Construt(IInput newInputInterface, ICameraProperties newCamera)
+    {
+        input_ = newInputInterface;
+        camera_ = newCamera;
+    }
+
+    private void Awake()
+    {
+        Construt (Object.FindObjectOfType<InputSystem>(), 
+            Camera.main.GetComponent<ICameraProperties>());
+    }
+
     private void Start()
     {
-        camControl_ = CameraController.instance;
         dataBase_ = MonsterDataBase.instance;
     }
 
     private void Update()
     {
-        if (InputSystem.instance.ExecuteActionInput() && !findMonster_)
+        if (input_.ExecuteActionInput() && !findMonster_)
         {
             RayCastMonster();
             Counting();
-
         }
 
-        if (InputSystem.instance.ExitInput() && findMonster_)
+        if (input_.ExitInput() && findMonster_)
         {
             LoadCameraDefault();
         }
@@ -63,43 +69,43 @@ public class LookAtMonsterByClick : MonoBehaviour
         {
             if (hit.transform.tag == "Monster")
             {
-
                 StartCoroutine(FindInDatabase(hit.transform));
-               
             }
         }
     }
 
     private void CameraZoom()
     {
-
         #region SaveCameraInfo
-        previousCamTarget_ = camControl_.GetTarget();
-        defaultCameraDistance_ = camControl_.GetCameraDistance();
-        defaultDistanceUp_ = camControl_.GetDistanceUp();
-        defaultMaxAngle_ = camControl_.GetMaxAngle();
-        defaultMinAngle_ = camControl_.GetMinAngle();
-        defaultSmooth_ = camControl_.GetSmooth();
+        previousCamTarget_ = camera_.GetTarget();
+        defaultCameraDistance_ = camera_.GetCameraDistance();
+        defaultDistanceUp_ = camera_.GetDistanceUp();
+        defaultMaxAngle_ = camera_.GetMaxAngle();
+        defaultMinAngle_ = camera_.GetMinAngle();
+        defaultSmooth_ = camera_.GetSmooth();
         #endregion
 
         #region SetNewInfo
-        camControl_.SetTarget(placeOfTransform_);
-        camControl_.cameraDistance = cameraDistance;
-        camControl_.smooth = smooth;
-        camControl_.SetDistanceUpMinAngleMaxAngle(distanceUp, minAngle, maxAngle);
+        camera_.SetTarget(placeOfTransform_);
+        camera_.SetDistanceUp(distanceUp);
+        camera_.SetMinAngle(minAngle);
+        camera_.SetMaxAngle(maxAngle);
+        camera_.SetSmooth(smooth);
+        camera_.SetCameraDistance(cameraDistance);
         #endregion
 
-        camControl_.cameraStyle = CameraController.CameraMode.Capturing;
-
+        camera_.SetCameraMode<CameraController.CameraMode>(CameraController.CameraMode.Capturing);
     }
 
     private void LoadCameraDefault()
     {
-        camControl_.SetTarget(previousCamTarget_);
-        camControl_.cameraDistance = defaultCameraDistance_;
-        camControl_.smooth = defaultSmooth_;
-        camControl_.SetDistanceUpMinAngleMaxAngle(defaultDistanceUp_, defaultMinAngle_, defaultMaxAngle_);
-        camControl_.cameraStyle = CameraController.CameraMode.FollowPlayer;
+        camera_.SetTarget(previousCamTarget_);
+        camera_.SetCameraDistance(defaultCameraDistance_);
+        camera_.SetSmooth(defaultSmooth_);
+        camera_.SetDistanceUp(defaultDistanceUp_);
+        camera_.SetMaxAngle(defaultMinAngle_);
+        camera_.SetMinAngle(defaultMaxAngle_);
+        camera_.SetCameraMode<CameraController.CameraMode>(CameraController.CameraMode.FollowPlayer);
         findMonster_ = false;
     }
 
@@ -112,16 +118,13 @@ public class LookAtMonsterByClick : MonoBehaviour
             case 1:
                 Debug.Log("Primeira Vez Clicada");
                 break;
-
             case 2:
                 Debug.Log("Segunda Vez Clicada");
                 break;
-
             default:
                 countTimes = 1;
                 Debug.Log("Primeira Vez Clicada");
                 break;
-
         }
     }
 
@@ -136,7 +139,6 @@ public class LookAtMonsterByClick : MonoBehaviour
                 findSomeone_ = true;
             }
 
-
             if (MonsterHitted == dataBase_.monster[i].monster.transform && !dataBase_.monster[i].beenSeen)
             {
                 dataBase_.monster[i].beenSeen = true;
@@ -144,11 +146,8 @@ public class LookAtMonsterByClick : MonoBehaviour
                 findSomeone_ = true;
             }
 
-
             if(i == dataBase_.monster.Length-1 && !findSomeone_)
-            {
                 Debug.Log("O Monster " + MonsterHitted.transform.name + " não existe no DataBase!");
-            }
         }
 
         findMonster_ = true;

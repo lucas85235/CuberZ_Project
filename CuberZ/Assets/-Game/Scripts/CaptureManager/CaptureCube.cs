@@ -1,9 +1,4 @@
-﻿
-
-
-
-
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -11,6 +6,7 @@ public class CaptureCube : MonoBehaviour
 {
     private Rigidbody rigibody_;
     private Collider mycollider_;
+    private ICameraProperties camera_;
 
     [Header("Variaveis de Alocação")]
     public GameObject fakeCube;
@@ -48,9 +44,16 @@ public class CaptureCube : MonoBehaviour
     [HideInInspector] public float speed { get { return speed_; } set { speed_ = value; } }
     #endregion
 
+    private void Construt(ICameraProperties newCamera)
+    {
+        camera_ = newCamera;
+    }
+
     #region Funções MonoBehaviour de Execução
     private void Awake()
     {
+        Construt (Camera.main.GetComponent<ICameraProperties>());
+
         InitializingAwake();
     }
 
@@ -223,11 +226,11 @@ public class CaptureCube : MonoBehaviour
                     Debug.Log("Oi");
                     mycollider_.isTrigger = false;
 
-                    if (CameraController.instance.GetTarget() != transform)
+                    if (camera_.GetTarget() != transform)
                     {
-                        CameraController.instance.cameraStyle = CameraController.CameraMode.Capturing;
-                        previewTarget_ = CameraController.instance.GetTarget();
-                        CameraController.instance.SetTarget(transform);
+                        camera_.SetCameraMode(CameraController.CameraMode.Capturing);
+                        previewTarget_ = camera_.GetTarget();
+                        camera_.SetTarget(transform);
                     }
 
                     StartCoroutine(ShakeItOff(coliderMonster_));
@@ -314,8 +317,8 @@ public class CaptureCube : MonoBehaviour
         {
             bigcube_.GetComponent<Animator>().Play("DissolveCubo", -1, 0);
             yield return new WaitForSeconds(1);
-            CameraController.instance.cameraStyle = CameraController.CameraMode.FollowPlayer;
-            CameraController.instance.SetTarget(previewTarget_);
+            camera_.SetCameraMode(CameraController.CameraMode.FollowPlayer);
+            camera_.SetTarget(previewTarget_);
 
             #region Acesso ao CaptureSystem
             if (CaptureSystem.instance.cuboQuantidade > 0) CaptureSystem.instance.CaptureInstantiate();
@@ -334,8 +337,8 @@ public class CaptureCube : MonoBehaviour
             monsterBreakFree_ = true;
             Debug.Log("Work" + col.name);
             FalseBreakCube();
-            CameraController.instance.cameraStyle = CameraController.CameraMode.FollowPlayer;
-            CameraController.instance.SetTarget(previewTarget_);
+            camera_.SetCameraMode(CameraController.CameraMode.FollowPlayer);
+            camera_.SetTarget(previewTarget_);
             yield return new WaitUntil(() => !monsterBreakFree_);
             col.GetComponent<MonsterBase>().beenCapture = false;
             #region Acesso ao CaptureSystem
