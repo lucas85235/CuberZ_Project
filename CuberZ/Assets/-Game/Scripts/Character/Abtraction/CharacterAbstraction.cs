@@ -24,7 +24,8 @@ public abstract class CharacterAbstraction : MonoBehaviour
     public float runSpeed = 22.0f;
     public float smoothTime = 0.3f;
     private float smooth_;
-    public CaptureSystem captureSystem_;
+    public CaptureSystem captureSystem { get { return captureSystem_; } set { captureSystem_ = value; } }
+    private CaptureSystem captureSystem_;
     public bool isEnabled { get; set; }
 
     protected virtual void Construt(IInput newInputInterface) 
@@ -52,7 +53,7 @@ public abstract class CharacterAbstraction : MonoBehaviour
                 ref smooth_, 
                 smoothTime);
 
-            if (!captureSystem_.capturing_)
+            if (!captureSystem.capturing_)
             {
                 if (!input_.RunInput())
                     transform.position += transform.forward * walkSpeed * Time.deltaTime;

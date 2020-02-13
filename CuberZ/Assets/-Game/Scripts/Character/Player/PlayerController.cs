@@ -32,7 +32,7 @@ public class PlayerController : CharacterAbstraction
     {
         if (canMove_)
         {
-            if (isEnabled && !captureSystem_.capturingProcess_)
+            if (isEnabled && !captureSystem.capturingProcess_)
             {
                 if (!jump)
                 {
@@ -54,7 +54,7 @@ public class PlayerController : CharacterAbstraction
             }
 
             if (input_.JumpInput() && isEnabled)
-                if (!captureSystem_.capturingProcess_ && !captureSystem_.capturing_)
+                if (!captureSystem.capturingProcess_ && !captureSystem.capturing_)
                     PlayerAnimation.instance.SetAnimatorAndAnimation(2, "startjump");
              
             if (jump)
