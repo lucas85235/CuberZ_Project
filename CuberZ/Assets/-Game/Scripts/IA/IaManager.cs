@@ -144,10 +144,10 @@ public class IaManager : MonoBehaviour
     private void FollowTarget()
     {
 
-        if (findTargetAutomatic)
+        /*if (findTargetAutomatic)
         {
             if(PlayerController.instance.moster)  target = PlayerController.instance.moster.transform;
-        }
+        }*/
 
         if (agent_.enabled && !useSkill_ && target && Vector3.Distance(transform.position, target.transform.position) > stopDistance)
         {
