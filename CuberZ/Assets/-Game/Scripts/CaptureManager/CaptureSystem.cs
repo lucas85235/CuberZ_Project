@@ -33,28 +33,28 @@ public class CaptureSystem : MonoBehaviour
     private float distance_;
     public bool throwbool;
     private Vector3 holdTarget_;
+    private ICameraProperties camera_;
+    private PlayerController playerController_;
 
     //Singleton
-    private static CaptureSystem instance_;
-    public static CaptureSystem instance { get { return instance_; } }
 
-    protected virtual void Construt(IInput newInputInterface) 
+    private void Construt(IInput newInputInterface, ICameraProperties newCamera)
     {
         input_ = newInputInterface;
+        camera_ = newCamera;
     }
 
     private void Awake()
     {
-        instance_ = this;
-        layermask = LayerMask.GetMask("Input");    
-
-        Construt(Object.FindObjectOfType<InputSystem>());    
+        layermask = LayerMask.GetMask("Input");
+        playerController_ = GetComponent<PlayerController>();
+        Construt(Object.FindObjectOfType<InputSystem>(), Camera.main.GetComponent<ICameraProperties>());    
     }
 
     private void Update()
     {
         if (input_.CaptureKubberInput() && !capturing_ && !capturingProcess_ && cuboQuantidade > 0 && 
-            !GetComponent<PlayerController>().jump && GetComponent<PlayerController>().isEnabled) 
+            !playerController_.jump && playerController_.isEnabled) 
             EnterCaptureMode();
 
         else if (input_.CaptureKubberInput() && capturing_ && !capturingProcess_ && !captured_) 

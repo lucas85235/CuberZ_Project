@@ -32,7 +32,7 @@ public class PlayerController : CharacterAbstraction
     {
         if (canMove_)
         {
-            if (isEnabled && !CaptureSystem.instance.capturingProcess_)
+            if (isEnabled && !captureSystem_.capturingProcess_)
             {
                 if (!jump)
                 {
@@ -41,8 +41,6 @@ public class PlayerController : CharacterAbstraction
                 }
 
                 Movement();
-                //  animation_.AnimationSpeed(axisX, axisY);
-
                 #region Get Inputs
                 if (Input.GetKeyDown(KeyCode.T))
                 {
@@ -56,7 +54,7 @@ public class PlayerController : CharacterAbstraction
             }
 
             if (input_.JumpInput() && isEnabled)
-                if (!CaptureSystem.instance.capturingProcess_ && !CaptureSystem.instance.capturing_)
+                if (!captureSystem_.capturingProcess_ && !captureSystem_.capturing_)
                     PlayerAnimation.instance.SetAnimatorAndAnimation(2, "startjump");
              
             if (jump)
@@ -114,6 +112,7 @@ public class PlayerController : CharacterAbstraction
         canMove_ = false;
         yield return new WaitForSeconds(0.3f);
         canMove_ = true;
+        PlayerAnimation.instance.GoToWalkAnimator();
         yield break;
     }
 }
