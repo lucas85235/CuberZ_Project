@@ -66,6 +66,34 @@ public class PlayerController : CharacterAbstraction
         PlayerAnimation.instance.SpeedBlendTree(PlayerVelocity());
     }
 
+    protected override void Movement() 
+    {
+        Vector2 input = new Vector2(axisX, axisY);
+
+        if (input != Vector2.zero)
+        {
+            float targetrotation = Mathf.Atan2(input.x, input.y) * Mathf.Rad2Deg;;
+
+            transform.eulerAngles = Vector3.up * Mathf.SmoothDampAngle(
+                transform.eulerAngles.y, 
+                targetrotation + Camera.main.transform.eulerAngles.y, 
+                ref smooth_, 
+                smoothTime);
+
+            if (!CaptureSystem.instance.capturing_)
+            {
+                if (!input_.RunInput())
+                    transform.position += transform.forward * walkSpeed * Time.deltaTime;
+                else
+                    transform.position += transform.forward * runSpeed * Time.deltaTime;
+            }
+            else
+            {
+              transform.position += transform.forward * walkSpeed/3f * Time.deltaTime;
+            }
+        }
+    }
+    
     private float PlayerVelocity()
     {
         Vector3 speed_ = (transform.position - previousVelocity_) / Time.deltaTime;

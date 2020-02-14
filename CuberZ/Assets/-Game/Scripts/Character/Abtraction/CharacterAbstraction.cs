@@ -23,7 +23,7 @@ public abstract class CharacterAbstraction : MonoBehaviour
     public float walkSpeed = 15.0f;
     public float runSpeed = 22.0f;
     public float smoothTime = 0.3f;
-    private float smooth_;
+    protected float smooth_;
     
     public bool isEnabled { get; set; }
 
@@ -37,6 +37,7 @@ public abstract class CharacterAbstraction : MonoBehaviour
         Construt(Object.FindObjectOfType<InputSystem>());
     }
 
+    #region Implementações padrão
     protected virtual void Movement() 
     {
         Vector2 input = new Vector2(axisX, axisY);
@@ -51,17 +52,10 @@ public abstract class CharacterAbstraction : MonoBehaviour
                 ref smooth_, 
                 smoothTime);
 
-            if (!CaptureSystem.instance.capturing_)
-            {
-                if (!input_.RunInput())
-                    transform.position += transform.forward * walkSpeed * Time.deltaTime;
-                else
-                    transform.position += transform.forward * runSpeed * Time.deltaTime;
-            }
+            if (!input_.RunInput())
+                transform.position += transform.forward * walkSpeed * Time.deltaTime;
             else
-            {
-              transform.position += transform.forward * walkSpeed/3f * Time.deltaTime;
-            }
+                transform.position += transform.forward * runSpeed * Time.deltaTime;
         }
     }
 
@@ -90,6 +84,7 @@ public abstract class CharacterAbstraction : MonoBehaviour
         cameraController_.SetTarget(target);
         cameraController_.SetCameraDistance(cameraDistance);
     }
+    #endregion
 
     protected IEnumerator WaitTime(CharacterAbstraction switchCharacter)
     {
