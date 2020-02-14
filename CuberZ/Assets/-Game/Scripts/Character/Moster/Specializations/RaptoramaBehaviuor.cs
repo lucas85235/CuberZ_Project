@@ -29,7 +29,7 @@ public class RaptoramaBehaviuor : MonsterBase
     private void Start()
     {
         #region Get Components
-        bory_ = GetComponent<Rigidbody>();
+        body_ = GetComponent<Rigidbody>();
         cameraController_ = Camera.main.GetComponent<CameraController>();
         nav_ = GetComponent<NavMeshAgent>();
         if (GameObject.FindGameObjectWithTag("Player") != null)
@@ -38,7 +38,7 @@ public class RaptoramaBehaviuor : MonsterBase
         attackAnimations_ = GetComponent<RapdoramaAnimation>();
         #endregion   
 
-        bory_.constraints = RigidbodyConstraints.FreezeAll;
+        body_.constraints = RigidbodyConstraints.FreezeAll;
         nav_.speed = followSpeed;
         nav_.enabled = false;
 
@@ -139,9 +139,9 @@ public class RaptoramaBehaviuor : MonsterBase
         else
         {
             if (animation_.GetCurrentAnimationInLayerOne().IsName("FlyAttack"))
-                bory_.velocity = transform.forward * attackSpeed;
+                body_.velocity = transform.forward * attackSpeed;
             else
-                bory_.velocity = Vector3.zero;
+                body_.velocity = Vector3.zero;
         }
     }
 
@@ -153,8 +153,8 @@ public class RaptoramaBehaviuor : MonsterBase
 
     private void MovableSetting()
     {
-        bory_.constraints = RigidbodyConstraints.FreezeAll;
-        bory_.velocity = Vector3.zero;
+        body_.constraints = RigidbodyConstraints.FreezeAll;
+        body_.velocity = Vector3.zero;
         isEnabled = true;
         canFollowPlayer = true;
         isAttacking = false;
@@ -188,8 +188,8 @@ public class RaptoramaBehaviuor : MonsterBase
 
                 transform.LookAt(hit.point);
                 AttackAnimation(false, false, (int)RaptoramaAttacks.FlyAttack);
-                bory_.constraints = RigidbodyConstraints.None;
-                bory_.freezeRotation = true;
+                body_.constraints = RigidbodyConstraints.None;
+                body_.freezeRotation = true;
 
                 DecrementStamina(attack_.GetStaminaCost(currentAttackIndex));
             }
