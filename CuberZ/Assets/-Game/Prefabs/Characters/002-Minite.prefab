@@ -100,13 +100,13 @@ GameObject:
   - component: {fileID: 88148845157386053}
   - component: {fileID: 8634684265689884797}
   - component: {fileID: 8972293388835585807}
-  - component: {fileID: 8634684265689884795}
+  - component: {fileID: 8617018000397016043}
   - component: {fileID: 8634684265689884793}
   - component: {fileID: 8634684265689884794}
   - component: {fileID: 8634684265689884796}
   - component: {fileID: 8634684265689884798}
   m_Layer: 0
-  m_Name: "002-Faltando-Anima\xE7\xF5es"
+  m_Name: 002-Minite
   m_TagString: Monster
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -173,7 +173,7 @@ NavMeshAgent:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 88148845147911301}
-  m_Enabled: 1
+  m_Enabled: 0
   m_AgentTypeID: 0
   m_Radius: 0.5
   m_Speed: 3.5
@@ -188,7 +188,7 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!65 &8634684265689884795
+--- !u!65 &8617018000397016043
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1891,6 +1891,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6038232148595464402}
   - component: {fileID: 7991565828423426766}
+  - component: {fileID: 322528548}
   m_Layer: 0
   m_Name: Circle
   m_TagString: Untagged
@@ -2020,6 +2021,18 @@ SkinnedMeshRenderer:
     m_Center: {x: 0.0001823157, y: 0.007201871, z: -0.0050289575}
     m_Extent: {x: 0.022232035, y: 0.028505577, z: 0.024882516}
   m_DirtyAABB: 0
+--- !u!114 &322528548
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6597959478221088427}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87af89f78373efe4089be953f8f907f8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6863286959035931696
 GameObject:
   m_ObjectHideFlags: 0

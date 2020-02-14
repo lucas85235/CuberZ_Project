@@ -96,13 +96,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target_: {fileID: 0}
-  sensibility: 125
   cameraDistance: 16
-  captureDistance: 12
-  adjustCollisionForward: 0.1
   smooth: 4
+  sensibility: 125
+  adjustCollisionForward: 0.1
   invertVerticalMouseInput: 0
-  excludeLayer:
+  excludeLayers:
     serializedVersion: 2
     m_Bits: 5943
-  cameraStyle: 0
+  cameraStyle_: 0
