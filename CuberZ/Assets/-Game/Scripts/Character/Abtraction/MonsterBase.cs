@@ -24,11 +24,12 @@ public abstract class MonsterBase : CharacterAbstraction
     public float jumpTime = 0.12f;
     public float dowmSpeed = 15;
 
-    private bool startJumpWait = false;
+    private bool startJumpWait_ = false;
 
-    protected float countJumpTime = 0;
+    protected bool canJump_ = true;
     protected bool isJump = false;
     protected bool startJumpTime = false;
+    protected float countJumpTime = 0;
 
     [Header("Attack Stats")]
     public float attackSpeed = 20.0f;
@@ -133,44 +134,36 @@ public abstract class MonsterBase : CharacterAbstraction
 
     protected virtual void Jump() 
     {
-        if (Input.GetKeyDown(KeyCode.Space) && !isJump) 
+        if (Input.GetKeyDown(KeyCode.Space) && !isJump && canJump_) 
         {
-            bory_.constraints = RigidbodyConstraints.None;
-            bory_.freezeRotation = true;
-            bory_.AddForce(Vector3.up * initialJumpImpulse, ForceMode.Impulse);
+            body_.AddForce(Vector3.up * initialJumpImpulse, ForceMode.Impulse);
             startJumpTime = true;
             isJump = true;
             animation_.EnterJump();
         }
 
         if (Input.GetKey(KeyCode.Space) && isJump)
-            bory_.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+            body_.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
 
         if (startJumpTime && countJumpTime < jumpTime)
             countJumpTime += Time.deltaTime;
 
         if (!ExistGround() && countJumpTime >= jumpTime)
-        {
-            bory_.AddForce(Vector3.down * dowmSpeed);
-            Debug.Log("Aqui");
-        }
+            body_.AddForce(Vector3.down * dowmSpeed);
 
-        if (ExistGround() && countJumpTime >= jumpTime && !startJumpWait)
-        {
+        if (ExistGround() && countJumpTime >= jumpTime && !startJumpWait_)
             StartCoroutine(JumpWaitTime());
-        }
     }
 
     protected virtual IEnumerator JumpWaitTime() 
     {
-        startJumpWait = true;
-        bory_.constraints = RigidbodyConstraints.FreezeAll; 
+        startJumpWait_ = true;
         animation_.ExitJump();
         yield return new WaitForSeconds(0.2f);
         isJump = false;
         startJumpTime = false;
         countJumpTime = 0;
-        startJumpWait = false;    
+        startJumpWait_ = false;    
     }
 
     protected virtual bool ExistGround()
@@ -264,4 +257,25 @@ public abstract class MonsterBase : CharacterAbstraction
         return mosterStamina > 0;
     }
     #endregion
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.tag == "Wall")
+            canJump_ = false;
+    }
+
+    private void OnCollisionExit(Collision collision)
+    {
+        if (collision.gameObject.tag == "Wall")
+            canJump_ = true;
+    }
+
+    private void OnCollisionStay(Collision collision)
+    {
+        if (collision.gameObject.tag == "Wall" && isJump)
+        {
+            transform.position += new Vector3(0, -0.1f, 0);
+            body_.AddForce(Vector3.down * dowmSpeed);
+        }
+    }
 }

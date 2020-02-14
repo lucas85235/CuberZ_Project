@@ -17,13 +17,13 @@ public class PlayerController : CharacterAbstraction
     private void Start()
     {
         #region Get Components
-        bory_ = GetComponent<Rigidbody>();
+        body_ = GetComponent<Rigidbody>();
         cameraController_ = Camera.main.GetComponent<CameraController>();
         #endregion
 
-        bory_.constraints = RigidbodyConstraints.FreezePositionX;
-        bory_.constraints = RigidbodyConstraints.FreezePositionZ;
-        bory_.constraints = RigidbodyConstraints.FreezeRotation;
+        body_.constraints = RigidbodyConstraints.FreezePositionX;
+        body_.constraints = RigidbodyConstraints.FreezePositionZ;
+        body_.constraints = RigidbodyConstraints.FreezeRotation;
 
         SetInitialCharacter();
     }
@@ -60,7 +60,7 @@ public class PlayerController : CharacterAbstraction
                     PlayerAnimation.instance.SetAnimatorAndAnimation(2, "startjump");
              
             if (jump)
-                bory_.AddForce(-Vector3.up * 1500 * Time.deltaTime);
+                body_.AddForce(-Vector3.up * 1500 * Time.deltaTime);
         }
 
         PlayerAnimation.instance.SpeedBlendTree(PlayerVelocity());
@@ -78,7 +78,7 @@ public class PlayerController : CharacterAbstraction
     private void Jump()
     {
         jump = true;
-        bory_.AddForce(Vector3.up * jumpforce,ForceMode.Impulse);
+        body_.AddForce(Vector3.up * jumpforce,ForceMode.Impulse);
     }
 
     private void SetInitialCharacter()

@@ -26,7 +26,7 @@ public class MinitiBehaviuor : MonsterBase
     private void Start()
     {
         #region Get Components
-        bory_ = GetComponent<Rigidbody>();
+        body_ = GetComponent<Rigidbody>();
         cameraController_ = Camera.main.GetComponent<CameraController>();
         nav_ = GetComponent<NavMeshAgent>();
         if (GameObject.FindGameObjectWithTag("Player") != null)
@@ -34,7 +34,7 @@ public class MinitiBehaviuor : MonsterBase
         attack_ = GetComponent<AttackManager>();
         #endregion   
 
-        bory_.constraints = RigidbodyConstraints.FreezeAll;
+        body_.freezeRotation = true;
         nav_.speed = followSpeed;
         nav_.enabled = false;
 
@@ -64,7 +64,7 @@ public class MinitiBehaviuor : MonsterBase
         // Deletar
     }
 
-    protected virtual void Update()
+    protected virtual void FixedUpdate()
     {
         if (isEnabled)
         {
@@ -140,9 +140,9 @@ public class MinitiBehaviuor : MonsterBase
         else 
         {
             if (animation_.GetCurrentAnimationInLayerOne().IsName("ToHeadButt"))
-                bory_.velocity = transform.forward * attackSpeed;
+                body_.velocity = transform.forward * attackSpeed;
             else
-                bory_.velocity = Vector3.zero;
+                body_.velocity = Vector3.zero;
         }
     }
 
@@ -154,8 +154,7 @@ public class MinitiBehaviuor : MonsterBase
 
     private void MovableSetting() 
     {
-        bory_.constraints = RigidbodyConstraints.FreezeAll;
-        bory_.velocity = Vector3.zero;
+        body_.velocity = Vector3.zero;
         isEnabled = true;
         canFollowPlayer = true;
         isAttacking = false;
@@ -189,8 +188,6 @@ public class MinitiBehaviuor : MonsterBase
 
                 transform.LookAt(hit.point);
                 animation_.NoMovableAttack((int)MinitiAttacks.ToHeadButt);
-                bory_.constraints = RigidbodyConstraints.None;
-                bory_.freezeRotation = true;
 
                 DecrementStamina(attack_.GetStaminaCost(currentAttackIndex));
             }

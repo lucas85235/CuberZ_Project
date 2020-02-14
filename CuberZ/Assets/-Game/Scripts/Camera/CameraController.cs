@@ -37,7 +37,7 @@ public class CameraController : MonoBehaviour, ICameraProperties
         Construt(Object.FindObjectOfType<InputSystem>());
     }
 
-    void LateUpdate()
+    void FixedUpdate()
     {
         if (cameraStyle_ == CameraMode.FollowPlayer)
         {

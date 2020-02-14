@@ -9,7 +9,7 @@ using UnityEngine.AI;
 public abstract class CharacterAbstraction : MonoBehaviour
 {
     [Header("Basic Components")]
-    protected Rigidbody bory_;
+    protected Rigidbody body_;
     protected CameraController cameraController_;
     protected IInput input_;
 
