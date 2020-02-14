@@ -7,16 +7,10 @@ public class PlayerAnimation : MonoBehaviour
     public RuntimeAnimatorController[] allAnimators;
     private Animator animator_;
 
-    #region Singleton
-    public static PlayerAnimation instance { get { return instance_; } }
-    private static PlayerAnimation instance_;
-
     private void Awake()
     {
-        instance_ = this;
         animator_ = GetComponent<Animator>();
     }
-    #endregion
 
     public void SpeedBlendTree(float speed)
     {
