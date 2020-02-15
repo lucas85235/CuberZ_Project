@@ -53,7 +53,7 @@ public abstract class CharacterAbstraction : MonoBehaviour
                 ref smooth_, 
                 smoothTime);
 
-            if (!captureSystem.capturing_)
+            if (!captureSystem.capturing)
             {
                 if (!input_.RunInput())
                     transform.position += transform.forward * walkSpeed * Time.deltaTime;

@@ -182,7 +182,7 @@ public class CaptureCube : MonoBehaviour
         transform.gameObject.SetActive(false);
         break_ = true;
 
-        captureSystem_.capturingProcess_ = false;
+        captureSystem_.capturingProcess = false;
     } //Função que controla a interação Cubo/(Chão e Parede)
 
     private void FalseBreakCube()
@@ -193,7 +193,7 @@ public class CaptureCube : MonoBehaviour
         GameObject t = Pooling.InstantiatePooling(fakeCube, bigcube_.transform.position,
         bigcube_.transform.rotation);
         mycollider_.enabled = false;
-        captureSystem_.capturingProcess_ = false;
+        captureSystem_.capturingProcess = false;
         break_ = true;
     }
 
@@ -212,16 +212,16 @@ public class CaptureCube : MonoBehaviour
                     if (captureSystem_.cuboQuantidade > 0)
                     {
                         captureSystem_.CaptureInstantiate();
-                        captureSystem_.capturingProcess_ = false;
+                        captureSystem_.capturingProcess = false;
                     }
 
                     else
                     {
                         captureSystem_.ExitCaptureMode();
-                        captureSystem_.capturingProcess_ = false;
+                        captureSystem_.capturingProcess = false;
                     }
 
-                    captureSystem_.capturingProcess_ = false;
+                    captureSystem_.capturingProcess = false;
                 }
                 else
                 {
@@ -325,7 +325,7 @@ public class CaptureCube : MonoBehaviour
             #region Acesso ao CaptureSystem
             if (captureSystem_.cuboQuantidade > 0) captureSystem_.CaptureInstantiate();
             else captureSystem_.ExitCaptureMode();
-            captureSystem_.capturingProcess_ = false;
+            captureSystem_.capturingProcess = false;
             #endregion
             setshake_ = false;
             yield break;
@@ -346,7 +346,7 @@ public class CaptureCube : MonoBehaviour
             #region Acesso ao CaptureSystem
             if (captureSystem_.cuboQuantidade > 0) captureSystem_.CaptureInstantiate();
             else captureSystem_.ExitCaptureMode();
-            captureSystem_.capturingProcess_ = false;
+            captureSystem_.capturingProcess = false;
             #endregion
             setshake_ = false;
             yield break;
