@@ -33,6 +33,7 @@ public class CaptureSystem : MonoBehaviour
     private float distance_;
     public bool throwbool;
     private Vector3 holdTarget_;
+    private PlayerAnimation playerAnimation_;
 
     //Singleton
     private static CaptureSystem instance_;
@@ -49,6 +50,11 @@ public class CaptureSystem : MonoBehaviour
         layermask = LayerMask.GetMask("Input");    
 
         Construt(Object.FindObjectOfType<InputSystem>());    
+    }
+
+    private void Start()
+    {
+        playerAnimation_ = GetComponent<PlayerAnimation>();
     }
 
     private void Update()
@@ -85,7 +91,7 @@ public class CaptureSystem : MonoBehaviour
         capturingProcess_ = true;
         Vector3 tempV_ = new Vector3(holdTarget_.x,transform.position.y,holdTarget_.z) - transform.position;
         transform.forward = Vector3.Lerp(transform.forward, tempV_, 0.5f * Time.deltaTime);
-        PlayerAnimation.instance.SetAnimatorAndAnimation(1, "throwfar");
+        playerAnimation_.SetAnimatorAndAnimation(1, "throwfar");
     }
 
 

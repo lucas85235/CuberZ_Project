@@ -13,12 +13,14 @@ public class PlayerController : CharacterAbstraction
     public bool jump;
 
     private Vector3 previousVelocity_;
+    private PlayerAnimation playerAnimation_;
 
     private void Start()
     {
         #region Get Components
         body_ = GetComponent<Rigidbody>();
         cameraController_ = Camera.main.GetComponent<CameraController>();
+        playerAnimation_ = GetComponent<PlayerAnimation>();
         #endregion
 
         body_.constraints = RigidbodyConstraints.FreezePositionX;
@@ -57,13 +59,13 @@ public class PlayerController : CharacterAbstraction
 
             if (input_.JumpInput() && isEnabled)
                 if (!CaptureSystem.instance.capturingProcess_ && !CaptureSystem.instance.capturing_)
-                    PlayerAnimation.instance.SetAnimatorAndAnimation(2, "startjump");
+                    playerAnimation_.SetAnimatorAndAnimation(2, "startjump");
              
             if (jump)
                 body_.AddForce(-Vector3.up * 1500 * Time.deltaTime);
         }
 
-        PlayerAnimation.instance.SpeedBlendTree(PlayerVelocity());
+        playerAnimation_.SpeedBlendTree(PlayerVelocity());
     }
 
     protected override void Movement() 
@@ -130,7 +132,7 @@ public class PlayerController : CharacterAbstraction
         {
             if (jump)
             {
-                PlayerAnimation.instance.SetAnimatorAndAnimation(2, "falljump");
+                playerAnimation_.SetAnimatorAndAnimation(2, "falljump");
                 StartCoroutine(WaitJumpTime());
             }
         }
