@@ -6,7 +6,7 @@ public class CaptureCube : MonoBehaviour
 {
     private Rigidbody rigibody_;
     private Collider mycollider_;
-    private ICameraProperties camera_;
+    private CameraProperties camera_;
 
     [Header("Variaveis de Alocação")]
     public GameObject fakeCube;
@@ -35,6 +35,7 @@ public class CaptureCube : MonoBehaviour
     private bool setshake_;
     private bool feedbackBool_;
     private float randomHelper_;
+    private CaptureSystem captureSystem_;
 
     #region propties getter and setter
     // Esconder causa comportamento indefinido
@@ -44,7 +45,7 @@ public class CaptureCube : MonoBehaviour
     [HideInInspector] public float speed { get { return speed_; } set { speed_ = value; } }
     #endregion
 
-    private void Construt(ICameraProperties newCamera)
+    private void Construt(CameraProperties newCamera)
     {
         camera_ = newCamera;
     }
@@ -52,7 +53,7 @@ public class CaptureCube : MonoBehaviour
     #region Funções MonoBehaviour de Execução
     private void Awake()
     {
-        Construt (Camera.main.GetComponent<ICameraProperties>());
+        Construt (Camera.main.GetComponent<CameraProperties>());
 
         InitializingAwake();
     }
@@ -94,6 +95,7 @@ public class CaptureCube : MonoBehaviour
         bigcube_ = transform.GetChild(1);
         smallcube_ = transform.GetChild(0);
         smallcube_.localScale = Vector3.one;
+        captureSystem_ = FindObjectOfType<CaptureSystem>();
     }
 
     private void InitializaingOnEnable()
@@ -108,6 +110,7 @@ public class CaptureCube : MonoBehaviour
         break_ = false;
         rigibody_.velocity = Vector3.zero;
         moviment_ = true;
+        captureSystem_ = FindObjectOfType<CaptureSystem>();
     }
     #endregion
 
@@ -179,7 +182,7 @@ public class CaptureCube : MonoBehaviour
         transform.gameObject.SetActive(false);
         break_ = true;
 
-        CaptureSystem.instance.capturingProcess_ = false;
+        captureSystem_.capturingProcess = false;
     } //Função que controla a interação Cubo/(Chão e Parede)
 
     private void FalseBreakCube()
@@ -190,8 +193,7 @@ public class CaptureCube : MonoBehaviour
         GameObject t = Pooling.InstantiatePooling(fakeCube, bigcube_.transform.position,
         bigcube_.transform.rotation);
         mycollider_.enabled = false;
-        bigcube_.gameObject.SetActive(false);
-        CaptureSystem.instance.capturingProcess_ = false;
+        captureSystem_.capturingProcess = false;
         break_ = true;
     }
 
@@ -207,19 +209,18 @@ public class CaptureCube : MonoBehaviour
                 {
                     BreakCube();
                     
-                    if (CaptureSystem.instance.cuboQuantidade > 0)
+                    if (captureSystem_.cuboQuantidade > 0)
                     {
-                        CaptureSystem.instance.CaptureInstantiate();
-                        CaptureSystem.instance.capturingProcess_ = false;
+                        captureSystem_.CaptureInstantiate();
+                        captureSystem_.capturingProcess = false;
                     }
-
                     else
                     {
-                        CaptureSystem.instance.ExitCaptureMode();
-                        CaptureSystem.instance.capturingProcess_ = false;
+                        captureSystem_.ExitCaptureMode();
+                        captureSystem_.capturingProcess = false;
                     }
 
-                    CaptureSystem.instance.capturingProcess_ = false;
+                    captureSystem_.capturingProcess = false;
                 }
                 else
                 {
@@ -242,7 +243,11 @@ public class CaptureCube : MonoBehaviour
                 monsterRotationCap_ = col.transform.rotation;
                 monsterPositionCap_ = col.transform.position;
                 coliderMonster_ = col;
-                col.GetComponent<MonsterBase>().beenCapture = true; // freeza navmesh
+
+                if (col.GetComponent<MonsterBase>())
+                    col.GetComponent<MonsterBase>().beenCapture = true; // freeza navmesh
+                else Debug.Log("Não possui MonsterBase");
+                
                 moviment_ = false;
                 rigibody_.velocity = Vector3.zero;
                 rigibody_.AddForce(-(col.transform.position - transform.position) * 7 + new Vector3(0, 35, 0), ForceMode.Impulse);
@@ -302,29 +307,29 @@ public class CaptureCube : MonoBehaviour
             setshake_ = true;
         }
 
-       
         bigcube_.GetComponent<Animator>().Play("ShakeCube", -1, 0);
-        yield return new WaitForSeconds(1);
 
+        yield return new WaitForSeconds(1);
 
         if (feedbackBool_ && shakeValue_  <= 2)
         {
             shakeValue_++;
             StartCoroutine(ShakeItOff(coliderMonster_));
         }
-
         else if (feedbackBool_ && shakeValue_ > 2)
         {
             bigcube_.GetComponent<Animator>().Play("DissolveCubo", -1, 0);
             yield return new WaitForSeconds(1);
+
             camera_.SetCameraMode(CameraController.CameraMode.FollowPlayer);
             camera_.SetTarget(previewTarget_);
 
             #region Acesso ao CaptureSystem
-            if (CaptureSystem.instance.cuboQuantidade > 0) CaptureSystem.instance.CaptureInstantiate();
-            else CaptureSystem.instance.ExitCaptureMode();
-            CaptureSystem.instance.capturingProcess_ = false;
+            if (captureSystem_.cuboQuantidade > 0) captureSystem_.CaptureInstantiate();
+            else captureSystem_.ExitCaptureMode();
+            captureSystem_.capturingProcess = false;
             #endregion
+            
             setshake_ = false;
             yield break;
         }
@@ -334,23 +339,29 @@ public class CaptureCube : MonoBehaviour
             col.GetComponent<Rigidbody>().useGravity = true;
             col.transform.parent = null;
             col.gameObject.SetActive(true);
+
             monsterBreakFree_ = true;
+            
             Debug.Log("Work" + col.name);
             FalseBreakCube();
+
             camera_.SetCameraMode(CameraController.CameraMode.FollowPlayer);
             camera_.SetTarget(previewTarget_);
+
             yield return new WaitUntil(() => !monsterBreakFree_);
             col.GetComponent<MonsterBase>().beenCapture = false;
+
             #region Acesso ao CaptureSystem
-            if (CaptureSystem.instance.cuboQuantidade > 0) CaptureSystem.instance.CaptureInstantiate();
-            else CaptureSystem.instance.ExitCaptureMode();
-            CaptureSystem.instance.capturingProcess_ = false;
+            if (captureSystem_.cuboQuantidade > 0) 
+                captureSystem_.CaptureInstantiate();
+            else captureSystem_.ExitCaptureMode();
+            captureSystem_.capturingProcess = false;
             #endregion
+
             setshake_ = false;
             yield break;
         }
-
-        else if(!feedbackBool_ && shakeValue_ != randomHelper_)
+        else if (!feedbackBool_ && shakeValue_ != randomHelper_)
         {
             shakeValue_++;
             StartCoroutine(ShakeItOff(coliderMonster_));

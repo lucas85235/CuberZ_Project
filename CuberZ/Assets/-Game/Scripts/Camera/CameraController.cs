@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CameraController : MonoBehaviour, ICameraProperties
+public class CameraController : CameraProperties
 {
     // O target deve ser um pivo no meio do personagem
 
@@ -20,7 +20,6 @@ public class CameraController : MonoBehaviour, ICameraProperties
     public bool invertVerticalMouseInput;
 
     public LayerMask excludeLayers;
-    [SerializeField] private CameraMode cameraStyle_;
 
     private float distanceUp_;
     private float minAngle_ = 0.95f;
@@ -73,30 +72,22 @@ public class CameraController : MonoBehaviour, ICameraProperties
         transform.eulerAngles = rotation;
     }
 
-    public bool IsFollowMode() { return cameraStyle_ == CameraMode.FollowPlayer; }
-    public bool IsCaptureMode() { return cameraStyle_ == CameraMode.Capturing; }
+    public override bool IsFollowMode() { return cameraStyle_ == CameraMode.FollowPlayer; }
+    public override bool IsCaptureMode() { return cameraStyle_ == CameraMode.Capturing; }
 
-    public float GetCameraDistance() { return cameraDistance; }
-    public float GetDistanceUp() { return distanceUp_; }
-    public float GetMinAngle() { return minAngle_; }
-    public float GetMaxAngle() { return maxAngle_; }
-    public float GetSmooth() { return smooth; }
-    public Transform GetTarget() { return target_; }
-    public System.Enum GetFollowMode() { return CameraMode.FollowPlayer; }
-    public System.Enum GetCapturingMode() { return CameraMode.Capturing; }
+    public override float GetCameraDistance() { return cameraDistance; }
+    public override float GetDistanceUp() { return distanceUp_; }
+    public override float GetMinAngle() { return minAngle_; }
+    public override float GetMaxAngle() { return maxAngle_; }
+    public override float GetSmooth() { return smooth; }
+    public override Transform GetTarget() { return target_; }
+    public override System.Enum GetFollowMode() { return CameraMode.FollowPlayer; }
+    public override System.Enum GetCapturingMode() { return CameraMode.Capturing; }
 
-    public void SetTarget(Transform newTarget) { target_ = newTarget; }
-    public void SetDistanceUp(float distanceUp) { distanceUp_ = distanceUp; }
-    public void SetMinAngle(float minAngle) { minAngle_ = minAngle; }
-    public void SetMaxAngle(float maxAngle) { maxAngle_ = maxAngle; }
-    public void SetSmooth(float newSmooth) { smooth = newSmooth; }
-    public void SetCameraDistance(float newDistance) { cameraDistance = newDistance; }
-    public void SetCameraMode<T>(T mode) { throw new System.NotImplementedException(); }
-    public void SetCameraMode<CameraMode>(CameraController.CameraMode mode) { cameraStyle_ = mode; }
-
-    public enum CameraMode
-    {
-        FollowPlayer,
-        Capturing
-    }
+    public override void SetTarget(Transform newTarget) { target_ = newTarget; }
+    public override void SetDistanceUp(float distanceUp) { distanceUp_ = distanceUp; }
+    public override void SetMinAngle(float minAngle) { minAngle_ = minAngle; }
+    public override void SetMaxAngle(float maxAngle) { maxAngle_ = maxAngle; }
+    public override void SetSmooth(float newSmooth) { smooth = newSmooth; }
+    public override void SetCameraDistance(float newDistance) { cameraDistance = newDistance; }
 }

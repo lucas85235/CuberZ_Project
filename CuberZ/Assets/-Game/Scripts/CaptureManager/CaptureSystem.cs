@@ -7,7 +7,7 @@ public class CaptureSystem : MonoBehaviour
     [Header("Variaveis de Alocação")]
     public GameObject captureCube;
     public Transform hand;
-    private LayerMask layermask;
+    private LayerMask layermask_;
 
     [Header("Variaveis de Captura")]
     public float impulseForce = 20;
@@ -16,39 +16,35 @@ public class CaptureSystem : MonoBehaviour
     public float sucessPercentage;
 
     [Range(0, 10f)]
-    public float distanceMultiplier_ = 1;
+    public float distanceMultiplier = 1;
 
     [Header("Variaveis de Feedback")]
     public int cuboQuantidade = 1000;
 
+    public bool throwbool;
+    public bool capturing;
+    public bool captured;
+    public bool capturingProcess;
 
     //Variaveis Privadas
     private IInput input_;
-    private GameObject captureCubeTemp_;
-    public bool capturing_;
-    public bool captured_;
-    public  bool capturingProcess_;
-    private Vector3 hitPointV3_;
-    private float xv3_, yv3_, zv3_;
-    private float distance_;
-    public bool throwbool;
-    private Vector3 holdTarget_;
+    private PlayerController player_;
     private PlayerAnimation playerAnimation_;
+    private GameObject captureCubeTemp_;
+    private Vector3 holdTarget_;
+    private Vector3 hitPointV3_;
+    private float distance_;
+    private float xv3_, yv3_, zv3_;
 
-    //Singleton
-    private static CaptureSystem instance_;
-    public static CaptureSystem instance { get { return instance_; } }
-
-    protected virtual void Construt(IInput newInputInterface) 
+    private void Construt(IInput newInputInterface)
     {
         input_ = newInputInterface;
     }
 
     private void Awake()
     {
-        instance_ = this;
-        layermask = LayerMask.GetMask("Input");    
-
+        layermask_ = LayerMask.GetMask("Input");
+        player_ = GetComponent<PlayerController>();
         Construt(Object.FindObjectOfType<InputSystem>());    
     }
 
@@ -59,20 +55,27 @@ public class CaptureSystem : MonoBehaviour
 
     private void Update()
     {
-        if (input_.CaptureKubberInput() && !capturing_ && !capturingProcess_ && cuboQuantidade > 0 && 
-            !GetComponent<PlayerController>().jump && GetComponent<PlayerController>().isEnabled) 
-            EnterCaptureMode();
-
-        else if (input_.CaptureKubberInput() && capturing_ && !capturingProcess_ && !captured_) 
-            ExitCaptureMode();
-
-        if (input_.ExecuteActionInput() && capturing_ && !capturingProcess_ && Vector3.Distance(transform.position,MiraCube()) > 15
-            && Vector3.Distance(transform.position, MiraCube()) <= 80)
+        if (input_.CaptureKubberInput())
         {
+            if (!capturing && !capturingProcess && cuboQuantidade > 0)
+            {
+                if (!player_.jump && player_.isEnabled)
+                    EnterCaptureMode();                
+            }
+            else if (input_.CaptureKubberInput() && capturing && !capturingProcess && !captured) 
+            {
+                ExitCaptureMode();
+            }            
+        }
 
-            captureCubeTemp_.GetComponent<CaptureCube>().target = MiraCube();
-            holdTarget_ = captureCubeTemp_.GetComponent<CaptureCube>().target;
-            throwbool = true;
+        if (input_.ExecuteActionInput())
+        {
+            if (ThrowPointRange() && capturing && !capturingProcess)
+            {
+                captureCubeTemp_.GetComponent<CaptureCube>().target = MiraCube();
+                holdTarget_ = captureCubeTemp_.GetComponent<CaptureCube>().target;
+                throwbool = true;
+            }            
         }
 
         if (throwbool) ThrowProcess();
@@ -85,44 +88,36 @@ public class CaptureSystem : MonoBehaviour
     }
 
     #region Funções usaveis/Publicas
-
     public void ThrowProcess()
     {
-        capturingProcess_ = true;
+        capturingProcess = true;
         Vector3 tempV_ = new Vector3(holdTarget_.x,transform.position.y,holdTarget_.z) - transform.position;
         transform.forward = Vector3.Lerp(transform.forward, tempV_, 0.5f * Time.deltaTime);
         playerAnimation_.SetAnimatorAndAnimation(1, "throwfar");
     }
 
-
-
-
     public void ThrowCube()
     {
         if (cuboQuantidade > 0)
         {
-           
             captureCubeTemp_.transform.SetParent(null);
             captureCubeTemp_.GetComponent<Collider>().enabled = true;
             captureCubeTemp_.transform.GetChild(0).GetComponent<Animator>().Play("DiminuirCuboPequeno", -1, 0);
             captureCubeTemp_.transform.GetChild(1).gameObject.SetActive(true);
             captureCubeTemp_.GetComponent<Rigidbody>().useGravity = true;
             
-            captureCubeTemp_.GetComponent<CaptureCube>().speed = impulseForce + (distance_ * distanceMultiplier_);
+            captureCubeTemp_.GetComponent<CaptureCube>().speed = impulseForce + (distance_ * distanceMultiplier);
 
             captureCubeTemp_ = null;
             cuboQuantidade--;
             
-          //  if (cuboQuantidade > 0) CaptureInstantiate();
-          //  else Debug.Log("Você não possui mais cubos para jogar!");
         }
-
         else Debug.Log("Você não possui mais cubos para jogar!");
     }
 
     public void EnterCaptureMode() //Função para entrar no modo de captura
     {
-        capturing_ = true;
+        capturing = true;
         CaptureInstantiate();
 
         //Ações Sobre o Player (Não pode pular, movimento lento)
@@ -130,7 +125,7 @@ public class CaptureSystem : MonoBehaviour
 
     public void ExitCaptureMode()
     {
-        capturing_ = false;
+        capturing = false;
         if (captureCubeTemp_)
         {
             captureCubeTemp_.SetActive(false);
@@ -144,7 +139,6 @@ public class CaptureSystem : MonoBehaviour
     {
         if (!captureCubeTemp_)
         {
-      
             captureCubeTemp_ = Pooling.InstantiatePooling(captureCube, hand.position, Quaternion.identity);
             captureCubeTemp_.transform.SetParent(hand.transform);
             captureCubeTemp_.transform.position = hand.transform.position;
@@ -154,20 +148,17 @@ public class CaptureSystem : MonoBehaviour
             captureCube.GetComponent<Rigidbody>().useGravity = false;
             captureCube.GetComponent<Rigidbody>().velocity = Vector3.zero;
         }
-
     }
     #endregion
 
     #region Funções Protegidas/Privadas
-
-
     private Vector3 MiraCube()
     {
         RaycastHit hit;
         Ray mousePosition_ = Camera.main.ScreenPointToRay(Input.mousePosition);
         Vector3 mouseposV3_ = Camera.main.ScreenToViewportPoint(Input.mousePosition);
 
-        if (Physics.Raycast(mousePosition_, out hit, Mathf.Infinity, layermask))
+        if (Physics.Raycast(mousePosition_, out hit, Mathf.Infinity, layermask_))
         {
             Debug.Log(hit.transform.name);
             hitPointV3_ = new Vector3(hit.point.x, mouseposV3_.y, hit.point.z);
@@ -181,6 +172,12 @@ public class CaptureSystem : MonoBehaviour
         distance_ = Vector3.Distance(transform.position, FinalPos);
 
         return FinalPos;
+    }
+
+    private bool ThrowPointRange()
+    {
+        return Vector3.Distance(transform.position,MiraCube()) >= 15.0f && 
+               Vector3.Distance(transform.position, MiraCube()) <= 80.0f;
     }
 
     private Vector3 CubeDirection()

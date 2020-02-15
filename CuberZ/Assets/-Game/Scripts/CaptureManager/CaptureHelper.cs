@@ -19,7 +19,7 @@ public class CaptureHelper : MonoBehaviour
 
     public void ThrowCube()
     {
-        CaptureSystem.instance.ThrowCube();
+        FindObjectOfType<CaptureSystem>().ThrowCube();
     }
 
     public void CanGo()

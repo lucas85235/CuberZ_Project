@@ -397,6 +397,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: CaptureSystemDI
       objectReference: {fileID: 0}
+    - target: {fileID: 867304845306037586, guid: 3cba6d5ce071ec0419c515859a2a7ec4,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3cba6d5ce071ec0419c515859a2a7ec4, type: 3}
 --- !u!4 &1154449891 stripped

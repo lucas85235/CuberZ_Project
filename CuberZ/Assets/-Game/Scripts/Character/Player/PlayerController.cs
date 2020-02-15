@@ -14,6 +14,7 @@ public class PlayerController : CharacterAbstraction
 
     private Vector3 previousVelocity_;
     private PlayerAnimation playerAnimation_;
+    private CaptureSystem captureSystem;
 
     private void Start()
     {
@@ -21,6 +22,7 @@ public class PlayerController : CharacterAbstraction
         body_ = GetComponent<Rigidbody>();
         cameraController_ = Camera.main.GetComponent<CameraController>();
         playerAnimation_ = GetComponent<PlayerAnimation>();
+        captureSystem = GetComponent<CaptureSystem>();
         #endregion
 
         body_.constraints = RigidbodyConstraints.FreezePositionX;
@@ -34,7 +36,7 @@ public class PlayerController : CharacterAbstraction
     {
         if (canMove_)
         {
-            if (isEnabled && !CaptureSystem.instance.capturingProcess_)
+            if (isEnabled && !captureSystem.capturingProcess)
             {
                 if (!jump)
                 {
@@ -43,8 +45,6 @@ public class PlayerController : CharacterAbstraction
                 }
 
                 Movement();
-                //  animation_.AnimationSpeed(axisX, axisY);
-
                 #region Get Inputs
                 if (Input.GetKeyDown(KeyCode.T))
                 {
@@ -58,7 +58,7 @@ public class PlayerController : CharacterAbstraction
             }
 
             if (input_.JumpInput() && isEnabled)
-                if (!CaptureSystem.instance.capturingProcess_ && !CaptureSystem.instance.capturing_)
+                if (!captureSystem.capturingProcess && !captureSystem.capturing)
                     playerAnimation_.SetAnimatorAndAnimation(2, "startjump");
              
             if (jump)
@@ -82,7 +82,7 @@ public class PlayerController : CharacterAbstraction
                 ref smooth_, 
                 smoothTime);
 
-            if (!CaptureSystem.instance.capturing_)
+            if (!captureSystem.capturing)
             {
                 if (!input_.RunInput())
                     transform.position += transform.forward * walkSpeed * Time.deltaTime;
@@ -100,9 +100,7 @@ public class PlayerController : CharacterAbstraction
     {
         Vector3 speed_ = (transform.position - previousVelocity_) / Time.deltaTime;
         previousVelocity_ = transform.position;
-        Debug.Log(speed_.magnitude);
         return speed_.magnitude;
-
     }
 
     private void Jump()
@@ -144,6 +142,7 @@ public class PlayerController : CharacterAbstraction
         canMove_ = false;
         yield return new WaitForSeconds(0.3f);
         canMove_ = true;
+        playerAnimation_.GoToWalkAnimator();
         yield break;
     }
 }
