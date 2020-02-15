@@ -6,7 +6,7 @@ public class CaptureCube : MonoBehaviour
 {
     private Rigidbody rigibody_;
     private Collider mycollider_;
-    private ICameraProperties camera_;
+    private CameraProperties camera_;
 
     [Header("Variaveis de Alocação")]
     public GameObject fakeCube;
@@ -45,7 +45,7 @@ public class CaptureCube : MonoBehaviour
     [HideInInspector] public float speed { get { return speed_; } set { speed_ = value; } }
     #endregion
 
-    private void Construt(ICameraProperties newCamera)
+    private void Construt(CameraProperties newCamera)
     {
         camera_ = newCamera;
     }
@@ -53,7 +53,7 @@ public class CaptureCube : MonoBehaviour
     #region Funções MonoBehaviour de Execução
     private void Awake()
     {
-        Construt (Camera.main.GetComponent<ICameraProperties>());
+        Construt (Camera.main.GetComponent<CameraProperties>());
 
         InitializingAwake();
     }
@@ -214,7 +214,6 @@ public class CaptureCube : MonoBehaviour
                         captureSystem_.CaptureInstantiate();
                         captureSystem_.capturingProcess = false;
                     }
-
                     else
                     {
                         captureSystem_.ExitCaptureMode();
@@ -244,7 +243,11 @@ public class CaptureCube : MonoBehaviour
                 monsterRotationCap_ = col.transform.rotation;
                 monsterPositionCap_ = col.transform.position;
                 coliderMonster_ = col;
-                col.GetComponent<MonsterBase>().beenCapture = true; // freeza navmesh
+
+                if (col.GetComponent<MonsterBase>())
+                    col.GetComponent<MonsterBase>().beenCapture = true; // freeza navmesh
+                else Debug.Log("Não possui MonsterBase");
+                
                 moviment_ = false;
                 rigibody_.velocity = Vector3.zero;
                 rigibody_.AddForce(-(col.transform.position - transform.position) * 7 + new Vector3(0, 35, 0), ForceMode.Impulse);
@@ -304,21 +307,20 @@ public class CaptureCube : MonoBehaviour
             setshake_ = true;
         }
 
-       
         bigcube_.GetComponent<Animator>().Play("ShakeCube", -1, 0);
-        yield return new WaitForSeconds(1);
 
+        yield return new WaitForSeconds(1);
 
         if (feedbackBool_ && shakeValue_  <= 2)
         {
             shakeValue_++;
             StartCoroutine(ShakeItOff(coliderMonster_));
         }
-
         else if (feedbackBool_ && shakeValue_ > 2)
         {
             bigcube_.GetComponent<Animator>().Play("DissolveCubo", -1, 0);
             yield return new WaitForSeconds(1);
+
             camera_.SetCameraMode(CameraController.CameraMode.FollowPlayer);
             camera_.SetTarget(previewTarget_);
 
@@ -327,6 +329,7 @@ public class CaptureCube : MonoBehaviour
             else captureSystem_.ExitCaptureMode();
             captureSystem_.capturingProcess = false;
             #endregion
+            
             setshake_ = false;
             yield break;
         }
@@ -336,23 +339,29 @@ public class CaptureCube : MonoBehaviour
             col.GetComponent<Rigidbody>().useGravity = true;
             col.transform.parent = null;
             col.gameObject.SetActive(true);
+
             monsterBreakFree_ = true;
+            
             Debug.Log("Work" + col.name);
             FalseBreakCube();
+
             camera_.SetCameraMode(CameraController.CameraMode.FollowPlayer);
             camera_.SetTarget(previewTarget_);
+
             yield return new WaitUntil(() => !monsterBreakFree_);
             col.GetComponent<MonsterBase>().beenCapture = false;
+
             #region Acesso ao CaptureSystem
-            if (captureSystem_.cuboQuantidade > 0) captureSystem_.CaptureInstantiate();
+            if (captureSystem_.cuboQuantidade > 0) 
+                captureSystem_.CaptureInstantiate();
             else captureSystem_.ExitCaptureMode();
             captureSystem_.capturingProcess = false;
             #endregion
+
             setshake_ = false;
             yield break;
         }
-
-        else if(!feedbackBool_ && shakeValue_ != randomHelper_)
+        else if (!feedbackBool_ && shakeValue_ != randomHelper_)
         {
             shakeValue_++;
             StartCoroutine(ShakeItOff(coliderMonster_));

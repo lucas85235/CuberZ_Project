@@ -21,7 +21,7 @@ public class LookAtMonsterByClick : MonoBehaviour
     private float defaultMaxAngle_;
 
     private int countTimes; // Para quando o código estiver completo
-    private ICameraProperties camera_;
+    private CameraProperties camera_;
     private IInput input_;
     private MonsterDataBase dataBase_;
     private Transform previousCamTarget_;
@@ -29,7 +29,7 @@ public class LookAtMonsterByClick : MonoBehaviour
     private bool findMonster_;
     private bool findSomeone_;
 
-    private void Construt(IInput newInputInterface, ICameraProperties newCamera)
+    private void Construt(IInput newInputInterface, CameraProperties newCamera)
     {
         input_ = newInputInterface;
         camera_ = newCamera;
@@ -38,7 +38,7 @@ public class LookAtMonsterByClick : MonoBehaviour
     private void Awake()
     {
         Construt (Object.FindObjectOfType<InputSystem>(), 
-            Camera.main.GetComponent<ICameraProperties>());
+            Camera.main.GetComponent<CameraProperties>());
     }
 
     private void Start()
@@ -94,7 +94,7 @@ public class LookAtMonsterByClick : MonoBehaviour
         camera_.SetCameraDistance(cameraDistance);
         #endregion
 
-        camera_.SetCameraMode<CameraController.CameraMode>(CameraController.CameraMode.Capturing);
+        camera_.SetCameraMode(CameraController.CameraMode.Capturing);
     }
 
     private void LoadCameraDefault()
@@ -105,7 +105,7 @@ public class LookAtMonsterByClick : MonoBehaviour
         camera_.SetDistanceUp(defaultDistanceUp_);
         camera_.SetMaxAngle(defaultMinAngle_);
         camera_.SetMinAngle(defaultMaxAngle_);
-        camera_.SetCameraMode<CameraController.CameraMode>(CameraController.CameraMode.FollowPlayer);
+        camera_.SetCameraMode(CameraController.CameraMode.FollowPlayer);
         findMonster_ = false;
     }
 

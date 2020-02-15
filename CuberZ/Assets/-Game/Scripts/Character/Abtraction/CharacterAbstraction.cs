@@ -35,7 +35,6 @@ public abstract class CharacterAbstraction : MonoBehaviour
     protected virtual void Awake() 
     {
         Construt(Object.FindObjectOfType<InputSystem>());
-        captureSystem_ = FindObjectOfType<CaptureSystem>();
     }
 
     #region Implementações padrão

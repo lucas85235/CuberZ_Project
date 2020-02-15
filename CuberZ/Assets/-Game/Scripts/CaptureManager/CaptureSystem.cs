@@ -21,33 +21,31 @@ public class CaptureSystem : MonoBehaviour
     [Header("Variaveis de Feedback")]
     public int cuboQuantidade = 1000;
 
-
-    //Variaveis Privadas
-    private IInput input_;
-    private GameObject captureCubeTemp_;
+    public bool throwbool;
     public bool capturing;
     public bool captured;
     public bool capturingProcess;
-    private Vector3 hitPointV3_;
-    private float xv3_, yv3_, zv3_;
-    private float distance_;
-    public bool throwbool;
-    private Vector3 holdTarget_;
+
+    //Variaveis Privadas
+    private IInput input_;
+    private PlayerController player_;
     private PlayerAnimation playerAnimation_;
+    private GameObject captureCubeTemp_;
+    private Vector3 holdTarget_;
+    private Vector3 hitPointV3_;
+    private float distance_;
+    private float xv3_, yv3_, zv3_;
 
-    //Singleton
-
-    private void Construt(IInput newInputInterface, ICameraProperties newCamera)
+    private void Construt(IInput newInputInterface)
     {
         input_ = newInputInterface;
-        camera_ = newCamera;
     }
 
     private void Awake()
     {
         layermask_ = LayerMask.GetMask("Input");
-        playerController_ = GetComponent<PlayerController>();
-        Construt(Object.FindObjectOfType<InputSystem>(), Camera.main.GetComponent<ICameraProperties>());    
+        player_ = GetComponent<PlayerController>();
+        Construt(Object.FindObjectOfType<InputSystem>());    
     }
 
     private void Start()
@@ -57,20 +55,27 @@ public class CaptureSystem : MonoBehaviour
 
     private void Update()
     {
-        if (input_.CaptureKubberInput() && !capturing && !capturingProcess && cuboQuantidade > 0 && 
-            !playerController_.jump && playerController_.isEnabled) 
-            EnterCaptureMode();
-
-        else if (input_.CaptureKubberInput() && capturing && !capturingProcess && !captured) 
-            ExitCaptureMode();
-
-        if (input_.ExecuteActionInput() && capturing && !capturingProcess && Vector3.Distance(transform.position,MiraCube()) > 15
-            && Vector3.Distance(transform.position, MiraCube()) <= 80)
+        if (input_.CaptureKubberInput())
         {
+            if (!capturing && !capturingProcess && cuboQuantidade > 0)
+            {
+                if (!player_.jump && player_.isEnabled)
+                    EnterCaptureMode();                
+            }
+            else if (input_.CaptureKubberInput() && capturing && !capturingProcess && !captured) 
+            {
+                ExitCaptureMode();
+            }            
+        }
 
-            captureCubeTemp_.GetComponent<CaptureCube>().target = MiraCube();
-            holdTarget_ = captureCubeTemp_.GetComponent<CaptureCube>().target;
-            throwbool = true;
+        if (input_.ExecuteActionInput())
+        {
+            if (ThrowPointRange() && capturing && !capturingProcess)
+            {
+                captureCubeTemp_.GetComponent<CaptureCube>().target = MiraCube();
+                holdTarget_ = captureCubeTemp_.GetComponent<CaptureCube>().target;
+                throwbool = true;
+            }            
         }
 
         if (throwbool) ThrowProcess();
@@ -83,7 +88,6 @@ public class CaptureSystem : MonoBehaviour
     }
 
     #region Funções usaveis/Publicas
-
     public void ThrowProcess()
     {
         capturingProcess = true;
@@ -92,14 +96,10 @@ public class CaptureSystem : MonoBehaviour
         playerAnimation_.SetAnimatorAndAnimation(1, "throwfar");
     }
 
-
-
-
     public void ThrowCube()
     {
         if (cuboQuantidade > 0)
         {
-           
             captureCubeTemp_.transform.SetParent(null);
             captureCubeTemp_.GetComponent<Collider>().enabled = true;
             captureCubeTemp_.transform.GetChild(0).GetComponent<Animator>().Play("DiminuirCuboPequeno", -1, 0);
@@ -111,10 +111,7 @@ public class CaptureSystem : MonoBehaviour
             captureCubeTemp_ = null;
             cuboQuantidade--;
             
-          //  if (cuboQuantidade > 0) CaptureInstantiate();
-          //  else Debug.Log("Você não possui mais cubos para jogar!");
         }
-
         else Debug.Log("Você não possui mais cubos para jogar!");
     }
 
@@ -142,7 +139,6 @@ public class CaptureSystem : MonoBehaviour
     {
         if (!captureCubeTemp_)
         {
-      
             captureCubeTemp_ = Pooling.InstantiatePooling(captureCube, hand.position, Quaternion.identity);
             captureCubeTemp_.transform.SetParent(hand.transform);
             captureCubeTemp_.transform.position = hand.transform.position;
@@ -152,13 +148,10 @@ public class CaptureSystem : MonoBehaviour
             captureCube.GetComponent<Rigidbody>().useGravity = false;
             captureCube.GetComponent<Rigidbody>().velocity = Vector3.zero;
         }
-
     }
     #endregion
 
     #region Funções Protegidas/Privadas
-
-
     private Vector3 MiraCube()
     {
         RaycastHit hit;
@@ -179,6 +172,12 @@ public class CaptureSystem : MonoBehaviour
         distance_ = Vector3.Distance(transform.position, FinalPos);
 
         return FinalPos;
+    }
+
+    private bool ThrowPointRange()
+    {
+        return Vector3.Distance(transform.position,MiraCube()) >= 15.0f && 
+               Vector3.Distance(transform.position, MiraCube()) <= 80.0f;
     }
 
     private Vector3 CubeDirection()
