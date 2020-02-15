@@ -35,6 +35,7 @@ public class CaptureCube : MonoBehaviour
     private bool setshake_;
     private bool feedbackBool_;
     private float randomHelper_;
+    private CaptureSystem captureSystem_;
 
     #region propties getter and setter
     // Esconder causa comportamento indefinido
@@ -94,6 +95,7 @@ public class CaptureCube : MonoBehaviour
         bigcube_ = transform.GetChild(1);
         smallcube_ = transform.GetChild(0);
         smallcube_.localScale = Vector3.one;
+        captureSystem_ = FindObjectOfType<CaptureSystem>();
     }
 
     private void InitializaingOnEnable()
@@ -108,6 +110,7 @@ public class CaptureCube : MonoBehaviour
         break_ = false;
         rigibody_.velocity = Vector3.zero;
         moviment_ = true;
+        captureSystem_ = FindObjectOfType<CaptureSystem>();
     }
     #endregion
 
@@ -179,7 +182,7 @@ public class CaptureCube : MonoBehaviour
         transform.gameObject.SetActive(false);
         break_ = true;
 
-        CaptureSystem.instance.capturingProcess_ = false;
+        captureSystem_.capturingProcess = false;
     } //Função que controla a interação Cubo/(Chão e Parede)
 
     private void FalseBreakCube()
@@ -190,8 +193,7 @@ public class CaptureCube : MonoBehaviour
         GameObject t = Pooling.InstantiatePooling(fakeCube, bigcube_.transform.position,
         bigcube_.transform.rotation);
         mycollider_.enabled = false;
-        bigcube_.gameObject.SetActive(false);
-        CaptureSystem.instance.capturingProcess_ = false;
+        captureSystem_.capturingProcess = false;
         break_ = true;
     }
 
@@ -207,19 +209,19 @@ public class CaptureCube : MonoBehaviour
                 {
                     BreakCube();
                     
-                    if (CaptureSystem.instance.cuboQuantidade > 0)
+                    if (captureSystem_.cuboQuantidade > 0)
                     {
-                        CaptureSystem.instance.CaptureInstantiate();
-                        CaptureSystem.instance.capturingProcess_ = false;
+                        captureSystem_.CaptureInstantiate();
+                        captureSystem_.capturingProcess = false;
                     }
 
                     else
                     {
-                        CaptureSystem.instance.ExitCaptureMode();
-                        CaptureSystem.instance.capturingProcess_ = false;
+                        captureSystem_.ExitCaptureMode();
+                        captureSystem_.capturingProcess = false;
                     }
 
-                    CaptureSystem.instance.capturingProcess_ = false;
+                    captureSystem_.capturingProcess = false;
                 }
                 else
                 {
@@ -321,9 +323,9 @@ public class CaptureCube : MonoBehaviour
             camera_.SetTarget(previewTarget_);
 
             #region Acesso ao CaptureSystem
-            if (CaptureSystem.instance.cuboQuantidade > 0) CaptureSystem.instance.CaptureInstantiate();
-            else CaptureSystem.instance.ExitCaptureMode();
-            CaptureSystem.instance.capturingProcess_ = false;
+            if (captureSystem_.cuboQuantidade > 0) captureSystem_.CaptureInstantiate();
+            else captureSystem_.ExitCaptureMode();
+            captureSystem_.capturingProcess = false;
             #endregion
             setshake_ = false;
             yield break;
@@ -342,9 +344,9 @@ public class CaptureCube : MonoBehaviour
             yield return new WaitUntil(() => !monsterBreakFree_);
             col.GetComponent<MonsterBase>().beenCapture = false;
             #region Acesso ao CaptureSystem
-            if (CaptureSystem.instance.cuboQuantidade > 0) CaptureSystem.instance.CaptureInstantiate();
-            else CaptureSystem.instance.ExitCaptureMode();
-            CaptureSystem.instance.capturingProcess_ = false;
+            if (captureSystem_.cuboQuantidade > 0) captureSystem_.CaptureInstantiate();
+            else captureSystem_.ExitCaptureMode();
+            captureSystem_.capturingProcess = false;
             #endregion
             setshake_ = false;
             yield break;

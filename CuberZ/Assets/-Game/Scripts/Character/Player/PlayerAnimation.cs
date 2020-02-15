@@ -6,20 +6,22 @@ public class PlayerAnimation : MonoBehaviour
 {
     public RuntimeAnimatorController[] allAnimators;
     private Animator animator_;
+    private CaptureSystem captureSystem_;
 
     private void Awake()
     {
         animator_ = GetComponent<Animator>();
+        captureSystem_ = FindObjectOfType<CaptureSystem>();
     }
 
     public void SpeedBlendTree(float speed)
     {
-        animator_.SetFloat("Speed", speed);
+       animator_.SetFloat("Speed", speed);
     }
 
     public void GoToWalkAnimator()
     {
-        CaptureSystem.instance.throwbool = false;
+        captureSystem_.throwbool = false;
         SetAnimatorAndAnimation(0);
     }
 
