@@ -146,17 +146,10 @@ public abstract class MonsterBase : CharacterAbstraction
                 ref smooth_,
                 smoothTime);
 
-            if (!CaptureSystem.instance.capturing_)
-            {
-                if (input_.RunInput() && !isJump)
-                    transform.position += transform.forward * runSpeed * Time.deltaTime;
-                else
-                    transform.position += transform.forward * walkSpeed * Time.deltaTime;
-            }
+            if (input_.RunInput() && !isJump)
+                transform.position += transform.forward * runSpeed * Time.deltaTime;
             else
-            {
-                transform.position += transform.forward * walkSpeed / 3f * Time.deltaTime;
-            }
+                transform.position += transform.forward * walkSpeed * Time.deltaTime;
         }
     }
     

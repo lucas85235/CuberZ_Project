@@ -32,7 +32,7 @@ public class PlayerController : CharacterAbstraction
         SetInitialCharacter();
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         if (canMove_)
         {
