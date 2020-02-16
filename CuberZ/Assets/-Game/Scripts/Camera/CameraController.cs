@@ -11,6 +11,7 @@ public class CameraController : CameraProperties
 
     [Header("Player to follow")]
     [SerializeField] private Transform target_;
+    [SerializeField] private Transform enemyTarget_;
 
     [Header("Camera Properties")]
     [SerializeField] private float cameraDistance = 16.0f;
@@ -44,14 +45,22 @@ public class CameraController : CameraProperties
             distanceUp_ = Mathf.Clamp(distanceUp_ += input_.GetAxisVertical(), minAngle_, maxAngle_);
             transform.position = Vector3.Lerp(transform.position, cameraPosition_, Time.deltaTime * smooth);
         }
-        else 
+        else if (cameraStyle_ == CameraMode.Capturing) 
         {
             cameraPosition_ = target_.position - transform.forward * (cameraDistance / 2);
             transform.position = Vector3.Lerp(transform.position, cameraPosition_, Time.deltaTime * smooth);
         } 
-
-        if (input_.MoveCameraInput()) 
-            CameraRotate();
+        
+        if (cameraStyle_ == CameraMode.TargetEnemy) 
+        {
+            cameraPosition_ = target_.position - transform.forward * cameraDistance * distanceUp_;
+            distanceUp_ = Mathf.Clamp(distanceUp_ += input_.GetAxisVertical(), minAngle_, maxAngle_);
+            transform.position = Vector3.Lerp(transform.position, cameraPosition_, Time.deltaTime * smooth);
+            this.transform.LookAt(enemyTarget_);
+        }
+        else 
+            if (input_.MoveCameraInput()) 
+                CameraRotate();
 
         if (Physics.Linecast(target_.position, transform.position, out hit_, excludeLayers)) 
             transform.position = hit_.point + transform.forward * adjustCollisionForward;
@@ -81,10 +90,12 @@ public class CameraController : CameraProperties
     public override float GetMaxAngle() { return maxAngle_; }
     public override float GetSmooth() { return smooth; }
     public override Transform GetTarget() { return target_; }
+    public override Transform GetEnemyTarget() { return enemyTarget_; }
     public override System.Enum GetFollowMode() { return CameraMode.FollowPlayer; }
     public override System.Enum GetCapturingMode() { return CameraMode.Capturing; }
 
     public override void SetTarget(Transform newTarget) { target_ = newTarget; }
+    public override void SetEnemyTarget(Transform newTarget) { enemyTarget_ = newTarget; }
     public override void SetDistanceUp(float distanceUp) { distanceUp_ = distanceUp; }
     public override void SetMinAngle(float minAngle) { minAngle_ = minAngle; }
     public override void SetMaxAngle(float maxAngle) { maxAngle_ = maxAngle; }

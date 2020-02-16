@@ -16,10 +16,12 @@ public abstract class CameraProperties : MonoBehaviour
     public abstract float GetMaxAngle();
     public abstract float GetSmooth();
     public abstract Transform GetTarget();
+    public abstract Transform GetEnemyTarget();
     public abstract System.Enum GetFollowMode();
     public abstract System.Enum GetCapturingMode();
 
     public abstract void SetTarget(Transform newTarget);
+    public abstract void SetEnemyTarget(Transform newTarget);
     public abstract void SetDistanceUp(float distanceUp);
     public abstract void SetMinAngle(float minAngle);
     public abstract void SetMaxAngle(float maxAngle);
@@ -33,6 +35,7 @@ public abstract class CameraProperties : MonoBehaviour
     public enum CameraMode
     {
         FollowPlayer,
-        Capturing
+        Capturing,
+        TargetEnemy
     }
 }
