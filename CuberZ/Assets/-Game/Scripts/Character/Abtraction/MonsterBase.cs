@@ -13,6 +13,7 @@ public abstract class MonsterBase : CharacterAbstraction
     protected NavMeshAgent nav_;
     protected AttackManager attack_;
     protected LayerMask inputLayer_;
+    protected HudWorldStats worldHud_;
 
     [SerializeField] public bool isAttacking { get; set; }
     [SerializeField] public int currentAttackIndex;
@@ -52,7 +53,7 @@ public abstract class MonsterBase : CharacterAbstraction
     [HideInInspector]
     public bool beenCapture { get { return beenCapture_; } set { beenCapture_ = value; } }
     private bool beenCapture_;
-    
+
     #region Inversão de depencia
     protected virtual void Construt(IInput newInputInterface, AnimationBase newAnimation) 
     {
@@ -63,6 +64,7 @@ public abstract class MonsterBase : CharacterAbstraction
     protected override void Awake() 
     {
         Construt(Object.FindObjectOfType<InputSystem>(), GetComponent<AnimationBase>());
+        worldHud_ = GetComponent<HudWorldStats>();
     }
     #endregion
 
@@ -222,20 +224,18 @@ public abstract class MonsterBase : CharacterAbstraction
     public void IncrementLife(float increment)
     {
         mosterLife += increment;
-        Debug.Log(gameObject.name + ": " + mosterLife);
 
         if (mosterLife > maxLife)
         {
             mosterLife = maxLife;
         }
 
-        HudWorldStats.instance.HudUpdateLife(transform, mosterLife, maxLife); // Singleton Recebe um valor e divide por outro vida/vidamax
+        worldHud_.HudUpdateLife(mosterLife, maxLife); // Singleton Recebe um valor e divide por outro vida/vidamax
     }
 
     public void DecrementLife(float decrement)
     {
         mosterLife -= decrement;
-        Debug.Log(gameObject.name + ": " + mosterLife);
 
         if (mosterLife <= 0)
         {
@@ -243,26 +243,24 @@ public abstract class MonsterBase : CharacterAbstraction
             Debug.Log("Life < 0, You Are Dead!");
         }
 
-        HudWorldStats.instance.HudUpdateLife(transform, mosterLife, maxLife); // Singleton Recebe um valor e divide por outro vida/vidamax
+        worldHud_.HudUpdateLife(mosterLife, maxLife); // Singleton Recebe um valor e divide por outro vida/vidamax
     }
 
     public void IncrementStamina(float increment)
     {
         mosterStamina += increment;
-        Debug.Log(gameObject.name + ": " + mosterStamina);
 
         if (mosterStamina > maxStamina)
         {
             mosterStamina = maxStamina;
         }
 
-        HudWorldStats.instance.HudUpdateStamina(transform, mosterStamina, maxStamina); // Singleton Recebe um valor e divide por outro stamina/staminamax
+        worldHud_.HudUpdateStamina(mosterStamina, maxStamina); // Singleton Recebe um valor e divide por outro stamina/staminamax
     }
 
     public void DecrementStamina(float decrement)
     {
         mosterStamina -= decrement;
-        Debug.Log(gameObject.name + ": " + mosterStamina);
 
         if (!HaveStamina())
         {
@@ -270,7 +268,7 @@ public abstract class MonsterBase : CharacterAbstraction
             Debug.Log("You not have stamina!");
         }
 
-        HudWorldStats.instance.HudUpdateStamina(transform, mosterStamina, maxStamina); // Singleton Recebe um valor e divide por outro stamina/staminamax
+        worldHud_.HudUpdateStamina(mosterStamina, maxStamina); // Singleton Recebe um valor e divide por outro stamina/staminamax
     }
 
     public bool HaveStamina()

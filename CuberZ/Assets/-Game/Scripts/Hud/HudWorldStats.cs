@@ -9,25 +9,15 @@ public class HudWorldStats : MonoBehaviour
     public Image lifeImage;
     public Image staminaImage;
 
-    #region Singleton
-    private static HudWorldStats instance_;
-    public static HudWorldStats instance { get { return instance_; } }
-    
-    private void Awake()
-    {
-        instance_ = this;
-    }
-    #endregion
-
     #region Funções para todos os Kubberz
-    public void HudUpdateLife(Transform target, float life, float maxLife)
+    public void HudUpdateLife(float life, float maxLife)
     {
-        target.GetComponent<HudWorldStats>().lifeImage.fillAmount = life / maxLife;
+        lifeImage.fillAmount = life / maxLife;
     }
 
-    public void HudUpdateStamina(Transform target, float stamina, float staminaMax)
+    public void HudUpdateStamina(float stamina, float staminaMax)
     {
-        target.GetComponent<HudWorldStats>().staminaImage.fillAmount = stamina / staminaMax;
+        staminaImage.fillAmount = stamina / staminaMax;
     }
     #endregion
 }
