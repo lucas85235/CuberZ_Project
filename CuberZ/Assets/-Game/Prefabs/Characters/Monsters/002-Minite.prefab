@@ -254,6 +254,8 @@ MonoBehaviour:
   dowmSpeed: 18
   attackSpeed: 20
   attackDistance: 5
+  staminaRegen: 0.03
+  regenStartTime: 1
   minDistance: 12
   followSpeed: 10
 --- !u!114 &8634684265689884798
@@ -273,7 +275,7 @@ MonoBehaviour:
   attackStats:
   - attackName: 
     baseDamage: 5
-    staminaCost: 6
+    staminaCost: 15
     attackCoolDown: 0
     canMove: 0
     attackEffect: 
@@ -285,19 +287,19 @@ MonoBehaviour:
     attackEffect: 
   - attackName: 
     baseDamage: 10
-    staminaCost: 5
+    staminaCost: 10
     attackCoolDown: 0
     canMove: 0
     attackEffect: 
   - attackName: 
-    baseDamage: 6
+    baseDamage: 8
     staminaCost: 8
     attackCoolDown: 0
     canMove: 0
     attackEffect: 
   - attackName: 
-    baseDamage: 10
-    staminaCost: 15
+    baseDamage: 14
+    staminaCost: 8
     attackCoolDown: 0
     canMove: 0
     attackEffect: 

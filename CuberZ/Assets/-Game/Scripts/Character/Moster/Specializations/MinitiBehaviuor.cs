@@ -144,6 +144,8 @@ public class MinitiBehaviuor : MonsterBase
             else
                 body_.velocity = Vector3.zero;
         }
+
+        RegenStamina();
     }
 
     protected override string GetAttackName(int index)

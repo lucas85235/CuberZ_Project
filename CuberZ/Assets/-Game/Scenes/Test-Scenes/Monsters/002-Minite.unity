@@ -139,7 +139,7 @@ MonoBehaviour:
   iaState: 0
   skillStats:
   - skillNumber: 0
-    skillDistance: 9
+    skillDistance: 12
   - skillNumber: 1
     skillDistance: 18
 --- !u!1 &386917686

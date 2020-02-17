@@ -37,13 +37,18 @@ public abstract class MonsterBase : CharacterAbstraction
     public float attackDistance = 5.0f;
 
     [Header("Life Stats")]
-    protected float mosterLife;
+    protected float monsterLife;
     protected float maxLife = 100f;
     protected bool isDead = false;
 
     [Header("Stamina Stats")]
-    protected float mosterStamina;
+    public float staminaRegen = 0.03f;
+    public float regenStartTime = 1.0f;  
+
+    protected float monsterStamina;
     protected float maxStamina = 100f;
+    protected float countRegenStartTime = 0;
+    protected bool startRegenProcess = false;
 
     [Header("IA config")]
     public float minDistance = 12.0f;
@@ -223,57 +228,79 @@ public abstract class MonsterBase : CharacterAbstraction
     #region Life and Stamina increment and decrement 
     public void IncrementLife(float increment)
     {
-        mosterLife += increment;
+        monsterLife += increment;
 
-        if (mosterLife > maxLife)
+        if (monsterLife > maxLife)
         {
-            mosterLife = maxLife;
+            monsterLife = maxLife;
         }
 
-        worldHud_.HudUpdateLife(mosterLife, maxLife); // Singleton Recebe um valor e divide por outro vida/vidamax
+        worldHud_.HudUpdateLife(monsterLife, maxLife); // Singleton Recebe um valor e divide por outro vida/vidamax
     }
 
     public void DecrementLife(float decrement)
     {
-        mosterLife -= decrement;
+        monsterLife -= decrement;
 
-        if (mosterLife <= 0)
+        if (monsterLife <= 0)
         {
             isDead = true;
             Debug.Log("Life < 0, You Are Dead!");
         }
 
-        worldHud_.HudUpdateLife(mosterLife, maxLife); // Singleton Recebe um valor e divide por outro vida/vidamax
+        worldHud_.HudUpdateLife(monsterLife, maxLife); // Singleton Recebe um valor e divide por outro vida/vidamax
     }
 
     public void IncrementStamina(float increment)
     {
-        mosterStamina += increment;
+        monsterStamina += increment;
 
-        if (mosterStamina > maxStamina)
+        if (monsterStamina > maxStamina)
         {
-            mosterStamina = maxStamina;
+            monsterStamina = maxStamina;
         }
 
-        worldHud_.HudUpdateStamina(mosterStamina, maxStamina); // Singleton Recebe um valor e divide por outro stamina/staminamax
+        worldHud_.HudUpdateStamina(monsterStamina, maxStamina); // Singleton Recebe um valor e divide por outro stamina/staminamax
     }
 
     public void DecrementStamina(float decrement)
     {
-        mosterStamina -= decrement;
+        monsterStamina -= decrement;
 
         if (!HaveStamina())
         {
-            mosterStamina = 0;
+            monsterStamina = 0;
             Debug.Log("You not have stamina!");
         }
 
-        worldHud_.HudUpdateStamina(mosterStamina, maxStamina); // Singleton Recebe um valor e divide por outro stamina/staminamax
+        worldHud_.HudUpdateStamina(monsterStamina, maxStamina); // Singleton Recebe um valor e divide por outro stamina/staminamax
+    }
+
+    public void RegenStamina() 
+    {
+        if (monsterStamina < maxStamina) 
+        {
+            if (!startRegenProcess) 
+            {
+                startRegenProcess = true;
+                countRegenStartTime = 0;
+            }
+            else  countRegenStartTime += Time.deltaTime;
+
+            if (countRegenStartTime >= regenStartTime) 
+                IncrementStamina(staminaRegen);
+            
+        }
+    }
+
+    public void RestartRegenProcess() 
+    {
+        startRegenProcess = false;
     }
 
     public bool HaveStamina()
     {
-        return mosterStamina > 0;
+        return monsterStamina > 0;
     }
     #endregion
 
