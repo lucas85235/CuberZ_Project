@@ -63,7 +63,7 @@ public class RaptoramaBehaviuor : MonsterBase
         #endregion
     }
 
-    protected virtual void Update()
+    protected virtual void FixedUpdate()
     {
         if (isEnabled)
         {
@@ -143,6 +143,8 @@ public class RaptoramaBehaviuor : MonsterBase
             else
                 body_.velocity = Vector3.zero;
         }
+
+        RegenStamina();
     }
 
     protected override string GetAttackName(int index)

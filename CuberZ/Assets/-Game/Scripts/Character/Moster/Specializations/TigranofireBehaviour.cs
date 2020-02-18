@@ -59,7 +59,7 @@ public class TigranofireBehaviour : MonsterBase
 
     }
 
-    protected virtual void Update()
+    protected virtual void FixedUpdate()
     {
         if (isEnabled)
         {
@@ -139,6 +139,8 @@ public class TigranofireBehaviour : MonsterBase
             else
                 body_.velocity = Vector3.zero;
         }
+    
+        RegenStamina();
     }
 
     protected override string GetAttackName(int index)

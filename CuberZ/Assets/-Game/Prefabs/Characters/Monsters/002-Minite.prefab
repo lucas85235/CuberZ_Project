@@ -227,7 +227,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lifeImage: {fileID: 1907072879052573122}
-  staminaImage: {fileID: 1907072878639419076}
+  staminaImage: {fileID: 6100759635875461293}
 --- !u!114 &8634684265689884796
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -254,6 +254,9 @@ MonoBehaviour:
   dowmSpeed: 18
   attackSpeed: 20
   attackDistance: 5
+  staminaRegen: 0.12
+  regenStartTime: 1
+  monsterStamina: 0
   minDistance: 12
   followSpeed: 10
 --- !u!114 &8634684265689884798
@@ -273,7 +276,7 @@ MonoBehaviour:
   attackStats:
   - attackName: 
     baseDamage: 5
-    staminaCost: 6
+    staminaCost: 15
     attackCoolDown: 0
     canMove: 0
     attackEffect: 
@@ -285,19 +288,19 @@ MonoBehaviour:
     attackEffect: 
   - attackName: 
     baseDamage: 10
-    staminaCost: 5
+    staminaCost: 10
     attackCoolDown: 0
     canMove: 0
     attackEffect: 
   - attackName: 
-    baseDamage: 6
+    baseDamage: 8
     staminaCost: 8
     attackCoolDown: 0
     canMove: 0
     attackEffect: 
   - attackName: 
-    baseDamage: 10
-    staminaCost: 15
+    baseDamage: 14
+    staminaCost: 8
     attackCoolDown: 0
     canMove: 0
     attackEffect: 
@@ -313,9 +316,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 82709c2561da0474984ce846e468f5c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemys: []
-  currentTargetIndex: 0
-  inTargetMode: 0
   arrowTargetPrefab: {fileID: 2863105574966691215, guid: 8a094115a61610c4892254bc0b0fdcb9,
     type: 3}
   maxTargetDistance: 22
@@ -2841,7 +2841,7 @@ PrefabInstance:
     - target: {fileID: 7825828790931696604, guid: ee0af40eedc483a4490b847f2fdc5e5e,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 6
+      value: 6.5
       objectReference: {fileID: 0}
     - target: {fileID: 7825828790931696604, guid: ee0af40eedc483a4490b847f2fdc5e5e,
         type: 3}
@@ -2913,9 +2913,9 @@ MonoBehaviour:
   m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1907072878639419076 stripped
+--- !u!114 &6100759635875461293 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7825828792338597398, guid: ee0af40eedc483a4490b847f2fdc5e5e,
+  m_CorrespondingSourceObject: {fileID: 2470195738520170623, guid: ee0af40eedc483a4490b847f2fdc5e5e,
     type: 3}
   m_PrefabInstance: {fileID: 8569687631041415378}
   m_PrefabAsset: {fileID: 0}

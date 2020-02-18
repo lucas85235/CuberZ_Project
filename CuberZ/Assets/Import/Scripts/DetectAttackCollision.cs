@@ -30,14 +30,14 @@ public class DetectAttackCollision : MonoBehaviour
 	{
 		if (other.tag == "Enemy") 
 		{
-			Debug.Log(other.name);
+			// Debug.Log(other.name);
 
 			if (!initAttack && IsAttacking())
 				StartCoroutine(DamageBehaviour(other));
 		}
 	}
 
-	IEnumerator DamageBehaviour(Collider other) 
+	private IEnumerator DamageBehaviour(Collider other) 
 	{
 		initAttack = true;
 		
@@ -49,11 +49,13 @@ public class DetectAttackCollision : MonoBehaviour
 		
 		other.GetComponent<Animator> ().SetTrigger ("HIT");
 
+		MonsterBase monsterParent = transform.parent.GetComponent<MonsterBase>();
+		IAManagerDefault enemy = other.GetComponent<IAManagerDefault>();
+		AttackManager attack = transform.parent.GetComponent<AttackManager>();
+
 		// mudar para decrementar a vida do enemy ista decrementa a vida do player
-		transform.parent.GetComponent<MonsterBase>().DecrementLife(
-			transform.parent.GetComponent<AttackManager>().attackStats[
-				transform.parent.GetComponent<MonsterBase>().currentAttackIndex
-					].baseDamage);
+		enemy.DecrementLife(attack.attackStats[
+				monsterParent.currentAttackIndex].baseDamage);
 
 		SpawHitEffect (other.transform);
 		yield return new WaitForSeconds(hitCoolDown);
