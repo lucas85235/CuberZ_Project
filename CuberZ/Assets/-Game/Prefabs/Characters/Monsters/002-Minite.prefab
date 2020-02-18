@@ -254,8 +254,9 @@ MonoBehaviour:
   dowmSpeed: 18
   attackSpeed: 20
   attackDistance: 5
-  staminaRegen: 0.03
+  staminaRegen: 0.12
   regenStartTime: 1
+  monsterStamina: 0
   minDistance: 12
   followSpeed: 10
 --- !u!114 &8634684265689884798

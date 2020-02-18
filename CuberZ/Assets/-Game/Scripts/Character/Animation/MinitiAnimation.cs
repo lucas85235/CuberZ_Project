@@ -27,10 +27,7 @@ public class MinitiAnimation : AnimationBase
 
     public override void AnimationSpeed(float xAxis, float yAxis) 
     {
-        if (input_.RunInput())
-            animator_.SetFloat(animationSpeed, xAxis * xAxis + yAxis * yAxis);
-        else 
-            animator_.SetFloat(animationSpeed, (xAxis * xAxis + yAxis * yAxis) / 2);
+        animator_.SetFloat(animationSpeed, (xAxis * xAxis + yAxis * yAxis) / 2);
     }
 
     public override void NoMovableAttack(int attackindex) 

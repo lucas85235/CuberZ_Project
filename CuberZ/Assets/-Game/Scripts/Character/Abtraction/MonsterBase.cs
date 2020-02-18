@@ -45,11 +45,14 @@ public abstract class MonsterBase : CharacterAbstraction
     public float staminaRegen = 0.03f;
     public float regenStartTime = 1.0f;  
 
-    protected float monsterStamina;
+    [SerializeField] protected float monsterStamina;
     protected float maxStamina = 100f;
     protected float countRegenStartTime = 0;
     protected bool startRegenProcess = false;
-
+    protected bool inRunInput = false;
+    protected bool endedStamina = false;
+    private bool startEnded = false;
+    
     [Header("IA config")]
     public float minDistance = 12.0f;
     public float followSpeed = 10.0f;
@@ -130,9 +133,8 @@ public abstract class MonsterBase : CharacterAbstraction
         #region stop moster walk animation
         axisX = 0;
         axisY = 0;
-        animation_.AnimationSpeed(axisX, axisY);
+        animation_.AnimationSpeed(axisX, axisY);       
         #endregion
-        
         canFollowState = false;
         yield return new WaitForSeconds(0.4f);
         canFollowState = true;
@@ -152,14 +154,41 @@ public abstract class MonsterBase : CharacterAbstraction
                 targetrotation + Camera.main.transform.eulerAngles.y,
                 ref smooth_,
                 smoothTime);
+            
+            if (Input.GetKeyUp(KeyCode.LeftShift))
+                inRunInput = false;
+            else if (Input.GetKeyDown(KeyCode.LeftShift))
+                inRunInput = true;
 
-            if (input_.RunInput() && !isJump)
+            if (input_.RunInput() && inRunInput && !isJump && !endedStamina) 
+            {
                 transform.position += transform.forward * runSpeed * Time.deltaTime;
+                DecrementStamina(0.5f);
+
+                if (monsterStamina == 0) 
+                    StartCoroutine(EndedRegenTime());           
+            }
             else
+            {
                 transform.position += transform.forward * walkSpeed * Time.deltaTime;
+                
+                if (!input_.RunInput())
+                    inRunInput = false;
+                else
+                    inRunInput = true;
+            }
         }
     }
     
+    private IEnumerator EndedRegenTime() 
+    {
+        startEnded = true;
+        endedStamina = true; 
+        yield return new WaitUntil(()=> inRunInput == false && monsterStamina > 5f);
+        endedStamina = false;
+        startEnded = false;
+    }
+
     protected virtual void Jump() 
     {
         if (Input.GetKeyDown(KeyCode.Space) && !isJump && canJump_) 

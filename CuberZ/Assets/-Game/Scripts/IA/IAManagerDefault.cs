@@ -221,6 +221,9 @@ public class IAManagerDefault : MonoBehaviour
             Debug.Log("Life < 0, You Are Dead!");
         }
 
+        if (iaState != State.Batlle)
+            iaState = State.Batlle;
+            
         worldHud_.HudUpdateLife(mosterLife, 100);
     }
     #endregion
