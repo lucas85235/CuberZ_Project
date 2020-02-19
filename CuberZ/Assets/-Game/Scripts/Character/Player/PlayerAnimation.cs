@@ -2,63 +2,39 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(PlayerEventCallAnimation))]
 public class PlayerAnimation : MonoBehaviour
 {
-    public RuntimeAnimatorController[] allAnimators;
     private Animator animator_;
-    private CaptureSystem captureSystem_;
 
     private void Awake()
     {
         animator_ = GetComponent<Animator>();
-        captureSystem_ = FindObjectOfType<CaptureSystem>();
     }
 
     public void SpeedBlendTree(float speed)
     {
-       animator_.SetFloat("Speed", speed);
+        animator_.SetFloat("SPEED", speed);
     }
 
-    public void GoToWalkAnimator()
+    public void SetAnimation(string animation)
     {
-        captureSystem_.throwbool = false;
-        SetAnimatorAndAnimation(0);
+        animator_.ResetTrigger("SWIM");
+        animator_.ResetTrigger("ENTER-JUMP");
+        animator_.ResetTrigger("CALL-MONSTER");
+        animator_.ResetTrigger("THROW");
+        animator_.ResetTrigger("THROW-NEAR");
+        animator_.SetTrigger(animation);
     }
 
-    public void SetAnimatorAndAnimation(int animatornumber, string animation = null)
+    public void ResetAll()
     {
-        /// <summary>
-        /// animatornumber = 0 -> Walk
-        /// animatornumber = 1 -> Capture
-        /// animatornumber = 2 -> Jump
-        /// animatornumber = 3 -> Swin
-        /// </summary>
 
-        switch (animatornumber)
-        {
-            case 0:
-                animator_.runtimeAnimatorController = allAnimators[animatornumber];
-                break;
+        animator_.ResetTrigger("SWIM");
+        animator_.ResetTrigger("ENTER-JUMP");
+        animator_.ResetTrigger("CALL-MONSTER");
+        animator_.ResetTrigger("THROW");
+        animator_.ResetTrigger("THROW-NEAR");
 
-            case 1:
-                animator_.runtimeAnimatorController = allAnimators[animatornumber];
-                animator_.ResetTrigger("throwfar");
-                animator_.ResetTrigger("thrownear");
-                animator_.ResetTrigger("bringback");
-                animator_.SetTrigger(animation);
-                break;
-
-            case 2:
-                animator_.runtimeAnimatorController = allAnimators[animatornumber];
-                animator_.ResetTrigger("startjump");
-                animator_.ResetTrigger("idlejump");
-                animator_.ResetTrigger("falljump");
-                animator_.SetTrigger(animation);
-                break;
-
-            case 3:
-                //depois faz  o do swin
-                break;
-        }
     }
 }

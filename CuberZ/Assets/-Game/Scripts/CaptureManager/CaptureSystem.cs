@@ -93,7 +93,7 @@ public class CaptureSystem : MonoBehaviour
         capturingProcess = true;
         Vector3 tempV_ = new Vector3(holdTarget_.x,transform.position.y,holdTarget_.z) - transform.position;
         transform.forward = Vector3.Lerp(transform.forward, tempV_, 0.5f * Time.deltaTime);
-        playerAnimation_.SetAnimatorAndAnimation(1, "throwfar");
+        playerAnimation_.SetAnimation("THROW");
     }
 
     public void ThrowCube()

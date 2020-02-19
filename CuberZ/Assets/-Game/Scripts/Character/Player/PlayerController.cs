@@ -8,10 +8,6 @@ public class PlayerController : CharacterAbstraction
     public MonsterBase moster;
     public bool canMove_ = true;
 
-    [Header("Jump Stats")]
-    public float jumpforce;
-    public bool jump;
-
     private Vector3 previousVelocity_;
     private PlayerAnimation playerAnimation_;
     private CaptureSystem captureSystem;
@@ -58,11 +54,11 @@ public class PlayerController : CharacterAbstraction
             }
 
             if (input_.JumpInput() && isEnabled)
-                if (!captureSystem.capturingProcess && !captureSystem.capturing)
-                    playerAnimation_.SetAnimatorAndAnimation(2, "startjump");
+            {
+                if (!captureSystem.capturingProcess && !captureSystem.capturing) playerAnimation_.SetAnimation("ENTER-JUMP");
+            }
              
-            if (jump)
-                body_.AddForce(-Vector3.up * 1500 * Time.deltaTime);
+            if (jump)  body_.AddForce(-Vector3.up * 1500 * Time.deltaTime);
         }
 
         playerAnimation_.SpeedBlendTree(PlayerVelocity());
@@ -103,12 +99,6 @@ public class PlayerController : CharacterAbstraction
         return speed_.magnitude;
     }
 
-    private void Jump()
-    {
-        jump = true;
-        body_.AddForce(Vector3.up * jumpforce,ForceMode.Impulse);
-    }
-
     private void SetInitialCharacter()
     {
         CharacterAbstraction thisCharacter = GetComponent<CharacterAbstraction>();
@@ -130,7 +120,7 @@ public class PlayerController : CharacterAbstraction
         {
             if (jump)
             {
-                playerAnimation_.SetAnimatorAndAnimation(2, "falljump");
+                playerAnimation_.ResetAll();
                 StartCoroutine(WaitJumpTime());
             }
         }
@@ -142,7 +132,7 @@ public class PlayerController : CharacterAbstraction
         canMove_ = false;
         yield return new WaitForSeconds(0.3f);
         canMove_ = true;
-        playerAnimation_.GoToWalkAnimator();
+        PlayerEventCallAnimation.instance.GoToWalkAnimator();
         yield break;
     }
 }
