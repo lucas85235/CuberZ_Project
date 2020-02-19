@@ -10254,7 +10254,6 @@ GameObject:
   - component: {fileID: 484331874400111052}
   - component: {fileID: 484331874400111042}
   - component: {fileID: 484331874400111040}
-  - component: {fileID: 1168604510}
   - component: {fileID: 3740074197964245103}
   m_Layer: 11
   m_Name: PlayerReal
@@ -10372,27 +10371,10 @@ MonoBehaviour:
   walkSpeed: 15
   runSpeed: 22
   smoothTime: 0.3
-  moster: {fileID: 0}
-  canMove_: 1
   jumpforce: 15
   jump: 0
---- !u!114 &1168604510
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 484331874400111045}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 67c7b428d9eb59a47a9db338a67e7411, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  allAnimators:
-  - {fileID: 9100000, guid: f9c9b72b3ae61fa459cf74b769232c0b, type: 2}
-  - {fileID: 9100000, guid: 0a988e97ba3b01c4a80968493f6f1c64, type: 2}
-  - {fileID: 9100000, guid: 6f480f8b222ebf347baa91adf071f342, type: 2}
-  - {fileID: 9100000, guid: 915d9ccaf1d892549a99afe4e5af36f3, type: 2}
+  moster: {fileID: 0}
+  canMove_: 1
 --- !u!114 &3740074197964245103
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10411,12 +10393,12 @@ MonoBehaviour:
   impulseForce: 20
   impulseY: 10
   sucessPercentage: 50
-  distanceMultiplier_: 1
+  distanceMultiplier: 1
   cuboQuantidade: 1000
-  capturing_: 0
-  captured_: 0
-  capturingProcess_: 0
   throwbool: 0
+  capturing: 0
+  captured: 0
+  capturingProcess: 0
 --- !u!1 &484331874400111047
 GameObject:
   m_ObjectHideFlags: 0

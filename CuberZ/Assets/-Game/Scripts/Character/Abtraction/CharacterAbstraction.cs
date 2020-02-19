@@ -24,7 +24,9 @@ public abstract class CharacterAbstraction : MonoBehaviour
     public float runSpeed = 22.0f;
     public float smoothTime = 0.3f;
     protected float smooth_;
-    
+
+
+
     public bool isEnabled { get; set; }
 
     protected virtual void Construt(IInput newInputInterface) 
@@ -58,6 +60,8 @@ public abstract class CharacterAbstraction : MonoBehaviour
                 transform.position += transform.forward * runSpeed * Time.deltaTime;
         }
     }
+
+   
 
     protected virtual void SwitchCharacterController(CharacterAbstraction switchCharacter) 
     {

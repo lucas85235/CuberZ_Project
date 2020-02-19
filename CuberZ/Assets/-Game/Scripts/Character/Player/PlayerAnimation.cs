@@ -4,61 +4,70 @@ using UnityEngine;
 
 public class PlayerAnimation : MonoBehaviour
 {
-    public RuntimeAnimatorController[] allAnimators;
     private Animator animator_;
-    private CaptureSystem captureSystem_;
 
     private void Awake()
     {
         animator_ = GetComponent<Animator>();
-        captureSystem_ = FindObjectOfType<CaptureSystem>();
     }
 
-    public void SpeedBlendTree(float speed)
+    public void MovimentSpeed(float speed)
     {
-       animator_.SetFloat("Speed", speed);
+        animator_.SetFloat("SPEED", speed);
     }
 
-    public void GoToWalkAnimator()
+    public void AnimationSet_SWIN()
     {
-        captureSystem_.throwbool = false;
-        SetAnimatorAndAnimation(0);
+        animator_.ResetTrigger("ENTER-JUMP");
+        animator_.ResetTrigger("CALL-MONSTER");
+        animator_.ResetTrigger("THROW");
+        animator_.ResetTrigger("THROW-NEAR");
+        animator_.SetTrigger("SWIM");
     }
 
-    public void SetAnimatorAndAnimation(int animatornumber, string animation = null)
+    public void AnimationSet_ENTERJUMP()
     {
-        /// <summary>
-        /// animatornumber = 0 -> Walk
-        /// animatornumber = 1 -> Capture
-        /// animatornumber = 2 -> Jump
-        /// animatornumber = 3 -> Swin
-        /// </summary>
+        animator_.ResetTrigger("SWIM");
+        animator_.ResetTrigger("CALL-MONSTER");
+        animator_.ResetTrigger("THROW");
+        animator_.ResetTrigger("THROW-NEAR");
+        animator_.SetTrigger("ENTER-JUMP");
+    }
 
-        switch (animatornumber)
-        {
-            case 0:
-                animator_.runtimeAnimatorController = allAnimators[animatornumber];
-                break;
+    public void AnimationSet_CALLMONSTER()
+    {
+        animator_.ResetTrigger("SWIM");
+        animator_.ResetTrigger("ENTER-JUMP");
+        animator_.ResetTrigger("THROW");
+        animator_.ResetTrigger("THROW-NEAR");
+        animator_.SetTrigger("CALL-MONSTER");
+    }
 
-            case 1:
-                animator_.runtimeAnimatorController = allAnimators[animatornumber];
-                animator_.ResetTrigger("throwfar");
-                animator_.ResetTrigger("thrownear");
-                animator_.ResetTrigger("bringback");
-                animator_.SetTrigger(animation);
-                break;
+    public void AnimationSet_THROWCUBE()
+    {
+        animator_.ResetTrigger("SWIM");
+        animator_.ResetTrigger("ENTER-JUMP");
+        animator_.ResetTrigger("CALL-MONSTER");
+        animator_.ResetTrigger("THROW-NEAR");
+        animator_.SetTrigger("THROW");
+    }
 
-            case 2:
-                animator_.runtimeAnimatorController = allAnimators[animatornumber];
-                animator_.ResetTrigger("startjump");
-                animator_.ResetTrigger("idlejump");
-                animator_.ResetTrigger("falljump");
-                animator_.SetTrigger(animation);
-                break;
+    public void AnimationSet_THROWCUBENEAR()
+    {
+        animator_.ResetTrigger("SWIM");
+        animator_.ResetTrigger("ENTER-JUMP");
+        animator_.ResetTrigger("CALL-MONSTER");
+        animator_.ResetTrigger("THROW");
+        animator_.ResetTrigger("THROW-NEAR");
+    }
 
-            case 3:
-                //depois faz  o do swin
-                break;
-        }
+
+    public void ResetAll()
+    {
+        animator_.ResetTrigger("SWIM");
+        animator_.ResetTrigger("ENTER-JUMP");
+        animator_.ResetTrigger("CALL-MONSTER");
+        animator_.ResetTrigger("THROW");
+        animator_.ResetTrigger("THROW-NEAR");
     }
 }

@@ -8,13 +8,15 @@ public class PlayerController : CharacterAbstraction
     public MonsterBase moster;
     public bool canMove_ = true;
 
+    private Vector3 previousVelocity_;
+    private PlayerAnimation playerAnimation_;
+    private CaptureSystem captureSystem;
+
+
     [Header("Jump Stats")]
     public float jumpforce;
     public bool jump;
 
-    private Vector3 previousVelocity_;
-    private PlayerAnimation playerAnimation_;
-    private CaptureSystem captureSystem;
 
     private void Start()
     {
@@ -58,14 +60,14 @@ public class PlayerController : CharacterAbstraction
             }
 
             if (input_.JumpInput() && isEnabled)
-                if (!captureSystem.capturingProcess && !captureSystem.capturing)
-                    playerAnimation_.SetAnimatorAndAnimation(2, "startjump");
+            {
+                if (!captureSystem.capturingProcess && !captureSystem.capturing) playerAnimation_.AnimationSet_ENTERJUMP();
+            }
              
-            if (jump)
-                body_.AddForce(-Vector3.up * 1500 * Time.deltaTime);
+            if (jump)  body_.AddForce(-Vector3.up * 1500 * Time.deltaTime);
         }
 
-        playerAnimation_.SpeedBlendTree(PlayerVelocity());
+        playerAnimation_.MovimentSpeed(PlayerVelocity());
     }
 
     protected override void Movement() 
@@ -106,8 +108,9 @@ public class PlayerController : CharacterAbstraction
     private void Jump()
     {
         jump = true;
-        body_.AddForce(Vector3.up * jumpforce,ForceMode.Impulse);
+        body_.AddForce(Vector3.up * jumpforce, ForceMode.Impulse);
     }
+
 
     private void SetInitialCharacter()
     {
@@ -130,7 +133,7 @@ public class PlayerController : CharacterAbstraction
         {
             if (jump)
             {
-                playerAnimation_.SetAnimatorAndAnimation(2, "falljump");
+                playerAnimation_.ResetAll();
                 StartCoroutine(WaitJumpTime());
             }
         }
@@ -142,7 +145,7 @@ public class PlayerController : CharacterAbstraction
         canMove_ = false;
         yield return new WaitForSeconds(0.3f);
         canMove_ = true;
-        playerAnimation_.GoToWalkAnimator();
+        captureSystem.GoToWalkAnimator();
         yield break;
     }
 }

@@ -93,7 +93,7 @@ public class CaptureSystem : MonoBehaviour
         capturingProcess = true;
         Vector3 tempV_ = new Vector3(holdTarget_.x,transform.position.y,holdTarget_.z) - transform.position;
         transform.forward = Vector3.Lerp(transform.forward, tempV_, 0.5f * Time.deltaTime);
-        playerAnimation_.SetAnimatorAndAnimation(1, "throwfar");
+        playerAnimation_.AnimationSet_THROWCUBE();
     }
 
     public void ThrowCube()
@@ -148,6 +148,12 @@ public class CaptureSystem : MonoBehaviour
             captureCube.GetComponent<Rigidbody>().useGravity = false;
             captureCube.GetComponent<Rigidbody>().velocity = Vector3.zero;
         }
+    }
+
+    public void GoToWalkAnimator()
+    {
+        throwbool = false;
+        playerAnimation_.ResetAll();
     }
     #endregion
 
