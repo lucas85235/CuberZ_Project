@@ -26,10 +26,6 @@ public abstract class CharacterAbstraction : MonoBehaviour
     protected float smooth_;
 
 
-    [Header("Jump Stats")]
-    public float jumpforce;
-    public bool jump;
-
 
     public bool isEnabled { get; set; }
 
@@ -65,12 +61,7 @@ public abstract class CharacterAbstraction : MonoBehaviour
         }
     }
 
-    private void Jump()
-    {
-        jump = true;
-        body_.AddForce(Vector3.up * jumpforce, ForceMode.Impulse);
-    }
-
+   
 
     protected virtual void SwitchCharacterController(CharacterAbstraction switchCharacter) 
     {

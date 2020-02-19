@@ -12,6 +12,12 @@ public class PlayerController : CharacterAbstraction
     private PlayerAnimation playerAnimation_;
     private CaptureSystem captureSystem;
 
+
+    [Header("Jump Stats")]
+    public float jumpforce;
+    public bool jump;
+
+
     private void Start()
     {
         #region Get Components
@@ -55,13 +61,13 @@ public class PlayerController : CharacterAbstraction
 
             if (input_.JumpInput() && isEnabled)
             {
-                if (!captureSystem.capturingProcess && !captureSystem.capturing) playerAnimation_.SetAnimation("ENTER-JUMP");
+                if (!captureSystem.capturingProcess && !captureSystem.capturing) playerAnimation_.AnimationSet_ENTERJUMP();
             }
              
             if (jump)  body_.AddForce(-Vector3.up * 1500 * Time.deltaTime);
         }
 
-        playerAnimation_.SpeedBlendTree(PlayerVelocity());
+        playerAnimation_.MovimentSpeed(PlayerVelocity());
     }
 
     protected override void Movement() 
@@ -99,6 +105,13 @@ public class PlayerController : CharacterAbstraction
         return speed_.magnitude;
     }
 
+    private void Jump()
+    {
+        jump = true;
+        body_.AddForce(Vector3.up * jumpforce, ForceMode.Impulse);
+    }
+
+
     private void SetInitialCharacter()
     {
         CharacterAbstraction thisCharacter = GetComponent<CharacterAbstraction>();
@@ -132,7 +145,7 @@ public class PlayerController : CharacterAbstraction
         canMove_ = false;
         yield return new WaitForSeconds(0.3f);
         canMove_ = true;
-        PlayerEventCallAnimation.instance.GoToWalkAnimator();
+        captureSystem.GoToWalkAnimator();
         yield break;
     }
 }
