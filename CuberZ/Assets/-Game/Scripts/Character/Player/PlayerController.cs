@@ -5,8 +5,9 @@ using UnityEngine.AI;
 
 public class PlayerController : CharacterAbstraction
 {
-    public MonsterBase moster;
+    public GameObject[] monster;
     public bool canMove_ = true;
+    public bool spawnedOnWorld;
 
     private Vector3 previousVelocity_;
     private PlayerAnimation playerAnimation_;
@@ -50,10 +51,10 @@ public class PlayerController : CharacterAbstraction
                 #region Get Inputs
                 if (Input.GetKeyDown(KeyCode.T))
                 {
-                    if (moster != null)
+                    if (monster[0]  && spawnedOnWorld)
                     {
-                        SwitchCharacterController(moster);
-                        StartCoroutine(moster.StopFollow());
+                        SwitchCharacterController(monster[0].GetComponent<MonsterBase>());
+                        StartCoroutine(monster[0].GetComponent<MonsterBase>().StopFollow());
                     }
                 }
                 #endregion
