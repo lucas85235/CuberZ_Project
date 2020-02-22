@@ -16,56 +16,45 @@ public class PlayerAnimation : MonoBehaviour
         animator_.SetFloat("SPEED", speed);
     }
 
-    public void AnimationSet_SWIN()
+    public void EnterInSwimMode()
     {
-        animator_.ResetTrigger("ENTER-JUMP");
-        animator_.ResetTrigger("CALL-MONSTER");
-        animator_.ResetTrigger("THROW");
-        animator_.ResetTrigger("THROW-NEAR");
-        animator_.SetTrigger("SWIM");
+        animator_.SetBool("SWIM", true);
     }
 
-    public void AnimationSet_ENTERJUMP()
+    public void ExitInSwimMode()
     {
-        animator_.ResetTrigger("SWIM");
-        animator_.ResetTrigger("CALL-MONSTER");
-        animator_.ResetTrigger("THROW");
-        animator_.ResetTrigger("THROW-NEAR");
-        animator_.SetTrigger("ENTER-JUMP");
+        animator_.SetBool("SWIM", false);
     }
 
-    public void AnimationSet_CALLMONSTER()
+    public void EnterJump()
     {
-        animator_.ResetTrigger("SWIM");
-        animator_.ResetTrigger("ENTER-JUMP");
-        animator_.ResetTrigger("THROW");
-        animator_.ResetTrigger("THROW-NEAR");
+        animator_.SetBool("ENTER-JUMP", true);
+    }
+
+    public void ExitJump()
+    {
+        animator_.SetBool("ENTER-JUMP", false);
+    }
+
+    public void CallMoster()
+    {
         animator_.SetTrigger("CALL-MONSTER");
     }
 
-    public void AnimationSet_THROWCUBE()
+    public void ThrowCube()
     {
-        animator_.ResetTrigger("SWIM");
-        animator_.ResetTrigger("ENTER-JUMP");
-        animator_.ResetTrigger("CALL-MONSTER");
-        animator_.ResetTrigger("THROW-NEAR");
         animator_.SetTrigger("THROW");
     }
 
-    public void AnimationSet_THROWCUBENEAR()
+    public void ThrowCubeNear()
     {
-        animator_.ResetTrigger("SWIM");
-        animator_.ResetTrigger("ENTER-JUMP");
-        animator_.ResetTrigger("CALL-MONSTER");
-        animator_.ResetTrigger("THROW");
-        animator_.ResetTrigger("THROW-NEAR");
+        animator_.SetTrigger("THROW-NEAR");
     }
-
 
     public void ResetAll()
     {
-        animator_.ResetTrigger("SWIM");
-        animator_.ResetTrigger("ENTER-JUMP");
+        animator_.SetBool("SWIM", false);
+        animator_.SetBool("ENTER-JUMP", false);
         animator_.ResetTrigger("CALL-MONSTER");
         animator_.ResetTrigger("THROW");
         animator_.ResetTrigger("THROW-NEAR");

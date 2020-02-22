@@ -11,7 +11,6 @@ public abstract class MonsterBase : CharacterAbstraction
     [Header("Spawned By Player")]
     public bool spawnByPlayer;
 
-
     protected AnimationBase animation_;
     protected CharacterAbstraction player_;
     protected NavMeshAgent nav_;
@@ -21,7 +20,6 @@ public abstract class MonsterBase : CharacterAbstraction
 
     [SerializeField] public bool isAttacking { get; set; }
     [SerializeField] public int currentAttackIndex;
-    [SerializeField] public bool isSwimMode = false;
 
     [Header("Jump Config")]
     public float initialJumpImpulse = 10.0f;

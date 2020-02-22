@@ -62,9 +62,7 @@ public class CaptureSystem : MonoBehaviour
 
     private void Update()
     {
-
         #region Inputs
-
         if (input_.CaptureKubberInput())
         {
             if (!capturing && !capturingProcess && cuboQuantidade > 0 && !cubeOnWorld_)
@@ -95,7 +93,7 @@ public class CaptureSystem : MonoBehaviour
                 theaterCube.SetActive(true);
                 cubeOnWorld_ = true;
                 player_.canMove_ = false;
-                playerAnimation_.AnimationSet_CALLMONSTER();
+                playerAnimation_.CallMoster();
                 turnToCall_ = true;
                 helperPoint_ = MiraCube();
             }
@@ -104,12 +102,13 @@ public class CaptureSystem : MonoBehaviour
             {
                 theaterCube.SetActive(true);
                 player_.canMove_ = false;
-                playerAnimation_.AnimationSet_CALLMONSTER();
+                playerAnimation_.CallMoster();
                 turnToCall_ = true;
                 helperPoint_ = MiraCube();
             }
 
         }
+        #endregion
 
         if (throwbool) ThrowProcess();
 
@@ -118,10 +117,6 @@ public class CaptureSystem : MonoBehaviour
             captureCubeTemp_.transform.position = hand.transform.position;
         }
 
-        #endregion
-
-        #region Other Functions
-
         if (sizing_ && kuberTemp_)
         {
             GoSizeKubber(kuberTemp_);
@@ -129,10 +124,6 @@ public class CaptureSystem : MonoBehaviour
         }
 
         if (turnToCall_) CallingProcess();
-
-
-        #endregion
-
     }
 
     #region Funções usaveis/Publicas
@@ -141,7 +132,7 @@ public class CaptureSystem : MonoBehaviour
         capturingProcess = true;
         Vector3 tempV_ = new Vector3(holdTarget_.x, transform.position.y, holdTarget_.z) - transform.position;
         transform.forward = Vector3.Lerp(transform.forward, tempV_, 0.5f * Time.deltaTime);
-        playerAnimation_.AnimationSet_THROWCUBE();
+        playerAnimation_.ThrowCube();
     }
 
     public void CallingProcess()
@@ -211,7 +202,6 @@ public class CaptureSystem : MonoBehaviour
             captureCubeTemp_.SetActive(false);
             captureCubeTemp_.transform.SetParent(null);
             captureCubeTemp_ = null;
-
         }
     }
 
@@ -324,6 +314,5 @@ public class CaptureSystem : MonoBehaviour
 
         }
     }
-
     #endregion
 }

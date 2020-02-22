@@ -15,6 +15,7 @@ public abstract class CharacterAbstraction : MonoBehaviour
 
     [HideInInspector] public float axisX;
     [HideInInspector] public float axisY;
+    [HideInInspector] public bool isSwimMode = false;
 
     [Header("Adjust Camera Propeties")]
     public float cameraDistance = 14.0f;
@@ -24,8 +25,6 @@ public abstract class CharacterAbstraction : MonoBehaviour
     public float runSpeed = 22.0f;
     public float smoothTime = 0.3f;
     protected float smooth_;
-
-
 
     public bool isEnabled { get; set; }
 
@@ -60,8 +59,6 @@ public abstract class CharacterAbstraction : MonoBehaviour
                 transform.position += transform.forward * runSpeed * Time.deltaTime;
         }
     }
-
-   
 
     protected virtual void SwitchCharacterController(CharacterAbstraction switchCharacter) 
     {
