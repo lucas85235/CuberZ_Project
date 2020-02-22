@@ -8,6 +8,9 @@ using UnityEngine.AI;
 
 public abstract class MonsterBase : CharacterAbstraction
 {
+    [Header("Spawned By Player")]
+    public bool spawnByPlayer;
+
     protected AnimationBase animation_;
     protected CharacterAbstraction player_;
     protected NavMeshAgent nav_;
@@ -17,7 +20,6 @@ public abstract class MonsterBase : CharacterAbstraction
 
     [SerializeField] public bool isAttacking { get; set; }
     [SerializeField] public int currentAttackIndex;
-    [SerializeField] public bool isSwimMode = false;
 
     [Header("Jump Config")]
     public float initialJumpImpulse = 10.0f;
@@ -81,6 +83,8 @@ public abstract class MonsterBase : CharacterAbstraction
     {
         if (player_ != null )
         {
+            Debug.Log("[e isso");
+
             if (Vector3.Distance(player_.transform.position, transform.position) > minDistance)
             {
                 if (!nav_.enabled)

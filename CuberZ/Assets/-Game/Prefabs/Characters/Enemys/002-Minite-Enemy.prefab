@@ -1385,7 +1385,6 @@ GameObject:
   - component: {fileID: 2636064715337603376}
   - component: {fileID: 6363454283160280701}
   - component: {fileID: 5411930550336680449}
-  - component: {fileID: 10556101}
   - component: {fileID: 6838173598302684057}
   m_Layer: 13
   m_Name: 002-Minite-Enemy
@@ -1494,7 +1493,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c28996d4a101c543b290c5cbee58876, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  kubberPlayer: 0
+  kubberPlayer: 1
   attackTier: ffffffffffffffffffffffffffffffff
   attackStats:
   - attackName: 
@@ -1521,34 +1520,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5000115b72433449b74c6869ab7e306, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &10556101
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7027413516889247024}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 968f8f591257f944288248bc7889a714, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  target: {fileID: 0}
-  walkRadius: 10
-  stopDistance: 4
-  waitTimer: 3
-  timerUpdate: 2
-  mosterLife: 100
-  iaState: 0
-  skillStats:
-  - skillNumber: 0
-    skillDistance: 8
-  - skillNumber: 1
-    skillDistance: 18
-  - skillNumber: 2
-    skillDistance: 7
-  - skillNumber: 3
-    skillDistance: 6
 --- !u!114 &6838173598302684057
 MonoBehaviour:
   m_ObjectHideFlags: 0

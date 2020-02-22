@@ -5,8 +5,9 @@ using UnityEngine.AI;
 
 public class PlayerController : CharacterAbstraction
 {
-    public MonsterBase moster;
+    public GameObject[] monster;
     public bool canMove_ = true;
+    public bool spawnedOnWorld;
 
     private Vector3 previousVelocity_;
     private PlayerAnimation playerAnimation_;
@@ -17,7 +18,6 @@ public class PlayerController : CharacterAbstraction
     public float jumpforce;
     public bool jump;
 
-
     private void Start()
     {
         #region Get Components
@@ -27,9 +27,7 @@ public class PlayerController : CharacterAbstraction
         captureSystem = GetComponent<CaptureSystem>();
         #endregion
 
-        body_.constraints = RigidbodyConstraints.FreezePositionX;
-        body_.constraints = RigidbodyConstraints.FreezePositionZ;
-        body_.constraints = RigidbodyConstraints.FreezeRotation;
+        body_.freezeRotation = true;
 
         SetInitialCharacter();
     }
@@ -47,13 +45,14 @@ public class PlayerController : CharacterAbstraction
                 }
 
                 Movement();
+
                 #region Get Inputs
                 if (Input.GetKeyDown(KeyCode.T))
                 {
-                    if (moster != null)
+                    if (monster[0]  && spawnedOnWorld)
                     {
-                        SwitchCharacterController(moster);
-                        StartCoroutine(moster.StopFollow());
+                        SwitchCharacterController(monster[0].GetComponent<MonsterBase>());
+                        StartCoroutine(monster[0].GetComponent<MonsterBase>().StopFollow());
                     }
                 }
                 #endregion
@@ -61,10 +60,28 @@ public class PlayerController : CharacterAbstraction
 
             if (input_.JumpInput() && isEnabled)
             {
-                if (!captureSystem.capturingProcess && !captureSystem.capturing) playerAnimation_.AnimationSet_ENTERJUMP();
+                if (!captureSystem.capturingProcess && !captureSystem.capturing) 
+                    playerAnimation_.EnterJump();
             }
              
-            if (jump)  body_.AddForce(-Vector3.up * 1500 * Time.deltaTime);
+            if (jump)  
+                body_.AddForce(-Vector3.up * 1500 * Time.deltaTime);
+        }
+
+        if (Input.GetKeyDown(KeyCode.N)) // Key de Teste
+        {
+            isSwimMode = !isSwimMode;
+
+            if (isSwimMode) 
+            {
+                playerAnimation_.EnterInSwimMode();
+                GameObject.Find("Ground").GetComponent<MeshRenderer>().enabled = false;
+            }
+            else 
+            {
+                playerAnimation_.ExitInSwimMode();
+                GameObject.Find("Ground").GetComponent<MeshRenderer>().enabled = true;
+            }               
         }
 
         playerAnimation_.MovimentSpeed(PlayerVelocity());
@@ -133,7 +150,7 @@ public class PlayerController : CharacterAbstraction
         {
             if (jump)
             {
-                playerAnimation_.ResetAll();
+                playerAnimation_.ExitJump();
                 StartCoroutine(WaitJumpTime());
             }
         }
