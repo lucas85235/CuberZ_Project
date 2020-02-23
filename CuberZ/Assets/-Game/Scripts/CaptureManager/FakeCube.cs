@@ -8,6 +8,7 @@ public class FakeCube : MonoBehaviour
     List<Vector3> cubesPositionList_ = new List<Vector3>();
     List<Quaternion> cubesRotationList_ = new List<Quaternion>();
 
+
     private void Start()
     {
         StartCoroutine(RememberCubesPositionAndRotation());

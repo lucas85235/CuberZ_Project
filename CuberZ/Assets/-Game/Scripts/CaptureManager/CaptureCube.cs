@@ -41,6 +41,7 @@ public class CaptureCube : MonoBehaviour
     private bool setshake_;
     private bool feedbackBool_;
     private bool canCollider_ = true;
+    private CubeAnimations cubeAnimations_;
 
     #region propties getter and setter
     [HideInInspector] public float sucessPercentage { get { return sucessPercentage_; } set { sucessPercentage_ = value; } }
@@ -234,7 +235,9 @@ public class CaptureCube : MonoBehaviour
             feedbackBool_ = GetInOrOutMonsterChance(sucessPercentage_);
             randomHelper_ = Random.Range(1, 4);
             setshake_ = true;
-        }
+        }
+        //---------------------------------------------------------
+        cubeAnimations_.AnimationSet_ShakeCube();
 
         fakeCube_.GetComponent<Animator>().Play("ShakeCube", -1, 0);
 

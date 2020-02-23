@@ -958,6 +958,7 @@ GameObject:
   - component: {fileID: 54086311206838328}
   - component: {fileID: 65629139346645156}
   - component: {fileID: 114845406499386308}
+  - component: {fileID: 222681370374063533}
   m_Layer: 10
   m_Name: CaptureCube
   m_TagString: Player
