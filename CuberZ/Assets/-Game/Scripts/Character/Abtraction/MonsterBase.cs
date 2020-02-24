@@ -130,9 +130,9 @@ public abstract class MonsterBase : CharacterAbstraction
                 ref smooth_,
                 smoothTime);
             
-            if (Input.GetKeyUp(KeyCode.LeftShift))
+            if (input_.RunInputUp()) // Quando solta o LeftControl
                 inRunInput = false;
-            else if (Input.GetKeyDown(KeyCode.LeftShift))
+            else if (input_.RunInputOnce()) //Quando aperta uma única vez
                 inRunInput = true;
 
             if (input_.RunInput() && inRunInput && !isJump && !endedStamina) 
