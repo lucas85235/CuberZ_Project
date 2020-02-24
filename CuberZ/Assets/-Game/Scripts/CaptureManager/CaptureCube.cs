@@ -36,6 +36,7 @@ public class CaptureCube : MonoBehaviour
     private bool feedbackBool_;
     private float randomHelper_;
     private CaptureSystem captureSystem_;
+    private PlayerController playerController_;
 
     #region propties getter and setter
     // Esconder causa comportamento indefinido
@@ -53,7 +54,7 @@ public class CaptureCube : MonoBehaviour
     #region Funções MonoBehaviour de Execução
     private void Awake()
     {
-        Construt (Camera.main.GetComponent<CameraProperties>());
+        Construt(Camera.main.GetComponent<CameraProperties>());
 
         InitializingAwake();
     }
@@ -90,6 +91,7 @@ public class CaptureCube : MonoBehaviour
         canCollide_ = true;
         rigibody_ = GetComponent<Rigidbody>();
         mycollider_ = GetComponent<Collider>();
+        playerController_ = GetComponent<PlayerController>();
         rigibody_.useGravity = false;
         rigibody_.velocity = Vector3.zero;
         bigcube_ = transform.GetChild(1);
@@ -208,7 +210,7 @@ public class CaptureCube : MonoBehaviour
                 if (!afterCapture_)
                 {
                     BreakCube();
-                    
+
                     if (captureSystem_.cuboQuantidade > 0)
                     {
                         captureSystem_.CaptureInstantiate();
@@ -247,8 +249,10 @@ public class CaptureCube : MonoBehaviour
                 if (col.GetComponent<MonsterBase>())
                     col.GetComponent<MonsterBase>().beenCapture = true; // freeza navmesh
                 else Debug.Log("Não possui MonsterBase");
-                
+
                 moviment_ = false;
+              //  playerController_.canMove_ = false;
+
                 rigibody_.velocity = Vector3.zero;
                 rigibody_.AddForce(-(col.transform.position - transform.position) * 7 + new Vector3(0, 35, 0), ForceMode.Impulse);
                 rigibody_.AddTorque(Vector3.forward * -5, ForceMode.Impulse);
@@ -272,6 +276,7 @@ public class CaptureCube : MonoBehaviour
     {
         if (monsterBreakFree_ && coliderMonster_)
         {
+            playerController_.canMove_ = true;
             Debug.Log("Hmmmm");
             coliderMonster_.transform.localScale = Vector3.Lerp(coliderMonster_.transform.localScale, Vector3.one,
                 5 * Time.deltaTime);
@@ -296,11 +301,12 @@ public class CaptureCube : MonoBehaviour
         afterCapture_ = false;
         capture_ = false;
         canCollide_ = false;
-     
+
 
         yield return new WaitForSeconds(1);
 
-        if (!setshake_){
+        if (!setshake_)
+        {
 
             feedbackBool_ = GetInOrOutMonsterChance(sucessPercentage_);
             randomHelper_ = Random.Range(1, 4);
@@ -311,7 +317,7 @@ public class CaptureCube : MonoBehaviour
 
         yield return new WaitForSeconds(1);
 
-        if (feedbackBool_ && shakeValue_  <= 2)
+        if (feedbackBool_ && shakeValue_ <= 2)
         {
             shakeValue_++;
             StartCoroutine(ShakeItOff(coliderMonster_));
@@ -320,6 +326,7 @@ public class CaptureCube : MonoBehaviour
         {
             bigcube_.GetComponent<Animator>().Play("DissolveCubo", -1, 0);
             yield return new WaitForSeconds(1);
+  
 
             camera_.SetCameraMode(CameraController.CameraMode.FollowPlayer);
             camera_.SetTarget(previewTarget_);
@@ -329,7 +336,7 @@ public class CaptureCube : MonoBehaviour
             else captureSystem_.ExitCaptureMode();
             captureSystem_.capturingProcess = false;
             #endregion
-            
+
             setshake_ = false;
             yield break;
         }
@@ -341,7 +348,7 @@ public class CaptureCube : MonoBehaviour
             col.gameObject.SetActive(true);
 
             monsterBreakFree_ = true;
-            
+
             Debug.Log("Work" + col.name);
             FalseBreakCube();
 
@@ -352,7 +359,7 @@ public class CaptureCube : MonoBehaviour
             col.GetComponent<MonsterBase>().beenCapture = false;
 
             #region Acesso ao CaptureSystem
-            if (captureSystem_.cuboQuantidade > 0) 
+            if (captureSystem_.cuboQuantidade > 0)
                 captureSystem_.CaptureInstantiate();
             else captureSystem_.ExitCaptureMode();
             captureSystem_.capturingProcess = false;
