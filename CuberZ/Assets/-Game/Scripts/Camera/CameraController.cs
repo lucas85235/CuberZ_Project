@@ -59,7 +59,7 @@ public class CameraController : CameraProperties
             this.transform.LookAt(enemyTarget_);
         }
         else 
-            if (input_.MoveCameraInput()) 
+            if (input_.MoveCamera()) 
                 CameraRotate();
 
         if (Physics.Linecast(target_.position, transform.position, out hit_, excludeLayers)) 

@@ -21,19 +21,6 @@ public abstract class MonsterBase : CharacterAbstraction
     [SerializeField] public bool isAttacking { get; set; }
     [SerializeField] public int currentAttackIndex;
 
-    [Header("Jump Config")]
-    public float initialJumpImpulse = 10.0f;
-    public float jumpForce = 0.03f;
-    public float jumpTime = 0.12f;
-    public float dowmSpeed = 15;
-
-    private bool startJumpWait_ = false;
-
-    protected bool canJump_ = true;
-    protected bool isJump = false;
-    protected bool startJumpTime = false;
-    protected float countJumpTime = 0;
-
     [Header("Attack Stats")]
     public float attackSpeed = 20.0f;
     public float attackDistance = 5.0f;
@@ -42,27 +29,11 @@ public abstract class MonsterBase : CharacterAbstraction
     protected float monsterLife;
     protected float maxLife = 100f;
     protected bool isDead = false;
-
-    [Header("Stamina Stats")]
-    public float staminaRegen = 0.03f;
-    public float regenStartTime = 1.0f;  
-
-    [SerializeField] protected float monsterStamina;
-    protected float maxStamina = 100f;
-    protected float countRegenStartTime = 0;
-    protected bool startRegenProcess = false;
-    protected bool inRunInput = false;
-    protected bool endedStamina = false;
-    private bool startEnded = false;
     
     [Header("IA config")]
     public float minDistance = 12.0f;
     public float followSpeed = 10.0f;
     protected bool canFollowState = true;
-
-    [HideInInspector]
-    public bool beenCapture { get { return beenCapture_; } set { beenCapture_ = value; } }
-    private bool beenCapture_;
 
     #region Inversão de depencia
     protected virtual void Construt(IInput newInputInterface, AnimationBase newAnimation) 
@@ -169,7 +140,7 @@ public abstract class MonsterBase : CharacterAbstraction
                 transform.position += transform.forward * runSpeed * Time.deltaTime;
                 DecrementStamina(0.5f);
 
-                if (monsterStamina == 0) 
+                if (characterStamina == 0) 
                     StartCoroutine(EndedRegenTime());           
             }
             else
@@ -183,17 +154,8 @@ public abstract class MonsterBase : CharacterAbstraction
             }
         }
     }
-    
-    private IEnumerator EndedRegenTime() 
-    {
-        startEnded = true;
-        endedStamina = true; 
-        yield return new WaitUntil(()=> inRunInput == false && monsterStamina > 5f);
-        endedStamina = false;
-        startEnded = false;
-    }
 
-    protected virtual void Jump() 
+    protected override void Jump() 
     {
         if (Input.GetKeyDown(KeyCode.Space) && !isJump && canJump_) 
         {
@@ -225,11 +187,6 @@ public abstract class MonsterBase : CharacterAbstraction
         startJumpTime = false;
         countJumpTime = 0;
         startJumpWait_ = false;    
-    }
-
-    protected virtual bool ExistGround()
-    {
-        return Physics.Raycast(transform.position, (-1 * transform.up), 0.2f);
     }
 
     protected virtual string GetAttackName(int index)
@@ -284,77 +241,29 @@ public abstract class MonsterBase : CharacterAbstraction
         worldHud_.HudUpdateLife(monsterLife, maxLife); // Singleton Recebe um valor e divide por outro vida/vidamax
     }
 
-    public void IncrementStamina(float increment)
+    public override void IncrementStamina(float increment)
     {
-        monsterStamina += increment;
+        characterStamina += increment;
 
-        if (monsterStamina > maxStamina)
+        if (characterStamina > maxStamina)
         {
-            monsterStamina = maxStamina;
+            characterStamina = maxStamina;
         }
 
-        worldHud_.HudUpdateStamina(monsterStamina, maxStamina); // Singleton Recebe um valor e divide por outro stamina/staminamax
+        worldHud_.HudUpdateStamina(characterStamina, maxStamina); // Singleton Recebe um valor e divide por outro stamina/staminamax
     }
 
-    public void DecrementStamina(float decrement)
+    public override void DecrementStamina(float decrement)
     {
-        monsterStamina -= decrement;
+        characterStamina -= decrement;
 
         if (!HaveStamina())
         {
-            monsterStamina = 0;
+            characterStamina = 0;
             Debug.Log("You not have stamina!");
         }
 
-        worldHud_.HudUpdateStamina(monsterStamina, maxStamina); // Singleton Recebe um valor e divide por outro stamina/staminamax
-    }
-
-    public void RegenStamina() 
-    {
-        if (monsterStamina < maxStamina) 
-        {
-            if (!startRegenProcess) 
-            {
-                startRegenProcess = true;
-                countRegenStartTime = 0;
-            }
-            else  countRegenStartTime += Time.deltaTime;
-
-            if (countRegenStartTime >= regenStartTime) 
-                IncrementStamina(staminaRegen);
-            
-        }
-    }
-
-    public void RestartRegenProcess() 
-    {
-        startRegenProcess = false;
-    }
-
-    public bool HaveStamina()
-    {
-        return monsterStamina > 0;
+        worldHud_.HudUpdateStamina(characterStamina, maxStamina); // Singleton Recebe um valor e divide por outro stamina/staminamax
     }
     #endregion
-
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.tag == "Wall")
-            canJump_ = false;
-    }
-
-    private void OnCollisionExit(Collision collision)
-    {
-        if (collision.gameObject.tag == "Wall")
-            canJump_ = true;
-    }
-
-    private void OnCollisionStay(Collision collision)
-    {
-        if (collision.gameObject.tag == "Wall" && isJump)
-        {
-            transform.position += new Vector3(0, -0.1f, 0);
-            body_.AddForce(Vector3.down * dowmSpeed);
-        }
-    }
 }

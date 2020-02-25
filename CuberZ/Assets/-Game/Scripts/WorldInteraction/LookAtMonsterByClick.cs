@@ -48,13 +48,13 @@ public class LookAtMonsterByClick : MonoBehaviour
 
     private void Update()
     {
-        if (input_.ExecuteActionInput() && !findMonster_)
+        if (input_.ExecuteAction() && !findMonster_)
         {
             RayCastMonster();
             Counting();
         }
 
-        if (input_.ExitInput() && findMonster_)
+        if (input_.Exit() && findMonster_)
         {
             LoadCameraDefault();
         }
