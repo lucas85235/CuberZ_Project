@@ -5,18 +5,35 @@ using UnityEngine.AI;
 
 public class PlayerController : CharacterAbstraction
 {
-    public GameObject[] monster;
-    public bool canMove_ = true;
+    [Header("Kubber Team")]
+    public GameObject[] monster = { null, null, null, null };
+
     public bool spawnedOnWorld;
 
-    private Vector3 previousVelocity_;
+    public bool IsJump { get => isJump; }
+    public bool CanMove_ { get => canMove_; set => canMove_ = value; }
+
     private PlayerAnimation playerAnimation_;
     private CaptureSystem captureSystem;
+    private HudWorldStats worldHud_;
+    private CameraProperties camera_;
 
+    private bool canGetInputs_ = false;
+    private bool canMove_ = true;
 
-    [Header("Jump Stats")]
-    public float jumpforce;
-    public bool jump;
+    #region Inversão de depencia
+    protected virtual void Construt(IInput newInputInterface, CameraProperties newCamera)
+    {
+        input_ = newInputInterface;
+        camera_ = newCamera;
+    }
+
+    protected override void Awake()
+    {
+        Construt(Object.FindObjectOfType<InputSystem>(), 
+            Camera.main.GetComponent<CameraProperties>());
+    }
+    #endregion
 
     private void Start()
     {
@@ -25,66 +42,80 @@ public class PlayerController : CharacterAbstraction
         cameraController_ = Camera.main.GetComponent<CameraController>();
         playerAnimation_ = GetComponent<PlayerAnimation>();
         captureSystem = GetComponent<CaptureSystem>();
+        worldHud_ = GetComponent<HudWorldStats>();
         #endregion
 
         body_.freezeRotation = true;
 
         SetInitialCharacter();
+
+        characterStamina = maxStamina;
+        worldHud_.HudUpdateStamina(characterStamina, maxStamina);
+
+        camera_.SetMinAngle(1f);
+        camera_.SetMinAngle(1f);
+    }
+
+    private void Update()
+    {
+        if (canGetInputs_ && isEnabled)
+        {
+            #region Get Inputs
+            if (Input.GetKeyDown(KeyCode.T))
+            {
+                if (monster[0] && spawnedOnWorld)
+                {
+                    SwitchCharacterController(monster[0].GetComponent<MonsterBase>());
+                    StartCoroutine(monster[0].GetComponent<MonsterBase>().StopFollow());
+                }
+            }
+
+            if (Input.GetKeyDown(KeyCode.N)) // Key de Teste
+            {
+                isSwimMode = !isSwimMode;
+
+                if (isSwimMode)
+                {
+                    playerAnimation_.EnterInSwimMode();
+                    GameObject.Find("Ground").GetComponent<MeshRenderer>().enabled = false;
+                }
+                else
+                {
+                    playerAnimation_.ExitInSwimMode();
+                    GameObject.Find("Ground").GetComponent<MeshRenderer>().enabled = true;
+                }
+            }
+
+            if (input_.GetAxisHorizontal() == 0 && input_.GetAxisVertical() == 0)
+                playerAnimation_.MovimentSpeed(0);
+
+            Jump();
+            #endregion
+        }
     }
 
     private void FixedUpdate()
     {
         if (canMove_)
         {
-            if (isEnabled && !captureSystem.capturingProcess)
+            if (isEnabled && !captureSystem.captureProcess)
             {
-                if (!jump)
-                {
-                    axisX = input_.GetAxisHorizontal();
-                    axisY = input_.GetAxisVertical();
-                }
+                axisX = input_.GetAxisHorizontal();
+                axisY = input_.GetAxisVertical();
 
                 Movement();
 
-                #region Get Inputs
-                if (Input.GetKeyDown(KeyCode.T))
-                {
-                    if (monster[0]  && spawnedOnWorld)
-                    {
-                        SwitchCharacterController(monster[0].GetComponent<MonsterBase>());
-                        StartCoroutine(monster[0].GetComponent<MonsterBase>().StopFollow());
-                    }
-                }
-                #endregion
-            }
 
-            if (input_.JumpInput() && isEnabled)
-            {
-                if (!captureSystem.capturingProcess && !captureSystem.capturing) 
-                    playerAnimation_.EnterJump();
+                canGetInputs_ = true;
             }
-             
-            if (jump)  
-                body_.AddForce(-Vector3.up * 1500 * Time.deltaTime);
+            else canGetInputs_ = false;
         }
-
-        if (Input.GetKeyDown(KeyCode.N)) // Key de Teste
+        else 
         {
-            isSwimMode = !isSwimMode;
-
-            if (isSwimMode) 
-            {
-                playerAnimation_.EnterInSwimMode();
-                GameObject.Find("Ground").GetComponent<MeshRenderer>().enabled = false;
-            }
-            else 
-            {
-                playerAnimation_.ExitInSwimMode();
-                GameObject.Find("Ground").GetComponent<MeshRenderer>().enabled = true;
-            }               
+            playerAnimation_.MovimentSpeed(0);
         }
 
-        playerAnimation_.MovimentSpeed(PlayerVelocity());
+        RegenStamina();
     }
 
     protected override void Movement() 
@@ -101,33 +132,77 @@ public class PlayerController : CharacterAbstraction
                 ref smooth_, 
                 smoothTime);
 
-            if (!captureSystem.capturing)
+            if (!captureSystem.inCaptureMode)
             {
-                if (!input_.RunInput())
-                    transform.position += transform.forward * walkSpeed * Time.deltaTime;
-                else
+                if (Input.GetKeyUp(KeyCode.LeftShift))
+                    inRunInput = false;
+                else if (Input.GetKeyDown(KeyCode.LeftShift))
+                    inRunInput = true;
+
+                if (input_.RunInput() && inRunInput && !isJump && !endedStamina)
+                {
                     transform.position += transform.forward * runSpeed * Time.deltaTime;
+                    playerAnimation_.MovimentSpeed(axisX * axisX + axisY * axisY);
+                    DecrementStamina(0.5f);
+
+                    if (characterStamina == 0)
+                        StartCoroutine(EndedRegenTime());
+                }
+                else
+                {
+                    transform.position += transform.forward * walkSpeed * Time.deltaTime;
+                    playerAnimation_.MovimentSpeed((axisX * axisX + axisY * axisY) / 2);
+
+                    if (!input_.RunInput())
+                        inRunInput = false;
+                    else
+                        inRunInput = true;
+                }
             }
-            else
+            
+            if (captureSystem.inCaptureMode)
             {
-              transform.position += transform.forward * walkSpeed/3f * Time.deltaTime;
+                if (input_.GetAxisHorizontal() != 0 || input_.GetAxisVertical() != 0)
+                {
+                    transform.position += transform.forward * (walkSpeed / 2) * Time.deltaTime;
+                    playerAnimation_.MovimentSpeed(0.45f);
+                }
+                else playerAnimation_.MovimentSpeed(0);
             }
+
+            if (captureSystem.captureProcess) 
+                StopWalk();
         }
     }
-    
-    private float PlayerVelocity()
+
+    protected override void Jump()
     {
-        Vector3 speed_ = (transform.position - previousVelocity_) / Time.deltaTime;
-        previousVelocity_ = transform.position;
-        return speed_.magnitude;
+        if (Input.GetKeyDown(KeyCode.Space) && !isJump && canJump_ && characterStamina >= 10.0f)
+        {
+            body_.AddForce(Vector3.up * initialJumpImpulse, ForceMode.Impulse);
+            startJumpTime = true;
+            isJump = true;
+            playerAnimation_.EnterJump();
+            DecrementStamina(10f);
+        }
+
+        if (Input.GetKey(KeyCode.Space) && isJump)
+            body_.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+
+        if (startJumpTime && countJumpTime < jumpTime)
+            countJumpTime += Time.deltaTime;
+
+        if (!ExistGround() && countJumpTime >= jumpTime)
+            body_.AddForce(Vector3.down * dowmSpeed);
+
+        if (ExistGround() && countJumpTime >= jumpTime && !startJumpWait_)
+            StartCoroutine(JumpWaitTime());
     }
 
-    private void Jump()
+    protected override bool ExistGround()
     {
-        jump = true;
-        body_.AddForce(Vector3.up * jumpforce, ForceMode.Impulse);
+        return Physics.Raycast(transform.position, (-1 * transform.up), 0.4f);
     }
-
 
     private void SetInitialCharacter()
     {
@@ -144,25 +219,48 @@ public class PlayerController : CharacterAbstraction
         SetCameraPropeties(transform.Find("CameraTarget"));
     }
 
-    private void OnCollisionEnter(Collision collision)
+    protected virtual IEnumerator JumpWaitTime()
     {
-        if (collision.gameObject.name == "Ground" || collision.gameObject.name == "Wall")
-        {
-            if (jump)
-            {
-                playerAnimation_.ExitJump();
-                StartCoroutine(WaitJumpTime());
-            }
-        }
+        startJumpWait_ = true;
+        playerAnimation_.ExitJump();
+        yield return new WaitForSeconds(0.2f);
+        StopWalk();
+        isJump = false;
+        startJumpTime = false;
+        countJumpTime = 0;
+        startJumpWait_ = false;
     }
 
-    private IEnumerator WaitJumpTime()
+    public override void IncrementStamina(float increment)
     {
-        jump = false;
-        canMove_ = false;
-        yield return new WaitForSeconds(0.3f);
-        canMove_ = true;
-        captureSystem.GoToWalkAnimator();
-        yield break;
+        characterStamina += increment;
+
+        if (characterStamina > maxStamina)
+        {
+            characterStamina = maxStamina;
+        }
+
+        worldHud_.HudUpdateStamina(characterStamina, maxStamina);
+    }
+
+    public override void DecrementStamina(float decrement)
+    {
+        characterStamina -= decrement;
+
+        if (!HaveStamina())
+        {
+            characterStamina = 0;
+            Debug.Log("You not have stamina!");
+        }
+
+        worldHud_.HudUpdateStamina(characterStamina, maxStamina);
+    }
+
+    public void StopWalk() 
+    {
+        axisX = 0;
+        axisY = 0;
+        playerAnimation_.MovimentSpeed(0);
+        body_.velocity = Vector3.zero;
     }
 }

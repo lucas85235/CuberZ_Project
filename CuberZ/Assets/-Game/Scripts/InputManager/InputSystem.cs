@@ -49,13 +49,13 @@ public class InputSystem : MonoBehaviour, IInput
     private const string jumpPref = "JUMP-PLAYER";
     #endregion
 
-    #region Funções Singleton
-    public bool MoveCameraInput() { return Input.GetKey(moveCameraKey); }
-    public bool ExecuteActionInput() { return Input.GetKeyDown(executeActionInput); }
-    public bool KubberAttack1Input() { return Input.GetKeyDown(kubberAtk1Key); }
-    public bool KubberAttack2Input() { return Input.GetKeyDown(kubberAtk2Key); }
-    public bool KubberAttack3Input() { return Input.GetKeyDown(kubberAtk3Key); }
-    public bool KubberAttack4Input() { return Input.GetKeyDown(kubberAtk4Key); }
+    #region Get Inputs
+    public bool MoveCamera() { return Input.GetKey(moveCameraKey); }
+    public bool ExecuteAction() { return Input.GetKeyDown(executeActionInput); }
+    public bool KubberAttack1() { return Input.GetKeyDown(kubberAtk1Key); }
+    public bool KubberAttack2() { return Input.GetKeyDown(kubberAtk2Key); }
+    public bool KubberAttack3() { return Input.GetKeyDown(kubberAtk3Key); }
+    public bool KubberAttack4() { return Input.GetKeyDown(kubberAtk4Key); }
     public float GetAxisHorizontal() { return Input.GetAxis(getAxisHorizontal); }
     public float GetAxisVertical() { return Input.GetAxis(getAxisVertical); }
     public float GetAxisMouseX() { return Input.GetAxis(getAxisMouseX); }
@@ -63,9 +63,9 @@ public class InputSystem : MonoBehaviour, IInput
     public bool FixCameraOnMyKubberInput() { return Input.GetKeyDown(fixCameraOnMyKubberKey); }
     public bool RescueKubberInput() { return Input.GetKeyDown(rescueKubberKey); }
     public bool RunInput() { return Input.GetKey(runKey); }
-    public bool ExitInput() { return Input.GetKeyDown(exitKey); }
-    public bool CaptureKubberInput() { return Input.GetKeyDown(captureKubberkey); }
-    public bool JumpInput() { return Input.GetKeyDown(jumpkey); }
+    public bool Exit() { return Input.GetKeyDown(exitKey); }
+    public bool EnterInCaptureMode() { return Input.GetKeyDown(captureKubberkey); }
+    public bool Jump() { return Input.GetKeyDown(jumpkey); }
     #endregion
 
     #region Funções PlayerPrefs

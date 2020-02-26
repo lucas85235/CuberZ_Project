@@ -114,16 +114,16 @@ public class TigranofireBehaviour : MonsterBase
             if (Input.GetKeyDown(KeyCode.T) && player_ != null) // Usado para testes romover na versão final
                 SwitchCharacterController(player_);
 
-            if (input_.ExecuteActionInput() && !isAttacking)
+            if (input_.ExecuteAction() && !isAttacking)
                 StartCoroutine(GetAttackName(currentAttackIndex));
 
-            if (input_.KubberAttack1Input())
+            if (input_.KubberAttack1())
                 currentAttackIndex = (int)TigrofireAttacks.FireWheel;
-            if (input_.KubberAttack2Input())
+            if (input_.KubberAttack2())
                 currentAttackIndex = (int)TigrofireAttacks.FlameThrower;
-            if (input_.KubberAttack3Input())
+            if (input_.KubberAttack3())
                 currentAttackIndex = (int)TigrofireAttacks.FireSequence;
-            if (input_.KubberAttack4Input())
+            if (input_.KubberAttack4())
                 currentAttackIndex = (int)TigrofireAttacks.HyperBeam;
             #endregion
         }

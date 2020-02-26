@@ -119,20 +119,20 @@ public class MinitiBehaviuor : MonsterBase
             if (Input.GetKeyDown(KeyCode.T) && player_ != null) // Usado para testes romover na versão final
                 SwitchCharacterController(player_);
 
-            if (input_.ExecuteActionInput() && !isAttacking) 
+            if (input_.ExecuteAction() && !isAttacking) 
             {
-                if (monsterStamina > attack_.GetStaminaCost(currentAttackIndex))
+                if (characterStamina > attack_.GetStaminaCost(currentAttackIndex))
                     StartCoroutine(GetAttackName(currentAttackIndex));
                 else Debug.Log("Você não tem stmina para realizar este attack!");
             }
 
-            if (input_.KubberAttack1Input())
+            if (input_.KubberAttack1())
                 currentAttackIndex = (int)MinitiAttacks.ToHeadButt;
-            if (input_.KubberAttack2Input())
+            if (input_.KubberAttack2())
                 currentAttackIndex = (int)MinitiAttacks.FireBall;
-            if (input_.KubberAttack3Input())
+            if (input_.KubberAttack3())
                 currentAttackIndex = (int)MinitiAttacks.RotatoryAttack;
-            if (input_.KubberAttack4Input())
+            if (input_.KubberAttack4())
                 currentAttackIndex = (int)MinitiAttacks.Bite;
             #endregion
         }

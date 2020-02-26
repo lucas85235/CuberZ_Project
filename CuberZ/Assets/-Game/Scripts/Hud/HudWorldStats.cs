@@ -12,7 +12,9 @@ public class HudWorldStats : MonoBehaviour
     #region Funções para todos os Kubberz
     public void HudUpdateLife(float life, float maxLife)
     {
-        lifeImage.fillAmount = life / maxLife;
+        if (lifeImage)
+            lifeImage.fillAmount = life / maxLife;
+        Debug.LogError("Não Possui: " + lifeImage);
     }
 
     public void HudUpdateStamina(float stamina, float staminaMax)
