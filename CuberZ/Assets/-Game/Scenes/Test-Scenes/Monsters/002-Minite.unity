@@ -2032,6 +2032,16 @@ PrefabInstance:
       propertyPath: staminaRegen
       value: 0.08
       objectReference: {fileID: 0}
+    - target: {fileID: 8634684265689884796, guid: e6ee79b6e9ca7544788677ee19ad52ec,
+        type: 3}
+      propertyPath: toHeadButtLenght_
+      value: 1.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 8634684265689884796, guid: e6ee79b6e9ca7544788677ee19ad52ec,
+        type: 3}
+      propertyPath: attackSpeed
+      value: 25
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e6ee79b6e9ca7544788677ee19ad52ec, type: 3}
 --- !u!4 &8569687631078579454 stripped

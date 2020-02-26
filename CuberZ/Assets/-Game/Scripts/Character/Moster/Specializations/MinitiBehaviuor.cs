@@ -7,12 +7,13 @@ public class MinitiBehaviuor : MonsterBase
 {
     // se tiver ataques de outros tipos setar um novo enum
     // que recebera ataques personalizados
-    // setar os novos ataques e dar mu override no GetAttackName
+    // setar os novos ataques e dar um override no GetAttackName
 
     private bool canFollowPlayer = true;
     private bool canMove = true;
 
-    private float toHeadButtLenght_ = 1.208333f;
+    [SerializeField]
+    private float toHeadButtLenght_ = 1.4f; // Valor anterior = 1.208333f;
 
     public enum MinitiAttacks
     {
@@ -64,6 +65,59 @@ public class MinitiBehaviuor : MonsterBase
         // Deletar
     }
 
+    protected virtual void Update()
+    {
+        #region Get Inputs
+        if (Input.GetKeyDown(KeyCode.N)) // Key de Teste
+        {
+            isSwimMode = !isSwimMode;
+            if (isSwimMode)
+            {
+                animation_.EnterInSwimMode();
+                GameObject.Find("Ground").GetComponent<MeshRenderer>().enabled = false;
+            }
+            else
+            {
+                animation_.ExitInSwimMode();
+                GameObject.Find("Ground").GetComponent<MeshRenderer>().enabled = true;
+            }
+        }
+        if (Input.GetKeyDown(KeyCode.F) && !isDead) // Key de Teste
+        {
+            StartCoroutine(animation_.PlayDeathState());
+            isDead = true;
+        }
+
+        if (Input.GetKeyDown(KeyCode.R) && isDead) // Key de Teste
+        {
+            animation_.ExitDeathState();
+            isDead = false;
+        }
+        if (Input.GetKeyDown(KeyCode.F1)) // Key de Teste
+            animation_.ExtraAnimationOne();
+        if (Input.GetKeyDown(KeyCode.F2)) // Key de Teste
+            animation_.ExtraAnimationTwo();
+        if (Input.GetKeyDown(KeyCode.T) && player_ != null) // Usado para testes romover na versão final
+            SwitchCharacterController(player_);
+        if (input_.ExecuteActionInput() && !isAttacking)
+        {
+            if (monsterStamina > attack_.GetStaminaCost(currentAttackIndex))
+            {
+                StartCoroutine(GetAttackName(currentAttackIndex));
+            }
+            else Debug.Log("Você não tem stmina para realizar este attack!");
+        }
+        if (input_.KubberAttack1Input())
+            currentAttackIndex = (int)MinitiAttacks.ToHeadButt;
+        if (input_.KubberAttack2Input())
+            currentAttackIndex = (int)MinitiAttacks.FireBall;
+        if (input_.KubberAttack3Input())
+            currentAttackIndex = (int)MinitiAttacks.RotatoryAttack;
+        if (input_.KubberAttack4Input())
+            currentAttackIndex = (int)MinitiAttacks.Bite;
+        #endregion
+    }
+
     protected virtual void FixedUpdate()
     {
         if (isEnabled)
@@ -81,73 +135,17 @@ public class MinitiBehaviuor : MonsterBase
             }
 
             Jump();
-
-            #region Get Inputs
-            if (Input.GetKeyDown(KeyCode.N)) // Key de Teste
-            {
-                isSwimMode = !isSwimMode;
-
-                if (isSwimMode) 
-                {
-                    animation_.EnterInSwimMode();
-                    GameObject.Find("Ground").GetComponent<MeshRenderer>().enabled = false;
-                }
-                else 
-                {
-                    animation_.ExitInSwimMode();
-                    GameObject.Find("Ground").GetComponent<MeshRenderer>().enabled = true;
-                }               
-            }
-
-            if (Input.GetKeyDown(KeyCode.F) && !isDead) // Key de Teste
-            {
-                StartCoroutine(animation_.PlayDeathState());
-                isDead = true;
-            }
-
-            if (Input.GetKeyDown(KeyCode.R) && isDead) // Key de Teste
-            {
-                animation_.ExitDeathState();
-                isDead = false;
-            }
-
-            if (Input.GetKeyDown(KeyCode.F1)) // Key de Teste
-                animation_.ExtraAnimationOne();
-            if (Input.GetKeyDown(KeyCode.F2)) // Key de Teste
-                animation_.ExtraAnimationTwo();
-
-            if (Input.GetKeyDown(KeyCode.T) && player_ != null) // Usado para testes romover na versão final
-                SwitchCharacterController(player_);
-
-            if (input_.ExecuteAction() && !isAttacking) 
-            {
-                if (characterStamina > attack_.GetStaminaCost(currentAttackIndex))
-                    StartCoroutine(GetAttackName(currentAttackIndex));
-                else Debug.Log("Você não tem stmina para realizar este attack!");
-            }
-
-            if (input_.KubberAttack1())
-                currentAttackIndex = (int)MinitiAttacks.ToHeadButt;
-            if (input_.KubberAttack2())
-                currentAttackIndex = (int)MinitiAttacks.FireBall;
-            if (input_.KubberAttack3())
-                currentAttackIndex = (int)MinitiAttacks.RotatoryAttack;
-            if (input_.KubberAttack4())
-                currentAttackIndex = (int)MinitiAttacks.Bite;
-            #endregion
         }
         else if (!isEnabled && canFollowPlayer)
         {
             if (canFollowState)
                 FollowPlayer();
         }
-        else 
+
+        if(animation_.GetCurrentAnimationInLayerOne().IsName("ToHeadButt"))
         {
-            if (animation_.GetCurrentAnimationInLayerOne().IsName("ToHeadButt"))
-                body_.velocity = transform.forward * attackSpeed;
-            else
-                body_.velocity = Vector3.zero;
-        }
+            body_.velocity = transform.forward * attackSpeed;        }
+        else body_.velocity = Vector3.zero;
 
         RegenStamina();
     }
@@ -211,8 +209,8 @@ public class MinitiBehaviuor : MonsterBase
         
         yield return new WaitForSeconds(toHeadButtLenght_);
         DebugAttack();
-
         MovableSetting();
+        yield break;
     }
 
     public IEnumerator FireBall() 
