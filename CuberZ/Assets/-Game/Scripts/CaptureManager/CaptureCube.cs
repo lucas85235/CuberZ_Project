@@ -9,6 +9,7 @@ public class CaptureCube : MonoBehaviour
     private CameraProperties camera_;
     private CaptureSystem captureSystem_;
     private PlayerController playerController_;
+    private CubeAnimations cubeAnimations_;
 
     [Header("Variaveis de Alocação")]
     public GameObject fakeCube;
@@ -41,7 +42,6 @@ public class CaptureCube : MonoBehaviour
     private bool setshake_;
     private bool feedbackBool_;
     private bool canCollider_ = true;
-    private CubeAnimations cubeAnimations_;
 
     #region propties getter and setter
     [HideInInspector] public float sucessPercentage { get { return sucessPercentage_; } set { sucessPercentage_ = value; } }
@@ -63,6 +63,7 @@ public class CaptureCube : MonoBehaviour
         mycollider_ = GetComponent<Collider>();
         playerController_ = FindObjectOfType<PlayerController>();
         captureSystem_ = FindObjectOfType<CaptureSystem>();
+        cubeAnimations_ = GetComponent<CubeAnimations>();
 
         canMovement_ = true;
         canCollider_ = true;
@@ -186,8 +187,9 @@ public class CaptureCube : MonoBehaviour
         rigibody_.velocity = Vector3.zero;
         rigibody_.freezeRotation = true;
         transform.LookAt(monsterColliderDetected_.transform);
+
         Debug.Log("Toca Animação");
-        fakeCube_.GetComponent<Animator>().Play("Capturing", -1, 0);
+        cubeAnimations_.Capturing();
         yield return new WaitUntil(() => fakeCube_.GetComponent<CaptureHelper>().canGo);
         moveCapture_ = false;
         abductionProcess = true;
@@ -235,12 +237,9 @@ public class CaptureCube : MonoBehaviour
             feedbackBool_ = GetInOrOutMonsterChance(sucessPercentage_);
             randomHelper_ = Random.Range(1, 4);
             setshake_ = true;
-        }
-        //---------------------------------------------------------
-        cubeAnimations_.AnimationSet_ShakeCube();
+        }
 
-        fakeCube_.GetComponent<Animator>().Play("ShakeCube", -1, 0);
-
+        cubeAnimations_.ShakeCube();
         yield return new WaitForSeconds(1);
 
         if (feedbackBool_ && shakeValue_ <= 2)
@@ -250,7 +249,7 @@ public class CaptureCube : MonoBehaviour
         }
         else if (feedbackBool_ && shakeValue_ > 2)
         {
-            fakeCube_.GetComponent<Animator>().Play("DissolveCubo", -1, 0);
+            cubeAnimations_.DissolveCube();
             yield return new WaitForSeconds(1);
 
             camera_.SetCameraMode(CameraController.CameraMode.FollowPlayer);

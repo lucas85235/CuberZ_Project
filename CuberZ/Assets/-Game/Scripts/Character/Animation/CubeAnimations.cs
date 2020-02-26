@@ -4,41 +4,36 @@ using UnityEngine;
 
 public class CubeAnimations : MonoBehaviour
 {
-    private Transform smallCube_, bigCube_;
-
+    private Transform captureCube_, fakeCube_;
 
     private void Start()
     {
-        smallCube_ = transform.GetChild(0);
-        bigCube_ = transform.GetChild(1);
+        captureCube_ = transform.GetChild(0);
+        fakeCube_ = transform.GetChild(1);
     }
 
-
-
-    public void AnimationSet_Capturing()
+    public void Capturing()
     {
-        bigCube_.GetComponent<Animator>().Play("Capturing", -1, 0);
-
+        fakeCube_.GetComponent<Animator>().Play("Capturing", -1, 0);
     }
 
-    public void AnimationSet_DiminuirSmallCube()
+    public void DecreaseCaptureCube()
     {
-        smallCube_.GetComponent<Animator>().Play("DiminuirCuboPequeno", -1, 0);
+        captureCube_.GetComponent<Animator>().Play("DiminuirCuboPequeno", -1, 0);
     }
 
-    public void AnimationSet_DissolveCube()
+    public void DissolveCube()
     {
-        bigCube_.GetComponent<Animator>().Play("DissolveCubo", -1, 0);
+        fakeCube_.GetComponent<Animator>().Play("DissolveCubo", -1, 0);
     }
 
-    public void AnimationSet_ExpandirBigCube()
+    public void ExpandFakeCube()
     {
-        bigCube_.GetComponent<Animator>().Play("ExpandirCubo", -1, 0);
+        fakeCube_.GetComponent<Animator>().Play("ExpandirCubo", -1, 0);
     }
 
-    public void AnimationSet_ShakeCube()
+    public void ShakeCube()
     {
-        bigCube_.GetComponent<Animator>().Play("ShakeCube", -1, 0);
+        fakeCube_.GetComponent<Animator>().Play("ShakeCube", -1, 0);
     }
-
 }

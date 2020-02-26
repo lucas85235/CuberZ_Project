@@ -163,7 +163,7 @@ public class CaptureSystem : MonoBehaviour
             captureCubeTemp_.GetComponent<Collider>().enabled = true;
             captureCubeTemp_.GetComponent<Rigidbody>().useGravity = true;
             captureCubeTemp_.GetComponent<CaptureCube>().speed = impulseForce + (distance_ * distanceMultiplier);
-            captureCubeTemp_.transform.GetChild(0).GetComponent<Animator>().Play("DiminuirCuboPequeno", -1, 0);
+            captureCubeTemp_.GetComponent<CubeAnimations>().DecreaseCaptureCube();
 
             captureCubeTemp_ = null;
 
