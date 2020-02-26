@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class IAManagerDefault : MonoBehaviour
+public class IAManagerDefault : MonsterBase
 {
     [Header("Variáveis Alocáveis")]
     public Transform target;
@@ -19,34 +19,27 @@ public class IAManagerDefault : MonoBehaviour
     [Range(0,3f)] public float waitTimer = 3;
     [Tooltip("A cada quantos segundos o Kubber procura um skill para se utilizar")]
     [Range(0,10f)] public float timerUpdate = 3;
-    [Tooltip("Vida do Kubber Selvagem")]
-    [Range(0, 100)] public float mosterLife = 100f;    
     [Tooltip("Modos da IA")]
     public State iaState;
     [Tooltip("Controla distÂncia e qual skill será usada.")]
     public SkillsAndDistance[] skillStats;
 
-    private NavMeshAgent navAgent_;
-    private AnimationBase animation_;
-    private HudWorldStats worldHud_;
     private Vector3 previousVelocity_;
     private Vector3 firstPos_;
     private float timerToCountUpdate_;
     private bool useSkill_;
     private bool canControl_;
     private bool goOut_;
-    private bool isDead = false;
     
     #region Métodos MonoBehaviour
-    private void Awake()
-    {
-        navAgent_ = GetComponent<NavMeshAgent>();
-        animation_ = GetComponent<AnimationBase>();
-        worldHud_ = GetComponent<HudWorldStats>();
-    }
 
     private void Start()
     {
+        nav_ = GetComponent<NavMeshAgent>();
+        animation_ = GetComponent<AnimationBase>();
+        worldHud_ = GetComponent<HudWorldStats>();
+        attack_ = GetComponent<AttackManager>();
+
         firstPos_ = transform.position;
         StartCoroutine(Timer());
     }
@@ -56,7 +49,9 @@ public class IAManagerDefault : MonoBehaviour
         if (iaState == State.Walk) 
             ControlWalkState();
         else if (iaState == State.Batlle) 
-            ControlBattleState(); 
+            ControlBattleState();
+
+        RegenStamina();
     }
 
     private void OnTriggerStay(Collider other) 
@@ -89,7 +84,7 @@ public class IAManagerDefault : MonoBehaviour
 
     private void GoBackToOrigin()
     {
-        navAgent_.SetDestination(firstPos_);
+        nav_.SetDestination(firstPos_);
         goOut_ = false;
         StartCoroutine(Timer());
     }
@@ -107,9 +102,9 @@ public class IAManagerDefault : MonoBehaviour
         Vector3 randomDirection = Random.insideUnitSphere * walkRadius;
         randomDirection += transform.position;
 
-        NavMeshHit hit;
+        NavMeshHit hit = new NavMeshHit();
         NavMesh.SamplePosition(randomDirection, out hit, walkRadius, 1);
-        navAgent_.SetDestination(hit.position);
+        nav_.SetDestination(hit.position);
         goOut_ = true;
 
         StartCoroutine(Timer());
@@ -131,25 +126,25 @@ public class IAManagerDefault : MonoBehaviour
     {
         if (target)
         {
-            if (navAgent_.enabled && !useSkill_ && DistanceBetweenTarget() > stopDistance)
+            if (nav_.enabled && !useSkill_ && DistanceBetweenTarget() > stopDistance)
             {
-                navAgent_.enabled = true;
+                nav_.enabled = true;
 
-                if (navAgent_.velocity != Vector3.zero) 
+                if (nav_.velocity != Vector3.zero) 
                 {
                     transform.rotation = Quaternion.Lerp(
                         transform.rotation, 
-                        Quaternion.LookRotation(navAgent_.velocity.normalized), 
+                        Quaternion.LookRotation(nav_.velocity.normalized), 
                         8 * Time.deltaTime);
                 }
-                navAgent_.SetDestination(target.transform.position);
+                nav_.SetDestination(target.transform.position);
             }
-            else if (!useSkill_ &&  navAgent_.enabled && DistanceBetweenTarget() <= stopDistance)
-                navAgent_.enabled = false;
-            else if (!useSkill_ && !navAgent_.enabled && DistanceBetweenTarget() > stopDistance) 
-                navAgent_.enabled = true;
+            else if (!useSkill_ &&  nav_.enabled && DistanceBetweenTarget() <= stopDistance)
+                nav_.enabled = false;
+            else if (!useSkill_ && !nav_.enabled && DistanceBetweenTarget() > stopDistance) 
+                nav_.enabled = true;
         }
-        else navAgent_.enabled = false;
+        else nav_.enabled = false;
     } 
 
     // Verifica se existe alguma skill naquele momento e distância que possa ser usada
@@ -161,14 +156,17 @@ public class IAManagerDefault : MonoBehaviour
         {
             for (int i = 0; i < skillStats.Length; i++)
             {
-                if (i == skillStats[i].skillNumber && DistanceBetweenTarget() <= skillStats[i].skillDistance)
+                if (i == skillStats[i].skillNumber && DistanceBetweenTarget() <= skillStats[i].skillDistance && monsterStamina >= attack_.attackStats[i].staminaCost)
                 {
-                    navAgent_.enabled = false;
+                    nav_.enabled = false;
                     useSkill_ = true;
                     timerToCountUpdate_ = timerUpdate;
                     animation_.NoMovableAttack(skillStats[i].skillNumber);
                     Debug.Log("Chamou a animação!");
-                    break;
+
+                    DecrementStamina(attack_.attackStats[i].staminaCost);
+
+                    return;
                 }
             }
             Debug.Log("Não Chamou a animação!");
@@ -210,21 +208,12 @@ public class IAManagerDefault : MonoBehaviour
         return Vector3.Distance(transform.position, target.transform.position);   
     }
 
-    public void DecrementLife(float decrement)
+    public override void DecrementLife(float decrement)
     {
-        mosterLife -= decrement;
-        Debug.Log(gameObject.name + ": " + mosterLife);
-
-        if (mosterLife <= 0)
-        {
-            isDead = true;
-            Debug.Log("Life < 0, You Are Dead!");
-        }
+        base.DecrementLife(decrement);
 
         if (iaState != State.Batlle)
             iaState = State.Batlle;
-            
-        worldHud_.HudUpdateLife(mosterLife, 100);
     }
     #endregion
 

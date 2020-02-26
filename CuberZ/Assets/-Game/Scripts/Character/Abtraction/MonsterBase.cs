@@ -216,7 +216,7 @@ public abstract class MonsterBase : CharacterAbstraction
     }
 
     #region Life and Stamina increment and decrement 
-    public void IncrementLife(float increment)
+    public virtual void IncrementLife(float increment)
     {
         monsterLife += increment;
 
@@ -228,7 +228,7 @@ public abstract class MonsterBase : CharacterAbstraction
         worldHud_.HudUpdateLife(monsterLife, maxLife); // Singleton Recebe um valor e divide por outro vida/vidamax
     }
 
-    public void DecrementLife(float decrement)
+    public virtual void DecrementLife(float decrement)
     {
         monsterLife -= decrement;
 
@@ -241,7 +241,7 @@ public abstract class MonsterBase : CharacterAbstraction
         worldHud_.HudUpdateLife(monsterLife, maxLife); // Singleton Recebe um valor e divide por outro vida/vidamax
     }
 
-    public override void IncrementStamina(float increment)
+    public virtual void IncrementStamina(float increment)
     {
         characterStamina += increment;
 
@@ -253,7 +253,7 @@ public abstract class MonsterBase : CharacterAbstraction
         worldHud_.HudUpdateStamina(characterStamina, maxStamina); // Singleton Recebe um valor e divide por outro stamina/staminamax
     }
 
-    public override void DecrementStamina(float decrement)
+    public virtual void DecrementStamina(float decrement)
     {
         characterStamina -= decrement;
 
