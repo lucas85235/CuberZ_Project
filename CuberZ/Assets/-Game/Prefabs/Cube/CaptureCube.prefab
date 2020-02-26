@@ -958,6 +958,7 @@ GameObject:
   - component: {fileID: 54086311206838328}
   - component: {fileID: 65629139346645156}
   - component: {fileID: 114845406499386308}
+  - component: {fileID: 114450369047885810}
   m_Layer: 10
   m_Name: CaptureCube
   m_TagString: Player
@@ -1026,6 +1027,18 @@ MonoBehaviour:
   fakeCube: {fileID: 6500537494581273465, guid: 5c62ecc897e5ccc47aee0a9b6bb9bc54,
     type: 3}
   sucessPercentage_: 5
+--- !u!114 &114450369047885810
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2145423973509888249}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70ea07f817c15aa4195010691b2dbe00, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2145423973513594112
 GameObject:
   m_ObjectHideFlags: 0
