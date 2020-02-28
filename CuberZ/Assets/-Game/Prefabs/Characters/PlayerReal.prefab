@@ -10612,7 +10612,7 @@ MonoBehaviour:
   regenStartTime: 1
   characterStamina: 0
   monster:
-  - {fileID: 0}
+  - {fileID: 88148845147911301, guid: e6ee79b6e9ca7544788677ee19ad52ec, type: 3}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
@@ -10635,13 +10635,12 @@ MonoBehaviour:
   hand: {fileID: 484331875291791517}
   impulseForce: 20
   impulseY: 10
-  sucessPercentage: 50
+  sucessPercentage: 60
   distanceMultiplier: 1
-  cuboQuantidade: 1000
+  cubeAmount: 1000
   throwbool: 0
-  capturing: 0
-  captured: 0
-  capturingProcess: 0
+  inCaptureMode: 0
+  captureProcess: 0
 --- !u!114 &424284370
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11122,7 +11121,7 @@ PrefabInstance:
     - target: {fileID: 3988786200815603549, guid: 30bef89df120819489e904b467ef9942,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 8.5
+      value: 8.25
       objectReference: {fileID: 0}
     - target: {fileID: 3988786200815603549, guid: 30bef89df120819489e904b467ef9942,
         type: 3}
@@ -11168,6 +11167,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7903144114096837760, guid: 30bef89df120819489e904b467ef9942,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 7903144114096837760, guid: 30bef89df120819489e904b467ef9942,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.35
+      objectReference: {fileID: 0}
+    - target: {fileID: 7903144114096837760, guid: 30bef89df120819489e904b467ef9942,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 30bef89df120819489e904b467ef9942, type: 3}

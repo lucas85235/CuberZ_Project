@@ -60,69 +60,72 @@ public class MinitiBehaviuor : MonsterBase
         #endregion
 
         // Deletar
-        isEnabled = true;
-        SetCameraPropeties(transform.Find("CameraTarget"));
+        // isEnabled = true;
+        // SetCameraPropeties(transform.Find("CameraTarget"));
         // Deletar
     }
 
     protected virtual void Update()
     {
-        #region Get Inputs
-        if (Input.GetKeyDown(KeyCode.N)) // Key de Teste
+        if (isEnabled) 
         {
-            isSwimMode = !isSwimMode;
-
-            if (isSwimMode)
+            #region Get Inputs
+            if (Input.GetKeyDown(KeyCode.N)) // Key de Teste
             {
-                animation_.EnterInSwimMode();
-                GameObject.Find("Ground").GetComponent<MeshRenderer>().enabled = false;
+                isSwimMode = !isSwimMode;
+
+                if (isSwimMode)
+                {
+                    animation_.EnterInSwimMode();
+                    GameObject.Find("Ground").GetComponent<MeshRenderer>().enabled = false;
+                }
+                else
+                {
+                    animation_.ExitInSwimMode();
+                    GameObject.Find("Ground").GetComponent<MeshRenderer>().enabled = true;
+                }
             }
-            else
+
+            if (Input.GetKeyDown(KeyCode.F) && !isDead) // Key de Teste
             {
-                animation_.ExitInSwimMode();
-                GameObject.Find("Ground").GetComponent<MeshRenderer>().enabled = true;
+                StartCoroutine(animation_.PlayDeathState());
+                isDead = true;
             }
-        }
 
-        if (Input.GetKeyDown(KeyCode.F) && !isDead) // Key de Teste
-        {
-            StartCoroutine(animation_.PlayDeathState());
-            isDead = true;
-        }
-
-        if (Input.GetKeyDown(KeyCode.R) && isDead) // Key de Teste
-        {
-            animation_.ExitDeathState();
-            isDead = false;
-        }
-
-        if (Input.GetKeyDown(KeyCode.F1)) // Key de Teste
-            animation_.ExtraAnimationOne();
-
-        if (Input.GetKeyDown(KeyCode.F2)) // Key de Teste
-            animation_.ExtraAnimationTwo();
-
-        if (Input.GetKeyDown(KeyCode.T) && player_ != null) // Usado para testes romover na versão final
-            SwitchCharacterController(player_);
-
-        if (input_.ExecuteAction() && !isAttacking)
-        {
-            if (characterStamina > attack_.GetStaminaCost(currentAttackIndex))
+            if (Input.GetKeyDown(KeyCode.R) && isDead) // Key de Teste
             {
-                StartCoroutine(GetAttackName(currentAttackIndex));
+                animation_.ExitDeathState();
+                isDead = false;
             }
-            else Debug.Log("Você não tem stmina para realizar este attack!");
-        }
 
-        if (input_.KubberAttack1())
-            currentAttackIndex = (int)MinitiAttacks.ToHeadButt;
-        if (input_.KubberAttack2())
-            currentAttackIndex = (int)MinitiAttacks.FireBall;
-        if (input_.KubberAttack3())
-            currentAttackIndex = (int)MinitiAttacks.RotatoryAttack;
-        if (input_.KubberAttack4())
-            currentAttackIndex = (int)MinitiAttacks.Bite;
-        #endregion
+            if (Input.GetKeyDown(KeyCode.F1)) // Key de Teste
+                animation_.ExtraAnimationOne();
+
+            if (Input.GetKeyDown(KeyCode.F2)) // Key de Teste
+                animation_.ExtraAnimationTwo();
+
+            if (Input.GetKeyDown(KeyCode.T) && player_ != null) // Usado para testes romover na versão final
+                SwitchCharacterController(player_);
+
+            if (input_.ExecuteAction() && !isAttacking)
+            {
+                if (characterStamina > attack_.GetStaminaCost(currentAttackIndex))
+                {
+                    StartCoroutine(GetAttackName(currentAttackIndex));
+                }
+                else Debug.Log("Você não tem stmina para realizar este attack!");
+            }
+
+            if (input_.KubberAttack1())
+                currentAttackIndex = (int)MinitiAttacks.ToHeadButt;
+            if (input_.KubberAttack2())
+                currentAttackIndex = (int)MinitiAttacks.FireBall;
+            if (input_.KubberAttack3())
+                currentAttackIndex = (int)MinitiAttacks.RotatoryAttack;
+            if (input_.KubberAttack4())
+                currentAttackIndex = (int)MinitiAttacks.Bite;
+            #endregion            
+        }
     }
 
     protected virtual void FixedUpdate()

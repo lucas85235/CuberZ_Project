@@ -8,8 +8,9 @@ public class CaptureCube : MonoBehaviour
     private Collider mycollider_;
     private CameraProperties camera_;
     private CaptureSystem captureSystem_;
-    private PlayerController playerController_;
+    private PlayerController player_;
     private CubeAnimations cubeAnimations_;
+    private MonsterDataBase dataBase_;
 
     [Header("Variaveis de Alocação")]
     public GameObject fakeCube;
@@ -61,9 +62,10 @@ public class CaptureCube : MonoBehaviour
         Construt(Camera.main.GetComponent<CameraProperties>());
         rigibody_ = GetComponent<Rigidbody>();
         mycollider_ = GetComponent<Collider>();
-        playerController_ = FindObjectOfType<PlayerController>();
+        player_ = FindObjectOfType<PlayerController>();
         captureSystem_ = FindObjectOfType<CaptureSystem>();
         cubeAnimations_ = GetComponent<CubeAnimations>();
+        dataBase_ = FindObjectOfType<MonsterDataBase>();
 
         canMovement_ = true;
         canCollider_ = true;
@@ -158,7 +160,7 @@ public class CaptureCube : MonoBehaviour
     {
         if (monsterBreakFree_ && monsterColliderDetected_)
         {
-            playerController_.CanMove_ = true;
+            player_.CanMove_ = true;
 
             monsterColliderDetected_.transform.localScale = Vector3.Lerp(
                 monsterColliderDetected_.transform.localScale, Vector3.one, 5 * Time.deltaTime);
@@ -302,8 +304,15 @@ public class CaptureCube : MonoBehaviour
     {
         float randomValue_ = Random.Range(1, 101);
 
-        if (randomValue_ > chance_) return false;
-        else return true;
+        if (randomValue_ > chance_) 
+        {
+            return false;
+        }
+        else 
+        {
+            player_.monster[0] = dataBase_.kubberDex[0].monster;
+            return true;
+        }
     }
     #endregion
 
@@ -329,7 +338,7 @@ public class CaptureCube : MonoBehaviour
                 }
                 else
                 {
-                    Debug.Log("Oi");
+                    Debug.Log("Esta 'Capturando'");
                     mycollider_.isTrigger = false;
 
                     if (camera_.GetTarget() != transform)
@@ -342,7 +351,7 @@ public class CaptureCube : MonoBehaviour
                     StartCoroutine(ShakeItOff(monsterColliderDetected_));
                 }
             }
-            else if (currentCollider.gameObject.tag == "Enemy")
+            else if (currentCollider.gameObject.tag == "Monster")
             {
                 monsterCaptureScale_ = currentCollider.transform.localScale;
                 monsterCaptureRotation_ = currentCollider.transform.rotation;
@@ -354,7 +363,7 @@ public class CaptureCube : MonoBehaviour
                 rigibody_.velocity = Vector3.zero;
                 rigibody_.AddForce(-(currentCollider.transform.position - transform.position) * 7 + new Vector3(0, 35, 0), ForceMode.Impulse);
                 rigibody_.AddTorque(Vector3.forward * -5, ForceMode.Impulse);
-                StartCoroutine(StopCube(currentCollider));
+                StartCoroutine(StopCube(currentCollider));                    
             }
         }
     }

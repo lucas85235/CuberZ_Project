@@ -84,22 +84,22 @@ public class CaptureSystem : MonoBehaviour
             if (!inCaptureMode && !captureProcess && !sizing_ && !cubeOnWorld_ && CallPointRange())
             {
                 theaterCube.SetActive(true);
+                playerAnimation_.CallMoster();
+                helperPoint_ = MiraCube();
+
+                player_.CanMove_ = false;
                 cubeOnWorld_ = true;
-                player_.CanMove_ = false;
-                playerAnimation_.CallMoster();
                 turnToCall_ = true;
-                helperPoint_ = MiraCube();
             }
-
             else if (!inCaptureMode && !captureProcess && !sizing_ && kuberTemp_ && cubeOnWorld_)
-            {
+            {                
                 theaterCube.SetActive(true);
-                player_.CanMove_ = false;
                 playerAnimation_.CallMoster();
-                turnToCall_ = true;
                 helperPoint_ = MiraCube();
-            }
 
+                player_.CanMove_ = false;
+                turnToCall_ = true;
+            }
         }
         #endregion
 
@@ -175,9 +175,16 @@ public class CaptureSystem : MonoBehaviour
     public void SpawnKubberOnWorld()
     {
         if (!kuberTemp_) 
-            kuberTemp_ = Pooling.InstantiatePooling(player_.monster[0], helperPoint_, player_.monster[0].transform.rotation);
+        {
+            kuberTemp_ = Instantiate(player_.monster[0], helperPoint_, player_.monster[0].transform.rotation);
+            player_.currentKubberSpawned = kuberTemp_.GetComponent<MonsterBase>();
+            player_.SwitchCharacterController(player_.currentKubberSpawned);
+        }
         else if (kuberTemp_ && !kuberTemp_.activeInHierarchy) 
+        {
+            player_.SwitchCharacterController(player_);
             kuberTemp_.transform.position = helperPoint_;
+        }
 
         sizing_ = true;
     }
@@ -277,12 +284,10 @@ public class CaptureSystem : MonoBehaviour
     {
         if (!kubber.GetComponent<MonsterBase>().spawnByPlayer)
         {
-
             kubber.gameObject.SetActive(true);
             kubber.GetComponent<Collider>().enabled = true;
             kubber.GetComponent<NavMeshAgent>().enabled = true;
             kubber.transform.localScale = Vector3.Lerp(kubber.transform.localScale, Vector3.one, 8 * Time.deltaTime);
-
 
             if (kubber.transform.localScale == Vector3.one)
             {
@@ -305,7 +310,6 @@ public class CaptureSystem : MonoBehaviour
                 kubber.gameObject.SetActive(false);
                 cubeOnWorld_ = false;
             }
-
         }
     }
     #endregion

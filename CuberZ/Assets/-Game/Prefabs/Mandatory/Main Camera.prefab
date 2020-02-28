@@ -95,7 +95,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7da8b9c5f6b6d1b43ac010fc7ce569cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cameraStyle_: 0
   target_: {fileID: 0}
+  enemyTarget_: {fileID: 0}
   cameraDistance: 16
   smooth: 4
   sensibility: 125
@@ -104,4 +106,3 @@ MonoBehaviour:
   excludeLayers:
     serializedVersion: 2
     m_Bits: 5943
-  cameraStyle_: 0

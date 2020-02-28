@@ -24,6 +24,7 @@ public class LookAtMonsterByClick : MonoBehaviour
     private CameraProperties camera_;
     private IInput input_;
     private MonsterDataBase dataBase_;
+    private CaptureSystem captureSystem_;
     private Transform previousCamTarget_;
     private Transform placeOfTransform_;
     private bool findMonster_;
@@ -33,6 +34,7 @@ public class LookAtMonsterByClick : MonoBehaviour
     {
         input_ = newInputInterface;
         camera_ = newCamera;
+        captureSystem_ = FindObjectOfType<CaptureSystem>();
     }
 
     private void Awake()
@@ -43,7 +45,7 @@ public class LookAtMonsterByClick : MonoBehaviour
 
     private void Start()
     {
-        dataBase_ = MonsterDataBase.instance;
+        dataBase_ = FindObjectOfType<MonsterDataBase>();
     }
 
     private void Update()
@@ -113,46 +115,44 @@ public class LookAtMonsterByClick : MonoBehaviour
     {
         countTimes++;
 
-        switch (countTimes)
+        if (countTimes == 1)
         {
-            case 1:
-                Debug.Log("Primeira Vez Clicada");
-                break;
-            case 2:
-                Debug.Log("Segunda Vez Clicada");
-                break;
-            default:
-                countTimes = 1;
-                Debug.Log("Primeira Vez Clicada");
-                break;
-        }
+            Debug.Log("Primeira Vez Clicada");
+        }        
+        else Debug.Log("Clicado Mais De Uma Vez");
     }
 
-    private IEnumerator FindInDatabase(Transform MonsterHitted)
+    private IEnumerator FindInDatabase(Transform monsterHitted)
     {
-        for (int i = 0; i < dataBase_.monster.Length; i++)
+        for (int i = 0; i < dataBase_.kubberDex.Length; i++)
         {
+            // Debug.Log(monsterHitted.GetComponent<MonsterID>().id);
+            // Debug.Log(dataBase_.kubberDex[i].monsterID.id);
 
-            if (MonsterHitted == dataBase_.monster[i].monster.transform && dataBase_.monster[i].beenSeen)
+            if (monsterHitted.GetComponent<MonsterID>().id == dataBase_.kubberDex[i].monsterID.id)
             {
-                Debug.Log("O Monster " + MonsterHitted.transform.name + " ja existe, e é o Nº" + i + 1 + " no seu DataBase!");
-                findSomeone_ = true;
+                if (dataBase_.kubberDex[i].beenSeen)
+                {
+                    Debug.Log("O Monster " + monsterHitted.transform.name + " ja existe, e é o Nº" + i + 1 + " no seu DataBase!");
+                    findSomeone_ = true;
+                }
+                else
+                {
+                    dataBase_.kubberDex[i].beenSeen = true;
+                    Debug.Log("O Monster " + monsterHitted.transform.name + " nunca foi visto antes e agora foi adicionado!");
+                    findSomeone_ = true;
+                }
             }
 
-            if (MonsterHitted == dataBase_.monster[i].monster.transform && !dataBase_.monster[i].beenSeen)
-            {
-                dataBase_.monster[i].beenSeen = true;
-                Debug.Log("O Monster " + MonsterHitted.transform.name + " nunca foi visto antes e agora foi adicionado!");
-                findSomeone_ = true;
-            }
-
-            if(i == dataBase_.monster.Length-1 && !findSomeone_)
-                Debug.Log("O Monster " + MonsterHitted.transform.name + " não existe no DataBase!");
+            if(i == (dataBase_.kubberDex.Length - 1) && !findSomeone_)
+                Debug.LogError("O Monster " + monsterHitted.transform.name + " não existe no DataBase!");
         }
 
         findMonster_ = true;
-        placeOfTransform_ = MonsterHitted.transform;
-        CameraZoom();
+        placeOfTransform_ = monsterHitted.transform;
+
+        if (!captureSystem_.inCaptureMode)
+            CameraZoom();
 
         yield break;
     }
