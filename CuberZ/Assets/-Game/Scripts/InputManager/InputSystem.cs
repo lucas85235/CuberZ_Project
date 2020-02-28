@@ -21,9 +21,11 @@ public class InputSystem : MonoBehaviour, IInput
     public KeyCode fixCameraOnMyKubberKey = KeyCode.Tab;
     public KeyCode rescueKubberKey = KeyCode.LeftControl;
     public KeyCode runKey = KeyCode.LeftShift;
+    public KeyCode runKeyUp = KeyCode.LeftShift;
     public KeyCode exitKey = KeyCode.Escape;
     public KeyCode captureKubberkey = KeyCode.Backspace;
     public KeyCode jumpkey = KeyCode.Space;
+    public KeyCode runKeyOnce = KeyCode.LeftShift;
 
     private void Awake()
     {
@@ -47,6 +49,8 @@ public class InputSystem : MonoBehaviour, IInput
     private const string exitPlayerPref = "EXIT-PLAYER";
     private const string captureKubberPref = "CAPTURE-KUBBER";
     private const string jumpPref = "JUMP-PLAYER";
+    private const string runPlayerUpPref = "RUN-UP-PLAYER";
+    private const string runPlayerOncePref = "RUN-ONCE-PLAYER";
     #endregion
 
     #region Get Inputs
@@ -66,6 +70,8 @@ public class InputSystem : MonoBehaviour, IInput
     public bool Exit() { return Input.GetKeyDown(exitKey); }
     public bool EnterInCaptureMode() { return Input.GetKeyDown(captureKubberkey); }
     public bool Jump() { return Input.GetKeyDown(jumpkey); }
+    public bool RunInputUp() { return Input.GetKeyUp(runKeyUp); }
+    public bool RunInputOnce() { return Input.GetKeyDown(runKeyOnce); }
     #endregion
 
     #region Funções PlayerPrefs
@@ -87,12 +93,15 @@ public class InputSystem : MonoBehaviour, IInput
         PlayerPrefs.SetString(exitPlayerPref, exitKey.ToString());
         PlayerPrefs.SetString(captureKubberPref, captureKubberkey.ToString());
         PlayerPrefs.SetString(jumpPref, jumpkey.ToString());
+        PlayerPrefs.SetString(runPlayerUpPref, runKeyUp.ToString());
+        PlayerPrefs.SetString(runPlayerOncePref, runKeyOnce.ToString());
 
         Debug.Log("Todas as Keys Foram Salvas");
     }
 
     public void LoadAllKeyCodes()
     {
+        runKeyOnce = (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString(runPlayerOncePref));
         moveCameraKey = (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString(moveCameraPlayerPref));
         executeActionInput = (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString(executeActionPlayerPref));
         kubberAtk1Key = (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString(kubberAtk1PlayerPref));
@@ -109,7 +118,7 @@ public class InputSystem : MonoBehaviour, IInput
         getAxisVertical = PlayerPrefs.GetString(getAxisMouseYPlayerPref);
         captureKubberkey = (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString(captureKubberPref));
         jumpkey = (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString(jumpPref));
-        
+        runKeyUp = (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString(runPlayerPref));
         Debug.Log("Todas as Keys Foram Carregadas");
     }
     #endregion

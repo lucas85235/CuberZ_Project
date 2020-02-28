@@ -19,6 +19,8 @@ public interface IInput
     bool Exit(); //Padrão- Esc
     bool EnterInCaptureMode(); //Padrão- Backspace
     bool Jump(); //Padrão- SpaceBar
+    bool RunInputUp(); //Padrão - LeftShift
+    bool RunInputOnce(); //Padrão - LeftShift
 
 }
 
