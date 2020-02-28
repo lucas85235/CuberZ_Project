@@ -49,6 +49,7 @@ public abstract class CharacterAbstraction : MonoBehaviour
     protected bool inRunInput = false;
     protected bool endedStamina = false;
 
+    [SerializeField]
     public bool isEnabled { get; set; }
 
     protected virtual void Construt(IInput newInputInterface) 
@@ -90,7 +91,7 @@ public abstract class CharacterAbstraction : MonoBehaviour
         return Physics.Raycast(transform.position, (-1 * transform.up), 0.25f);
     }
 
-    protected virtual void SwitchCharacterController(CharacterAbstraction switchCharacter) 
+    public virtual void SwitchCharacterController(CharacterAbstraction switchCharacter) 
     {
         CharacterAbstraction thisCharacter = GetComponent<CharacterAbstraction>();
         CharacterAbstraction[] allCharacters = FindObjectsOfType<CharacterAbstraction>();

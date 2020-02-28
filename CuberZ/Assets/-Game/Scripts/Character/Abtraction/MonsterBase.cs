@@ -46,19 +46,21 @@ public abstract class MonsterBase : CharacterAbstraction
     {
         Construt(Object.FindObjectOfType<InputSystem>(), GetComponent<AnimationBase>());
         worldHud_ = GetComponent<HudWorldStats>();
+
+        isEnabled = true;
     }
     #endregion
 
     #region AI Behaviour
     protected void FollowPlayer()
     {
-        if (player_ != null )
+        if (player_ != null)
         {
-            Debug.Log("[e isso");
+            Debug.Log("Seguindo o Player!");
 
             if (Vector3.Distance(player_.transform.position, transform.position) > minDistance)
             {
-                if (!nav_.enabled)
+                if (!nav_.enabled && !isEnabled)
                     nav_.enabled = true;
 
                 if (Vector3.Distance(player_.transform.position, transform.position) > minDistance)
@@ -85,7 +87,7 @@ public abstract class MonsterBase : CharacterAbstraction
         }
     }
 
-    private void StopFollowFunction()
+    private void StopWalkFunction()
     {
         nav_.speed = 0;
         #region stop moster walk animation
@@ -157,12 +159,13 @@ public abstract class MonsterBase : CharacterAbstraction
 
     protected override void Jump() 
     {
-        if (Input.GetKeyDown(KeyCode.Space) && !isJump && canJump_) 
+        if (Input.GetKeyDown(KeyCode.Space) && !isJump && canJump_ && characterStamina >= 10.0f) 
         {
             body_.AddForce(Vector3.up * initialJumpImpulse, ForceMode.Impulse);
             startJumpTime = true;
             isJump = true;
             animation_.EnterJump();
+            DecrementStamina(10f);
         }
 
         if (Input.GetKey(KeyCode.Space) && isJump)
@@ -194,7 +197,7 @@ public abstract class MonsterBase : CharacterAbstraction
         throw new System.NotImplementedException();
     }
 
-    protected override void SwitchCharacterController(CharacterAbstraction switchCharacter) 
+    public override void SwitchCharacterController(CharacterAbstraction switchCharacter) 
     {
         CharacterAbstraction thisCharacter = GetComponent<CharacterAbstraction>();
         CharacterAbstraction[] allCharacters = FindObjectsOfType<CharacterAbstraction>();
@@ -211,6 +214,7 @@ public abstract class MonsterBase : CharacterAbstraction
         animation_.AnimationSpeed(axisX, axisY);
         #endregion
 
+        StartCoroutine(StopFollow());
         SetCameraPropeties(switchCharacter.transform.Find("CameraTarget"));
         StartCoroutine(WaitTime(switchCharacter));
     }
@@ -241,7 +245,7 @@ public abstract class MonsterBase : CharacterAbstraction
         worldHud_.HudUpdateLife(monsterLife, maxLife); // Singleton Recebe um valor e divide por outro vida/vidamax
     }
 
-    public virtual void IncrementStamina(float increment)
+    public override void IncrementStamina(float increment)
     {
         characterStamina += increment;
 
@@ -253,7 +257,7 @@ public abstract class MonsterBase : CharacterAbstraction
         worldHud_.HudUpdateStamina(characterStamina, maxStamina); // Singleton Recebe um valor e divide por outro stamina/staminamax
     }
 
-    public virtual void DecrementStamina(float decrement)
+    public override void DecrementStamina(float decrement)
     {
         characterStamina -= decrement;
 

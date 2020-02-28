@@ -156,7 +156,7 @@ public class IAManagerDefault : MonsterBase
         {
             for (int i = 0; i < skillStats.Length; i++)
             {
-                if (i == skillStats[i].skillNumber && DistanceBetweenTarget() <= skillStats[i].skillDistance && monsterStamina >= attack_.attackStats[i].staminaCost)
+                if (i == skillStats[i].skillNumber && DistanceBetweenTarget() <= skillStats[i].skillDistance && characterStamina >= attack_.attackStats[i].staminaCost)
                 {
                     nav_.enabled = false;
                     useSkill_ = true;

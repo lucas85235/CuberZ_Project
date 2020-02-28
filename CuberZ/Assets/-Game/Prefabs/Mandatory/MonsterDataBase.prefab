@@ -43,7 +43,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21f2421924a26d44a8ad127342882807, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  monster:
-  - monsterName: Miniti
-    monster: {fileID: 0}
+  kubberDex:
+  - monsterName: Minite
+    monsterID: {fileID: 1724942739, guid: 11af191b5880d664da11368190d04ce7, type: 3}
+    monster: {fileID: 88148845147911301, guid: e6ee79b6e9ca7544788677ee19ad52ec, type: 3}
     beenSeen: 0

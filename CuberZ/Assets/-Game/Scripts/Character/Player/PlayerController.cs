@@ -7,8 +7,7 @@ public class PlayerController : CharacterAbstraction
 {
     [Header("Kubber Team")]
     public GameObject[] monster = { null, null, null, null };
-
-    public bool spawnedOnWorld;
+    public MonsterBase currentKubberSpawned;
 
     public bool IsJump { get => isJump; }
     public bool CanMove_ { get => canMove_; set => canMove_ = value; }
@@ -61,13 +60,11 @@ public class PlayerController : CharacterAbstraction
         if (canGetInputs_ && isEnabled)
         {
             #region Get Inputs
-            if (Input.GetKeyDown(KeyCode.T))
+            if (Input.GetKeyDown(KeyCode.T) && currentKubberSpawned)
             {
-                if (monster[0] && spawnedOnWorld)
-                {
-                    SwitchCharacterController(monster[0].GetComponent<MonsterBase>());
-                    StartCoroutine(monster[0].GetComponent<MonsterBase>().StopFollow());
-                }
+                if (currentKubberSpawned.isActiveAndEnabled)
+                    SwitchCharacterController(currentKubberSpawned);
+                //StartCoroutine(monster[0].GetComponent<MonsterBase>().StopFollow());
             }
 
             if (Input.GetKeyDown(KeyCode.N)) // Key de Teste
@@ -77,12 +74,12 @@ public class PlayerController : CharacterAbstraction
                 if (isSwimMode)
                 {
                     playerAnimation_.EnterInSwimMode();
-                    GameObject.Find("Ground").GetComponent<MeshRenderer>().enabled = false;
+                    GameObject.Find("Ground").GetComponent<Terrain>().enabled = false;
                 }
                 else
                 {
                     playerAnimation_.ExitInSwimMode();
-                    GameObject.Find("Ground").GetComponent<MeshRenderer>().enabled = true;
+                    GameObject.Find("Ground").GetComponent<Terrain>().enabled = true;
                 }
             }
 
@@ -110,10 +107,7 @@ public class PlayerController : CharacterAbstraction
             }
             else canGetInputs_ = false;
         }
-        else 
-        {
-            playerAnimation_.MovimentSpeed(0);
-        }
+        else playerAnimation_.MovimentSpeed(0);
 
         RegenStamina();
     }
