@@ -151,7 +151,7 @@ public class MinitiBehaviuor : MonsterBase
             if (canFollowState)
                 FollowPlayer();
         }
-
+        Debug.Log("isEnable: " + isEnabled);
         if(animation_.GetCurrentAnimationInLayerOne().IsName("ToHeadButt"))
         {
             body_.velocity = transform.forward * attackSpeed;

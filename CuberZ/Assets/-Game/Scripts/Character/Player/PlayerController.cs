@@ -62,9 +62,8 @@ public class PlayerController : CharacterAbstraction
             #region Get Inputs
             if (Input.GetKeyDown(KeyCode.T) && currentKubberSpawned)
             {
-                if (currentKubberSpawned.isActiveAndEnabled)
+                if (currentKubberSpawned.isActiveAndEnabled) 
                     SwitchCharacterController(currentKubberSpawned);
-                //StartCoroutine(monster[0].GetComponent<MonsterBase>().StopFollow());
             }
 
             if (Input.GetKeyDown(KeyCode.N)) // Key de Teste
@@ -198,7 +197,7 @@ public class PlayerController : CharacterAbstraction
         return Physics.Raycast(transform.position, (-1 * transform.up), 0.4f);
     }
 
-    private void SetInitialCharacter()
+    public void SetInitialCharacter()
     {
         CharacterAbstraction thisCharacter = GetComponent<CharacterAbstraction>();
         CharacterAbstraction[] allCharacters = FindObjectsOfType<CharacterAbstraction>();

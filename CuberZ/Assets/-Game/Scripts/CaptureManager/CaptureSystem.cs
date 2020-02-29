@@ -182,8 +182,16 @@ public class CaptureSystem : MonoBehaviour
         }
         else if (kuberTemp_ && !kuberTemp_.activeInHierarchy) 
         {
-            player_.SwitchCharacterController(player_);
             kuberTemp_.transform.position = helperPoint_;
+            if (player_.currentKubberSpawned) 
+            {
+                player_.SwitchCharacterController(player_.currentKubberSpawned);
+            }
+            else player_.SetInitialCharacter();
+        }
+        else if (player_.currentKubberSpawned.isEnabled)
+        {
+            player_.SetInitialCharacter();
         }
 
         sizing_ = true;

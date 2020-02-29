@@ -10616,7 +10616,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  spawnedOnWorld: 0
+  currentKubberSpawned: {fileID: 0}
 --- !u!114 &3740074197964245103
 MonoBehaviour:
   m_ObjectHideFlags: 0
