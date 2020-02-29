@@ -32,7 +32,6 @@ public class IAManagerDefault : MonsterBase
     private bool goOut_;
     
     #region Métodos MonoBehaviour
-
     private void Start()
     {
         nav_ = GetComponent<NavMeshAgent>();

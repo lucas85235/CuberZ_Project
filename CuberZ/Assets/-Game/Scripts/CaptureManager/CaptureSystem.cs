@@ -79,7 +79,7 @@ public class CaptureSystem : MonoBehaviour
             }
         }
 
-        if (input_.RescueKubberInput())
+        if (input_.RescueKubberInput() && player_.monster[0] != null) 
         {
             if (!inCaptureMode && !captureProcess && !sizing_ && !cubeOnWorld_ && CallPointRange())
             {
@@ -174,7 +174,7 @@ public class CaptureSystem : MonoBehaviour
 
     public void SpawnKubberOnWorld()
     {
-        if (!kuberTemp_) 
+        if (!kuberTemp_ && player_.monster[0] != null) 
         {
             kuberTemp_ = Instantiate(player_.monster[0], helperPoint_, player_.monster[0].transform.rotation);
             player_.currentKubberSpawned = kuberTemp_.GetComponent<MonsterBase>();

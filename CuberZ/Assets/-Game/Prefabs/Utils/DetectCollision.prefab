@@ -1,0 +1,66 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &7299998311111842056
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7299998311111842057}
+  - component: {fileID: 7299998311111842059}
+  - component: {fileID: 8471461180644266559}
+  m_Layer: 13
+  m_Name: DetectCollision
+  m_TagString: Monster
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7299998311111842057
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7299998311111842056}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &7299998311111842059
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7299998311111842056}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 2.4, y: 4.5, z: 4}
+  m_Center: {x: 0, y: 2.25, z: -0.5}
+--- !u!114 &8471461180644266559
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7299998311111842056}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ed40b3a43794614cbedbfe81f0b7764, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hitNumericPrefab_: {fileID: 4284705373430382158, guid: 9eaf83c622183ad43a4490a09dbefd86,
+    type: 3}
+  hitSimplePrefab_: {fileID: 1193597728275138, guid: aaafea074a64fd44ba9726b4b87c974c,
+    type: 3}
+  hitSimpleRedPrefab_: {fileID: 1426722514190363129, guid: 034e7309c5fd4ef48af0ea031a8ed155,
+    type: 3}
+  adjustHitPosition: 2.5

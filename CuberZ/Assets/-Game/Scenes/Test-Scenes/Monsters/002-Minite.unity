@@ -1649,6 +1649,19 @@ PrefabInstance:
     - target: {fileID: 10556101, guid: 65fad19d1c9d7d04a8b5be38706cf6ca, type: 3}
       propertyPath: target
       value: 
+<<<<<<< develop
+=======
+      objectReference: {fileID: 8569687631078579454}
+    - target: {fileID: 6363454283160280701, guid: 65fad19d1c9d7d04a8b5be38706cf6ca,
+        type: 3}
+      propertyPath: attackStats.Array.data[0].attackEffect.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6363454283160280701, guid: 65fad19d1c9d7d04a8b5be38706cf6ca,
+        type: 3}
+      propertyPath: attackStats.Array.data[0].attackEffect.Array.data[0]
+      value: 1
+>>>>>>> Set Detect Colision (WIP)
       objectReference: {fileID: 0}
     - target: {fileID: 7027413516888953104, guid: 65fad19d1c9d7d04a8b5be38706cf6ca,
         type: 3}
@@ -1880,6 +1893,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 8332692052576637833, guid: 65c37e4db0f98734b8d1fe5dbb581099,
+        type: 3}
+      propertyPath: m_CullingMask.m_Bits
+      value: 4294967295
+      objectReference: {fileID: 0}
     - target: {fileID: 8332692052576637834, guid: 65c37e4db0f98734b8d1fe5dbb581099,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1947,3 +1965,103 @@ PrefabInstance:
       objectReference: {fileID: 610283649}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 65c37e4db0f98734b8d1fe5dbb581099, type: 3}
+<<<<<<< develop
+=======
+--- !u!1001 &8569687631078579453
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 88148845147547813, guid: e6ee79b6e9ca7544788677ee19ad52ec,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 88148845147547813, guid: e6ee79b6e9ca7544788677ee19ad52ec,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 88148845147547813, guid: e6ee79b6e9ca7544788677ee19ad52ec,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 88148845147547813, guid: e6ee79b6e9ca7544788677ee19ad52ec,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 88148845147547813, guid: e6ee79b6e9ca7544788677ee19ad52ec,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 88148845147547813, guid: e6ee79b6e9ca7544788677ee19ad52ec,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 88148845147547813, guid: e6ee79b6e9ca7544788677ee19ad52ec,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 88148845147547813, guid: e6ee79b6e9ca7544788677ee19ad52ec,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 88148845147547813, guid: e6ee79b6e9ca7544788677ee19ad52ec,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 88148845147547813, guid: e6ee79b6e9ca7544788677ee19ad52ec,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 88148845147547813, guid: e6ee79b6e9ca7544788677ee19ad52ec,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 88148845147911301, guid: e6ee79b6e9ca7544788677ee19ad52ec,
+        type: 3}
+      propertyPath: m_Name
+      value: 002
+      objectReference: {fileID: 0}
+    - target: {fileID: 8634684265689884798, guid: e6ee79b6e9ca7544788677ee19ad52ec,
+        type: 3}
+      propertyPath: attackStats.Array.data[2].attackEffect
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8634684265689884798, guid: e6ee79b6e9ca7544788677ee19ad52ec,
+        type: 3}
+      propertyPath: attackStats.Array.data[3].attackEffect
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: e6ee79b6e9ca7544788677ee19ad52ec, type: 3}
+--- !u!4 &8569687631078579454 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 88148845147547813, guid: e6ee79b6e9ca7544788677ee19ad52ec,
+    type: 3}
+  m_PrefabInstance: {fileID: 8569687631078579453}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &8634684265689884796 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8634684265689884796, guid: e6ee79b6e9ca7544788677ee19ad52ec,
+    type: 3}
+  m_PrefabInstance: {fileID: 8569687631078579453}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3480512fff320f041aa802ee4b77f2c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+>>>>>>> Set Detect Colision (WIP)

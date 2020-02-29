@@ -107,7 +107,7 @@ public class MinitiBehaviuor : MonsterBase
             if (Input.GetKeyDown(KeyCode.T) && player_ != null) // Usado para testes romover na versão final
                 SwitchCharacterController(player_);
 
-            if (input_.ExecuteAction() && !isAttacking)
+            if (input_.ExecuteAction() && !isAttacking && !isJump) 
             {
                 if (characterStamina > attack_.GetStaminaCost(currentAttackIndex))
                 {
@@ -226,36 +226,42 @@ public class MinitiBehaviuor : MonsterBase
 
     public IEnumerator FireBall() 
     {
+        //isAttacking = true;
         canMove = attack_.GetCanMove(currentAttackIndex);
 
         animation_.MovableAttack((int)MinitiAttacks.FireBall);
         DecrementStamina(attack_.GetStaminaCost(currentAttackIndex));
 
         yield return new WaitForSeconds(toHeadButtLenght_);
+        //isAttacking = false;
 
         DebugAttack();
     }
 
     public IEnumerator RotatoryAttack() 
     {
+        isAttacking = true;
         canMove = attack_.GetCanMove(currentAttackIndex);
 
         animation_.MovableAttack((int)MinitiAttacks.RotatoryAttack);
         DecrementStamina(attack_.GetStaminaCost(currentAttackIndex));
 
         yield return new WaitForSeconds(toHeadButtLenght_);
+        isAttacking = false;
 
         DebugAttack();
     }
 
     public IEnumerator Bite() 
     {
+        isAttacking = true;
         canMove = attack_.GetCanMove(currentAttackIndex);
 
         animation_.MovableAttack((int)MinitiAttacks.Bite);
         DecrementStamina(attack_.GetStaminaCost(currentAttackIndex));
 
         yield return new WaitForSeconds(toHeadButtLenght_);
+        isAttacking = false;
 
         DebugAttack();
     }

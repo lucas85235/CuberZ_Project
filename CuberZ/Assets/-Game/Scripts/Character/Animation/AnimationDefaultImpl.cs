@@ -5,13 +5,11 @@ using UnityEngine;
 public class AnimationDefaultImpl : AnimationBase
 {
     private Animator animator_;
-    private IInput input_;
 
     protected const string animationSpeed = "SPEED";
 
     private void Awake() 
     {
-        input_ = Object.FindObjectOfType<InputSystem>();
         animator_ = GetComponent<Animator>();    
     }
 

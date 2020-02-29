@@ -73,55 +73,39 @@ public class AttackManager : MonoBehaviour
     public struct AttackStats
     {
         public string attackName;
+
         public int baseDamage;
         public int staminaCost;
+
         public float attackCoolDown;
+        public float damagePerSecond; // 
+        public float totalDamageTime; // 
+
         public bool canMove;
-        public Lineage[] attackEffect;
-        //public AttackType attackType;
+        public bool canStartInStay; //
+        public bool isDamagePerSencond; // 
+        public bool isProjectileAttack; //
+
+        public Lineage attackEffect;
+        public Lineage[] attackTypes; //
     }
     
-    public string GetAttackName(int index)
-    {
-        string name = attackStats[index].attackName;
-        return name;
-    }
+    public string GetAttackName(int index) { return attackStats[index].attackName; }
 
-    public int GetBaseDamage(int index)
-    {
-        int baseDamage = attackStats[index].baseDamage;
-        return baseDamage;
-    }
+    public int GetBaseDamage(int index) { return attackStats[index].baseDamage; }
+    public int GetStaminaCost(int index) { return attackStats[index].staminaCost; }
 
-    public int GetStaminaCost(int index)
-    {
-        int staminaCost = attackStats[index].staminaCost;
-        return staminaCost;
-    }
+    public float GetAttackCoolDown(int index) { return attackStats[index].attackCoolDown; }
+    public float GetDamagePerSecond(int index) { return attackStats[index].damagePerSecond; }
+    public float GetTotalDamageTime(int index) { return attackStats[index].totalDamageTime; }
 
-    public float GetAttackCoolDown(int index)
-    {
-        float coolDown = attackStats[index].attackCoolDown;
-        return coolDown;
-    }
+    public bool GetCanMove(int index) { return attackStats[index].canMove; }
+    public bool GetCanStartInStay(int index) { return attackStats[index].canStartInStay; }
+    public bool GetIsDamagePerSecond(int index) { return attackStats[index].isDamagePerSencond; }
+    public bool GetIsTotalDamageTime(int index) { return attackStats[index].isProjectileAttack; }
 
-    public bool GetCanMove(int index)
-    {
-        bool can = attackStats[index].canMove;
-        return can;
-    }
-
-    public Lineage[] GetAttackEffects(int index)
-    {
-        Lineage[] types = attackStats[index].attackEffect;
-        return types;
-    }
-
-    /*public AttackType GetAttackType(int index)
-    {
-        AttackType type = attackStats[index].attackType;
-        return type;
-    }*/
+    public Lineage GetAttackEffect(int index) { return attackStats[index].attackEffect; }
+    public Lineage[] GetAttackTypes(int index) { return attackStats[index].attackTypes; }
 
     public void SetAttackNamesInStats(System.Enum getName, int statsIndex)
     {
@@ -140,10 +124,9 @@ public class AttackManager : MonoBehaviour
             int random = Random.Range(0, 2);
             attackStats[i].canMove = random == 1 ? true : false;
             
-            attackStats[i].attackEffect = new Lineage[1];
-            attackStats[i].attackEffect[0] = Lineage.Lava;
+            attackStats[i].attackEffect = Lineage.Lava;
         }
-        //Armazena o attackStats em uma variavel do HudSystem.
+        // Armazena o attackStats em uma variavel do HudSystem.
     }   
     #endregion
 
