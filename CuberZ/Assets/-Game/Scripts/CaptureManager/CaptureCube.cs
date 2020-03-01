@@ -304,15 +304,12 @@ public class CaptureCube : MonoBehaviour
     {
         float randomValue_ = Random.Range(1, 101);
 
-        if (randomValue_ > chance_) 
-        {
-            return false;
-        }
-        else 
+        if (randomValue_ < chance_) 
         {
             player_.monster[0] = dataBase_.kubberDex[0].monster;
             return true;
         }
+        else return false;
     }
     #endregion
 

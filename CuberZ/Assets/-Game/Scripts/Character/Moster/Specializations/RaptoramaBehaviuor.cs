@@ -36,6 +36,7 @@ public class RaptoramaBehaviuor : MonsterBase
             player_ = GameObject.FindGameObjectWithTag("Player").GetComponent<CharacterAbstraction>();
         attack_ = GetComponent<AttackManager>();
         attackAnimations_ = GetComponent<RapdoramaAnimation>();
+        worldHud_ = GetComponent<HudWorldStats>();
         #endregion   
 
         body_.constraints = RigidbodyConstraints.FreezeAll;
@@ -61,6 +62,11 @@ public class RaptoramaBehaviuor : MonsterBase
             attack_.SetAttackNamesInStats((RaptoramaAttacks)i, i);
         }
         #endregion
+
+        // Deletar
+        isEnabled = true;
+        SetCameraPropeties(transform.Find("CameraTarget"));
+        // Deletar
     }
 
     protected virtual void FixedUpdate()

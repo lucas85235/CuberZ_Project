@@ -158,24 +158,31 @@ public abstract class CharacterAbstraction : MonoBehaviour
         }
     }
 
-    private void OnCollisionEnter(Collision collision)
+    /*protected virtual void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.tag == "Wall")
-            canJump_ = false;
+        {
+            canJump_ = false;  
+            Debug.Log("Can Jump: " + false);
+        }    
     }
 
-    private void OnCollisionExit(Collision collision)
+    protected virtual void OnCollisionExit(Collision collision)
     {
-        if (collision.gameObject.tag == "Wall")
+        if (collision.gameObject.tag == "Wall") 
+        {
             canJump_ = true;
+            Debug.Log("Can Jump: " + false);
+        }
     }
 
-    private void OnCollisionStay(Collision collision)
+    protected virtual void OnCollisionStay(Collision collision)
     {
         if (collision.gameObject.tag == "Wall" && isJump)
         {
             transform.position += new Vector3(0, -0.1f, 0);
             body_.AddForce(Vector3.down * dowmSpeed);
+            Debug.Log("Down Jump!");
         }
-    }
+    }*/
 }
