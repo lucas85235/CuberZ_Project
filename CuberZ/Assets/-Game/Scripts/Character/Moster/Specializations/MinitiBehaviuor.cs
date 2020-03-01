@@ -60,8 +60,8 @@ public class MinitiBehaviuor : MonsterBase
         #endregion
 
         // Deletar
-        // isEnabled = true;
-        // SetCameraPropeties(transform.Find("CameraTarget"));
+        isEnabled = true;
+        SetCameraPropeties(transform.Find("CameraTarget"));
         // Deletar
     }
 
@@ -69,6 +69,8 @@ public class MinitiBehaviuor : MonsterBase
     {
         if (isEnabled) 
         {
+            //Jump();
+
             #region Get Inputs
             if (Input.GetKeyDown(KeyCode.N)) // Key de Teste
             {
@@ -77,12 +79,12 @@ public class MinitiBehaviuor : MonsterBase
                 if (isSwimMode)
                 {
                     animation_.EnterInSwimMode();
-                    GameObject.Find("Ground").GetComponent<MeshRenderer>().enabled = false;
+                    GameObject.Find("Ground").GetComponent<Terrain>().enabled = false;
                 }
                 else
                 {
                     animation_.ExitInSwimMode();
-                    GameObject.Find("Ground").GetComponent<MeshRenderer>().enabled = true;
+                    GameObject.Find("Ground").GetComponent<Terrain>().enabled = true;
                 }
             }
 
@@ -143,15 +145,12 @@ public class MinitiBehaviuor : MonsterBase
                     animation_.AnimationSpeed(axisX, axisY);
                 }                
             }
-
-            Jump();
         }
         else if (!isEnabled && canFollowPlayer)
         {
             if (canFollowState)
                 FollowPlayer();
         }
-        Debug.Log("isEnable: " + isEnabled);
         if(animation_.GetCurrentAnimationInLayerOne().IsName("ToHeadButt"))
         {
             body_.velocity = transform.forward * attackSpeed;

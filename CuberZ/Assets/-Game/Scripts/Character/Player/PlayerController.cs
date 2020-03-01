@@ -59,6 +59,8 @@ public class PlayerController : CharacterAbstraction
     {
         if (canGetInputs_ && isEnabled)
         {
+            Jump();
+
             #region Get Inputs
             if (Input.GetKeyDown(KeyCode.T) && currentKubberSpawned)
             {
@@ -84,8 +86,6 @@ public class PlayerController : CharacterAbstraction
 
             if (input_.GetAxisHorizontal() == 0 && input_.GetAxisVertical() == 0)
                 playerAnimation_.MovimentSpeed(0);
-
-            Jump();
             #endregion
         }
     }
@@ -100,7 +100,6 @@ public class PlayerController : CharacterAbstraction
                 axisY = input_.GetAxisVertical();
 
                 Movement();
-
 
                 canGetInputs_ = true;
             }
@@ -212,6 +211,31 @@ public class PlayerController : CharacterAbstraction
         SetCameraPropeties(transform.Find("CameraTarget"));
     }
 
+    public override void SwitchCharacterController(CharacterAbstraction switchCharacter) 
+    {
+        CharacterAbstraction thisCharacter = GetComponent<CharacterAbstraction>();
+        CharacterAbstraction[] allCharacters = FindObjectsOfType<CharacterAbstraction>();
+
+        foreach(CharacterAbstraction currentCharacter in allCharacters)
+        {
+            if (currentCharacter != switchCharacter)
+                currentCharacter.isEnabled = false;
+        }
+
+        #region stop character walk
+        thisCharacter.axisX = 0;
+        thisCharacter.axisY = 0;
+        playerAnimation_.MovimentSpeed(0);
+        #endregion
+
+        if (switchCharacter.GetComponent<MonsterBase>() != null) 
+        {
+            StartCoroutine(switchCharacter.GetComponent<MonsterBase>().StopFollow());
+        }
+        SetCameraPropeties(switchCharacter.transform.Find("CameraTarget"));
+        StartCoroutine(WaitTime(switchCharacter));
+    }
+
     protected virtual IEnumerator JumpWaitTime()
     {
         startJumpWait_ = true;
@@ -255,5 +279,33 @@ public class PlayerController : CharacterAbstraction
         axisY = 0;
         playerAnimation_.MovimentSpeed(0);
         body_.velocity = Vector3.zero;
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.tag == "Wall")
+        {
+            canJump_ = false;  
+            Debug.Log("Can Jump: " + false);
+        }    
+    }
+
+    private void OnCollisionExit(Collision collision)
+    {
+        if (collision.gameObject.tag == "Wall") 
+        {
+            canJump_ = true;
+            Debug.Log("Can Jump: " + false);
+        }
+    }
+
+    private void OnCollisionStay(Collision collision)
+    {
+        if (collision.gameObject.tag == "Wall" && isJump)
+        {
+            transform.position += new Vector3(0, -0.1f, 0);
+            body_.AddForce(Vector3.down * dowmSpeed);
+            Debug.Log("Down Jump!");
+        }
     }
 }

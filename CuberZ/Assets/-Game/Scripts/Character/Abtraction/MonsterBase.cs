@@ -47,7 +47,9 @@ public abstract class MonsterBase : CharacterAbstraction
         Construt(Object.FindObjectOfType<InputSystem>(), GetComponent<AnimationBase>());
         worldHud_ = GetComponent<HudWorldStats>();
 
-        isEnabled = true;
+        nav_ = GetComponent<NavMeshAgent>();
+
+        // isEnabled = true;
     }
     #endregion
 
@@ -103,7 +105,6 @@ public abstract class MonsterBase : CharacterAbstraction
         if (nav_.enabled) 
         {
             nav_.speed = 0;
-            nav_.isStopped = true;
             nav_.enabled = false;
         }
 
