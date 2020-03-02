@@ -5,6 +5,9 @@ using UnityEngine;
 public class CameraController : CameraProperties
 {
     // O target deve ser um pivo no meio do personagem
+    [Min(0)]
+    [SerializeField] private float minAngleY = 0f;
+    [SerializeField] private float maxAngleY = 60f;
 
     private RaycastHit hit_;
     private IInput input_;
@@ -45,24 +48,24 @@ public class CameraController : CameraProperties
             distanceUp_ = Mathf.Clamp(distanceUp_ += input_.GetAxisVertical(), minAngle_, maxAngle_);
             transform.position = Vector3.Lerp(transform.position, cameraPosition_, Time.deltaTime * smooth);
         }
-        else if (cameraStyle_ == CameraMode.Capturing) 
+        else if (cameraStyle_ == CameraMode.Capturing)
         {
             cameraPosition_ = target_.position - transform.forward * (cameraDistance / 2);
             transform.position = Vector3.Lerp(transform.position, cameraPosition_, Time.deltaTime * smooth);
-        } 
-        
-        if (cameraStyle_ == CameraMode.TargetEnemy) 
+        }
+
+        if (cameraStyle_ == CameraMode.TargetEnemy)
         {
             cameraPosition_ = target_.position - transform.forward * cameraDistance * distanceUp_;
             distanceUp_ = Mathf.Clamp(distanceUp_ += input_.GetAxisVertical(), minAngle_, maxAngle_);
             transform.position = Vector3.Lerp(transform.position, cameraPosition_, Time.deltaTime * smooth);
             this.transform.LookAt(enemyTarget_);
         }
-        else 
-            if (input_.MoveCamera()) 
-                CameraRotate();
+        else
+            if (input_.MoveCamera())
+            CameraRotate();
 
-        if (Physics.Linecast(target_.position, transform.position, out hit_, excludeLayers)) 
+        if (Physics.Linecast(target_.position, transform.position, out hit_, excludeLayers))
             transform.position = hit_.point + transform.forward * adjustCollisionForward;
     }
 
@@ -70,10 +73,15 @@ public class CameraController : CameraProperties
     {
         transform.RotateAround(target_.position, transform.up, input_.GetAxisMouseX() * sensibility * Time.deltaTime);
 
+        float angleY = 0;
+
         if (invertVerticalMouseInput)
-            transform.RotateAround(target_.position, transform.right, -input_.GetAxisMouseY() * sensibility * Time.deltaTime);
+            angleY = -input_.GetAxisMouseY() * sensibility * Time.deltaTime;
         else
-            transform.RotateAround(target_.position, transform.right, input_.GetAxisMouseY() * sensibility * Time.deltaTime);
+            angleY = input_.GetAxisMouseY() * sensibility * Time.deltaTime;
+
+        if (transform.eulerAngles.x + angleY > minAngleY && transform.eulerAngles.x + angleY < maxAngleY)
+            transform.RotateAround(target_.position, transform.right, angleY);
 
         Vector3 rotation = transform.eulerAngles;
         rotation.z = 0;
