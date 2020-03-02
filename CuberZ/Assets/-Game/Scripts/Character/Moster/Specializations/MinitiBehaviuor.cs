@@ -9,10 +9,8 @@ public class MinitiBehaviuor : MonsterBase
     // que recebera ataques personalizados
     // setar os novos ataques e dar um override no GetAttackName
 
-    private DetectAttackCollision attackCollision;
-
-    private bool canFollowPlayer = true;
-    private bool canMove = true;
+    [SerializeField]
+    private float toHeadButtLenght_ = 1.4f; // Valor anterior = 1.208333f;
 
     public enum MinitiAttacks
     {
@@ -67,61 +65,14 @@ public class MinitiBehaviuor : MonsterBase
         // Deletar
     }
 
-    protected virtual void Update()
+    protected override void Update()
     {
+        base.Update();
+
+        #region Individual Skills
         if (isEnabled) 
         {
-            Jump();
-
-            #region Get Inputs
-            if (Input.GetKeyDown(KeyCode.N)) // Key de Teste
-            {
-                isSwimMode = !isSwimMode;
-
-                if (isSwimMode)
-                {
-                    animation_.EnterInSwimMode();
-                    GameObject.Find("Ground").GetComponent<Terrain>().enabled = false;
-                }
-                else
-                {
-                    animation_.ExitInSwimMode();
-                    GameObject.Find("Ground").GetComponent<Terrain>().enabled = true;
-                }
-            }
-
-            if (Input.GetKeyDown(KeyCode.F) && !isDead) // Key de Teste
-            {
-                animation_.PlayDeathState();
-                isDead = true;
-            }
-
-            if (Input.GetKeyDown(KeyCode.R) && isDead) // Key de Teste
-            {
-                animation_.ExitDeathState();
-                isDead = false;
-            }
-
-            if (Input.GetKeyDown(KeyCode.F1)) // Key de Teste
-                animation_.ExtraAnimationOne();
-
-            if (Input.GetKeyDown(KeyCode.F2)) // Key de Teste
-                animation_.ExtraAnimationTwo();
-
-            if (Input.GetKeyDown(KeyCode.T) && player_ != null) // Usado para testes romover na versão final
-                SwitchCharacterController(player_);
-
-            if (input_.ExecuteAction() && !isAttacking && !isJump) 
-            {
-                if (characterStamina > attack_.GetStaminaCost(currentAttackIndex))
-                {
-                    StartCoroutine(GetAttackName(currentAttackIndex));
-                }
-                else Debug.Log("Você não tem stmina para realizar este attack!");
-            }
-
-            if (input_.KubberAttack1())  
-            {
+            if (input_.KubberAttack1())
                 currentAttackIndex = (int)MinitiAttacks.ToHeadButt;
                 attackCollision.UpdateCurrentAttackStats(attack_.attackStats[currentAttackIndex]);
             }
@@ -138,41 +89,25 @@ public class MinitiBehaviuor : MonsterBase
             else if (input_.KubberAttack4())
             {
                 currentAttackIndex = (int)MinitiAttacks.Bite;
-                attackCollision.UpdateCurrentAttackStats(attack_.attackStats[currentAttackIndex]);
-            }
-
-            #endregion            
         }
+        #endregion
     }
 
-    protected virtual void FixedUpdate()
-    {
-        if (isEnabled)
-        {
-            if (!isAttacking || canMove) 
-            {
-                axisX = input_.GetAxisHorizontal();
-                axisY = input_.GetAxisVertical();
 
-                if (!animation_.IsPlayAttackAnimation())
-                {
-                    Movement();
-                    animation_.AnimationSpeed(axisX, axisY);
-                }                
-            }
-        }
-        else if (!isEnabled && canFollowPlayer)
-        {
-            if (canFollowState)
-                FollowPlayer();
-        }
-        if(animation_.GetCurrentAnimationInLayerOne().IsName("ToHeadButt"))
+    protected override void FixedUpdate()
+    {
+        base.FixedUpdate();
+
+        #region AnimationBehaviour
+
+        if (animation_.GetCurrentAnimationInLayerOne().IsName("ToHeadButt"))
         {
             body_.velocity = transform.forward * attackSpeed;
         }
         else body_.velocity = Vector3.zero;
 
-        RegenStamina();
+        #endregion
+
     }
 
     protected override string GetAttackName(int index)

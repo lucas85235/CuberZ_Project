@@ -8,10 +8,6 @@ public class RaptoramaBehaviuor : MonsterBase
     // se tiver ataques de outros tipos setar um novo enum
     // que recebera ataques personalizados
     // setar os novos ataques e dar mu override no GetAttackName
-
-    private bool canFollowPlayer = true;
-    private bool canMove = true;
-
     private float defaultAnimationTime_ = 1.208333f;
 
     private RapdoramaAnimation attackAnimations_;
@@ -69,64 +65,13 @@ public class RaptoramaBehaviuor : MonsterBase
         // Deletar
     }
 
-    protected virtual void FixedUpdate()
+    protected override void Update()
     {
+        base.Update();
+
+        #region Individual Skills
         if (isEnabled)
         {
-            if (!isAttacking || canMove)
-            {
-                axisX = input_.GetAxisHorizontal();
-                axisY = input_.GetAxisVertical();
-
-                if (!animation_.IsPlayAttackAnimation())
-                {
-                    Movement();
-                    animation_.AnimationSpeed(axisX, axisY);
-                }
-            }
-
-            Jump();
-
-            #region Get Inputs
-            if (Input.GetKeyDown(KeyCode.N)) // Key de Teste
-            {
-                isSwimMode = !isSwimMode;
-
-                if (isSwimMode)
-                {
-                    animation_.EnterInSwimMode();
-                    GameObject.Find("Ground").GetComponent<MeshRenderer>().enabled = false;
-                }
-                else
-                {
-                    animation_.ExitInSwimMode();
-                    GameObject.Find("Ground").GetComponent<MeshRenderer>().enabled = true;
-                }
-            }
-
-            if (Input.GetKeyDown(KeyCode.F) && !isDead) // Key de Teste
-            {
-                animation_.PlayDeathState();
-                isDead = true;
-            }
-
-            if (Input.GetKeyDown(KeyCode.R) && isDead) // Key de Teste
-            {
-                animation_.ExitDeathState();
-                isDead = false;
-            }
-
-            if (Input.GetKeyDown(KeyCode.F1)) // Key de Teste
-                animation_.ExtraAnimationOne();
-            if (Input.GetKeyDown(KeyCode.F2)) // Key de Teste
-                animation_.ExtraAnimationTwo();
-
-            if (Input.GetKeyDown(KeyCode.T) && player_ != null) // Usado para testes romover na versão final
-                SwitchCharacterController(player_);
-
-            if (input_.ExecuteAction() && !isAttacking)
-                StartCoroutine(GetAttackName(currentAttackIndex));
-
             if (input_.KubberAttack1())
                 currentAttackIndex = (int)RaptoramaAttacks.FlyAttack;
             if (input_.KubberAttack2())
@@ -135,22 +80,21 @@ public class RaptoramaBehaviuor : MonsterBase
                 currentAttackIndex = (int)RaptoramaAttacks.Bite;
             if (input_.KubberAttack4())
                 currentAttackIndex = (int)RaptoramaAttacks.Rollout;
-            #endregion
         }
-        else if (!isEnabled && canFollowPlayer)
-        {
-            if (canFollowState)
-                FollowPlayer();
-        }
-        else
-        {
-            if (animation_.GetCurrentAnimationInLayerOne().IsName("FlyAttack"))
-                body_.velocity = transform.forward * attackSpeed;
-            else
-                body_.velocity = Vector3.zero;
-        }
+        #endregion
+    }
 
-        RegenStamina();
+    protected override void FixedUpdate()
+    {
+        base.FixedUpdate();
+
+        #region AnimationBehaviour
+
+        if (animation_.GetCurrentAnimationInLayerOne().IsName("FlyAttack"))
+            body_.velocity = transform.forward * attackSpeed;
+        else
+            body_.velocity = Vector3.zero;
+        #endregion
     }
 
     protected override string GetAttackName(int index)
