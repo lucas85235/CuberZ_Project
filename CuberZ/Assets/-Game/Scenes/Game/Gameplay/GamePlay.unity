@@ -180,6 +180,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7367590997582007582, guid: 6fc7a341a97566449acbc8f245229717,
+        type: 3}
+      propertyPath: rescueKubberKey
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 7367590997582007582, guid: 6fc7a341a97566449acbc8f245229717,
+        type: 3}
+      propertyPath: fixCameraOnMyKubberKey
+      value: 306
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6fc7a341a97566449acbc8f245229717, type: 3}
 --- !u!4 &170347619 stripped
@@ -249,6 +259,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 484331874400111040, guid: b454664e31062494b9ae434be08b02b9,
+        type: 3}
+      propertyPath: walkSpeed
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 484331874400111045, guid: b454664e31062494b9ae434be08b02b9,
         type: 3}

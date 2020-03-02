@@ -143,7 +143,8 @@ public class PlayerController : CharacterAbstraction
                 else
                 {
                     transform.position += transform.forward * walkSpeed * Time.deltaTime;
-                    playerAnimation_.MovimentSpeed((axisX * axisX + axisY * axisY) / 2);
+                    float speed = axisX * axisX + axisY * axisY /2;
+                    playerAnimation_.MovimentSpeed(speed >= 0.5 ? 0.5f : speed);
 
                     if (!input_.RunInput())
                         inRunInput = false;
