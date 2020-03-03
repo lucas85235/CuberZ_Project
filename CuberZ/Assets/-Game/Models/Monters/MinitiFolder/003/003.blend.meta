@@ -1,213 +1,620 @@
 fileFormatVersion: 2
 guid: fb487fd77f301a741af123f0900eae39
 ModelImporter:
-  serializedVersion: 23
-  fileIDToRecycleName:
-    100000: //RootNode
-    100002: antCoxaD_L
-    100004: antCoxaD_L_end
-    100006: antCoxaD_R
-    100008: antCoxaD_R_end
-    100010: antCoxaT_L
-    100012: antCoxaT_L_end
-    100014: antCoxaT_R
-    100016: antCoxaT_R_end
-    100018: Armature
-    100020: base
-    100022: base.001
-    100024: base_coxa_L
-    100026: base_coxa_R
-    100028: Bone.001
-    100030: Bone.002
-    100032: Bone.002_L.004
-    100034: Bone.002_L.004_end
-    100036: Bone.002_L.005
-    100038: Bone.002_L.005_end
-    100040: Bone.002_L.006
-    100042: Bone.002_L.007
-    100044: Bone.002_R.004
-    100046: Bone.002_R.004_end
-    100048: Bone.002_R.005
-    100050: Bone.002_R.005_end
-    100052: Bone.002_R.006
-    100054: Bone.002_R.007
-    100056: Bone.003
-    100058: Bone.004
-    100060: Bone.005
-    100062: Bone.006
-    100064: Bone.007
-    100066: Bone.007_end
-    100068: Bone.008
-    100070: Bone.009
-    100072: Bone.010
-    100074: Bone.010_L
-    100076: Bone.010_L.001
-    100078: Bone.010_L.001_end
-    100080: Bone.010_L.002
-    100082: Bone.010_L.002_end
-    100084: Bone.010_L.003
-    100086: Bone.010_L.003_end
-    100088: Bone.010_L.004
-    100090: Bone.010_L.004_end
-    100092: Bone.010_R
-    100094: Bone.010_R.001
-    100096: Bone.010_R.001_end
-    100098: Bone.010_R.002
-    100100: Bone.010_R.002_end
-    100102: Bone.010_R.003
-    100104: Bone.010_R.003_end
-    100106: Bone.010_R.004
-    100108: Bone.010_R.004_end
-    100110: Bone.011
-    100112: Bone.011_end
-    100114: Bone.012
-    100116: Bone.013
-    100118: Bone.014
-    100120: Bone.014_end
-    100122: Bone.015
-    100124: Circle
-    100126: control_pata_D_L
-    100128: control_pata_D_R
-    100130: coxaD_L
-    100132: coxaD_R
-    100134: coxaT_L
-    100136: coxaT_R
-    100138: "C\xE2mera"
-    100140: Esfera UV
-    100142: ombro_L
-    100144: ombro_L.004
-    100146: ombro_L.004_end
-    100148: ombro_L.005
-    100150: ombro_R
-    100152: ombro_R.004
-    100154: ombro_R.004_end
-    100156: ombroC_L
-    100158: ombroC_R
-    100160: pataD_L
-    100162: pataD_L_end
-    100164: pataD_R
-    100166: pataD_R_end
-    100168: pataD_ROT_R
-    400000: //RootNode
-    400002: antCoxaD_L
-    400004: antCoxaD_L_end
-    400006: antCoxaD_R
-    400008: antCoxaD_R_end
-    400010: antCoxaT_L
-    400012: antCoxaT_L_end
-    400014: antCoxaT_R
-    400016: antCoxaT_R_end
-    400018: Armature
-    400020: base
-    400022: base.001
-    400024: base_coxa_L
-    400026: base_coxa_R
-    400028: Bone.001
-    400030: Bone.002
-    400032: Bone.002_L.004
-    400034: Bone.002_L.004_end
-    400036: Bone.002_L.005
-    400038: Bone.002_L.005_end
-    400040: Bone.002_L.006
-    400042: Bone.002_L.007
-    400044: Bone.002_R.004
-    400046: Bone.002_R.004_end
-    400048: Bone.002_R.005
-    400050: Bone.002_R.005_end
-    400052: Bone.002_R.006
-    400054: Bone.002_R.007
-    400056: Bone.003
-    400058: Bone.004
-    400060: Bone.005
-    400062: Bone.006
-    400064: Bone.007
-    400066: Bone.007_end
-    400068: Bone.008
-    400070: Bone.009
-    400072: Bone.010
-    400074: Bone.010_L
-    400076: Bone.010_L.001
-    400078: Bone.010_L.001_end
-    400080: Bone.010_L.002
-    400082: Bone.010_L.002_end
-    400084: Bone.010_L.003
-    400086: Bone.010_L.003_end
-    400088: Bone.010_L.004
-    400090: Bone.010_L.004_end
-    400092: Bone.010_R
-    400094: Bone.010_R.001
-    400096: Bone.010_R.001_end
-    400098: Bone.010_R.002
-    400100: Bone.010_R.002_end
-    400102: Bone.010_R.003
-    400104: Bone.010_R.003_end
-    400106: Bone.010_R.004
-    400108: Bone.010_R.004_end
-    400110: Bone.011
-    400112: Bone.011_end
-    400114: Bone.012
-    400116: Bone.013
-    400118: Bone.014
-    400120: Bone.014_end
-    400122: Bone.015
-    400124: Circle
-    400126: control_pata_D_L
-    400128: control_pata_D_R
-    400130: coxaD_L
-    400132: coxaD_R
-    400134: coxaT_L
-    400136: coxaT_R
-    400138: "C\xE2mera"
-    400140: Esfera UV
-    400142: ombro_L
-    400144: ombro_L.004
-    400146: ombro_L.004_end
-    400148: ombro_L.005
-    400150: ombro_R
-    400152: ombro_R.004
-    400154: ombro_R.004_end
-    400156: ombroC_L
-    400158: ombroC_R
-    400160: pataD_L
-    400162: pataD_L_end
-    400164: pataD_R
-    400166: pataD_R_end
-    400168: pataD_ROT_R
-    2000000: "C\xE2mera"
-    2100000: Materiais
-    2100002: Material
-    2100004: Material.001
-    2300000: Esfera UV
-    3300000: Esfera UV
-    4300000: Esfera UV
-    4300002: Circle
-    7400000: Esfera UV|Esfera UVAction
-    7400002: Armature|01-idle
-    7400004: Armature|01.2-boiando
-    7400006: Armature|02-andando
-    7400008: Armature|02.2-nadando lento
-    7400010: Armature|03-correndo
-    7400012: Armature|03.2-nadando rapido
-    7400014: Armature|04-pulo 1-saindo da agua
-    7400016: Armature|04-pulo 1-saindo do chao
-    7400018: Armature|04-pulo 2-idle
-    7400020: Armature|04-pulo 3-caindo
-    7400022: Armature|05-ataque 1
-    7400024: Armature|06-ataque 2
-    7400026: Armature|07-ataque 3
-    7400028: Armature|08-ataque 4
-    7400030: Armature|09-ataque rapido
-    7400032: Armature|10-hit
-    7400034: Armature|11-caindo
-    7400036: Armature|12-levantando
-    7400038: "Armature|13-anima\xE7a\xF5 extra 1"
-    7400040: Armature|14-ataque 6
-    7400042: Armature|Esfera UVAction
-    9500000: //RootNode
-    13700000: Circle
+  serializedVersion: 19300
+  internalIDToNameTable:
+  - first:
+      1: 100000
+    second: //RootNode
+  - first:
+      1: 100002
+    second: antCoxaD_L
+  - first:
+      1: 100004
+    second: antCoxaD_L_end
+  - first:
+      1: 100006
+    second: antCoxaD_R
+  - first:
+      1: 100008
+    second: antCoxaD_R_end
+  - first:
+      1: 100010
+    second: antCoxaT_L
+  - first:
+      1: 100012
+    second: antCoxaT_L_end
+  - first:
+      1: 100014
+    second: antCoxaT_R
+  - first:
+      1: 100016
+    second: antCoxaT_R_end
+  - first:
+      1: 100018
+    second: Armature
+  - first:
+      1: 100020
+    second: base
+  - first:
+      1: 100022
+    second: base.001
+  - first:
+      1: 100024
+    second: base_coxa_L
+  - first:
+      1: 100026
+    second: base_coxa_R
+  - first:
+      1: 100028
+    second: Bone.001
+  - first:
+      1: 100030
+    second: Bone.002
+  - first:
+      1: 100032
+    second: Bone.002_L.004
+  - first:
+      1: 100034
+    second: Bone.002_L.004_end
+  - first:
+      1: 100036
+    second: Bone.002_L.005
+  - first:
+      1: 100038
+    second: Bone.002_L.005_end
+  - first:
+      1: 100040
+    second: Bone.002_L.006
+  - first:
+      1: 100042
+    second: Bone.002_L.007
+  - first:
+      1: 100044
+    second: Bone.002_R.004
+  - first:
+      1: 100046
+    second: Bone.002_R.004_end
+  - first:
+      1: 100048
+    second: Bone.002_R.005
+  - first:
+      1: 100050
+    second: Bone.002_R.005_end
+  - first:
+      1: 100052
+    second: Bone.002_R.006
+  - first:
+      1: 100054
+    second: Bone.002_R.007
+  - first:
+      1: 100056
+    second: Bone.003
+  - first:
+      1: 100058
+    second: Bone.004
+  - first:
+      1: 100060
+    second: Bone.005
+  - first:
+      1: 100062
+    second: Bone.006
+  - first:
+      1: 100064
+    second: Bone.007
+  - first:
+      1: 100066
+    second: Bone.007_end
+  - first:
+      1: 100068
+    second: Bone.008
+  - first:
+      1: 100070
+    second: Bone.009
+  - first:
+      1: 100072
+    second: Bone.010
+  - first:
+      1: 100074
+    second: Bone.010_L
+  - first:
+      1: 100076
+    second: Bone.010_L.001
+  - first:
+      1: 100078
+    second: Bone.010_L.001_end
+  - first:
+      1: 100080
+    second: Bone.010_L.002
+  - first:
+      1: 100082
+    second: Bone.010_L.002_end
+  - first:
+      1: 100084
+    second: Bone.010_L.003
+  - first:
+      1: 100086
+    second: Bone.010_L.003_end
+  - first:
+      1: 100088
+    second: Bone.010_L.004
+  - first:
+      1: 100090
+    second: Bone.010_L.004_end
+  - first:
+      1: 100092
+    second: Bone.010_R
+  - first:
+      1: 100094
+    second: Bone.010_R.001
+  - first:
+      1: 100096
+    second: Bone.010_R.001_end
+  - first:
+      1: 100098
+    second: Bone.010_R.002
+  - first:
+      1: 100100
+    second: Bone.010_R.002_end
+  - first:
+      1: 100102
+    second: Bone.010_R.003
+  - first:
+      1: 100104
+    second: Bone.010_R.003_end
+  - first:
+      1: 100106
+    second: Bone.010_R.004
+  - first:
+      1: 100108
+    second: Bone.010_R.004_end
+  - first:
+      1: 100110
+    second: Bone.011
+  - first:
+      1: 100112
+    second: Bone.011_end
+  - first:
+      1: 100114
+    second: Bone.012
+  - first:
+      1: 100116
+    second: Bone.013
+  - first:
+      1: 100118
+    second: Bone.014
+  - first:
+      1: 100120
+    second: Bone.014_end
+  - first:
+      1: 100122
+    second: Bone.015
+  - first:
+      1: 100124
+    second: Circle
+  - first:
+      1: 100126
+    second: control_pata_D_L
+  - first:
+      1: 100128
+    second: control_pata_D_R
+  - first:
+      1: 100130
+    second: coxaD_L
+  - first:
+      1: 100132
+    second: coxaD_R
+  - first:
+      1: 100134
+    second: coxaT_L
+  - first:
+      1: 100136
+    second: coxaT_R
+  - first:
+      1: 100138
+    second: "C\xE2mera"
+  - first:
+      1: 100140
+    second: Esfera UV
+  - first:
+      1: 100142
+    second: ombro_L
+  - first:
+      1: 100144
+    second: ombro_L.004
+  - first:
+      1: 100146
+    second: ombro_L.004_end
+  - first:
+      1: 100148
+    second: ombro_L.005
+  - first:
+      1: 100150
+    second: ombro_R
+  - first:
+      1: 100152
+    second: ombro_R.004
+  - first:
+      1: 100154
+    second: ombro_R.004_end
+  - first:
+      1: 100156
+    second: ombroC_L
+  - first:
+      1: 100158
+    second: ombroC_R
+  - first:
+      1: 100160
+    second: pataD_L
+  - first:
+      1: 100162
+    second: pataD_L_end
+  - first:
+      1: 100164
+    second: pataD_R
+  - first:
+      1: 100166
+    second: pataD_R_end
+  - first:
+      1: 100168
+    second: pataD_ROT_R
+  - first:
+      4: 400000
+    second: //RootNode
+  - first:
+      4: 400002
+    second: antCoxaD_L
+  - first:
+      4: 400004
+    second: antCoxaD_L_end
+  - first:
+      4: 400006
+    second: antCoxaD_R
+  - first:
+      4: 400008
+    second: antCoxaD_R_end
+  - first:
+      4: 400010
+    second: antCoxaT_L
+  - first:
+      4: 400012
+    second: antCoxaT_L_end
+  - first:
+      4: 400014
+    second: antCoxaT_R
+  - first:
+      4: 400016
+    second: antCoxaT_R_end
+  - first:
+      4: 400018
+    second: Armature
+  - first:
+      4: 400020
+    second: base
+  - first:
+      4: 400022
+    second: base.001
+  - first:
+      4: 400024
+    second: base_coxa_L
+  - first:
+      4: 400026
+    second: base_coxa_R
+  - first:
+      4: 400028
+    second: Bone.001
+  - first:
+      4: 400030
+    second: Bone.002
+  - first:
+      4: 400032
+    second: Bone.002_L.004
+  - first:
+      4: 400034
+    second: Bone.002_L.004_end
+  - first:
+      4: 400036
+    second: Bone.002_L.005
+  - first:
+      4: 400038
+    second: Bone.002_L.005_end
+  - first:
+      4: 400040
+    second: Bone.002_L.006
+  - first:
+      4: 400042
+    second: Bone.002_L.007
+  - first:
+      4: 400044
+    second: Bone.002_R.004
+  - first:
+      4: 400046
+    second: Bone.002_R.004_end
+  - first:
+      4: 400048
+    second: Bone.002_R.005
+  - first:
+      4: 400050
+    second: Bone.002_R.005_end
+  - first:
+      4: 400052
+    second: Bone.002_R.006
+  - first:
+      4: 400054
+    second: Bone.002_R.007
+  - first:
+      4: 400056
+    second: Bone.003
+  - first:
+      4: 400058
+    second: Bone.004
+  - first:
+      4: 400060
+    second: Bone.005
+  - first:
+      4: 400062
+    second: Bone.006
+  - first:
+      4: 400064
+    second: Bone.007
+  - first:
+      4: 400066
+    second: Bone.007_end
+  - first:
+      4: 400068
+    second: Bone.008
+  - first:
+      4: 400070
+    second: Bone.009
+  - first:
+      4: 400072
+    second: Bone.010
+  - first:
+      4: 400074
+    second: Bone.010_L
+  - first:
+      4: 400076
+    second: Bone.010_L.001
+  - first:
+      4: 400078
+    second: Bone.010_L.001_end
+  - first:
+      4: 400080
+    second: Bone.010_L.002
+  - first:
+      4: 400082
+    second: Bone.010_L.002_end
+  - first:
+      4: 400084
+    second: Bone.010_L.003
+  - first:
+      4: 400086
+    second: Bone.010_L.003_end
+  - first:
+      4: 400088
+    second: Bone.010_L.004
+  - first:
+      4: 400090
+    second: Bone.010_L.004_end
+  - first:
+      4: 400092
+    second: Bone.010_R
+  - first:
+      4: 400094
+    second: Bone.010_R.001
+  - first:
+      4: 400096
+    second: Bone.010_R.001_end
+  - first:
+      4: 400098
+    second: Bone.010_R.002
+  - first:
+      4: 400100
+    second: Bone.010_R.002_end
+  - first:
+      4: 400102
+    second: Bone.010_R.003
+  - first:
+      4: 400104
+    second: Bone.010_R.003_end
+  - first:
+      4: 400106
+    second: Bone.010_R.004
+  - first:
+      4: 400108
+    second: Bone.010_R.004_end
+  - first:
+      4: 400110
+    second: Bone.011
+  - first:
+      4: 400112
+    second: Bone.011_end
+  - first:
+      4: 400114
+    second: Bone.012
+  - first:
+      4: 400116
+    second: Bone.013
+  - first:
+      4: 400118
+    second: Bone.014
+  - first:
+      4: 400120
+    second: Bone.014_end
+  - first:
+      4: 400122
+    second: Bone.015
+  - first:
+      4: 400124
+    second: Circle
+  - first:
+      4: 400126
+    second: control_pata_D_L
+  - first:
+      4: 400128
+    second: control_pata_D_R
+  - first:
+      4: 400130
+    second: coxaD_L
+  - first:
+      4: 400132
+    second: coxaD_R
+  - first:
+      4: 400134
+    second: coxaT_L
+  - first:
+      4: 400136
+    second: coxaT_R
+  - first:
+      4: 400138
+    second: "C\xE2mera"
+  - first:
+      4: 400140
+    second: Esfera UV
+  - first:
+      4: 400142
+    second: ombro_L
+  - first:
+      4: 400144
+    second: ombro_L.004
+  - first:
+      4: 400146
+    second: ombro_L.004_end
+  - first:
+      4: 400148
+    second: ombro_L.005
+  - first:
+      4: 400150
+    second: ombro_R
+  - first:
+      4: 400152
+    second: ombro_R.004
+  - first:
+      4: 400154
+    second: ombro_R.004_end
+  - first:
+      4: 400156
+    second: ombroC_L
+  - first:
+      4: 400158
+    second: ombroC_R
+  - first:
+      4: 400160
+    second: pataD_L
+  - first:
+      4: 400162
+    second: pataD_L_end
+  - first:
+      4: 400164
+    second: pataD_R
+  - first:
+      4: 400166
+    second: pataD_R_end
+  - first:
+      4: 400168
+    second: pataD_ROT_R
+  - first:
+      20: 2000000
+    second: "C\xE2mera"
+  - first:
+      21: 2100000
+    second: Materiais
+  - first:
+      21: 2100002
+    second: Material
+  - first:
+      21: 2100004
+    second: Material.001
+  - first:
+      23: 2300000
+    second: Esfera UV
+  - first:
+      33: 3300000
+    second: Esfera UV
+  - first:
+      43: 4300000
+    second: Esfera UV
+  - first:
+      43: 4300002
+    second: Circle
+  - first:
+      74: 7400000
+    second: Esfera UV|Esfera UVAction
+  - first:
+      74: 7400002
+    second: Armature|01-idle
+  - first:
+      74: 7400004
+    second: Armature|01.2-boiando
+  - first:
+      74: 7400006
+    second: Armature|02-andando
+  - first:
+      74: 7400008
+    second: Armature|02.2-nadando lento
+  - first:
+      74: 7400010
+    second: Armature|03-correndo
+  - first:
+      74: 7400012
+    second: Armature|03.2-nadando rapido
+  - first:
+      74: 7400014
+    second: Armature|04-pulo 1-saindo da agua
+  - first:
+      74: 7400016
+    second: Armature|04-pulo 1-saindo do chao
+  - first:
+      74: 7400018
+    second: Armature|04-pulo 2-idle
+  - first:
+      74: 7400020
+    second: Armature|04-pulo 3-caindo
+  - first:
+      74: 7400022
+    second: Armature|05-ataque 1
+  - first:
+      74: 7400024
+    second: Armature|06-ataque 2
+  - first:
+      74: 7400026
+    second: Armature|07-ataque 3
+  - first:
+      74: 7400028
+    second: Armature|08-ataque 4
+  - first:
+      74: 7400030
+    second: Armature|09-ataque rapido
+  - first:
+      74: 7400032
+    second: Armature|10-hit
+  - first:
+      74: 7400034
+    second: Armature|11-caindo
+  - first:
+      74: 7400036
+    second: Armature|12-levantando
+  - first:
+      74: 7400038
+    second: "Armature|13-anima\xE7a\xF5 extra 1"
+  - first:
+      74: 7400040
+    second: Armature|14-ataque 6
+  - first:
+      74: 7400042
+    second: Armature|Esfera UVAction
+  - first:
+      95: 9500000
+    second: //RootNode
+  - first:
+      137: 13700000
+    second: Circle
+  - first:
+      74: -623603649343465320
+    second: Scene
   externalObjects: {}
   materials:
-    importMaterials: 1
+    materialImportMode: 1
     materialName: 0
     materialSearch: 1
     materialLocation: 1
@@ -240,6 +647,7 @@ ModelImporter:
     meshCompression: 0
     addColliders: 0
     useSRGBMaterialColor: 1
+    sortHierarchyByName: 1
     importVisibility: 1
     importBlendShapes: 1
     importCameras: 1
@@ -247,18 +655,19 @@ ModelImporter:
     swapUVChannels: 0
     generateSecondaryUV: 0
     useFileUnits: 1
-    optimizeMeshForGPU: 1
     keepQuads: 0
     weldVertices: 1
     preserveHierarchy: 0
+    skinWeightsMode: 0
+    maxBonesPerVertex: 4
+    minBoneWeight: 0.001
+    meshOptimizationFlags: -1
     indexFormat: 0
     secondaryUVAngleDistortion: 8
     secondaryUVAreaDistortion: 15.000001
     secondaryUVHardAngle: 88
     secondaryUVPackMargin: 4
     useFileScale: 1
-    previousCalculatedGlobalScale: 1.5
-    hasPreviousCalculatedGlobalScale: 1
   tangentSpace:
     normalSmoothAngle: 60
     normalImportMode: 0
@@ -267,10 +676,10 @@ ModelImporter:
     legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
     blendShapeNormalImportMode: 1
     normalSmoothingSource: 0
+  referencedClips: []
   importAnimation: 1
-  copyAvatar: 0
   humanDescription:
-    serializedVersion: 2
+    serializedVersion: 3
     human: []
     skeleton: []
     armTwist: 0.5
@@ -280,13 +689,16 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
+    globalScale: 1.5
     rootMotionBoneName: 
     hasTranslationDoF: 0
     hasExtraRoot: 0
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
+  autoGenerateAvatarMappingIfUnspecified: 1
   animationType: 2
   humanoidOversampling: 1
+  avatarSetup: 1
   additionalBone: 0
   userData: 
   assetBundleName: 
