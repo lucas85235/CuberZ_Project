@@ -189,7 +189,7 @@ public abstract class MonsterBase : CharacterAbstraction
                 }
             }
 
-            Jump();
+           
         }
         else if (!isEnabled && canFollowPlayer)
         {
@@ -206,7 +206,7 @@ public abstract class MonsterBase : CharacterAbstraction
 
     protected virtual void FixedUpdate()
     {
-
+        Jump();
     }
 
     protected override void Movement()
@@ -259,7 +259,7 @@ public abstract class MonsterBase : CharacterAbstraction
             DecrementStamina(10f);
         }
 
-        if (Input.GetKey(KeyCode.Space) && isJump)
+        if(Input.GetKey(KeyCode.Space) && isJump)
             body_.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
 
         if (startJumpTime && countJumpTime < jumpTime)
