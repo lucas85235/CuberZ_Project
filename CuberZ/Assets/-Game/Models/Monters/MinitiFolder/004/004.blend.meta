@@ -1,181 +1,524 @@
 fileFormatVersion: 2
 guid: f6d5f0ca00de54a4a86cbe8092d9bc05
 ModelImporter:
-  serializedVersion: 23
-  fileIDToRecycleName:
-    100000: //RootNode
-    100002: Armature
-    100004: Bone
-    100006: Bone.001
-    100008: Bone.002
-    100010: Bone.003
-    100012: Bone.003_L.001
-    100014: Bone.003_L.001_end
-    100016: Bone.003_R.001
-    100018: Bone.003_R.001_end
-    100020: Bone.004
-    100022: Bone.004_end
-    100024: Bone.005
-    100026: Bone.006
-    100028: Bone.007
-    100030: Bone.008
-    100032: Bone.009
-    100034: Bone.010
-    100036: Bone.011
-    100038: Bone.012
-    100040: Bone.013
-    100042: Bone.014
-    100044: Bone.015
-    100046: Bone.015_end
-    100048: Bone.016
-    100050: Bone.017
-    100052: Bone.018
-    100054: Bone.018_end
-    100056: Bone.019
-    100058: Bone.020
-    100060: Bone.020_end
-    100062: Bone.021
-    100064: Bone.021_end
-    100066: Bone.022
-    100068: Bone.022_end
-    100070: Bone.023
-    100072: Bone.023_end
-    100074: control1_dianteira_L
-    100076: control1_dianteira_R
-    100078: control1_L
-    100080: control1_R
-    100082: control2_dianteira_L
-    100084: control2_dianteira_L_end
-    100086: control2_dianteira_R
-    100088: control2_dianteira_R_end
-    100090: control2_L
-    100092: control2_L_end
-    100094: control2_R
-    100096: control2_R_end
-    100098: control_dianteira_L
-    100100: control_dianteira_R
-    100102: control_L
-    100104: control_R
-    100106: coxa_dianteira_L
-    100108: coxa_dianteira_R
-    100110: coxa_L
-    100112: coxa_R
-    100114: Cube
-    100116: "C\xE2mera"
-    100118: ombro_L
-    100120: ombro_R
-    100122: perna_dianteira_L
-    100124: perna_dianteira_L_end
-    100126: perna_dianteira_R
-    100128: perna_dianteira_R_end
-    100130: perna_L
-    100132: perna_L_end
-    100134: perna_R
-    100136: perna_R_end
-    100138: quadril_dianteira_L
-    100140: quadril_dianteira_R
-    400000: //RootNode
-    400002: Armature
-    400004: Bone
-    400006: Bone.001
-    400008: Bone.002
-    400010: Bone.003
-    400012: Bone.003_L.001
-    400014: Bone.003_L.001_end
-    400016: Bone.003_R.001
-    400018: Bone.003_R.001_end
-    400020: Bone.004
-    400022: Bone.004_end
-    400024: Bone.005
-    400026: Bone.006
-    400028: Bone.007
-    400030: Bone.008
-    400032: Bone.009
-    400034: Bone.010
-    400036: Bone.011
-    400038: Bone.012
-    400040: Bone.013
-    400042: Bone.014
-    400044: Bone.015
-    400046: Bone.015_end
-    400048: Bone.016
-    400050: Bone.017
-    400052: Bone.018
-    400054: Bone.018_end
-    400056: Bone.019
-    400058: Bone.020
-    400060: Bone.020_end
-    400062: Bone.021
-    400064: Bone.021_end
-    400066: Bone.022
-    400068: Bone.022_end
-    400070: Bone.023
-    400072: Bone.023_end
-    400074: control1_dianteira_L
-    400076: control1_dianteira_R
-    400078: control1_L
-    400080: control1_R
-    400082: control2_dianteira_L
-    400084: control2_dianteira_L_end
-    400086: control2_dianteira_R
-    400088: control2_dianteira_R_end
-    400090: control2_L
-    400092: control2_L_end
-    400094: control2_R
-    400096: control2_R_end
-    400098: control_dianteira_L
-    400100: control_dianteira_R
-    400102: control_L
-    400104: control_R
-    400106: coxa_dianteira_L
-    400108: coxa_dianteira_R
-    400110: coxa_L
-    400112: coxa_R
-    400114: Cube
-    400116: "C\xE2mera"
-    400118: ombro_L
-    400120: ombro_R
-    400122: perna_dianteira_L
-    400124: perna_dianteira_L_end
-    400126: perna_dianteira_R
-    400128: perna_dianteira_R_end
-    400130: perna_L
-    400132: perna_L_end
-    400134: perna_R
-    400136: perna_R_end
-    400138: quadril_dianteira_L
-    400140: quadril_dianteira_R
-    2000000: "C\xE2mera"
-    2100000: Material.005
-    4300000: Cube
-    7400000: "C\xE2mera|Sem t\xEDtulo"
-    7400002: "C\xE2mera|Sem t\xEDtulo.001"
-    7400004: Armature|01-idle
-    7400006: Armature|01.2-idle na agua
-    7400008: Armature|02-andando
-    7400010: Armature|02.2-nadando lento
-    7400012: Armature|03-correndo
-    7400014: Armature|03.2-nadando rapido
-    7400016: Armature|04-pulo 1- saindo do chao
-    7400018: Armature|04-pulo 2-idle
-    7400020: Armature|04-pulo 3-caindo
-    7400022: Armature|05-ataque 1
-    7400024: Armature|06-ataque 2
-    7400026: Armature|07-ataque 3
-    7400028: Armature|08-ataque 4
-    7400030: Armature|09-hit
-    7400032: Armature|10-caindo
-    7400034: Armature|11-levantando
-    7400036: "Armature|12-anima\xE7\xE3o extra"
-    7400038: "Armature|Sem t\xEDtulo"
-    7400040: "Armature|Sem t\xEDtulo.001"
-    7400042: "Cube|Sem t\xEDtulo"
-    7400044: "Cube|Sem t\xEDtulo.001"
-    9500000: //RootNode
-    13700000: Cube
+  serializedVersion: 19300
+  internalIDToNameTable:
+  - first:
+      1: 100000
+    second: //RootNode
+  - first:
+      1: 100002
+    second: Armature
+  - first:
+      1: 100004
+    second: Bone
+  - first:
+      1: 100006
+    second: Bone.001
+  - first:
+      1: 100008
+    second: Bone.002
+  - first:
+      1: 100010
+    second: Bone.003
+  - first:
+      1: 100012
+    second: Bone.003_L.001
+  - first:
+      1: 100014
+    second: Bone.003_L.001_end
+  - first:
+      1: 100016
+    second: Bone.003_R.001
+  - first:
+      1: 100018
+    second: Bone.003_R.001_end
+  - first:
+      1: 100020
+    second: Bone.004
+  - first:
+      1: 100022
+    second: Bone.004_end
+  - first:
+      1: 100024
+    second: Bone.005
+  - first:
+      1: 100026
+    second: Bone.006
+  - first:
+      1: 100028
+    second: Bone.007
+  - first:
+      1: 100030
+    second: Bone.008
+  - first:
+      1: 100032
+    second: Bone.009
+  - first:
+      1: 100034
+    second: Bone.010
+  - first:
+      1: 100036
+    second: Bone.011
+  - first:
+      1: 100038
+    second: Bone.012
+  - first:
+      1: 100040
+    second: Bone.013
+  - first:
+      1: 100042
+    second: Bone.014
+  - first:
+      1: 100044
+    second: Bone.015
+  - first:
+      1: 100046
+    second: Bone.015_end
+  - first:
+      1: 100048
+    second: Bone.016
+  - first:
+      1: 100050
+    second: Bone.017
+  - first:
+      1: 100052
+    second: Bone.018
+  - first:
+      1: 100054
+    second: Bone.018_end
+  - first:
+      1: 100056
+    second: Bone.019
+  - first:
+      1: 100058
+    second: Bone.020
+  - first:
+      1: 100060
+    second: Bone.020_end
+  - first:
+      1: 100062
+    second: Bone.021
+  - first:
+      1: 100064
+    second: Bone.021_end
+  - first:
+      1: 100066
+    second: Bone.022
+  - first:
+      1: 100068
+    second: Bone.022_end
+  - first:
+      1: 100070
+    second: Bone.023
+  - first:
+      1: 100072
+    second: Bone.023_end
+  - first:
+      1: 100074
+    second: control1_dianteira_L
+  - first:
+      1: 100076
+    second: control1_dianteira_R
+  - first:
+      1: 100078
+    second: control1_L
+  - first:
+      1: 100080
+    second: control1_R
+  - first:
+      1: 100082
+    second: control2_dianteira_L
+  - first:
+      1: 100084
+    second: control2_dianteira_L_end
+  - first:
+      1: 100086
+    second: control2_dianteira_R
+  - first:
+      1: 100088
+    second: control2_dianteira_R_end
+  - first:
+      1: 100090
+    second: control2_L
+  - first:
+      1: 100092
+    second: control2_L_end
+  - first:
+      1: 100094
+    second: control2_R
+  - first:
+      1: 100096
+    second: control2_R_end
+  - first:
+      1: 100098
+    second: control_dianteira_L
+  - first:
+      1: 100100
+    second: control_dianteira_R
+  - first:
+      1: 100102
+    second: control_L
+  - first:
+      1: 100104
+    second: control_R
+  - first:
+      1: 100106
+    second: coxa_dianteira_L
+  - first:
+      1: 100108
+    second: coxa_dianteira_R
+  - first:
+      1: 100110
+    second: coxa_L
+  - first:
+      1: 100112
+    second: coxa_R
+  - first:
+      1: 100114
+    second: Cube
+  - first:
+      1: 100116
+    second: "C\xE2mera"
+  - first:
+      1: 100118
+    second: ombro_L
+  - first:
+      1: 100120
+    second: ombro_R
+  - first:
+      1: 100122
+    second: perna_dianteira_L
+  - first:
+      1: 100124
+    second: perna_dianteira_L_end
+  - first:
+      1: 100126
+    second: perna_dianteira_R
+  - first:
+      1: 100128
+    second: perna_dianteira_R_end
+  - first:
+      1: 100130
+    second: perna_L
+  - first:
+      1: 100132
+    second: perna_L_end
+  - first:
+      1: 100134
+    second: perna_R
+  - first:
+      1: 100136
+    second: perna_R_end
+  - first:
+      1: 100138
+    second: quadril_dianteira_L
+  - first:
+      1: 100140
+    second: quadril_dianteira_R
+  - first:
+      4: 400000
+    second: //RootNode
+  - first:
+      4: 400002
+    second: Armature
+  - first:
+      4: 400004
+    second: Bone
+  - first:
+      4: 400006
+    second: Bone.001
+  - first:
+      4: 400008
+    second: Bone.002
+  - first:
+      4: 400010
+    second: Bone.003
+  - first:
+      4: 400012
+    second: Bone.003_L.001
+  - first:
+      4: 400014
+    second: Bone.003_L.001_end
+  - first:
+      4: 400016
+    second: Bone.003_R.001
+  - first:
+      4: 400018
+    second: Bone.003_R.001_end
+  - first:
+      4: 400020
+    second: Bone.004
+  - first:
+      4: 400022
+    second: Bone.004_end
+  - first:
+      4: 400024
+    second: Bone.005
+  - first:
+      4: 400026
+    second: Bone.006
+  - first:
+      4: 400028
+    second: Bone.007
+  - first:
+      4: 400030
+    second: Bone.008
+  - first:
+      4: 400032
+    second: Bone.009
+  - first:
+      4: 400034
+    second: Bone.010
+  - first:
+      4: 400036
+    second: Bone.011
+  - first:
+      4: 400038
+    second: Bone.012
+  - first:
+      4: 400040
+    second: Bone.013
+  - first:
+      4: 400042
+    second: Bone.014
+  - first:
+      4: 400044
+    second: Bone.015
+  - first:
+      4: 400046
+    second: Bone.015_end
+  - first:
+      4: 400048
+    second: Bone.016
+  - first:
+      4: 400050
+    second: Bone.017
+  - first:
+      4: 400052
+    second: Bone.018
+  - first:
+      4: 400054
+    second: Bone.018_end
+  - first:
+      4: 400056
+    second: Bone.019
+  - first:
+      4: 400058
+    second: Bone.020
+  - first:
+      4: 400060
+    second: Bone.020_end
+  - first:
+      4: 400062
+    second: Bone.021
+  - first:
+      4: 400064
+    second: Bone.021_end
+  - first:
+      4: 400066
+    second: Bone.022
+  - first:
+      4: 400068
+    second: Bone.022_end
+  - first:
+      4: 400070
+    second: Bone.023
+  - first:
+      4: 400072
+    second: Bone.023_end
+  - first:
+      4: 400074
+    second: control1_dianteira_L
+  - first:
+      4: 400076
+    second: control1_dianteira_R
+  - first:
+      4: 400078
+    second: control1_L
+  - first:
+      4: 400080
+    second: control1_R
+  - first:
+      4: 400082
+    second: control2_dianteira_L
+  - first:
+      4: 400084
+    second: control2_dianteira_L_end
+  - first:
+      4: 400086
+    second: control2_dianteira_R
+  - first:
+      4: 400088
+    second: control2_dianteira_R_end
+  - first:
+      4: 400090
+    second: control2_L
+  - first:
+      4: 400092
+    second: control2_L_end
+  - first:
+      4: 400094
+    second: control2_R
+  - first:
+      4: 400096
+    second: control2_R_end
+  - first:
+      4: 400098
+    second: control_dianteira_L
+  - first:
+      4: 400100
+    second: control_dianteira_R
+  - first:
+      4: 400102
+    second: control_L
+  - first:
+      4: 400104
+    second: control_R
+  - first:
+      4: 400106
+    second: coxa_dianteira_L
+  - first:
+      4: 400108
+    second: coxa_dianteira_R
+  - first:
+      4: 400110
+    second: coxa_L
+  - first:
+      4: 400112
+    second: coxa_R
+  - first:
+      4: 400114
+    second: Cube
+  - first:
+      4: 400116
+    second: "C\xE2mera"
+  - first:
+      4: 400118
+    second: ombro_L
+  - first:
+      4: 400120
+    second: ombro_R
+  - first:
+      4: 400122
+    second: perna_dianteira_L
+  - first:
+      4: 400124
+    second: perna_dianteira_L_end
+  - first:
+      4: 400126
+    second: perna_dianteira_R
+  - first:
+      4: 400128
+    second: perna_dianteira_R_end
+  - first:
+      4: 400130
+    second: perna_L
+  - first:
+      4: 400132
+    second: perna_L_end
+  - first:
+      4: 400134
+    second: perna_R
+  - first:
+      4: 400136
+    second: perna_R_end
+  - first:
+      4: 400138
+    second: quadril_dianteira_L
+  - first:
+      4: 400140
+    second: quadril_dianteira_R
+  - first:
+      20: 2000000
+    second: "C\xE2mera"
+  - first:
+      21: 2100000
+    second: Material.005
+  - first:
+      43: 4300000
+    second: Cube
+  - first:
+      74: 7400000
+    second: "C\xE2mera|Sem t\xEDtulo"
+  - first:
+      74: 7400002
+    second: "C\xE2mera|Sem t\xEDtulo.001"
+  - first:
+      74: 7400004
+    second: Armature|01-idle
+  - first:
+      74: 7400006
+    second: Armature|01.2-idle na agua
+  - first:
+      74: 7400008
+    second: Armature|02-andando
+  - first:
+      74: 7400010
+    second: Armature|02.2-nadando lento
+  - first:
+      74: 7400012
+    second: Armature|03-correndo
+  - first:
+      74: 7400014
+    second: Armature|03.2-nadando rapido
+  - first:
+      74: 7400016
+    second: Armature|04-pulo 1- saindo do chao
+  - first:
+      74: 7400018
+    second: Armature|04-pulo 2-idle
+  - first:
+      74: 7400020
+    second: Armature|04-pulo 3-caindo
+  - first:
+      74: 7400022
+    second: Armature|05-ataque 1
+  - first:
+      74: 7400024
+    second: Armature|06-ataque 2
+  - first:
+      74: 7400026
+    second: Armature|07-ataque 3
+  - first:
+      74: 7400028
+    second: Armature|08-ataque 4
+  - first:
+      74: 7400030
+    second: Armature|09-hit
+  - first:
+      74: 7400032
+    second: Armature|10-caindo
+  - first:
+      74: 7400034
+    second: Armature|11-levantando
+  - first:
+      74: 7400036
+    second: "Armature|12-anima\xE7\xE3o extra"
+  - first:
+      74: 7400038
+    second: "Armature|Sem t\xEDtulo"
+  - first:
+      74: 7400040
+    second: "Armature|Sem t\xEDtulo.001"
+  - first:
+      74: 7400042
+    second: "Cube|Sem t\xEDtulo"
+  - first:
+      74: 7400044
+    second: "Cube|Sem t\xEDtulo.001"
+  - first:
+      95: 9500000
+    second: //RootNode
+  - first:
+      137: 13700000
+    second: Cube
+  - first:
+      74: -623603649343465320
+    second: Scene
   externalObjects: {}
   materials:
-    importMaterials: 1
+    materialImportMode: 1
     materialName: 0
     materialSearch: 1
     materialLocation: 1
@@ -208,6 +551,7 @@ ModelImporter:
     meshCompression: 0
     addColliders: 0
     useSRGBMaterialColor: 1
+    sortHierarchyByName: 1
     importVisibility: 1
     importBlendShapes: 1
     importCameras: 1
@@ -215,18 +559,19 @@ ModelImporter:
     swapUVChannels: 0
     generateSecondaryUV: 0
     useFileUnits: 1
-    optimizeMeshForGPU: 1
     keepQuads: 0
     weldVertices: 1
     preserveHierarchy: 0
+    skinWeightsMode: 0
+    maxBonesPerVertex: 4
+    minBoneWeight: 0.001
+    meshOptimizationFlags: -1
     indexFormat: 0
     secondaryUVAngleDistortion: 8
     secondaryUVAreaDistortion: 15.000001
     secondaryUVHardAngle: 88
     secondaryUVPackMargin: 4
     useFileScale: 1
-    previousCalculatedGlobalScale: 1
-    hasPreviousCalculatedGlobalScale: 1
   tangentSpace:
     normalSmoothAngle: 60
     normalImportMode: 0
@@ -235,10 +580,10 @@ ModelImporter:
     legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
     blendShapeNormalImportMode: 1
     normalSmoothingSource: 0
+  referencedClips: []
   importAnimation: 1
-  copyAvatar: 0
   humanDescription:
-    serializedVersion: 2
+    serializedVersion: 3
     human: []
     skeleton: []
     armTwist: 0.5
@@ -248,13 +593,16 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
+    globalScale: 1
     rootMotionBoneName: 
     hasTranslationDoF: 0
     hasExtraRoot: 0
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
+  autoGenerateAvatarMappingIfUnspecified: 1
   animationType: 2
   humanoidOversampling: 1
+  avatarSetup: 1
   additionalBone: 0
   userData: 
   assetBundleName: 
