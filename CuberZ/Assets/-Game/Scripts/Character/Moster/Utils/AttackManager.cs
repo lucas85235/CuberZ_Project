@@ -78,16 +78,19 @@ public class AttackManager : MonoBehaviour
         public int staminaCost;
 
         public float attackCoolDown;
-        public float damagePerSecond; // 
-        public float totalDamageTime; // 
+        public float damagePerSecond;
+        public float totalDamageTime;
+        public float startDamageTime; //
+        public float endDamageTime; // 
+        public float attackAnimationTime; //
 
         public bool canMove;
-        public bool canStartInStay; //
-        public bool isDamagePerSencond; // 
-        public bool isProjectileAttack; //
+        public bool canStartInStay;
+        public bool isDamagePerSencond;
+        public bool isProjectileAttack;
 
         public Lineage attackEffect;
-        public Lineage[] attackTypes; //
+        public Lineage[] attackTypes;
     }
     
     public string GetAttackName(int index) { return attackStats[index].attackName; }
@@ -98,6 +101,9 @@ public class AttackManager : MonoBehaviour
     public float GetAttackCoolDown(int index) { return attackStats[index].attackCoolDown; }
     public float GetDamagePerSecond(int index) { return attackStats[index].damagePerSecond; }
     public float GetTotalDamageTime(int index) { return attackStats[index].totalDamageTime; }
+    public float GetStartDamageTime(int index) { return attackStats[index].startDamageTime; }
+    public float GetEndDamageTime(int index) { return attackStats[index].endDamageTime; }
+    public float GetAttackAnimationTime(int index) { return attackStats[index].attackAnimationTime; }
 
     public bool GetCanMove(int index) { return attackStats[index].canMove; }
     public bool GetCanStartInStay(int index) { return attackStats[index].canStartInStay; }

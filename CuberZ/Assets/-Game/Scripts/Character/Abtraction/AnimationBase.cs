@@ -17,6 +17,6 @@ public abstract class AnimationBase : MonoBehaviour
     public abstract void EnterInSwimMode();
     public abstract void ExitInSwimMode();
     public abstract void ExitDeathState();
-    public abstract IEnumerator PlayDeathState();
+    public abstract void PlayDeathState();
     public abstract bool IsPlayAttackAnimation();
 }

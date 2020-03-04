@@ -80,14 +80,12 @@ public class AnimationDefaultImpl : AnimationBase
     public override void ExitDeathState() 
     {
         GetComponent<Animator>().SetBool("DEAD", false);
-        GetComponent<Animator>().SetBool("PLAY-DEAD", false);  
     }
 
-    public override IEnumerator PlayDeathState() 
+    public override void PlayDeathState() 
     {
-        GetComponent<Animator>().SetBool("DEAD", true);
-        yield return new WaitForSeconds(0.1f);
-        GetComponent<Animator>().SetBool("PLAY-DEAD", true);    }
+        GetComponent<Animator>().SetBool("DEAD", true); 
+    }
 
     public override bool IsPlayAttackAnimation()
     {

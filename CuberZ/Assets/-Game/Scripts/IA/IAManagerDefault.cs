@@ -40,17 +40,24 @@ public class IAManagerDefault : MonsterBase
         attack_ = GetComponent<AttackManager>();
 
         firstPos_ = transform.position;
+
+        characterStamina = maxStamina;
+        monsterLife = maxLife;
+
         StartCoroutine(Timer());
     }
 
     private void Update()
     {
-        if (iaState == State.Walk) 
-            ControlWalkState();
-        else if (iaState == State.Batlle) 
-            ControlBattleState();
+        if (!isDead) 
+        {
+            if (iaState == State.Walk) 
+                ControlWalkState();
+            else if (iaState == State.Batlle) 
+                ControlBattleState();
 
-        RegenStamina();
+            RegenStamina();
+        }
     }
 
     private void OnTriggerStay(Collider other) 
@@ -207,12 +214,23 @@ public class IAManagerDefault : MonsterBase
         return Vector3.Distance(transform.position, target.transform.position);   
     }
 
+    public override void IncrementLife(float decrement)
+    {
+        base.IncrementLife(decrement);
+
+        if (isDead && monsterLife > 0)
+            animation_.ExitDeathState();
+    }
+
     public override void DecrementLife(float decrement)
     {
         base.DecrementLife(decrement);
-
+        
         if (iaState != State.Batlle)
             iaState = State.Batlle;
+
+        if (monsterLife <= 0) 
+            animation_.PlayDeathState();
     }
     #endregion
 

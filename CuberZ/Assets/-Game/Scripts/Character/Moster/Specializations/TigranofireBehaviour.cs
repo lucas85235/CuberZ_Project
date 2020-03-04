@@ -96,7 +96,7 @@ public class TigranofireBehaviour : MonsterBase
 
             if (Input.GetKeyDown(KeyCode.F) && !isDead) // Key de Teste
             {
-                StartCoroutine(animation_.PlayDeathState());
+                animation_.PlayDeathState();
                 isDead = true;
             }
 

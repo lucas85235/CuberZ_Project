@@ -1,77 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &1018558676333574433
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 3734249843310875188}
-  - component: {fileID: 1012793466511032987}
-  - component: {fileID: 1480889907420419793}
-  - component: {fileID: 3234282214702095188}
-  m_Layer: 13
-  m_Name: DetectCollision
-  m_TagString: Enemy
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!4 &3734249843310875188
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1018558676333574433}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 7027413516888953104}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &1012793466511032987
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1018558676333574433}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 2.4, y: 4.5, z: 4}
-  m_Center: {x: 0, y: 2.25, z: -0.5}
---- !u!114 &1480889907420419793
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1018558676333574433}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d5c3d4f2a790bb940aaaaf37aff1f9c5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  adjustHitPosition: 2.5
---- !u!114 &3234282214702095188
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1018558676333574433}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d5c3d4f2a790bb940aaaaf37aff1f9c5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  adjustHitPosition: 2.5
 --- !u!1 &7027413516889246848
 GameObject:
   m_ObjectHideFlags: 0
@@ -771,6 +699,7 @@ SkinnedMeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -783,6 +712,7 @@ SkinnedMeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -1387,9 +1317,10 @@ GameObject:
   - component: {fileID: 5411930550336680449}
   - component: {fileID: 6838173598302684057}
   - component: {fileID: 114747102182921992}
+  - component: {fileID: 870563105}
   m_Layer: 13
   m_Name: 002-Minite-Enemy
-  m_TagString: Monster
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1407,7 +1338,6 @@ Transform:
   m_Children:
   - {fileID: 7027413516888953106}
   - {fileID: 7027413516888952970}
-  - {fileID: 3734249843310875188}
   - {fileID: 8977532172590536003}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -1501,14 +1431,32 @@ MonoBehaviour:
     baseDamage: 15
     staminaCost: 8
     attackCoolDown: 0
+    damagePerSecond: 0
+    totalDamageTime: 0
+    startDamageTime: 0
+    endDamageTime: 0
+    attackAnimationTime: 0
     canMove: 0
-    attackEffect: 0000000001000000
+    canStartInStay: 0
+    isDamagePerSencond: 0
+    isProjectileAttack: 0
+    attackEffect: 1000000
+    attackTypes: 
   - attackName: 
     baseDamage: 10
     staminaCost: 5
     attackCoolDown: 0
+    damagePerSecond: 0
+    totalDamageTime: 0
+    startDamageTime: 0
+    endDamageTime: 0
+    attackAnimationTime: 0
     canMove: 1
-    attackEffect: 0000000001000000
+    canStartInStay: 0
+    isDamagePerSencond: 0
+    isProjectileAttack: 0
+    attackEffect: 1000000
+    attackTypes: 
 --- !u!114 &5411930550336680449
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1548,6 +1496,49 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: 2
+--- !u!114 &870563105
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7027413516889247024}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 58656ab74cf66eb46bc5e3a35fbfa509, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  axisX: 0
+  axisY: 0
+  isSwimMode: 0
+  cameraDistance: 14
+  walkSpeed: 15
+  runSpeed: 22
+  smoothTime: 0.3
+  initialJumpImpulse: 10
+  jumpForce: 0.03
+  jumpTime: 0.12
+  dowmSpeed: 15
+  staminaRegen: 0.03
+  regenStartTime: 1
+  characterStamina: 0
+  spawnByPlayer: 0
+  currentAttackIndex: 0
+  attackSpeed: 20
+  attackDistance: 5
+  minDistance: 12
+  followSpeed: 10
+  target: {fileID: 0}
+  walkRadius: 10
+  stopDistance: 10
+  waitTimer: 3
+  timerUpdate: 3
+  iaState: 0
+  skillStats:
+  - skillNumber: 0
+    skillDistance: 12
+  - skillNumber: 1
+    skillDistance: 20
 --- !u!1 &7027413516889247026
 GameObject:
   m_ObjectHideFlags: 0
@@ -2803,7 +2794,7 @@ PrefabInstance:
     - target: {fileID: 7825828790931696604, guid: ee0af40eedc483a4490b847f2fdc5e5e,
         type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7825828790931696604, guid: ee0af40eedc483a4490b847f2fdc5e5e,
         type: 3}
@@ -2842,7 +2833,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &3624150645244284640 stripped
@@ -2854,6 +2845,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

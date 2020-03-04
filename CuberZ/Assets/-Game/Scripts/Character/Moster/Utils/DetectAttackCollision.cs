@@ -62,17 +62,11 @@ public class DetectAttackCollision : MonoBehaviour
 	{
 		initAttack_ = true;
 		
-		if (canLookAt_) 
-		{
-			other.transform.LookAt(transform);
-			canLookAt_ = false;
-		}
-		
 		other.GetComponent<AnimationBase>().ActiveHit();
 
+		enemy_ = other.GetComponent<IAManagerDefault>();
 		monster_ = thisKubber_.GetComponent<MonsterBase>();
 		attack_ = thisKubber_.GetComponent<AttackManager>();
-		enemy_ = other.GetComponent<IAManagerDefault>();
 
 		// e um attack por segundo?
 		// mudar attackEffect de array para variavel unica

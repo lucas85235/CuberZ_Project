@@ -29,6 +29,7 @@ public abstract class MonsterBase : CharacterAbstraction
     protected float monsterLife;
     protected float maxLife = 100f;
     protected bool isDead = false;
+    [SerializeField] public bool IsDead { get; }
     
     [Header("IA config")]
     public float minDistance = 12.0f;
@@ -158,7 +159,7 @@ public abstract class MonsterBase : CharacterAbstraction
         }
     }
 
-    protected override void Jump() 
+    protected virtual void Jump() 
     {
         if (Input.GetKeyDown(KeyCode.Space) && !isJump && canJump_ && characterStamina >= 10.0f) 
         {

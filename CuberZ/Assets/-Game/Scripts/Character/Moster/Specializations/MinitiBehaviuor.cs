@@ -13,7 +13,7 @@ public class MinitiBehaviuor : MonsterBase
     private bool canMove = true;
 
     [SerializeField]
-    private float toHeadButtLenght_ = 1.4f; // Valor anterior = 1.208333f;
+    private float toHeadButtLenght_ = 1.5f; // Valor anterior = 1.208333f;
 
     public enum MinitiAttacks
     {
@@ -69,7 +69,7 @@ public class MinitiBehaviuor : MonsterBase
     {
         if (isEnabled) 
         {
-            //Jump();
+            Jump();
 
             #region Get Inputs
             if (Input.GetKeyDown(KeyCode.N)) // Key de Teste
@@ -90,7 +90,7 @@ public class MinitiBehaviuor : MonsterBase
 
             if (Input.GetKeyDown(KeyCode.F) && !isDead) // Key de Teste
             {
-                StartCoroutine(animation_.PlayDeathState());
+                animation_.PlayDeathState();
                 isDead = true;
             }
 
@@ -225,14 +225,14 @@ public class MinitiBehaviuor : MonsterBase
 
     public IEnumerator FireBall() 
     {
-        //isAttacking = true;
+        isAttacking = true;
         canMove = attack_.GetCanMove(currentAttackIndex);
 
         animation_.MovableAttack((int)MinitiAttacks.FireBall);
         DecrementStamina(attack_.GetStaminaCost(currentAttackIndex));
 
         yield return new WaitForSeconds(toHeadButtLenght_);
-        //isAttacking = false;
+        isAttacking = false;
 
         DebugAttack();
     }

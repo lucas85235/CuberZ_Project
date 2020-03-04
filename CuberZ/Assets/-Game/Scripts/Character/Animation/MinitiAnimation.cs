@@ -85,11 +85,10 @@ public class MinitiAnimation : AnimationBase
         GetComponent<Animator>().SetBool("PLAY-DEAD", false);  
     }
 
-    public override IEnumerator PlayDeathState() 
+    public override void PlayDeathState() 
     {
-        GetComponent<Animator>().SetBool("DEAD", true);
-        yield return new WaitForSeconds(0.1f);
-        GetComponent<Animator>().SetBool("PLAY-DEAD", true);    }
+        GetComponent<Animator>().SetBool("DEAD", true);  
+    }
 
     public override bool IsPlayAttackAnimation()
     {
