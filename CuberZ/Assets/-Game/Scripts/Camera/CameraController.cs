@@ -17,7 +17,10 @@ public class CameraController : CameraProperties
     [SerializeField] private Transform enemyTarget_;
 
     [Header("Camera Properties")]
+    [SerializeField] private float cameraDistanceMin = 5.0f;
+    [SerializeField] private float cameraDistanceMax = 20.0f;
     [SerializeField] private float cameraDistance = 16.0f;
+    [SerializeField] private float zoomSpeed = 5.0f;
     [SerializeField] private float smooth = 4.0f;
     public float sensibility = 125.0f;
     public float adjustCollisionForward = 0.1f;
@@ -65,6 +68,9 @@ public class CameraController : CameraProperties
             if (input_.MoveCamera())
             CameraRotate();
 
+        if (Input.GetAxis("Mouse ScrollWheel") != 0)
+            CameraZoom();
+
         if (Physics.Linecast(target_.position, transform.position, out hit_, excludeLayers))
             transform.position = hit_.point + transform.forward * adjustCollisionForward;
     }
@@ -87,6 +93,12 @@ public class CameraController : CameraProperties
         rotation.z = 0;
 
         transform.eulerAngles = rotation;
+    }
+
+    private void CameraZoom()
+    {
+        cameraDistance -= Input.GetAxis("Mouse ScrollWheel") * zoomSpeed;
+        cameraDistance = Mathf.Clamp(cameraDistance, cameraDistanceMin, cameraDistanceMax);
     }
 
     public override bool IsFollowMode() { return cameraStyle_ == CameraMode.FollowPlayer; }
