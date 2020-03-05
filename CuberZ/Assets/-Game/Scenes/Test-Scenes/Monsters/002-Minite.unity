@@ -459,10 +459,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1283949618, guid: e6ee79b6e9ca7544788677ee19ad52ec, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 88148845147547813, guid: e6ee79b6e9ca7544788677ee19ad52ec,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -525,8 +521,8 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8634684265689884798, guid: e6ee79b6e9ca7544788677ee19ad52ec,
         type: 3}
-      propertyPath: attackStats.Array.data[2].baseDamage
-      value: 80
+      propertyPath: attackStats.Array.data[3].startDamageTime
+      value: 0.4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e6ee79b6e9ca7544788677ee19ad52ec, type: 3}

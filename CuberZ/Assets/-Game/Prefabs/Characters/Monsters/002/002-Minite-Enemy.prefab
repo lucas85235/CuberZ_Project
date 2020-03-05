@@ -1313,10 +1313,10 @@ GameObject:
   - component: {fileID: 1682178035263487736}
   - component: {fileID: 6356701997116750613}
   - component: {fileID: 2636064715337603376}
-  - component: {fileID: 6363454283160280701}
-  - component: {fileID: 5411930550336680449}
-  - component: {fileID: 6838173598302684057}
   - component: {fileID: 114747102182921992}
+  - component: {fileID: 2001211027}
+  - component: {fileID: 6363454283160280701}
+  - component: {fileID: 6838173598302684057}
   - component: {fileID: 870563105}
   m_Layer: 13
   m_Name: 002-Minite-Enemy
@@ -1412,6 +1412,31 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!114 &114747102182921992
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7027413516889247024}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 72bd2be532194944fab1577fb03937d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  id: 2
+--- !u!114 &2001211027
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7027413516889247024}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4091cf941ee284a468148d6c4cb06e98, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &6363454283160280701
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1432,7 +1457,6 @@ MonoBehaviour:
     staminaCost: 8
     attackCoolDown: 0
     damagePerSecond: 0
-    totalDamageTime: 0
     startDamageTime: 0
     endDamageTime: 0
     attackAnimationTime: 0
@@ -1440,14 +1464,13 @@ MonoBehaviour:
     canStartInStay: 0
     isDamagePerSencond: 0
     isProjectileAttack: 0
-    attackEffect: 1000000
+    attackEffect: 0
     attackTypes: 
   - attackName: 
     baseDamage: 10
     staminaCost: 5
     attackCoolDown: 0
     damagePerSecond: 0
-    totalDamageTime: 0
     startDamageTime: 0
     endDamageTime: 0
     attackAnimationTime: 0
@@ -1455,20 +1478,8 @@ MonoBehaviour:
     canStartInStay: 0
     isDamagePerSencond: 0
     isProjectileAttack: 0
-    attackEffect: 1000000
+    attackEffect: 0
     attackTypes: 
---- !u!114 &5411930550336680449
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7027413516889247024}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e5000115b72433449b74c6869ab7e306, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &6838173598302684057
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1483,19 +1494,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lifeImage: {fileID: 8977532173189513103}
   staminaImage: {fileID: 3624150645244284640}
---- !u!114 &114747102182921992
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7027413516889247024}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 72bd2be532194944fab1577fb03937d9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  id: 2
 --- !u!114 &870563105
 MonoBehaviour:
   m_ObjectHideFlags: 0

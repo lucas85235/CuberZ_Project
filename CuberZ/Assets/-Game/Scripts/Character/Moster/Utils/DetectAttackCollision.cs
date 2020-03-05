@@ -8,31 +8,64 @@ public class DetectAttackCollision : MonoBehaviour
 	[SerializeField] private GameObject hitSimplePrefab_;
 	[SerializeField] private GameObject hitSimpleRedPrefab_;
 
-	private Transform thisKubber_;
+	private AttackManager.AttackStats currentAttackStats;
+
 	private IAManagerDefault enemy_;
 	private AttackManager attack_;
 	private MonsterBase monster_;
+	private Transform thisKubber_;
 
-	private float hitCoolDown_ = 1.2f; // ajustar dependendo do attack
-	private float waitForDamagePerSecond = 0.2f; // padrão mas deve ser ajustado dinamicamente
 	private bool initAttack_ = false;
-	private bool canLookAt_ = true;
-	private bool damagePerSecond = false;
+	private bool damagePerSecond_ = false;
+	private bool isAttackingInStay_ = false;
+	private bool inStayCollision = false;
 
 	public float adjustHitPosition = 2.5f;
+
+	// Pronto
+	// 1 limpar o cogigo
+	// 3 ajustar ataque iniciado no stay colluider
+	// 2 ajustar a attack com o tempo de animação
+
+	// Falta
+	// 4 ajustar para o attack ser dado apos o tempo atual ser maior que o min e menor que o maximo
+	// 5 ajustar attack de projetil 
+	// 6 ajustar attack de dano por segundo
 
 	private void Start() 
 	{
 		thisKubber_ = transform.parent;
 	}
-	
+
+	public void UpdateCurrentAttackStats(AttackManager.AttackStats newStats) 
+	{
+		currentAttackStats.attackName = newStats.attackName;
+
+        currentAttackStats.baseDamage = newStats.baseDamage;
+        currentAttackStats.staminaCost = newStats.staminaCost;
+
+        currentAttackStats.attackCoolDown = newStats.attackCoolDown;
+        currentAttackStats.damagePerSecond = newStats.damagePerSecond;
+        currentAttackStats.startDamageTime = newStats.startDamageTime;
+        currentAttackStats.endDamageTime = newStats.endDamageTime;
+        currentAttackStats.attackAnimationTime = newStats.attackAnimationTime;
+
+        currentAttackStats.canMove = newStats.canMove;
+        currentAttackStats.canStartInStay = newStats.canStartInStay;
+        currentAttackStats.isDamagePerSencond = newStats.isDamagePerSencond;
+        currentAttackStats.isProjectileAttack = newStats.isProjectileAttack;
+
+        currentAttackStats.attackEffect = newStats.attackEffect;
+        currentAttackStats.attackTypes = newStats.attackTypes;
+	}
+
 	#region Fluxo de colisão 
 	private void OnTriggerEnter (Collider other) 
 	{
-		if (other.tag == "Enemy" && !damagePerSecond)
+		if (other.tag == "Enemy")
 		{
 			if (!initAttack_ && IsAttacking())
-				StartCoroutine(DamageBehaviour(other));
+				StartCoroutine(AttackEnterBehaviour(other));
 		}
 		if (other.tag == "Projectile") 
 		{
@@ -42,60 +75,95 @@ public class DetectAttackCollision : MonoBehaviour
 
 	private void OnTriggerStay (Collider other) 
 	{
-		if (other.tag == "Enemy" && damagePerSecond) 
+		if (other.tag == "Enemy" && currentAttackStats.canStartInStay) 
 		{
-			if (!initAttack_ && IsAttacking())
-				StartCoroutine(DamageBehaviour(other));
+			if (!initAttack_ && IsAttacking() && !isAttackingInStay_) 
+			{
+				StartCoroutine(AttackInStayBehaviour(other));
+			}
+			inStayCollision = true;
 		}
+		else inStayCollision = false;
 	}
 
 	private void OnTriggerExit(Collider other) 
 	{
-		if (other.tag == "Enemy" && damagePerSecond) 
+		if (other.tag == "Enemy" && damagePerSecond_) 
 		{
-			damagePerSecond = false;
+			damagePerSecond_ = false;
+			inStayCollision = false;
 		}
 	}
 	#endregion
 	
-	private IEnumerator DamageBehaviour(Collider other) 
+	private IEnumerator AttackEnterBehaviour(Collider other) 
 	{
 		initAttack_ = true;
-		
-		other.GetComponent<AnimationBase>().ActiveHit();
 
 		enemy_ = other.GetComponent<IAManagerDefault>();
 		monster_ = thisKubber_.GetComponent<MonsterBase>();
 		attack_ = thisKubber_.GetComponent<AttackManager>();
 
-		// e um attack por segundo?
-		// mudar attackEffect de array para variavel unica
-		
-		// adicionar caroutine para esperar o tempo em que o dano pode ser recebido
-
-		// if ()  { verificar se e um attack de longa distancia / de projetil 
-
 		int damage = attack_.attackStats[monster_.currentAttackIndex].baseDamage;
 
 		enemy_.DecrementLife(damage);
-
+		other.GetComponent<AnimationBase>().ActiveHit();
 		ChoiceAttackEffect(other.transform);
+		NumericDamageEffect(other.transform, damage);
 
+		yield return new WaitForSeconds(currentAttackStats.attackAnimationTime);
+
+		initAttack_ = false;
+	}
+
+	private IEnumerator AttackInStayBehaviour(Collider other) 
+	{
+		initAttack_ = true;
+		isAttackingInStay_ = true;
+
+		enemy_ = other.GetComponent<IAManagerDefault>();
+		monster_ = thisKubber_.GetComponent<MonsterBase>();
+		attack_ = thisKubber_.GetComponent<AttackManager>();
+
+		// e um attack por segundo		
+		// adicionar caroutine para esperar o tempo em que o dano pode ser recebido
+
+		yield return new WaitForSeconds(currentAttackStats.startDamageTime);
+
+		if (inStayCollision) 
+		{
+			int damage = attack_.attackStats[monster_.currentAttackIndex].baseDamage;
+
+			other.GetComponent<AnimationBase>().ActiveHit();
+			enemy_.DecrementLife(damage);
+					
+			ChoiceAttackEffect(other.transform);
+			NumericDamageEffect(other.transform, damage);			
+		}
+
+		yield return new WaitForSeconds(currentAttackStats.attackAnimationTime - currentAttackStats.startDamageTime);
+
+		initAttack_ = false;
+		isAttackingInStay_ = false;
+	}
+
+	private bool IsAttacking() 
+	{
+		return transform.parent.GetComponent<MonsterBase>().isAttacking;
+	}
+
+	#region Effect Manager
+	private void NumericDamageEffect(Transform spawPosition, int damage) 
+	{
 		GameObject damageEffect = Instantiate(hitNumericPrefab_);
-		damageEffect.transform.position = other.transform.position + (Vector3.forward * (
+		damageEffect.transform.position = spawPosition.position + (Vector3.forward * (
 			Random.Range(0, 1) == 1 ? 
 				Random.Range(-1, -adjustHitPosition) : Random.Range(1, adjustHitPosition))
 		);
 		
-		damageEffect.transform.parent = other.transform;
+		damageEffect.transform.parent = spawPosition;
 		damageEffect.GetComponent<NumericDamageEffect>().SetUpEffect(damage);
 		Destroy(damageEffect, 1f);	
-		// }
-
-		yield return new WaitForSeconds(hitCoolDown_);
-
-		initAttack_ = false;
-		canLookAt_ = true;
 	}
 
 	private void ChoiceAttackEffect(Transform spawInTransform) 
@@ -122,10 +190,5 @@ public class DetectAttackCollision : MonoBehaviour
 			Destroy (hitEffect, 1);
 		}
 	}
-
-	private bool IsAttacking() 
-	{
-		// verificar se e um ataque de longa distancia se for retornar false
-		return transform.parent.GetComponent<MonsterBase>().isAttacking;
-	}
+	#endregion	
 }

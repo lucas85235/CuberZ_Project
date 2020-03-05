@@ -79,7 +79,7 @@ public class AttackManager : MonoBehaviour
 
         public float attackCoolDown;
         public float damagePerSecond;
-        public float totalDamageTime;
+        public float waitDamagePerSecond;
         public float startDamageTime; //
         public float endDamageTime; // 
         public float attackAnimationTime; //
@@ -100,7 +100,7 @@ public class AttackManager : MonoBehaviour
 
     public float GetAttackCoolDown(int index) { return attackStats[index].attackCoolDown; }
     public float GetDamagePerSecond(int index) { return attackStats[index].damagePerSecond; }
-    public float GetTotalDamageTime(int index) { return attackStats[index].totalDamageTime; }
+    public float GetTotalDamageTime(int index) { return attackStats[index].waitDamagePerSecond; }
     public float GetStartDamageTime(int index) { return attackStats[index].startDamageTime; }
     public float GetEndDamageTime(int index) { return attackStats[index].endDamageTime; }
     public float GetAttackAnimationTime(int index) { return attackStats[index].attackAnimationTime; }

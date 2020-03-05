@@ -43,11 +43,11 @@ GameObject:
   - component: {fileID: 8634684265689884797}
   - component: {fileID: 8972293388835585807}
   - component: {fileID: 8617018000397016043}
-  - component: {fileID: 8634684265689884793}
   - component: {fileID: 8634684265689884794}
   - component: {fileID: 8634684265689884796}
   - component: {fileID: 8634684265689884798}
   - component: {fileID: 1283949618}
+  - component: {fileID: 106586689}
   m_Layer: 13
   m_Name: 002-Minite
   m_TagString: Monster
@@ -144,18 +144,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 2.5, y: 4.5, z: 4.5}
   m_Center: {x: 0, y: 2.25, z: 0.5}
---- !u!114 &8634684265689884793
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 88148845147911301}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e5000115b72433449b74c6869ab7e306, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &8634684265689884794
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -202,7 +190,6 @@ MonoBehaviour:
   attackDistance: 5
   minDistance: 12
   followSpeed: 10
-  toHeadButtLenght_: 1.4
 --- !u!114 &8634684265689884798
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -219,26 +206,26 @@ MonoBehaviour:
   attackTier: ffffffffffffffffffffffffffffffff
   attackStats:
   - attackName: ToHeadButt
-    baseDamage: 12
-    staminaCost: 15
+    baseDamage: 22
+    staminaCost: 14
     attackCoolDown: 0
     damagePerSecond: 0
-    totalDamageTime: 0
+    waitDamagePerSecond: 0
     startDamageTime: 0
     endDamageTime: 0
-    attackAnimationTime: 0
+    attackAnimationTime: 1.6
     canMove: 0
     canStartInStay: 0
     isDamagePerSencond: 0
     isProjectileAttack: 0
-    attackEffect: 1
+    attackEffect: 0
     attackTypes: 
   - attackName: FireBall
     baseDamage: 10
     staminaCost: 5
     attackCoolDown: 0
     damagePerSecond: 0
-    totalDamageTime: 0
+    waitDamagePerSecond: 0
     startDamageTime: 0
     endDamageTime: 0
     attackAnimationTime: 0
@@ -249,31 +236,31 @@ MonoBehaviour:
     attackEffect: 0
     attackTypes: 
   - attackName: RotatoryAttack
-    baseDamage: 10
+    baseDamage: 8
     staminaCost: 10
     attackCoolDown: 0
     damagePerSecond: 0
-    totalDamageTime: 0
-    startDamageTime: 0
+    waitDamagePerSecond: 0
+    startDamageTime: 0.6
     endDamageTime: 0
-    attackAnimationTime: 0
+    attackAnimationTime: 1.8
     canMove: 1
-    canStartInStay: 0
+    canStartInStay: 1
     isDamagePerSencond: 0
     isProjectileAttack: 0
-    attackEffect: 0
+    attackEffect: 1
     attackTypes: 
   - attackName: Bite
-    baseDamage: 8
+    baseDamage: 5
     staminaCost: 8
     attackCoolDown: 0
     damagePerSecond: 0
-    totalDamageTime: 0
-    startDamageTime: 0
+    waitDamagePerSecond: 0
+    startDamageTime: 0.6
     endDamageTime: 0
-    attackAnimationTime: 0
+    attackAnimationTime: 1.8
     canMove: 1
-    canStartInStay: 0
+    canStartInStay: 1
     isDamagePerSencond: 0
     isProjectileAttack: 0
     attackEffect: 0
@@ -283,7 +270,7 @@ MonoBehaviour:
     staminaCost: 8
     attackCoolDown: 0
     damagePerSecond: 0
-    totalDamageTime: 0
+    waitDamagePerSecond: 0
     startDamageTime: 0
     endDamageTime: 0
     attackAnimationTime: 0
@@ -308,6 +295,18 @@ MonoBehaviour:
   arrowTargetPrefab: {fileID: 2863105574966691215, guid: 8a094115a61610c4892254bc0b0fdcb9,
     type: 3}
   maxTargetDistance: 22
+--- !u!114 &106586689
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 88148845147911301}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4091cf941ee284a468148d6c4cb06e98, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &108934997799632099
 GameObject:
   m_ObjectHideFlags: 0

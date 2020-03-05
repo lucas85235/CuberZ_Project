@@ -168,14 +168,12 @@ public class IAManagerDefault : MonsterBase
                     useSkill_ = true;
                     timerToCountUpdate_ = timerUpdate;
                     animation_.NoMovableAttack(skillStats[i].skillNumber);
-                    Debug.Log("Chamou a animação!");
 
                     DecrementStamina(attack_.attackStats[i].staminaCost);
 
                     return;
                 }
             }
-            Debug.Log("Não Chamou a animação!");
         }
     } 
 
@@ -218,19 +216,30 @@ public class IAManagerDefault : MonsterBase
     {
         base.IncrementLife(decrement);
 
-        if (isDead && monsterLife > 0)
+        if (isDead && monsterLife > 0) 
+        {
             animation_.ExitDeathState();
+            nav_.enabled = true;
+        }
     }
 
     public override void DecrementLife(float decrement)
     {
-        base.DecrementLife(decrement);
-        
-        if (iaState != State.Batlle)
-            iaState = State.Batlle;
+        monsterLife -= decrement;
 
-        if (monsterLife <= 0) 
+        if (monsterLife <= 0)
+        {
+            isDead = true;
             animation_.PlayDeathState();
+            nav_.enabled = false;                
+            this.StopAllCoroutines(); 
+            Debug.Log("Life < 0, You Are Dead!");
+        }
+
+        worldHud_.HudUpdateLife(monsterLife, maxLife);
+
+        if (iaState != State.Batlle && !isDead)
+            iaState = State.Batlle;
     }
     #endregion
 

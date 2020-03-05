@@ -7,11 +7,13 @@ public class EyeAnimation : MonoBehaviour
     private SkinnedMeshRenderer skinnedMesh_;
 
     private int index_;
+
     private float countTime_;
     private float secondCountTime_;
     private float waitTime_;
     private float morph_;
-
+    
+    private bool isEnable = true;
 
     void Start()
     {
@@ -21,41 +23,55 @@ public class EyeAnimation : MonoBehaviour
 
     void Update()
     {
-        skinnedMesh_.SetBlendShapeWeight(0, Mathf.Lerp(skinnedMesh_.GetBlendShapeWeight(0), morph_, 20 * Time.deltaTime));
-
-        if (index_ < 2)
+        if (isEnable) 
         {
-            if (countTime_ < waitTime_)
+            skinnedMesh_.SetBlendShapeWeight(0, Mathf.Lerp(skinnedMesh_.GetBlendShapeWeight(0), morph_, 20 * Time.deltaTime));
+
+            if (index_ < 2)
             {
-                countTime_ += 1f;
-            }
-            else
-            {
-                if (morph_ <= 1)
+                if (countTime_ < waitTime_)
                 {
-                    morph_ = 100;
-                    waitTime_ = 3;
+                    countTime_ += 1f;
                 }
                 else
                 {
-                    morph_ = 0;
-                    waitTime_ = 50;
+                    if (morph_ <= 1)
+                    {
+                        morph_ = 100;
+                        waitTime_ = 3;
+                    }
+                    else
+                    {
+                        morph_ = 0;
+                        waitTime_ = 50;
+                    }
+                    index_++;
+                    countTime_ = 0;
                 }
-                index_++;
-                countTime_ = 0;
             }
-        }
-        if (index_ >= 2)
-        {
-            if (secondCountTime_ < waitTime_ * 2)
+            if (index_ >= 2)
             {
-                secondCountTime_ += 1;
-            }
-            else
-            {
-                index_ = 0;
-                secondCountTime_ = 0;
-            }
+                if (secondCountTime_ < waitTime_ * 2)
+                {
+                    secondCountTime_ += 1;
+                }
+                else
+                {
+                    index_ = 0;
+                    secondCountTime_ = 0;
+                }
+            }            
         }
+    }
+
+    public void CloseEyes() 
+    {
+        isEnable = false;
+        skinnedMesh_.SetBlendShapeWeight(0, 100);
+    }
+
+    public void OpenEyes() 
+    {
+        isEnable = true;
     }
 }
