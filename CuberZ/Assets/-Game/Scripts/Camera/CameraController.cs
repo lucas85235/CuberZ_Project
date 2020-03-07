@@ -20,7 +20,7 @@ public class CameraController : CameraProperties
     [SerializeField] private float cameraDistanceMin = 5.0f;
     [SerializeField] private float cameraDistanceMax = 20.0f;
     [SerializeField] private float cameraDistance = 16.0f;
-    [SerializeField] private float zoomSpeed = 5.0f;
+    [SerializeField] private float zoomSpeed = 25.0f;
     [SerializeField] private float smooth = 4.0f;
     public float sensibility = 125.0f;
     public float adjustCollisionForward = 0.1f;
