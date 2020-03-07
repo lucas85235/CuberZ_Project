@@ -62,8 +62,6 @@ public abstract class CharacterAbstraction : MonoBehaviour
         Construt(Object.FindObjectOfType<InputSystem>());
     }
 
-    protected abstract void Jump();
-
     #region Implementações padrão
     protected virtual void Movement() 
     {

@@ -40,17 +40,24 @@ public class IAManagerDefault : MonsterBase
         attack_ = GetComponent<AttackManager>();
 
         firstPos_ = transform.position;
+
+        characterStamina = maxStamina;
+        monsterLife = maxLife;
+
         StartCoroutine(Timer());
     }
 
     private void Update()
     {
-        if (iaState == State.Walk) 
-            ControlWalkState();
-        else if (iaState == State.Batlle) 
-            ControlBattleState();
+        if (!isDead) 
+        {
+            if (iaState == State.Walk) 
+                ControlWalkState();
+            else if (iaState == State.Batlle) 
+                ControlBattleState();
 
-        RegenStamina();
+            RegenStamina();
+        }
     }
 
     private void OnTriggerStay(Collider other) 
@@ -161,14 +168,12 @@ public class IAManagerDefault : MonsterBase
                     useSkill_ = true;
                     timerToCountUpdate_ = timerUpdate;
                     animation_.NoMovableAttack(skillStats[i].skillNumber);
-                    Debug.Log("Chamou a animação!");
 
                     DecrementStamina(attack_.attackStats[i].staminaCost);
 
                     return;
                 }
             }
-            Debug.Log("Não Chamou a animação!");
         }
     } 
 
@@ -207,11 +212,33 @@ public class IAManagerDefault : MonsterBase
         return Vector3.Distance(transform.position, target.transform.position);   
     }
 
+    public override void IncrementLife(float decrement)
+    {
+        base.IncrementLife(decrement);
+
+        if (isDead && monsterLife > 0) 
+        {
+            animation_.ExitDeathState();
+            nav_.enabled = true;
+        }
+    }
+
     public override void DecrementLife(float decrement)
     {
-        base.DecrementLife(decrement);
+        monsterLife -= decrement;
 
-        if (iaState != State.Batlle)
+        if (monsterLife <= 0)
+        {
+            isDead = true;
+            animation_.PlayDeathState();
+            nav_.enabled = false;                
+            this.StopAllCoroutines(); 
+            Debug.Log("Life < 0, You Are Dead!");
+        }
+
+        worldHud_.HudUpdateLife(monsterLife, maxLife);
+
+        if (iaState != State.Batlle && !isDead)
             iaState = State.Batlle;
     }
     #endregion

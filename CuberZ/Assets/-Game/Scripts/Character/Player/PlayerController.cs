@@ -59,7 +59,14 @@ public class PlayerController : CharacterAbstraction
     {
         if (canGetInputs_ && isEnabled)
         {
-            Jump();
+            if (Input.GetKeyDown(KeyCode.Space) && !isJump && canJump_ && characterStamina >= 10.0f)
+            {
+                body_.AddForce(Vector3.up * initialJumpImpulse, ForceMode.Impulse);
+                startJumpTime = true;
+                isJump = true;
+                playerAnimation_.EnterJump();
+                DecrementStamina(10f);
+            }
 
             #region Get Inputs
             if (Input.GetKeyDown(KeyCode.T) && currentKubberSpawned)
@@ -96,6 +103,8 @@ public class PlayerController : CharacterAbstraction
         {
             if (isEnabled && !captureSystem.captureProcess)
             {
+                JumpControl();
+
                 axisX = input_.GetAxisHorizontal();
                 axisY = input_.GetAxisVertical();
 
@@ -140,6 +149,10 @@ public class PlayerController : CharacterAbstraction
                     if (characterStamina == 0)
                         StartCoroutine(EndedRegenTime());
                 }
+                else if (input_.RunInput() && inRunInput && isJump)
+                {
+                    transform.position += transform.forward * (walkSpeed * 1.8f) * Time.deltaTime;
+                }
                 else
                 {
                     transform.position += transform.forward * walkSpeed * Time.deltaTime;
@@ -168,17 +181,8 @@ public class PlayerController : CharacterAbstraction
         }
     }
 
-    protected override void Jump()
+    private void JumpControl()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && !isJump && canJump_ && characterStamina >= 10.0f)
-        {
-            body_.AddForce(Vector3.up * initialJumpImpulse, ForceMode.Impulse);
-            startJumpTime = true;
-            isJump = true;
-            playerAnimation_.EnterJump();
-            DecrementStamina(10f);
-        }
-
         if (Input.GetKey(KeyCode.Space) && isJump)
             body_.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
 

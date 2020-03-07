@@ -5,12 +5,14 @@ using UnityEngine;
 public class AnimationDefaultImpl : AnimationBase
 {
     private Animator animator_;
+    private EyeAnimation eyes_;
 
     protected const string animationSpeed = "SPEED";
 
     private void Awake() 
     {
-        animator_ = GetComponent<Animator>();    
+        animator_ = GetComponent<Animator>();  
+        eyes_ = transform.GetChild(1).GetComponent<EyeAnimation>(); 
     }
 
     public override AnimatorStateInfo GetCurrentAnimationInLayerOne() 
@@ -59,35 +61,38 @@ public class AnimationDefaultImpl : AnimationBase
 
     public override void EnterJump() 
     {
-        GetComponent<Animator>().SetBool("ENTER-JUMP", true);
+        animator_.SetBool("ENTER-JUMP", true);
     }
     
     public override void ExitJump() 
     {
-        GetComponent<Animator>().SetBool("ENTER-JUMP", false);
+        animator_.SetBool("ENTER-JUMP", false);
     }
 
     public override void EnterInSwimMode() 
     {
-        GetComponent<Animator>().SetBool("SWIM", true);
+        animator_.SetBool("SWIM", true);
     }
     
     public override void ExitInSwimMode() 
     {
-        GetComponent<Animator>().SetBool("SWIM", false);
+        animator_.SetBool("SWIM", false);
+        eyes_.enabled = true;
+        eyes_.OpenEyes();
     }
 
     public override void ExitDeathState() 
     {
-        GetComponent<Animator>().SetBool("DEAD", false);
-        GetComponent<Animator>().SetBool("PLAY-DEAD", false);  
+        animator_.SetBool("DEAD", false);
+        eyes_.OpenEyes();
     }
 
-    public override IEnumerator PlayDeathState() 
+    public override void PlayDeathState() 
     {
-        GetComponent<Animator>().SetBool("DEAD", true);
-        yield return new WaitForSeconds(0.1f);
-        GetComponent<Animator>().SetBool("PLAY-DEAD", true);    }
+        animator_.SetBool("DEAD", true);
+        eyes_.CloseEyes();
+        eyes_.enabled = false;
+    }
 
     public override bool IsPlayAttackAnimation()
     {

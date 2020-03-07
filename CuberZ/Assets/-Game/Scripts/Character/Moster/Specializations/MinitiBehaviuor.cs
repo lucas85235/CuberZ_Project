@@ -9,11 +9,10 @@ public class MinitiBehaviuor : MonsterBase
     // que recebera ataques personalizados
     // setar os novos ataques e dar um override no GetAttackName
 
+    private DetectAttackCollision attackCollision;
+
     private bool canFollowPlayer = true;
     private bool canMove = true;
-
-    [SerializeField]
-    private float toHeadButtLenght_ = 1.4f; // Valor anterior = 1.208333f;
 
     public enum MinitiAttacks
     {
@@ -33,6 +32,7 @@ public class MinitiBehaviuor : MonsterBase
         if (GameObject.FindGameObjectWithTag("Player") != null)
             player_ = GameObject.FindGameObjectWithTag("Player").GetComponent<CharacterAbstraction>();
         attack_ = GetComponent<AttackManager>();
+        attackCollision = transform.Find("DetectCollision").GetComponent<DetectAttackCollision>();
         #endregion   
 
         body_.freezeRotation = true;
@@ -53,6 +53,8 @@ public class MinitiBehaviuor : MonsterBase
         attack_.attackTier[2] = (int)MinitiAttacks.RotatoryAttack;
         attack_.attackTier[3] = (int)MinitiAttacks.Bite;
 
+        attackCollision.UpdateCurrentAttackStats(attack_.attackStats[currentAttackIndex]);
+
         for (int i = 0; i < (int)MinitiAttacks.FireBall2+1; i++) 
         {
             attack_.SetAttackNamesInStats((MinitiAttacks)i, i);
@@ -69,7 +71,7 @@ public class MinitiBehaviuor : MonsterBase
     {
         if (isEnabled) 
         {
-            //Jump();
+            Jump();
 
             #region Get Inputs
             if (Input.GetKeyDown(KeyCode.N)) // Key de Teste
@@ -90,7 +92,7 @@ public class MinitiBehaviuor : MonsterBase
 
             if (Input.GetKeyDown(KeyCode.F) && !isDead) // Key de Teste
             {
-                StartCoroutine(animation_.PlayDeathState());
+                animation_.PlayDeathState();
                 isDead = true;
             }
 
@@ -118,14 +120,27 @@ public class MinitiBehaviuor : MonsterBase
                 else Debug.Log("Você não tem stmina para realizar este attack!");
             }
 
-            if (input_.KubberAttack1())
+            if (input_.KubberAttack1())  
+            {
                 currentAttackIndex = (int)MinitiAttacks.ToHeadButt;
-            if (input_.KubberAttack2())
+                attackCollision.UpdateCurrentAttackStats(attack_.attackStats[currentAttackIndex]);
+            }
+            else if (input_.KubberAttack2())
+            {
                 currentAttackIndex = (int)MinitiAttacks.FireBall;
-            if (input_.KubberAttack3())
+                attackCollision.UpdateCurrentAttackStats(attack_.attackStats[currentAttackIndex]);
+            }
+            else if (input_.KubberAttack3())
+            {
                 currentAttackIndex = (int)MinitiAttacks.RotatoryAttack;
-            if (input_.KubberAttack4())
+                attackCollision.UpdateCurrentAttackStats(attack_.attackStats[currentAttackIndex]);
+            }
+            else if (input_.KubberAttack4())
+            {
                 currentAttackIndex = (int)MinitiAttacks.Bite;
+                attackCollision.UpdateCurrentAttackStats(attack_.attackStats[currentAttackIndex]);
+            }
+
             #endregion            
         }
     }
@@ -176,8 +191,8 @@ public class MinitiBehaviuor : MonsterBase
 
     private void DebugAttack() 
     {
-        Debug.Log("Attack: " + ((MinitiAttacks)attack_.attackTier[currentAttackIndex]).ToString());
-        Debug.Log("Pode Mover: " + attack_.GetCanMove(currentAttackIndex));
+        // Debug.Log("Attack: " + ((MinitiAttacks)attack_.attackTier[currentAttackIndex]).ToString());
+        // Debug.Log("Pode Mover: " + attack_.GetCanMove(currentAttackIndex));
     }
 
     public IEnumerator ToHeadButt() 
@@ -217,7 +232,7 @@ public class MinitiBehaviuor : MonsterBase
             yield break;
         }
         
-        yield return new WaitForSeconds(toHeadButtLenght_);
+        yield return new WaitForSeconds(attack_.GetAttackAnimationTime(currentAttackIndex));
         DebugAttack();
         MovableSetting();
         yield break;
@@ -225,14 +240,14 @@ public class MinitiBehaviuor : MonsterBase
 
     public IEnumerator FireBall() 
     {
-        //isAttacking = true;
+        isAttacking = true;
         canMove = attack_.GetCanMove(currentAttackIndex);
 
         animation_.MovableAttack((int)MinitiAttacks.FireBall);
         DecrementStamina(attack_.GetStaminaCost(currentAttackIndex));
 
-        yield return new WaitForSeconds(toHeadButtLenght_);
-        //isAttacking = false;
+        yield return new WaitForSeconds(attack_.GetAttackAnimationTime(currentAttackIndex));
+        isAttacking = false;
 
         DebugAttack();
     }
@@ -245,7 +260,7 @@ public class MinitiBehaviuor : MonsterBase
         animation_.MovableAttack((int)MinitiAttacks.RotatoryAttack);
         DecrementStamina(attack_.GetStaminaCost(currentAttackIndex));
 
-        yield return new WaitForSeconds(toHeadButtLenght_);
+        yield return new WaitForSeconds(attack_.GetAttackAnimationTime(currentAttackIndex));
         isAttacking = false;
 
         DebugAttack();
@@ -259,7 +274,7 @@ public class MinitiBehaviuor : MonsterBase
         animation_.MovableAttack((int)MinitiAttacks.Bite);
         DecrementStamina(attack_.GetStaminaCost(currentAttackIndex));
 
-        yield return new WaitForSeconds(toHeadButtLenght_);
+        yield return new WaitForSeconds(attack_.GetAttackAnimationTime(currentAttackIndex));
         isAttacking = false;
 
         DebugAttack();
