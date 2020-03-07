@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 1
+  m_UseShadowmask: 0
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -214,43 +214,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 167752588}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1 &382189508 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8332692052576637838, guid: 65c37e4db0f98734b8d1fe5dbb581099,
-    type: 3}
-  m_PrefabInstance: {fileID: 8332692051809375564}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &382189509
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 382189508}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a79441f348de89743a2939f4d699eac1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_RenderShadows: 1
-  m_RequiresDepthTextureOption: 2
-  m_RequiresOpaqueTextureOption: 2
-  m_CameraType: 0
-  m_CameraOutput: 0
-  m_Cameras: []
-  m_RendererIndex: -1
-  m_VolumeLayerMask:
-    serializedVersion: 2
-    m_Bits: 1
-  m_VolumeTrigger: {fileID: 0}
-  m_RenderPostProcessing: 0
-  m_Antialiasing: 0
-  m_AntialiasingQuality: 2
-  m_StopNaN: 0
-  m_Dithering: 0
-  m_RequiresDepthTexture: 0
-  m_RequiresColorTexture: 0
-  m_Version: 2
 --- !u!1 &386917686
 GameObject:
   m_ObjectHideFlags: 0
@@ -518,11 +481,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: 002-Minite
-      objectReference: {fileID: 0}
-    - target: {fileID: 8634684265689884798, guid: e6ee79b6e9ca7544788677ee19ad52ec,
-        type: 3}
-      propertyPath: attackStats.Array.data[3].startDamageTime
-      value: 0.4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e6ee79b6e9ca7544788677ee19ad52ec, type: 3}
@@ -969,15 +927,5 @@ PrefabInstance:
       propertyPath: target_
       value: 
       objectReference: {fileID: 1543504985}
-    - target: {fileID: 8332692052576637839, guid: 65c37e4db0f98734b8d1fe5dbb581099,
-        type: 3}
-      propertyPath: maxAngleY
-      value: 70
-      objectReference: {fileID: 0}
-    - target: {fileID: 8332692052576637839, guid: 65c37e4db0f98734b8d1fe5dbb581099,
-        type: 3}
-      propertyPath: smooth
-      value: 3
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 65c37e4db0f98734b8d1fe5dbb581099, type: 3}

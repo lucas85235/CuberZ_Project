@@ -1457,6 +1457,7 @@ MonoBehaviour:
     staminaCost: 8
     attackCoolDown: 0
     damagePerSecond: 0
+    waitDamagePerSecond: 0
     startDamageTime: 0
     endDamageTime: 0
     attackAnimationTime: 0
@@ -1471,6 +1472,7 @@ MonoBehaviour:
     staminaCost: 5
     attackCoolDown: 0
     damagePerSecond: 0
+    waitDamagePerSecond: 0
     startDamageTime: 0
     endDamageTime: 0
     attackAnimationTime: 0
