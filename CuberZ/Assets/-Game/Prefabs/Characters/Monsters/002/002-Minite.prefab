@@ -256,7 +256,7 @@ MonoBehaviour:
     attackCoolDown: 0
     damagePerSecond: 0
     waitDamagePerSecond: 0
-    startDamageTime: 0.6
+    startDamageTime: 0.4
     endDamageTime: 0
     attackAnimationTime: 1.8
     canMove: 1

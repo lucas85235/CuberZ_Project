@@ -790,6 +790,7 @@ SkinnedMeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -802,6 +803,7 @@ SkinnedMeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -2172,64 +2174,6 @@ Transform:
   m_Father: {fileID: 8210674816322318518}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &8127598570340024767
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 8127598570340024766}
-  - component: {fileID: 8127598570340024764}
-  - component: {fileID: 8127598570340024765}
-  m_Layer: 13
-  m_Name: DetectCollision
-  m_TagString: Monster
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &8127598570340024766
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8127598570340024767}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 8210674816322318518}
-  m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &8127598570340024764
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8127598570340024767}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 2.4, y: 4.5, z: 4}
-  m_Center: {x: 0, y: 2.25, z: -0.5}
---- !u!114 &8127598570340024765
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8127598570340024767}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d5c3d4f2a790bb940aaaaf37aff1f9c5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  adjustHitPosition: 2.5
 --- !u!1 &8155370655352850864
 GameObject:
   m_ObjectHideFlags: 0
@@ -2303,8 +2247,8 @@ GameObject:
   - component: {fileID: 513278696897638510}
   - component: {fileID: 885232869556037404}
   - component: {fileID: 531085974974612472}
-  - component: {fileID: 513278696897638506}
   - component: {fileID: 1724942739}
+  - component: {fileID: 2143864334385027363}
   m_Layer: 13
   m_Name: 002-Minite-First-Capture
   m_TagString: Monster
@@ -2326,7 +2270,6 @@ Transform:
   - {fileID: 60736311369106944}
   - {fileID: 2524016849795023041}
   - {fileID: 8127598568887773087}
-  - {fileID: 8127598570340024766}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2400,18 +2343,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 2.5, y: 4.5, z: 4.5}
   m_Center: {x: 0, y: 2.25, z: 0.5}
---- !u!114 &513278696897638506
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8210674816322415766}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e5000115b72433449b74c6869ab7e306, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1724942739
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2425,6 +2356,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: 2
+--- !u!114 &2143864334385027363
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8210674816322415766}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4091cf941ee284a468148d6c4cb06e98, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8305401998354788381
 GameObject:
   m_ObjectHideFlags: 0

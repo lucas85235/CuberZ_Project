@@ -451,7 +451,7 @@ GameObject:
   - component: {fileID: 1866332536367118899}
   - component: {fileID: 1866332536367118897}
   - component: {fileID: 1866332536367118911}
-  - component: {fileID: 1866332536367118909}
+  - component: {fileID: 6239245080318355009}
   m_Layer: 13
   m_Name: 004-TigranoFire
   m_TagString: Enemy
@@ -515,26 +515,62 @@ MonoBehaviour:
     baseDamage: 40
     staminaCost: 15
     attackCoolDown: 2
+    damagePerSecond: 0
+    waitDamagePerSecond: 0
+    startDamageTime: 0
+    endDamageTime: 0
+    attackAnimationTime: 0
     canMove: 0
-    attackEffect: 01000000
+    canStartInStay: 0
+    isDamagePerSencond: 0
+    isProjectileAttack: 0
+    attackEffect: 1000000
+    attackTypes: 
   - attackName: FlameThrower
     baseDamage: 5
     staminaCost: 30
     attackCoolDown: 5
+    damagePerSecond: 0
+    waitDamagePerSecond: 0
+    startDamageTime: 0
+    endDamageTime: 0
+    attackAnimationTime: 0
     canMove: 0
-    attackEffect: 00000000
+    canStartInStay: 0
+    isDamagePerSencond: 0
+    isProjectileAttack: 0
+    attackEffect: 0
+    attackTypes: 
   - attackName: FireSequence
     baseDamage: 15
     staminaCost: 45
     attackCoolDown: 8
+    damagePerSecond: 0
+    waitDamagePerSecond: 0
+    startDamageTime: 0
+    endDamageTime: 0
+    attackAnimationTime: 0
     canMove: 0
-    attackEffect: 00000000
+    canStartInStay: 0
+    isDamagePerSencond: 0
+    isProjectileAttack: 0
+    attackEffect: 0
+    attackTypes: 
   - attackName: HyperBeam
     baseDamage: 10
     staminaCost: 80
     attackCoolDown: 15
+    damagePerSecond: 0
+    waitDamagePerSecond: 0
+    startDamageTime: 0
+    endDamageTime: 0
+    attackAnimationTime: 0
     canMove: 0
-    attackEffect: 00000000
+    canStartInStay: 0
+    isDamagePerSencond: 0
+    isProjectileAttack: 0
+    attackEffect: 0
+    attackTypes: 
 --- !u!54 &1866332536367118901
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -565,16 +601,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   axisX: 0
   axisY: 0
+  isSwimMode: 0
   cameraDistance: 14
   walkSpeed: 15
   runSpeed: 22
   smoothTime: 0.3
-  currentAttackIndex: 0
-  isSwimMode: 0
   initialJumpImpulse: 10
   jumpForce: 0.03
   jumpTime: 0.12
   dowmSpeed: 15
+  staminaRegen: 0.03
+  regenStartTime: 1
+  characterStamina: 0
+  spawnByPlayer: 0
+  currentAttackIndex: 0
   attackSpeed: 20
   attackDistance: 5
   minDistance: 12
@@ -627,8 +667,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lifeImage: {fileID: 8010250293886292833}
-  staminaImage: {fileID: 8010250294836319335}
---- !u!114 &1866332536367118909
+  staminaImage: {fileID: 0}
+--- !u!114 &6239245080318355009
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -637,7 +677,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1866332536367118906}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e5000115b72433449b74c6869ab7e306, type: 3}
+  m_Script: {fileID: 11500000, guid: 4091cf941ee284a468148d6c4cb06e98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1866332536367118908
@@ -1864,6 +1904,7 @@ SkinnedMeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -1875,6 +1916,7 @@ SkinnedMeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -2572,18 +2614,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &8010250294836319335 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7825828792338597398, guid: ee0af40eedc483a4490b847f2fdc5e5e,
-    type: 3}
-  m_PrefabInstance: {fileID: 265938744835707505}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
