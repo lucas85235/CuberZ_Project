@@ -6,8 +6,8 @@ using UnityEngine.UI;
 public class HudWorldStats : MonoBehaviour
 {
     [Header("Variáveis para Setar")]
-    [SerializeField] private Image lifeImage;
-    [SerializeField] private Image staminaImage;
+    [SerializeField] private Image lifeImage = null;
+    [SerializeField] private Image staminaImage = null;
 
     #region Funções para todos os Kubberz
     public void HudUpdateLife(float life, float maxLife)

@@ -10,7 +10,7 @@ public class DetectAttackCollision : MonoBehaviour
 
 	private AttackManager.AttackStats currentAttackStats;
 
-	private IAManagerDefault enemy_;
+	private IAAbstraction enemy_;
 	private AttackManager attack_;
 	private MonsterBase monster_;
 	private Transform thisKubber_;
@@ -100,7 +100,7 @@ public class DetectAttackCollision : MonoBehaviour
 	{
 		initAttack_ = true;
 
-		enemy_ = other.GetComponent<IAManagerDefault>();
+		enemy_ = other.GetComponent<IAAbstraction>();
 		monster_ = thisKubber_.GetComponent<MonsterBase>();
 		attack_ = thisKubber_.GetComponent<AttackManager>();
 
@@ -121,7 +121,7 @@ public class DetectAttackCollision : MonoBehaviour
 		initAttack_ = true;
 		isAttackingInStay_ = true;
 
-		enemy_ = other.GetComponent<IAManagerDefault>();
+		enemy_ = other.GetComponent<IAAbstraction>();
 		monster_ = thisKubber_.GetComponent<MonsterBase>();
 		attack_ = thisKubber_.GetComponent<AttackManager>();
 
@@ -161,7 +161,7 @@ public class DetectAttackCollision : MonoBehaviour
 				Random.Range(-1, -adjustHitPosition) : Random.Range(1, adjustHitPosition))
 		);
 		
-		damageEffect.transform.parent = spawPosition;
+		damageEffect.transform.SetParent(spawPosition);
 		damageEffect.GetComponent<NumericDamageEffect>().SetUpEffect(damage);
 		Destroy(damageEffect, 1f);	
 	}
@@ -185,7 +185,7 @@ public class DetectAttackCollision : MonoBehaviour
 		{
 			GameObject hitEffect = Instantiate(effect);
 			hitEffect.transform.position = objectTransform.position + (Vector3.up * adjustHitPosition);
-			hitEffect.transform.parent = objectTransform;
+			hitEffect.transform.SetParent(objectTransform);
 			hitEffect.name = "Hit_FX";
 			Destroy (hitEffect, 1);
 		}
