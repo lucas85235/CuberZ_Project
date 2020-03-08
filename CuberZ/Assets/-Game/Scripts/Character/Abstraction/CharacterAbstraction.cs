@@ -123,7 +123,7 @@ public abstract class CharacterAbstraction : MonoBehaviour
         switchCharacter.isEnabled = true;
     }
 
-    private protected IEnumerator EndedRegenTime()
+    protected IEnumerator EndedRegenTime()
     {
         endedStamina = true;
         yield return new WaitUntil(() => inRunInput == false && characterStamina > 5f);
