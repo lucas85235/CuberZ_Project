@@ -192,7 +192,6 @@ public class CaptureCube : MonoBehaviour
 
         Debug.Log("Toca Animação");
         cubeAnimations_.Capturing();
-        yield return new WaitUntil(() => fakeCube_.GetComponent<CaptureHelper>().canGo);
         moveCapture_ = false;
         abductionProcess = true;
         lastColliderDetected_ = col;

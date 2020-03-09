@@ -6,7 +6,7 @@ using UnityEngine.AI;
 public class PlayerController : CharacterAbstraction
 {
     private PlayerAnimation playerAnimation_;
-    private CaptureSystem captureSystem;
+    private CaptureSystemNew captureSystem;
     private HudWorldStats worldHud_;
     private CameraProperties camera_;
 
@@ -39,7 +39,7 @@ public class PlayerController : CharacterAbstraction
         body_ = GetComponent<Rigidbody>();
         cameraController_ = Camera.main.GetComponent<CameraController>();
         playerAnimation_ = GetComponent<PlayerAnimation>();
-        captureSystem = GetComponent<CaptureSystem>();
+        captureSystem = GetComponent<CaptureSystemNew>();
         worldHud_ = GetComponent<HudWorldStats>();
         #endregion
 
@@ -100,7 +100,7 @@ public class PlayerController : CharacterAbstraction
     {
         if (canMove_)
         {
-            if (isEnabled && !captureSystem.captureProcess)
+            if (isEnabled && !captureSystem.waitingForCaptureEnd)
             {
                 JumpBehaviour();
 
@@ -132,7 +132,7 @@ public class PlayerController : CharacterAbstraction
                 ref smooth_,
                 smoothTime);
 
-            if (!captureSystem.inCaptureMode)
+            if (!captureSystem.waitingForCaptureEnd)
             {
                 if (input_.RunInputUp())
                     inRunInput = true;
@@ -164,8 +164,8 @@ public class PlayerController : CharacterAbstraction
                         inRunInput = true;
                 }
             }
-
-            if (captureSystem.inCaptureMode)
+            
+            if (captureSystem.waitingForCaptureEnd)
             {
                 if (input_.GetAxisHorizontal() != 0 || input_.GetAxisVertical() != 0)
                 {
@@ -175,7 +175,7 @@ public class PlayerController : CharacterAbstraction
                 else playerAnimation_.MovimentSpeed(0);
             }
 
-            if (captureSystem.captureProcess)
+            if (captureSystem.waitingForCaptureEnd) 
                 StopWalk();
         }
     }
