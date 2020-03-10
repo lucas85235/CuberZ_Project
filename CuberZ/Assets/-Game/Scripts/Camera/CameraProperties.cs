@@ -27,10 +27,7 @@ public abstract class CameraProperties : MonoBehaviour
     public abstract void SetMaxAngle(float maxAngle);
     public abstract void SetSmooth(float newSmooth);
     public abstract void SetCameraDistance(float newDistance);
-    public virtual void SetCameraMode(CameraMode mode) 
-    {
-        cameraStyle_ = mode;
-    }
+    public virtual void SetCameraMode(CameraMode mode) { cameraStyle_ = mode; }
 
     public enum CameraMode
     {
