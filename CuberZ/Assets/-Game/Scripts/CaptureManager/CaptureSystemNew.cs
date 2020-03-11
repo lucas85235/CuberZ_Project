@@ -28,15 +28,12 @@ public class CaptureSystemNew : MonoBehaviour
     #endregion
 
     #region Private Variables
-    private void Construt(IInput newInputInterface)
-    {
-        input_ = newInputInterface;
-    }
     private LayerMask layerMask_;
     private IInput input_;
     private PlayerController playerController_;
     private PlayerAnimation playerAnimation_;
     private CameraController cameraController_;
+    private KubberzInventory kubberzInventory_;
     private bool captureMode_;
     private GameObject cubeTemp_;
     private Vector3 cubeGoalPosistion;
@@ -57,6 +54,8 @@ public class CaptureSystemNew : MonoBehaviour
     private Vector3 tempVelocity_;
     #endregion
 
+    private void Construt(IInput newInputInterface) { input_ = newInputInterface; }
+
     #region Monster RecordedVariables
     private Vector3 monsterCaptureScale_;
     private Quaternion monsterCaptureRotation_;
@@ -64,6 +63,13 @@ public class CaptureSystemNew : MonoBehaviour
     public Collider currentMonsterColider_ { get; set; }
     #endregion
 
+    #region Funções Lambda
+    private bool CanThrowCube() => input_.ExecuteAction() && !waitingForCaptureEnd && ThrowPointRange();
+    private bool CanEnterCaptureMode() => (cubeQuantity > 0 && !captureMode_ && !waitingForCaptureEnd) ? true : false;
+    private bool CanExitCaptureMode() => (captureMode_ && !waitingForCaptureEnd) ? true : false;
+    #endregion
+
+    #region Funções MonoBehaviour
     private void OnEnable()
     {
         //resetar toGoal e finishCubeCatchAnimatior
@@ -76,6 +82,7 @@ public class CaptureSystemNew : MonoBehaviour
         playerAnimation_ = FindObjectOfType<PlayerAnimation>();
         playerController_ = FindObjectOfType<PlayerController>();
         cameraController_ = FindObjectOfType<CameraController>();
+        kubberzInventory_ = FindObjectOfType<KubberzInventory>();
     }
 
     private void Update()
@@ -97,6 +104,7 @@ public class CaptureSystemNew : MonoBehaviour
     {
         if (goCubeToGoal_) GoCubeGoPhysics();
     }
+    #endregion
 
     #region Capturando o Kubber
 
@@ -104,8 +112,8 @@ public class CaptureSystemNew : MonoBehaviour
     {
         GameObject t = Pooling.InstantiatePooling(fakeCube, cubeTemp_.transform.position, cubeTemp_.transform.rotation);
         monsterCapturePosition_ = new Vector3(cubeTemp_.transform.position.x, monsterCapturePosition_.y, cubeTemp_.transform.position.z);
-        Rigidy(cubeTemp_).velocity = Vector3.zero;
-        Rigidy(cubeTemp_).useGravity = false;
+        GetRigidyBody(cubeTemp_).velocity = Vector3.zero;
+        GetRigidyBody(cubeTemp_).useGravity = false;
         cubeTemp_.gameObject.SetActive(false);
         cubeTemp_.transform.parent = null;
         ResetCaptureSystem(false);
@@ -124,7 +132,7 @@ public class CaptureSystemNew : MonoBehaviour
             putKubberInCUBE_ = false;
             kubberCollider.transform.gameObject.SetActive(false);
             kubberCollider.transform.SetParent(cubeTemp_.transform);
-            Rigidy(cubeTemp_).useGravity = true;
+            GetRigidyBody(cubeTemp_).useGravity = true;
             cubeTemp_.GetComponent<Collider>().enabled = true;
             cubeTemp_.GetComponent<Collider>().isTrigger = false;
             tryToCatchKubber = true;
@@ -150,7 +158,7 @@ public class CaptureSystemNew : MonoBehaviour
         cameraController_.SetTarget(cubeTemp_.transform);
 
 
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(1f);
 
         if (!setShakeVariables_)
         {
@@ -168,19 +176,19 @@ public class CaptureSystemNew : MonoBehaviour
         #region Casos de Captura
 
         #region Caso dê certo a Captura
-        if (catchKubber_ && numberOfShakes_ <= 2) //Captura do Kubber foi bem sucedida mas ainda não fez todas as balançadas
+        if (catchKubber_ && numberOfShakes_ < 2) //Captura do Kubber foi bem sucedida mas ainda não fez todas as balançadas
         {
             numberOfShakes_++;
             StartCoroutine(ShakeCube(MonsterCollider));
         }
 
-        else if (catchKubber_ && numberOfShakes_ > 2) //Captura do Kubber foi bem sucedida e terminou a ultima balançada;
+        else if (catchKubber_ && numberOfShakes_ >= 2) //Captura do Kubber foi bem sucedida e terminou a ultima balançada;
         {
             cubeTemp_.GetComponent<CubeAnimations>().DissolveCube();
-            yield return new WaitForSeconds(1);
+            yield return new WaitForSeconds(1.5f);
 
             cameraController_.SetCameraMode(CameraProperties.CameraMode.FollowPlayer);
-            cameraController_.SetTarget(previewTarget);
+            cameraController_.SetTarget(transform.Find("CameraTarget"));
 
             if (cubeQuantity > 0) SpawnCubeOnHand();
             else ExitCaptureMode(false);
@@ -188,6 +196,13 @@ public class CaptureSystemNew : MonoBehaviour
             startCapturing = false;
 
             setShakeVariables_ = false;
+
+            playerController_.CanMove_ = true;
+
+            ResetCaptureSystem(false);
+
+            kubberzInventory_.AddKubberInNextEmptySlot(currentMonsterColider_.gameObject);
+
             yield break;
         }
         #endregion
@@ -199,7 +214,7 @@ public class CaptureSystemNew : MonoBehaviour
             monsterBreakFree_ = true;
 
             cameraController_.SetCameraMode(CameraProperties.CameraMode.FollowPlayer);
-            cameraController_.SetTarget(previewTarget);
+            cameraController_.SetTarget(transform.Find("CameraTarget"));
 
             yield return new WaitUntil(() => !monsterBreakFree_);
 
@@ -303,10 +318,10 @@ public class CaptureSystemNew : MonoBehaviour
             cubeTemp_.transform.Rotate(-900 * Time.deltaTime, 0, 0, Space.Self);
 
             if (!goDown_) //Faz o arco quando está longe do target
-                Rigidy(cubeTemp_).velocity = (tempVelocity_ - cubeTemp_.transform.position).normalized * cubeSpeed + new Vector3(0, cubeForceY, 0);
+                GetRigidyBody(cubeTemp_).velocity = (tempVelocity_ - cubeTemp_.transform.position).normalized * cubeSpeed + new Vector3(0, cubeForceY, 0);
 
             else //Vai direto para o target ao estar perto dele
-                Rigidy(cubeTemp_).velocity = (tempVelocity_ - cubeTemp_.transform.position).normalized * cubeSpeed;
+                GetRigidyBody(cubeTemp_).velocity = (tempVelocity_ - cubeTemp_.transform.position).normalized * cubeSpeed;
         }
     }
 
@@ -331,9 +346,9 @@ public class CaptureSystemNew : MonoBehaviour
         monsterCapturePosition_ = currentCollider.transform.position;
         goCubeToGoal_ = false;
 
-        Rigidy(cubeTemp_).velocity = Vector3.zero;
-        Rigidy(cubeTemp_).AddForce((currentCollider.transform.position - transform.position) * 2 + new Vector3(0, 45, 0), ForceMode.Impulse);
-        Rigidy(cubeTemp_).AddTorque(Vector3.forward * -3, ForceMode.Impulse);
+        GetRigidyBody(cubeTemp_).velocity = Vector3.zero;
+        GetRigidyBody(cubeTemp_).AddForce((currentCollider.transform.position - transform.position) * 2 + new Vector3(0, 45, 0), ForceMode.Impulse);
+        GetRigidyBody(cubeTemp_).AddTorque(Vector3.forward * -3, ForceMode.Impulse);
         startCapturing = false;
         StartCoroutine(WaitTimerToStopCubeOnAir(currentCollider));
     } //Momento exato que bate no Kubber
@@ -346,7 +361,7 @@ public class CaptureSystemNew : MonoBehaviour
     {
         cubeTemp_.transform.SetParent(null);
         goCubeToGoal_ = true;
-        Rigidy(cubeTemp_).useGravity = true;
+        GetRigidyBody(cubeTemp_).useGravity = true;
         cubeTemp_.GetComponent<CubeAnimations>().DecreaseCaptureCube();
         cubeTemp_.transform.GetChild(1).gameObject.SetActive(true);
         cubeTemp_.GetComponent<CubeAnimations>().ExpandFakeCube();
@@ -356,7 +371,6 @@ public class CaptureSystemNew : MonoBehaviour
 
     #region CaptureMode ChangeState Functions
 
-    private bool CanThrowCube() => input_.ExecuteAction() && !waitingForCaptureEnd && ThrowPointRange();
     private void InputCaptureModeControlState()
     {
         if (captureMode_ && CanThrowCube()) //Estando no modo de captura a parte para capturar
@@ -386,13 +400,11 @@ public class CaptureSystemNew : MonoBehaviour
 
     }
 
-    private bool CanEnterCaptureMode() => (cubeQuantity > 0 && !captureMode_ && !waitingForCaptureEnd) ? true : false;
     private void EnterInCaptureMode()
     {
         captureMode_ = true;
     }
 
-    private bool CanExitCaptureMode() => (captureMode_ && !waitingForCaptureEnd) ? true : false;
     private void ExitCaptureMode(bool incrmentCube)
     {
         captureMode_ = false;
@@ -426,7 +438,7 @@ public class CaptureSystemNew : MonoBehaviour
             cubeTemp_.GetComponent<CaptureCubeNew>().canShakeCube = false;
             cubeTemp_.transform.SetParent(spawnPoint.transform);
             cubeTemp_.SetActive(true);
-            Rigidy(cubeTemp_).useGravity = false;
+            GetRigidyBody(cubeTemp_).useGravity = false;
 
             cubeQuantity--;
         }
@@ -440,7 +452,7 @@ public class CaptureSystemNew : MonoBehaviour
 
     #region Funções Úteis
 
-    private Rigidbody Rigidy(GameObject obj) => obj.GetComponent<Rigidbody>();
+    private Rigidbody GetRigidyBody(GameObject obj) => obj.GetComponent<Rigidbody>();
 
     private bool ThrowPointRange(float a = 15f, float b = 80f) => Vector3.Distance(cubeTemp_.transform.position, CubeGoalPositionCalculator()) >= a &&
         Vector3.Distance(cubeTemp_.transform.position, CubeGoalPositionCalculator()) <= b;
@@ -450,10 +462,10 @@ public class CaptureSystemNew : MonoBehaviour
         startCapturing = false;
         currentCollider.enabled = false;
         yield return new WaitForSeconds(1f);
-        Rigidy(cubeTemp_).useGravity = false;
-        Rigidy(cubeTemp_).velocity = Vector3.zero;
-        Rigidy(cubeTemp_).angularVelocity = Vector3.zero;
-        Rigidy(cubeTemp_).freezeRotation = true;
+        GetRigidyBody(cubeTemp_).useGravity = false;
+        GetRigidyBody(cubeTemp_).velocity = Vector3.zero;
+        GetRigidyBody(cubeTemp_).angularVelocity = Vector3.zero;
+        GetRigidyBody(cubeTemp_).freezeRotation = true;
         cubeTemp_.transform.LookAt(currentMonsterColider_.transform);
         cubeTemp_.GetComponent<CubeAnimations>().Capturing();
         yield return new WaitUntil(() => finishCubeCatchAnimator);

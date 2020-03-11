@@ -10,6 +10,7 @@ public class CaptureCubeNew : MonoBehaviour
     private CaptureSystemNew captureSystemNew_;
     private Collider myCollider_;
     private CameraController cameraController_;
+    private Rigidbody rigidybody_;
 
 
     //NEGOCIO DA QUANTIDADE DE CUBOS AO CUBO QUEBRAR ETC
@@ -18,6 +19,7 @@ public class CaptureCubeNew : MonoBehaviour
     {
         myCollider_ = GetComponent<Collider>();
         captureSystemNew_ = FindObjectOfType<CaptureSystemNew>();
+        rigidybody_ = GetComponent<Rigidbody>();
     }
 
     private void OnEnable()
@@ -88,8 +90,8 @@ public class CaptureCubeNew : MonoBehaviour
 
     private void ChangeMeForFakeCube()
     {
-        GetComponent<Rigidbody>().velocity = Vector3.zero;
-        GetComponent<Rigidbody>().useGravity = true;
+        rigidybody_.velocity = Vector3.zero;
+        rigidybody_.useGravity = true;
         GameObject t = Pooling.InstantiatePooling(fakeCube, transform.position, transform.rotation);
         transform.GetChild(0).gameObject.SetActive(true);
         transform.GetChild(1).gameObject.SetActive(false);
