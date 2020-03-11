@@ -259,15 +259,10 @@ public class MinitiBehaviuor : MonsterBase
 
         yield return new WaitForSeconds(attack_.GetAttackAnimationTime(currentAttackIndex));
 
-        #region SpawnSkill
-        yield return new WaitForSeconds(0.85f);
-        Transform spawnPoint = transform.Find("spawnSkill");
-        SkillCaster.instance.FireBallAttack(spawnPoint, Vector3.zero);
-        #endregion
-
         isAttacking = false;
 
         DebugAttack();
+        yield break;
     }
 
     public IEnumerator RotatoryAttack() 
@@ -296,5 +291,10 @@ public class MinitiBehaviuor : MonsterBase
         isAttacking = false;
 
         DebugAttack();
+    }
+
+    public void AnimationEventFireBall()
+    {   Transform spawnPoint = transform.Find("spawnSkill");
+        SkillCaster.instance.FireBallAttack(spawnPoint, Vector3.zero);
     }
 }
