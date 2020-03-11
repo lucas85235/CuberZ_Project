@@ -99,7 +99,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 0
+  m_UseShadowmask: 1
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -269,17 +269,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 484331874400111040, guid: b454664e31062494b9ae434be08b02b9,
-        type: 3}
-      propertyPath: walkSpeed
-      value: 6.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 484331874400111040, guid: b454664e31062494b9ae434be08b02b9,
-        type: 3}
-      propertyPath: monster.Array.data[0]
-      value: 
-      objectReference: {fileID: 88148845147911301, guid: e6ee79b6e9ca7544788677ee19ad52ec,
-        type: 3}
     - target: {fileID: 484331874400111045, guid: b454664e31062494b9ae434be08b02b9,
         type: 3}
       propertyPath: m_Name

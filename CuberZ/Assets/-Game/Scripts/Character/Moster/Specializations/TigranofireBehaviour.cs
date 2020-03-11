@@ -75,7 +75,7 @@ public class TigranofireBehaviour : MonsterBase
                 }
             }
 
-            Jump();
+            JumpBehaviour();
 
             #region Get Inputs
             if (Input.GetKeyDown(KeyCode.N)) // Key de Teste

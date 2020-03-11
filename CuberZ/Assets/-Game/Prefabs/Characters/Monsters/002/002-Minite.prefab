@@ -177,10 +177,10 @@ MonoBehaviour:
   walkSpeed: 15
   runSpeed: 22
   smoothTime: 0.3
-  initialJumpImpulse: 10
+  initialJumpImpulse: 12
   jumpForce: 0.03
   jumpTime: 0.12
-  dowmSpeed: 18
+  dowmSpeed: 16
   staminaRegen: 0.12
   regenStartTime: 1
   characterStamina: 0

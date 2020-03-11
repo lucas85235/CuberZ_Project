@@ -5,14 +5,14 @@ using UnityEngine.AI;
 
 public class MinitiBehaviuor : MonsterBase
 {
-    // se tiver ataques de outros tipos setar um novo enum
-    // que recebera ataques personalizados
-    // setar os novos ataques e dar um override no GetAttackName
-
     private DetectAttackCollision attackCollision;
 
     private bool canFollowPlayer = true;
     private bool canMove = true;
+    [SerializeField] private bool canResetVelocity = false;
+
+    [Header("Show Attack in Console")]
+    public bool debugAttack = false;
 
     public enum MinitiAttacks
     {
@@ -71,7 +71,7 @@ public class MinitiBehaviuor : MonsterBase
     {
         if (isEnabled) 
         {
-            Jump();
+            JumpBehaviour();
 
             #region Get Inputs
             if (Input.GetKeyDown(KeyCode.N)) // Key de Teste
@@ -166,11 +166,18 @@ public class MinitiBehaviuor : MonsterBase
             if (canFollowState)
                 FollowPlayer();
         }
-        if(animation_.GetCurrentAnimationInLayerOne().IsName("ToHeadButt"))
+
+        if (animation_.GetCurrentAnimationInLayerOne().IsName("ToHeadButt"))
         {
             body_.velocity = transform.forward * attackSpeed;
         }
-        else body_.velocity = Vector3.zero;
+        else if (canResetVelocity && !isAttacking)
+        {
+            body_.velocity = Vector3.zero;
+            
+            if (body_.velocity.magnitude <= 0)
+                canResetVelocity = false;
+        }
 
         RegenStamina();
     }
@@ -191,8 +198,11 @@ public class MinitiBehaviuor : MonsterBase
 
     private void DebugAttack() 
     {
-        // Debug.Log("Attack: " + ((MinitiAttacks)attack_.attackTier[currentAttackIndex]).ToString());
-        // Debug.Log("Pode Mover: " + attack_.GetCanMove(currentAttackIndex));
+        if (debugAttack) 
+        {
+            Debug.Log("Attack: " + ((MinitiAttacks)attack_.attackTier[currentAttackIndex]).ToString());
+            Debug.Log("Pode Mover: " + attack_.GetCanMove(currentAttackIndex));
+        }
     }
 
     public IEnumerator ToHeadButt() 
@@ -217,6 +227,7 @@ public class MinitiBehaviuor : MonsterBase
 
                 transform.LookAt(hit.point);
                 animation_.NoMovableAttack((int)MinitiAttacks.ToHeadButt);
+                canResetVelocity = true;
 
                 DecrementStamina(attack_.GetStaminaCost(currentAttackIndex));
             }

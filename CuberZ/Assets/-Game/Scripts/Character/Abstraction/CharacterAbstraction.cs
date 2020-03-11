@@ -26,11 +26,23 @@ public abstract class CharacterAbstraction : MonoBehaviour
     public float smoothTime = 0.3f;
     protected float smooth_;
 
+    [Header("Stamina Stats")]
+    public float staminaRegen = 0.03f;
+    public float regenStartTime = 1.0f;
+
+    [SerializeField] 
+    protected float characterStamina;
+    protected float maxStamina = 100f;
+    protected float countRegenStartTime = 0;
+    protected bool startRegenProcess = false;
+    protected bool inRunInput = false;
+    protected bool endedStamina = false;
+
     [Header("Jump Config")]
     public float initialJumpImpulse = 10.0f;
     public float jumpForce = 0.03f;
     public float jumpTime = 0.12f;
-    public float dowmSpeed = 15;
+    public float dowmSpeed = 16;
 
     protected bool startJumpWait_ = false;
     protected bool canJump_ = true;
@@ -38,18 +50,7 @@ public abstract class CharacterAbstraction : MonoBehaviour
     protected bool startJumpTime = false;
     protected float countJumpTime = 0;
 
-    [Header("Stamina Stats")]
-    public float staminaRegen = 0.03f;
-    public float regenStartTime = 1.0f;
-
-    [SerializeField] protected float characterStamina;
-    protected float maxStamina = 100f;
-    protected float countRegenStartTime = 0;
-    protected bool startRegenProcess = false;
-    protected bool inRunInput = false;
-    protected bool endedStamina = false;
-
-    [SerializeField]
+    public bool IsJump { get => isJump; }
     public bool isEnabled { get; set; }
 
     protected virtual void Construt(IInput newInputInterface) 
@@ -84,9 +85,11 @@ public abstract class CharacterAbstraction : MonoBehaviour
         }
     }
 
+    protected abstract void JumpBehaviour();
+
     protected virtual bool ExistGround()
     {
-        return Physics.Raycast(transform.position, (-1 * transform.up), 0.25f);
+        return Physics.Raycast(transform.position, (-1 * transform.up), 0.5f);
     }
 
     public virtual void SwitchCharacterController(CharacterAbstraction switchCharacter) 
@@ -106,7 +109,7 @@ public abstract class CharacterAbstraction : MonoBehaviour
         #endregion
 
         SetCameraPropeties(switchCharacter.transform.Find("CameraTarget"));
-        StartCoroutine(WaitTime(switchCharacter));
+        StartCoroutine(WaitTimeForEnable(switchCharacter));
     }
 
     protected virtual void SetCameraPropeties(Transform target) 
@@ -116,7 +119,7 @@ public abstract class CharacterAbstraction : MonoBehaviour
     }
     #endregion
 
-    protected IEnumerator WaitTime(CharacterAbstraction switchCharacter)
+    protected IEnumerator WaitTimeForEnable(CharacterAbstraction switchCharacter)
     {
         // chamar para nao trocar 2 vezes seguidas
         yield return new WaitForSeconds(0.2f);
@@ -156,7 +159,10 @@ public abstract class CharacterAbstraction : MonoBehaviour
         }
     }
 
-    /*protected virtual void OnCollisionEnter(Collision collision)
+    // Ajustar paredes e outros objetos com a tag Wall para o pulo ao colidir
+    // e não iniciar o pula ao estar encostando na superficie com a tag
+    // Pois o character começa a flickar ao pular encostado na parede sem a tag
+    protected virtual void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.tag == "Wall")
         {
@@ -182,5 +188,5 @@ public abstract class CharacterAbstraction : MonoBehaviour
             body_.AddForce(Vector3.down * dowmSpeed);
             Debug.Log("Down Jump!");
         }
-    }*/
+    }
 }
