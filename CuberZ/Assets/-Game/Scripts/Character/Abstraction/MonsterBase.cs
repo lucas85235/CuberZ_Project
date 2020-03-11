@@ -159,7 +159,7 @@ public abstract class MonsterBase : CharacterAbstraction
         }
     }
 
-    protected virtual void Jump() 
+    protected override void JumpBehaviour() 
     {
         if (Input.GetKeyDown(KeyCode.Space) && !isJump && canJump_ && characterStamina >= 10.0f) 
         {
@@ -218,7 +218,7 @@ public abstract class MonsterBase : CharacterAbstraction
 
         StartCoroutine(StopFollow());
         SetCameraPropeties(switchCharacter.transform.Find("CameraTarget"));
-        StartCoroutine(WaitTime(switchCharacter));
+        StartCoroutine(WaitTimeForEnable(switchCharacter));
     }
 
     #region Life and Stamina increment and decrement 

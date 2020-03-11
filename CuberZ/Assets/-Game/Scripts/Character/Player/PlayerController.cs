@@ -5,20 +5,19 @@ using UnityEngine.AI;
 
 public class PlayerController : CharacterAbstraction
 {
-    [Header("Kubber Team")]
-    public GameObject[] monster = { null, null, null, null };
-    public MonsterBase currentKubberSpawned;
-
-    public bool IsJump { get => isJump; }
-    public bool CanMove_ { get => canMove_; set => canMove_ = value; }
-
     private PlayerAnimation playerAnimation_;
     private CaptureSystem captureSystem;
     private HudWorldStats worldHud_;
     private CameraProperties camera_;
 
     private bool canGetInputs_ = false;
-    private bool canMove_ = true;
+    private bool canMove_ = true;    
+
+    [Header("Kubber Team")]
+    public MonsterBase currentKubberSpawned;
+    public GameObject[] monster = { null, null, null, null };
+
+    public bool CanMove_ { get => canMove_; set => canMove_ = value; }
 
     #region Inversão de depencia
     protected virtual void Construt(IInput newInputInterface, CameraProperties newCamera)
@@ -103,7 +102,7 @@ public class PlayerController : CharacterAbstraction
         {
             if (isEnabled && !captureSystem.captureProcess)
             {
-                JumpControl();
+                JumpBehaviour();
 
                 axisX = input_.GetAxisHorizontal();
                 axisY = input_.GetAxisVertical();
@@ -181,7 +180,7 @@ public class PlayerController : CharacterAbstraction
         }
     }
 
-    private void JumpControl()
+    protected override void JumpBehaviour()
     {
         if (Input.GetKey(KeyCode.Space) && isJump)
             body_.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
@@ -238,7 +237,7 @@ public class PlayerController : CharacterAbstraction
             StartCoroutine(switchCharacter.GetComponent<MonsterBase>().StopFollow());
         }
         SetCameraPropeties(switchCharacter.transform.Find("CameraTarget"));
-        StartCoroutine(WaitTime(switchCharacter));
+        StartCoroutine(WaitTimeForEnable(switchCharacter));
     }
 
     protected virtual IEnumerator JumpWaitTime()
@@ -284,33 +283,5 @@ public class PlayerController : CharacterAbstraction
         axisY = 0;
         playerAnimation_.MovimentSpeed(0);
         body_.velocity = Vector3.zero;
-    }
-
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.tag == "Wall")
-        {
-            canJump_ = false;  
-            Debug.Log("Can Jump: " + false);
-        }    
-    }
-
-    private void OnCollisionExit(Collision collision)
-    {
-        if (collision.gameObject.tag == "Wall") 
-        {
-            canJump_ = true;
-            Debug.Log("Can Jump: " + false);
-        }
-    }
-
-    private void OnCollisionStay(Collision collision)
-    {
-        if (collision.gameObject.tag == "Wall" && isJump)
-        {
-            transform.position += new Vector3(0, -0.1f, 0);
-            body_.AddForce(Vector3.down * dowmSpeed);
-            Debug.Log("Down Jump!");
-        }
     }
 }
