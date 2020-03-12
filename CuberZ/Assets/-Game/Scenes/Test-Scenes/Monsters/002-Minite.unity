@@ -921,7 +921,7 @@ PrefabInstance:
     - target: {fileID: 5544447174640208716, guid: ee258db3684f0fc4998a439c2960316c,
         type: 3}
       propertyPath: m_Name
-      value: SkillCaster
+      value: SpawManager
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ee258db3684f0fc4998a439c2960316c, type: 3}

@@ -945,7 +945,7 @@ ModelImporter:
       curves: []
       events:
       - time: 0.44537815
-        functionName: AnimationEventFireBall
+        functionName: InstantiateFireBallEvent
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0

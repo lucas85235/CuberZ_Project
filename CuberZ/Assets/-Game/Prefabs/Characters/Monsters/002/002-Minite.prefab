@@ -40,7 +40,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1279996357}
   m_Layer: 13
-  m_Name: spawnSkill
+  m_Name: ProjectileSpawPonit
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -208,19 +208,24 @@ MonoBehaviour:
   walkSpeed: 15
   runSpeed: 22
   smoothTime: 0.3
+  staminaRegen: 0.12
+  regenStartTime: 1
+  characterStamina: 0
   initialJumpImpulse: 12
   jumpForce: 0.03
   jumpTime: 0.12
   dowmSpeed: 16
-  staminaRegen: 0.12
-  regenStartTime: 1
-  characterStamina: 0
   spawnByPlayer: 0
   currentAttackIndex: 0
   attackSpeed: 20
   attackDistance: 5
   minDistance: 12
   followSpeed: 10
+  canResetVelocity: 0
+  debugAttack: 0
+  fireBallSpawnPoint: {fileID: 1279996357}
+  fireBallPrefab: {fileID: 7808024119782194937, guid: c4a930b4bfde72843b4c8120d2e0c685,
+    type: 3}
 --- !u!114 &8634684265689884798
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -259,7 +264,7 @@ MonoBehaviour:
     waitDamagePerSecond: 0
     startDamageTime: 0
     endDamageTime: 0
-    attackAnimationTime: 0
+    attackAnimationTime: 1.6
     canMove: 1
     canStartInStay: 0
     isDamagePerSencond: 0

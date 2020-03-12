@@ -14,6 +14,10 @@ public class MinitiBehaviuor : MonsterBase
     [Header("Show Attack in Console")]
     public bool debugAttack = false;
 
+    [Header("Set FireBall Attack")]
+    public Transform fireBallSpawnPoint;
+    public GameObject fireBallPrefab;
+
     public enum MinitiAttacks
     {
         ToHeadButt,
@@ -257,6 +261,9 @@ public class MinitiBehaviuor : MonsterBase
         animation_.MovableAttack((int)MinitiAttacks.FireBall);
         DecrementStamina(attack_.GetStaminaCost(currentAttackIndex));
 
+        // A bola de fogo e instanciada atraves do metodo InstantiateFireBallEvent
+        // que por sua vez e chamdo por evento setado na animação bola de fogo
+
         yield return new WaitForSeconds(attack_.GetAttackAnimationTime(currentAttackIndex));
 
         isAttacking = false;
@@ -292,9 +299,10 @@ public class MinitiBehaviuor : MonsterBase
 
         DebugAttack();
     }
-
-    public void AnimationEventFireBall()
-    {   Transform spawnPoint = transform.Find("spawnSkill");
-        SkillCaster.instance.FireBallAttack(spawnPoint, Vector3.zero);
+    
+    // Chamado por evento setado na animação bola de fogo 
+    public void InstantiateFireBallEvent()
+    {   
+        SpawManager.getInstance.SpawObject(fireBallPrefab, fireBallSpawnPoint);
     }
 }
