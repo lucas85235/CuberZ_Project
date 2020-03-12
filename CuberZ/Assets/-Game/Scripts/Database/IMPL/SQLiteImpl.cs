@@ -11,60 +11,67 @@ using Mono.Data.SqliteClient;
 
 public class SQLiteImpl : MonoBehaviour, IDatabase
 {
-    private string dbPath_ = Application.dataPath + "/-Game/Scripts/Database/SQLiteDatabase";
-    private IDbConnection dbConnection;
-    private IDbCommand dbCommand;
+    private string dbPath_;
+    private IDbConnection dbConnection_;
+    private IDbCommand dbCommand_;
+    private IDataReader reader_;
 
+    void Awake ()
+    {
+        dbPath_ =  Application.dataPath + "/-Game/Scripts/Database/SQLiteDatabase/";
+        OpenConnection("test");
+        CreateTable("client", "name VARCHAR(10)");
+    }
+ 
     public void CreateDatabase(string dbName)
     {
-        if (Directory.GetFiles(dbPath_, ".sqlite").Length == 0)
+        if (Directory.GetFiles(dbPath_, "*.db").Length == 0)
         {
             Debug.LogWarning("No database file found");
             Debug.Log("Creating new database");
-            SQLiteConnection.CreateFile(dbName + ".sqlite");
+            SQLiteConnection.CreateFile(Path.Combine(dbPath_, dbName + ".db"));
         }
         else Debug.Log("There is a database created");
     }
 
     public void OpenConnection(string dbName)
     {
-        if (dbConnection.State == ConnectionState.Closed)
-        {
-            dbConnection = new SqliteConnection(dbPath_ + dbName + ".sqlite");
-            dbConnection.Open();
-        }
-        else Debug.Log("A database instance is opened already");
+        dbConnection_ = new SqliteConnection();
+        dbConnection_.ConnectionString = "URI=file:" + dbPath_ + dbName + ".db";
+        dbConnection_.Open();
+
+        if (dbConnection_.State == ConnectionState.Open)
+            Debug.Log("Connection opened successfully"); 
     }
 
     public void CloseConnection()
     {
-        dbConnection.Close();
-        dbConnection = null;
+        dbConnection_.Close();
+        dbConnection_ = null;
+        Debug.Log("Connection closed successfully");
     }
 
     public void CreateTable(string tableName, string sqlQuery)
     {
-        if (dbConnection.State == ConnectionState.Open) 
+        try
         {
-            dbCommand = dbConnection.CreateCommand();
-            dbCommand.CommandText = "CREATE TABLE IF NOT EXISTS " + tableName + "(" + sqlQuery + ")";
-            dbCommand.ExecuteNonQuery();
-            dbCommand.Dispose();
-            dbCommand = null;
+            dbCommand_ = dbConnection_.CreateCommand();
+            dbCommand_.CommandText =
+                "CREATE TABLE IF NOT EXISTS " + tableName + "(" + sqlQuery + ")";
+            reader_ = dbCommand_.ExecuteReader();
+            Debug.Log("New table created");
+            dbCommand_.Dispose();
+            dbCommand_ = null;
         }
-        else Debug.Log("Connect to a database first");
+        catch { Debug.Log("Can't create table without a database connected"); }
     }
 
     public void ShowData(string tableName)
     {
-        if (dbConnection.State != ConnectionState.Open)
-        {
-            dbCommand = dbConnection.CreateCommand();
-            dbCommand.CommandText = "SELECT * FROM " + tableName;
-            dbCommand.ExecuteNonQuery();
-            dbCommand.Dispose();
-            dbCommand = null;
-        }
-        else Debug.Log("Connect to a database first");
+        dbCommand_ = dbConnection_.CreateCommand();
+        dbCommand_.CommandText = "SELECT * FROM " + tableName;
+        reader_ = dbCommand_.ExecuteReader();
+        dbCommand_.Dispose();
+        dbCommand_ = null;
     }
 }
