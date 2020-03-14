@@ -59,7 +59,7 @@ public class MinitiBehaviuor : MonsterBase
 
         attackCollision.UpdateCurrentAttackStats(attack_.attackStats[currentAttackIndex]);
 
-        for (int i = 0; i < (int)MinitiAttacks.FireBall2+1; i++) 
+        for (int i = 0; i < (int)MinitiAttacks.FireBall2 + 1; i++)
         {
             attack_.SetAttackNamesInStats((MinitiAttacks)i, i);
         }
@@ -73,7 +73,7 @@ public class MinitiBehaviuor : MonsterBase
 
     protected virtual void Update()
     {
-        if (isEnabled) 
+        if (isEnabled)
         {
             JumpBehaviour();
 
@@ -115,7 +115,7 @@ public class MinitiBehaviuor : MonsterBase
             if (Input.GetKeyDown(KeyCode.T) && player_ != null) // Usado para testes romover na versão final
                 SwitchCharacterController(player_);
 
-            if (input_.ExecuteAction() && !isAttacking && !isJump) 
+            if (input_.ExecuteAction() && !isAttacking && !isJump)
             {
                 if (characterStamina > attack_.GetStaminaCost(currentAttackIndex))
                 {
@@ -124,7 +124,7 @@ public class MinitiBehaviuor : MonsterBase
                 else Debug.Log("Você não tem stmina para realizar este attack!");
             }
 
-            if (input_.KubberAttack1())  
+            if (input_.KubberAttack1())
             {
                 currentAttackIndex = (int)MinitiAttacks.ToHeadButt;
                 attackCollision.UpdateCurrentAttackStats(attack_.attackStats[currentAttackIndex]);
@@ -153,7 +153,7 @@ public class MinitiBehaviuor : MonsterBase
     {
         if (isEnabled)
         {
-            if (!isAttacking || canMove) 
+            if (!isAttacking || canMove)
             {
                 axisX = input_.GetAxisHorizontal();
                 axisY = input_.GetAxisVertical();
@@ -161,8 +161,14 @@ public class MinitiBehaviuor : MonsterBase
                 if (!animation_.IsPlayAttackAnimation())
                 {
                     Movement();
-                    animation_.AnimationSpeed(axisX, axisY);
-                }                
+
+                    float setSpeed_ = new Vector2(axisX, axisY).magnitude;
+
+                    if (inRunInput && !endedStamina) setSpeed_ = setSpeed_ < 1f ? setSpeed_ : 1f;
+                    else setSpeed_ = setSpeed_ < 0.5f ? setSpeed_ : 0.5f;
+
+                    animation_.MovementSpeed(setSpeed_);
+                }
             }
         }
         else if (!isEnabled && canFollowPlayer)
@@ -170,7 +176,6 @@ public class MinitiBehaviuor : MonsterBase
             if (canFollowState)
                 FollowPlayer();
         }
-
         if (animation_.GetCurrentAnimationInLayerOne().IsName("ToHeadButt"))
         {
             body_.velocity = transform.forward * attackSpeed;
@@ -192,7 +197,7 @@ public class MinitiBehaviuor : MonsterBase
         return ((MinitiAttacks)attack_.attackTier[index]).ToString();
     }
 
-    private void MovableSetting() 
+    private void MovableSetting()
     {
         body_.velocity = Vector3.zero;
         isEnabled = true;
@@ -200,7 +205,7 @@ public class MinitiBehaviuor : MonsterBase
         isAttacking = false;
     }
 
-    private void DebugAttack() 
+    private void DebugAttack()
     {
         if (debugAttack) 
         {
@@ -209,7 +214,7 @@ public class MinitiBehaviuor : MonsterBase
         }
     }
 
-    public IEnumerator ToHeadButt() 
+    public IEnumerator ToHeadButt()
     {
         canFollowPlayer = false;
         isEnabled = false;
@@ -226,7 +231,7 @@ public class MinitiBehaviuor : MonsterBase
                 #region stop character walk
                 axisX = 0;
                 axisY = 0;
-                animation_.AnimationSpeed(axisX, axisY);            
+                animation_.AnimationSpeed(axisX, axisY);
                 #endregion
 
                 transform.LookAt(hit.point);
@@ -235,25 +240,25 @@ public class MinitiBehaviuor : MonsterBase
 
                 DecrementStamina(attack_.GetStaminaCost(currentAttackIndex));
             }
-            else  
-            {   
+            else
+            {
                 MovableSetting();
                 yield break;
             }
         }
-        else  
-        {   
+        else
+        {
             MovableSetting();
             yield break;
         }
-        
+
         yield return new WaitForSeconds(attack_.GetAttackAnimationTime(currentAttackIndex));
         DebugAttack();
         MovableSetting();
         yield break;
     }
 
-    public IEnumerator FireBall() 
+    public IEnumerator FireBall()
     {
         isAttacking = true;
         canMove = attack_.GetCanMove(currentAttackIndex);
@@ -272,7 +277,7 @@ public class MinitiBehaviuor : MonsterBase
         yield break;
     }
 
-    public IEnumerator RotatoryAttack() 
+    public IEnumerator RotatoryAttack()
     {
         isAttacking = true;
         canMove = attack_.GetCanMove(currentAttackIndex);
@@ -286,7 +291,7 @@ public class MinitiBehaviuor : MonsterBase
         DebugAttack();
     }
 
-    public IEnumerator Bite() 
+    public IEnumerator Bite()
     {
         isAttacking = true;
         canMove = attack_.GetCanMove(currentAttackIndex);

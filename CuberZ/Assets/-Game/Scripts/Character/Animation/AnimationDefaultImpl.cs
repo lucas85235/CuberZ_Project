@@ -20,10 +20,12 @@ public class AnimationDefaultImpl : MonoBehaviour, AnimationBase
         return animator_.GetCurrentAnimatorStateInfo(0);
     }
 
-    public virtual void AnimationSpeed(float xAxis, float yAxis) 
+    public virtual void AnimationSpeed(float xAxis, float yAxis)
     {
         animator_.SetFloat(animationSpeed, xAxis * xAxis + yAxis * yAxis);
     }
+
+    public virtual void MovementSpeed(float speed) => animator_.SetFloat(animationSpeed, speed);
 
     public virtual void NoMovableAttack(int attackindex) 
     {

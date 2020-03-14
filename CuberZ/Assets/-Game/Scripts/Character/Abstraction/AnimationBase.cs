@@ -6,6 +6,7 @@ public interface AnimationBase
 {
     AnimatorStateInfo GetCurrentAnimationInLayerOne();
     void AnimationSpeed(float xAxis, float yAxis);
+    void MovementSpeed(float speed);
     void NoMovableAttack(int attackindex);
     void MovableAttack(int attackindex);
     void ActiveHit();
