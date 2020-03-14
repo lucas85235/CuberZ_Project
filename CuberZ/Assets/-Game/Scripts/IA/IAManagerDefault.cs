@@ -27,6 +27,10 @@ public class IAManagerDefault : IAAbstraction
     [Tooltip("Controla a distancia e skill que será usada.")]
     public SkillsAndDistance[] skillStats;
 
+    [Header("Set FireBall Attack")]
+    public Transform fireBallSpawnPoint;
+    public GameObject fireBallPrefab;
+
     private NavMeshAgent nav_;
     private AnimationBase animation_;
     private HudWorldStats worldHud_;
@@ -209,6 +213,13 @@ public class IAManagerDefault : IAAbstraction
         FollowTarget();
         yield break;
     } 
+
+    // Chamado por evento setado na animação bola de fogo 
+    public void InstantiateFireBallEvent()
+    {   
+        GameObject projectile = SpawManager.getInstance.SpawObject(fireBallPrefab, fireBallSpawnPoint);
+        projectile.GetComponent<GenericProjectile>().SpawnedBy(this.gameObject);
+    }
     #endregion
 
     #region funções auxiliares

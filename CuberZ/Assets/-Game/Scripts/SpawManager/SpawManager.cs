@@ -22,17 +22,21 @@ public class SpawManager : MonoBehaviour
         isPolling = choice;
     }
 
-    public void SpawObject(GameObject objectSpaw, Transform spawnPoint)
+    public GameObject SpawObject(GameObject objectSpaw, Transform spawnPoint)
     {
         GameObject objTemp = (isPolling) ? 
                Pooling.Instantiate(objectSpaw, spawnPoint.position, spawnPoint.rotation) : 
                Instantiate(objectSpaw, spawnPoint.position, spawnPoint.rotation);
+
+        return objTemp;
     }
 
-    public void SpawObject(GameObject objectSpaw, Transform spawnPoint, Vector3 adjustSpawnPoint)
+    public GameObject SpawObject(GameObject objectSpaw, Transform spawnPoint, Vector3 adjustSpawnPoint)
     {
         GameObject objTemp = (isPolling) ? 
                Pooling.Instantiate(objectSpaw, spawnPoint.position += adjustSpawnPoint, spawnPoint.rotation) : 
                Instantiate(objectSpaw, spawnPoint.position + adjustSpawnPoint, spawnPoint.rotation);
+
+        return objTemp;
     }
 }

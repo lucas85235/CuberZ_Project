@@ -5,38 +5,31 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody))]
 public class GenericProjectile : MonoBehaviour
 {
+    // Pra ir apenas RETO basta:
+    // Fall Down Speed 0
 
-    /// <summary>
-    /// Predefinições
-    /// 
-    /// Pra ir apenas RETO basta:
-    /// Fall Down Speed 0
-    /// 
-    /// Para uma transição suave para baixo:
-    /// Manter Speed e FallDownSpeed em uma proporção de 1 para speed e 0.02 para fallDownSpeed
-    /// 
-    /// 
-    /// 
-    /// </summary>
+    // Para uma transição suave para baixo:
+    // Manter Speed e FallDownSpeed em uma proporção de 1 para speed e 0.02 para fallDownSpeed
 
-
-    #region Variaveis Publicas
-    [Header("Projectile Configuration")]
-    [Range(0.1f, 10)] [Tooltip("Após quanto tempo o projetil sumirá")] public float lifeTime;
-    [Range(0, 10)] [Tooltip("Após quanto tempo o projétil irá começar a cair")] public float fallDownTimer;
-    [Tooltip("Velocidade do projétil")] public float speed;
-    [Tooltip("Velocidade da decida do projétil")] public float fallDownSpeed;
-    [Tooltip("Define o comportamento do objeto dependendo de como foi instanciado.")] public state objState;
-    #endregion
-
-    #region Variaveis Privadas
-    private Rigidbody myBody_;
+    private GameObject spawnedBy = null;
+    private Rigidbody rigidbody_;
     private float timerLifeTime_;
     private float timerFallDown_;
     private bool canDie_;
     private bool canFallDown_;
-    #endregion
 
+    [Header("Projectile Configuration")]
+    public float projectileSpeed;
+    public float fallDownSpeed;
+
+    [Range(0, 100)]
+    public float projectileDamage;
+    [Range(0.1f, 10)] [Tooltip("Após quanto tempo o projetil sumirá")] 
+    public float lifeTime;
+    [Range(0, 10)] [Tooltip("Após quanto tempo o projétil irá começar a cair")] 
+    public float fallDownTimer;    
+    [Tooltip("Define o comportamento do objeto dependendo de como foi instanciado.")] 
+    public state objState;
 
     public enum state
     {
@@ -45,7 +38,6 @@ public class GenericProjectile : MonoBehaviour
         [Tooltip("Marcar caso o objeto for ser usado em pooling")]
         Pooling
     }
-
 
     #region Funções MonoBehaviour
     void Start()
@@ -60,25 +52,29 @@ public class GenericProjectile : MonoBehaviour
 
     void Update()
     {
-        AnalyticsProjectile();
+        ControlProjectile();
     }
 
     private void FixedUpdate()
     {
-        PhysicsProjectile();
+        ProjectileBehaviour();
     }
     #endregion
 
-
     #region Funções projétil
-
-    private void PhysicsProjectile()
+    private void ProjectileBehaviour()
     {
         if (!canDie_)
-            myBody_.velocity = (canFallDown_) ? (transform.forward * speed) + (new Vector3(0, -fallDownSpeed, 0)) : transform.forward * speed;
+        {
+            if (canFallDown_)
+            {
+                rigidbody_.velocity = (transform.forward * projectileSpeed) + (new Vector3(0, -fallDownSpeed, 0));
+            }
+            else rigidbody_.velocity = transform.forward * projectileSpeed;
+        }
     }
 
-    private void AnalyticsProjectile()
+    private void ControlProjectile()
     {
         timerLifeTime_ -= Time.deltaTime;
         timerFallDown_ -= Time.deltaTime;
@@ -88,20 +84,37 @@ public class GenericProjectile : MonoBehaviour
 
         if (canDie_)
         {
-            if (objState == state.Instantiate) Destroy(transform.gameObject);
+            if (objState == state.Instantiate) 
+            {
+                Destroy(transform.gameObject);
+            }
             else if (objState == state.Pooling) transform.gameObject.SetActive(false);
         }
     }
 
     private void Initialization()
     {
-        myBody_ = GetComponent<Rigidbody>();
+        rigidbody_ = GetComponent<Rigidbody>();
         timerLifeTime_ = lifeTime;
         timerFallDown_ = fallDownTimer;
         canDie_ = false;
         canFallDown_ = false;
-        myBody_.useGravity = false;
+        rigidbody_.useGravity = false;
     }
 
+    public void SpawnedBy(GameObject by) 
+    {
+        spawnedBy = by;
+    }
+
+    private  void OnTriggerEnter(Collider other) 
+    {
+        if (other.tag == "Enemy" && spawnedBy != null) 
+		{
+            var attackDetect = spawnedBy.transform.Find("DetectCollision").GetComponent<DetectAttackCollision>();
+            attackDetect.ProjectileAttackDamage(other);
+            Destroy(this.gameObject);
+		}
+    }
     #endregion
 }

@@ -8,6 +8,7 @@ TagManager:
   - InputDI
   - Enemy
   - Wall
+  - Projectile
   layers:
   - Default
   - TransparentFX
@@ -23,7 +24,7 @@ TagManager:
   - Player
   - NoPlayerInteraction
   - Monster
-  - 
+  - Projectile
   - 
   - 
   - 
