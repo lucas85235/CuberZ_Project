@@ -11,7 +11,7 @@ public class PlayerController : CharacterAbstraction
     private CameraProperties camera_;
 
     private bool canGetInputs_ = false;
-    private bool canMove_ = true;    
+    private bool canMove_ = true;
 
     [Header("Kubber Team")]
     public MonsterBase currentKubberSpawned;
@@ -28,7 +28,7 @@ public class PlayerController : CharacterAbstraction
 
     protected override void Awake()
     {
-        Construt(Object.FindObjectOfType<InputSystem>(), 
+        Construt(Object.FindObjectOfType<DesktopInputImpl>(),
             Camera.main.GetComponent<CameraProperties>());
     }
     #endregion
@@ -58,7 +58,7 @@ public class PlayerController : CharacterAbstraction
     {
         if (canGetInputs_ && isEnabled)
         {
-            if (Input.GetKeyDown(KeyCode.Space) && !isJump && canJump_ && characterStamina >= 10.0f)
+            if (input_.Jump() && !isJump && canJump_ && characterStamina >= 10.0f)
             {
                 body_.AddForce(Vector3.up * initialJumpImpulse, ForceMode.Impulse);
                 startJumpTime = true;
@@ -70,7 +70,7 @@ public class PlayerController : CharacterAbstraction
             #region Get Inputs
             if (Input.GetKeyDown(KeyCode.T) && currentKubberSpawned)
             {
-                if (currentKubberSpawned.isActiveAndEnabled) 
+                if (currentKubberSpawned.isActiveAndEnabled)
                     SwitchCharacterController(currentKubberSpawned);
             }
 
@@ -118,26 +118,26 @@ public class PlayerController : CharacterAbstraction
         RegenStamina();
     }
 
-    protected override void Movement() 
+    protected override void Movement()
     {
         Vector2 input = new Vector2(axisX, axisY);
 
         if (input != Vector2.zero)
         {
-            float targetrotation = Mathf.Atan2(input.x, input.y) * Mathf.Rad2Deg;;
+            float targetrotation = Mathf.Atan2(input.x, input.y) * Mathf.Rad2Deg; 
 
             transform.eulerAngles = Vector3.up * Mathf.SmoothDampAngle(
-                transform.eulerAngles.y, 
-                targetrotation + Camera.main.transform.eulerAngles.y, 
-                ref smooth_, 
+                transform.eulerAngles.y,
+                targetrotation + Camera.main.transform.eulerAngles.y,
+                ref smooth_,
                 smoothTime);
 
             if (!captureSystem.inCaptureMode)
             {
-                if (Input.GetKeyUp(KeyCode.LeftShift))
-                    inRunInput = false;
-                else if (Input.GetKeyDown(KeyCode.LeftShift))
+                if (input_.RunInput())
                     inRunInput = true;
+                else
+                    inRunInput = false;
 
                 if (input_.RunInput() && inRunInput && !isJump && !endedStamina)
                 {
@@ -155,7 +155,7 @@ public class PlayerController : CharacterAbstraction
                 else
                 {
                     transform.position += transform.forward * walkSpeed * Time.deltaTime;
-                    float speed = axisX * axisX + axisY * axisY /2;
+                    float speed = axisX * axisX + axisY * axisY / 2;
                     playerAnimation_.MovimentSpeed(speed >= 0.5 ? 0.5f : speed);
 
                     if (!input_.RunInput())
@@ -164,7 +164,7 @@ public class PlayerController : CharacterAbstraction
                         inRunInput = true;
                 }
             }
-            
+
             if (captureSystem.inCaptureMode)
             {
                 if (input_.GetAxisHorizontal() != 0 || input_.GetAxisVertical() != 0)
@@ -175,14 +175,14 @@ public class PlayerController : CharacterAbstraction
                 else playerAnimation_.MovimentSpeed(0);
             }
 
-            if (captureSystem.captureProcess) 
+            if (captureSystem.captureProcess)
                 StopWalk();
         }
     }
 
     protected override void JumpBehaviour()
     {
-        if (Input.GetKey(KeyCode.Space) && isJump)
+        if (input_.Jump() && isJump)
             body_.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
 
         if (startJumpTime && countJumpTime < jumpTime)
@@ -215,12 +215,12 @@ public class PlayerController : CharacterAbstraction
         SetCameraPropeties(transform.Find("CameraTarget"));
     }
 
-    public override void SwitchCharacterController(CharacterAbstraction switchCharacter) 
+    public override void SwitchCharacterController(CharacterAbstraction switchCharacter)
     {
         CharacterAbstraction thisCharacter = GetComponent<CharacterAbstraction>();
         CharacterAbstraction[] allCharacters = FindObjectsOfType<CharacterAbstraction>();
 
-        foreach(CharacterAbstraction currentCharacter in allCharacters)
+        foreach (CharacterAbstraction currentCharacter in allCharacters)
         {
             if (currentCharacter != switchCharacter)
                 currentCharacter.isEnabled = false;
@@ -232,7 +232,7 @@ public class PlayerController : CharacterAbstraction
         playerAnimation_.MovimentSpeed(0);
         #endregion
 
-        if (switchCharacter.GetComponent<MonsterBase>() != null) 
+        if (switchCharacter.GetComponent<MonsterBase>() != null)
         {
             StartCoroutine(switchCharacter.GetComponent<MonsterBase>().StopFollow());
         }
@@ -277,7 +277,7 @@ public class PlayerController : CharacterAbstraction
         worldHud_.HudUpdateStamina(characterStamina, maxStamina);
     }
 
-    public void StopWalk() 
+    public void StopWalk()
     {
         axisX = 0;
         axisY = 0;

@@ -31,7 +31,7 @@ public class HUDKubberAttacks : MonoBehaviour
             HudUpdateAll(true);
         }
 
-        if (InputSystem.instance.ExecuteAction())
+        if (DesktopInputImpl.instance.ExecuteAction())
         {
             CastSkill();
         }
@@ -76,7 +76,7 @@ public class HUDKubberAttacks : MonoBehaviour
 
     public void WhichSkillIsSelected()
     {
-        if (InputSystem.instance.KubberAttack1())
+        if (DesktopInputImpl.instance.KubberAttack1())
         {
             if (skillSetHolder_.Length > 0)
             {
@@ -85,7 +85,7 @@ public class HUDKubberAttacks : MonoBehaviour
                 getContent_ = true;
             }
         }
-        else if (InputSystem.instance.KubberAttack2())
+        else if (DesktopInputImpl.instance.KubberAttack2())
         {
             if (skillSetHolder_.Length > 1)
             {
@@ -94,7 +94,7 @@ public class HUDKubberAttacks : MonoBehaviour
                 getContent_ = true;
             }
         }  
-        else if (InputSystem.instance.KubberAttack3())
+        else if (DesktopInputImpl.instance.KubberAttack3())
         {
             if (skillSetHolder_.Length > 2)
             {
@@ -103,7 +103,7 @@ public class HUDKubberAttacks : MonoBehaviour
                 getContent_ = true;
             }
         }
-        else if (InputSystem.instance.KubberAttack4())
+        else if (DesktopInputImpl.instance.KubberAttack4())
         {
             if (skillSetHolder_.Length > 3)
             {

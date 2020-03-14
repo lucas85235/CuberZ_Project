@@ -46,7 +46,7 @@ public class CaptureSystem : MonoBehaviour
 
     private void Awake()
     {
-        Construt(Object.FindObjectOfType<InputSystem>());
+        Construt(Object.FindObjectOfType<DesktopInputImpl>());
 
         layermask_ = LayerMask.GetMask("Input");
         player_ = GetComponent<PlayerController>();

@@ -30,22 +30,22 @@ public abstract class MonsterBase : CharacterAbstraction
     protected float maxLife = 100f;
     protected bool isDead = false;
     [SerializeField] public bool IsDead { get; }
-    
+
     [Header("IA config")]
     public float minDistance = 12.0f;
     public float followSpeed = 10.0f;
     protected bool canFollowState = true;
 
     #region Inversão de depencia
-    protected virtual void Construt(IInput newInputInterface, AnimationBase newAnimation) 
+    protected virtual void Construt(IInput newInputInterface, AnimationBase newAnimation)
     {
         input_ = newInputInterface;
         animation_ = newAnimation;
     }
 
-    protected override void Awake() 
+    protected override void Awake()
     {
-        Construt(Object.FindObjectOfType<InputSystem>(), GetComponent<AnimationBase>());
+        Construt(Object.FindObjectOfType<DesktopInputImpl>(), GetComponent<AnimationBase>());
         worldHud_ = GetComponent<HudWorldStats>();
 
         nav_ = GetComponent<NavMeshAgent>();
@@ -103,7 +103,7 @@ public abstract class MonsterBase : CharacterAbstraction
 
     public IEnumerator StopFollow()
     {
-        if (nav_.enabled) 
+        if (nav_.enabled)
         {
             nav_.speed = 0;
             nav_.enabled = false;
@@ -112,7 +112,7 @@ public abstract class MonsterBase : CharacterAbstraction
         #region stop moster walk animation
         axisX = 0;
         axisY = 0;
-        animation_.AnimationSpeed(axisX, axisY);       
+        animation_.AnimationSpeed(axisX, axisY);
         #endregion
         canFollowState = false;
         yield return new WaitForSeconds(0.4f);
@@ -133,24 +133,24 @@ public abstract class MonsterBase : CharacterAbstraction
                 targetrotation + Camera.main.transform.eulerAngles.y,
                 ref smooth_,
                 smoothTime);
-            
-            if (input_.RunInputUp()) // Quando solta o LeftControl
-                inRunInput = false;
-            else if (input_.RunInputOnce()) //Quando aperta uma única vez
-                inRunInput = true;
 
-            if (input_.RunInput() && inRunInput && !isJump && !endedStamina) 
+            if (input_.RunInput()) // Quando solta o LeftControl
+                inRunInput = true;
+            else  //Quando aperta uma única vez
+                inRunInput = false;
+
+            if (input_.RunInput() && inRunInput && !isJump && !endedStamina)
             {
                 transform.position += transform.forward * runSpeed * Time.deltaTime;
                 DecrementStamina(0.5f);
 
-                if (characterStamina == 0) 
-                    StartCoroutine(EndedRegenTime());           
+                if (characterStamina == 0)
+                    StartCoroutine(EndedRegenTime());
             }
             else
             {
                 transform.position += transform.forward * walkSpeed * Time.deltaTime;
-                
+
                 if (!input_.RunInput())
                     inRunInput = false;
                 else
@@ -159,9 +159,9 @@ public abstract class MonsterBase : CharacterAbstraction
         }
     }
 
-    protected override void JumpBehaviour() 
+    protected override void JumpBehaviour()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && !isJump && canJump_ && characterStamina >= 10.0f) 
+        if (input_.Jump() && !isJump && canJump_ && characterStamina >= 10.0f)
         {
             body_.AddForce(Vector3.up * initialJumpImpulse, ForceMode.Impulse);
             startJumpTime = true;
@@ -170,7 +170,7 @@ public abstract class MonsterBase : CharacterAbstraction
             DecrementStamina(10f);
         }
 
-        if (Input.GetKey(KeyCode.Space) && isJump)
+        if (input_.Jump() && isJump)
             body_.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
 
         if (startJumpTime && countJumpTime < jumpTime)
@@ -183,7 +183,7 @@ public abstract class MonsterBase : CharacterAbstraction
             StartCoroutine(JumpWaitTime());
     }
 
-    protected virtual IEnumerator JumpWaitTime() 
+    protected virtual IEnumerator JumpWaitTime()
     {
         startJumpWait_ = true;
         animation_.ExitJump();
@@ -191,7 +191,7 @@ public abstract class MonsterBase : CharacterAbstraction
         isJump = false;
         startJumpTime = false;
         countJumpTime = 0;
-        startJumpWait_ = false;    
+        startJumpWait_ = false;
     }
 
     protected virtual string GetAttackName(int index)
@@ -199,12 +199,12 @@ public abstract class MonsterBase : CharacterAbstraction
         throw new System.NotImplementedException();
     }
 
-    public override void SwitchCharacterController(CharacterAbstraction switchCharacter) 
+    public override void SwitchCharacterController(CharacterAbstraction switchCharacter)
     {
         CharacterAbstraction thisCharacter = GetComponent<CharacterAbstraction>();
         CharacterAbstraction[] allCharacters = FindObjectsOfType<CharacterAbstraction>();
 
-        foreach(CharacterAbstraction currentCharacter in allCharacters)
+        foreach (CharacterAbstraction currentCharacter in allCharacters)
         {
             if (currentCharacter != switchCharacter)
                 currentCharacter.isEnabled = false;
