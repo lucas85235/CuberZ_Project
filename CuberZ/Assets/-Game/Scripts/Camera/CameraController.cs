@@ -47,34 +47,21 @@ public class CameraController : CameraProperties
     {
         if (cameraStyle_ == CameraMode.FollowPlayer)
         {
-            cameraPosition_ =
-                target_.position - transform.forward * cameraDistance_ * distanceUp_;
-
-            distanceUp_ =
-                Mathf.Clamp(distanceUp_ += input_.GetAxisVertical(), minAngle_, maxAngle_);
-
-            transform.position =
-                Vector3.Lerp(transform.position, cameraPosition_, Time.deltaTime * smooth_);
+            cameraPosition_ = target_.position - transform.forward * cameraDistance_ * distanceUp_;
+            distanceUp_ = Mathf.Clamp(distanceUp_ += input_.GetAxisVertical(), minAngle_, maxAngle_);
+            transform.position = Vector3.Lerp(transform.position, cameraPosition_, Time.deltaTime * smooth_);
         }
         else if (cameraStyle_ == CameraMode.Capturing)
         {
-            cameraPosition_ =
-                target_.position - transform.forward * (cameraDistance_ / 2);
-
-            transform.position =
-                Vector3.Lerp(transform.position, cameraPosition_, Time.deltaTime * smooth_);
+            cameraPosition_ = target_.position - transform.forward * (cameraDistance_ / 2);
+            transform.position = Vector3.Lerp(transform.position, cameraPosition_, Time.deltaTime * smooth_);
         }
 
         if (cameraStyle_ == CameraMode.TargetEnemy)
         {
-            cameraPosition_ =
-                target_.position - transform.forward * cameraDistance_ * distanceUp_;
-
-            distanceUp_ =
-                Mathf.Clamp(distanceUp_ += input_.GetAxisVertical(), minAngle_, maxAngle_);
-
-            transform.position =
-                Vector3.Lerp(transform.position, cameraPosition_, Time.deltaTime * smooth_);
+            cameraPosition_ = target_.position - transform.forward * cameraDistance_ * distanceUp_;
+            distanceUp_ = Mathf.Clamp(distanceUp_ += input_.GetAxisVertical(), minAngle_, maxAngle_);
+            transform.position = Vector3.Lerp(transform.position, cameraPosition_, Time.deltaTime * smooth_);
 
             this.transform.LookAt(enemyTarget_);
         }

@@ -13,7 +13,9 @@ public class DetectAttackCollision : MonoBehaviour
 	private IAAbstraction enemy_;
 	private AttackManager attack_;
 	private MonsterBase monster_;
+	private LevelManager levelManager_;
 	private Transform thisKubber_;
+	private Collider thisCollider_;
 
 	private bool initAttack_ = false;
 	private bool damagePerSecond_ = false;
@@ -35,6 +37,8 @@ public class DetectAttackCollision : MonoBehaviour
 	private void Start() 
 	{
 		thisKubber_ = transform.parent;
+
+		levelManager_ = thisKubber_.GetComponent<LevelManager>();
 	}
 
 	public void UpdateCurrentAttackStats(AttackManager.AttackStats newStats) 
@@ -64,26 +68,26 @@ public class DetectAttackCollision : MonoBehaviour
 	{
 		if (other.tag == "Enemy")
 		{
-			if (!initAttack_ && IsAttacking())
+			if (!initAttack_ && IsAttacking() && !currentAttackStats.isProjectileAttack)
 				StartCoroutine(AttackEnterBehaviour(other));
 		}
-		if (other.tag == "Projectile") 
-		{
-			// ativar efeito do projetiu e destruir projetil
-		}
+		// Detectar Colisão de Projeteis Fica No GenericProjectile.cs
 	}
 
 	private void OnTriggerStay (Collider other) 
 	{
-		if (other.tag == "Enemy" && currentAttackStats.canStartInStay) 
-		{
-			if (!initAttack_ && IsAttacking() && !isAttackingInStay_) 
+		if (!currentAttackStats.isDamagePerSencond)
+		{	
+			if (other.tag == "Enemy" && currentAttackStats.canStartInStay) 
 			{
-				StartCoroutine(AttackInStayBehaviour(other));
+				if (!initAttack_ && IsAttacking() && !isAttackingInStay_) 
+				{
+					StartCoroutine(AttackInStayBehaviour(other));
+				}
+				inStayCollision = true;
 			}
-			inStayCollision = true;
+			else inStayCollision = false;
 		}
-		else inStayCollision = false;
 	}
 
 	private void OnTriggerExit(Collider other) 
@@ -96,7 +100,7 @@ public class DetectAttackCollision : MonoBehaviour
 	}
 	#endregion
 	
-	private IEnumerator AttackEnterBehaviour(Collider other) 
+	public IEnumerator AttackEnterBehaviour(Collider other) 
 	{
 		initAttack_ = true;
 
@@ -108,12 +112,13 @@ public class DetectAttackCollision : MonoBehaviour
 
 		enemy_.DecrementLife(damage);
 		other.GetComponent<AnimationBase>().ActiveHit();
-		ChoiceAttackEffect(other.transform);
+		ChoiceAttackEffect(other.transform, attack_);
 		NumericDamageEffect(other.transform, damage);
 
 		yield return new WaitForSeconds(currentAttackStats.attackAnimationTime);
 
 		initAttack_ = false;
+		isAttackingInStay_ = false;
 	}
 
 	private IEnumerator AttackInStayBehaviour(Collider other) 
@@ -125,8 +130,8 @@ public class DetectAttackCollision : MonoBehaviour
 		monster_ = thisKubber_.GetComponent<MonsterBase>();
 		attack_ = thisKubber_.GetComponent<AttackManager>();
 
-		// e um attack por segundo		
-		// adicionar caroutine para esperar o tempo em que o dano pode ser recebido
+		// se e um attack por segundo		
+		// adicionar eventos para setar o tempo em que o dano pode ser recebido
 
 		yield return new WaitForSeconds(currentAttackStats.startDamageTime);
 
@@ -136,8 +141,13 @@ public class DetectAttackCollision : MonoBehaviour
 
 			other.GetComponent<AnimationBase>().ActiveHit();
 			enemy_.DecrementLife(damage);
-					
-			ChoiceAttackEffect(other.transform);
+
+			// se o inimigo estiver morto 
+			// entregar a experiencia a este kubber
+
+			// if (enemy_.)
+
+			ChoiceAttackEffect(other.transform, attack_);
 			NumericDamageEffect(other.transform, damage);			
 		}
 
@@ -147,13 +157,29 @@ public class DetectAttackCollision : MonoBehaviour
 		isAttackingInStay_ = false;
 	}
 
+	public void ProjectileAttackDamage(Collider other) 
+	{
+		enemy_ = other.GetComponent<IAAbstraction>();
+		monster_ = thisKubber_.GetComponent<MonsterBase>();
+		attack_ = thisKubber_.GetComponent<AttackManager>();
+
+		int damage = attack_.attackStats[monster_.currentAttackIndex].baseDamage;
+
+		enemy_.DecrementLife(damage);
+		other.GetComponent<AnimationBase>().ActiveHit();
+		ChoiceAttackEffect(other.transform, attack_);
+		NumericDamageEffect(other.transform, damage);
+		
+		isAttackingInStay_ = false;
+	}
+
 	private bool IsAttacking() 
 	{
 		return transform.parent.GetComponent<MonsterBase>().isAttacking;
 	}
 
 	#region Effect Manager
-	private void NumericDamageEffect(Transform spawPosition, int damage) 
+	public void NumericDamageEffect(Transform spawPosition, int damage) 
 	{
 		GameObject damageEffect = Instantiate(hitNumericPrefab_);
 		damageEffect.transform.position = spawPosition.position + (Vector3.forward * (
@@ -166,9 +192,9 @@ public class DetectAttackCollision : MonoBehaviour
 		Destroy(damageEffect, 1f);	
 	}
 
-	private void ChoiceAttackEffect(Transform spawInTransform) 
+	public void ChoiceAttackEffect(Transform spawInTransform, AttackManager attack)
 	{
-		switch (attack_.GetAttackEffect(monster_.currentAttackIndex))
+		switch (attack.GetAttackEffect(monster_.currentAttackIndex))
 		{
 			case AttackManager.Lineage.Lava:
 				SpawHitEffect(spawInTransform, hitSimpleRedPrefab_);
@@ -176,11 +202,16 @@ public class DetectAttackCollision : MonoBehaviour
 			case AttackManager.Lineage.Original:
 				SpawHitEffect(spawInTransform, hitSimplePrefab_);
 				break;
+			default:
+				SpawHitEffect(spawInTransform, hitSimplePrefab_);
+				break;
 		}
 	}
 
 	public void SpawHitEffect(Transform objectTransform, GameObject effect) 
 	{
+		// impede que o efeito seja instanciado caso haja outro efeito no objeto em que ele sera instanciado
+
 		if (!GameObject.Find("Hit_FX"))
 		{
 			GameObject hitEffect = Instantiate(effect);

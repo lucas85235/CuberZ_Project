@@ -301,8 +301,12 @@ public class MinitiBehaviuor : MonsterBase
     }
     
     // Chamado por evento setado na animação bola de fogo 
+    // Precisar saber quem o spawno para o GenericProjectile 
+    // chamar o AttackEnterBehaviour no DetectAttackCollision
+    // dessa forma aplicando o dano ao inimigo que colidiu
     public void InstantiateFireBallEvent()
     {   
-        SpawManager.getInstance.SpawObject(fireBallPrefab, fireBallSpawnPoint);
+        GameObject projectile = SpawManager.getInstance.SpawObject(fireBallPrefab, fireBallSpawnPoint);
+        projectile.GetComponent<GenericProjectile>().SpawnedBy(this.gameObject);
     }
 }
