@@ -109,10 +109,10 @@ public class GenericProjectile : MonoBehaviour
 
     private  void OnTriggerEnter(Collider other) 
     {
-        if (other.tag == "Enemy" && spawnedBy != null) 
+        if (other.tag == "Enemy" || other.tag == "Monster" && spawnedBy != null) 
 		{
-            var attackDetect = spawnedBy.transform.Find("DetectCollision").GetComponent<DetectAttackCollision>();
-            attackDetect.ProjectileAttackDamage(other);
+            spawnedBy.transform.Find("DetectCollision").
+                GetComponent<DetectAttackCollision>().ProjectileAttackDamage(other);
             Destroy(this.gameObject);
 		}
     }

@@ -167,7 +167,6 @@ public abstract class CharacterAbstraction : MonoBehaviour
         if (collision.gameObject.tag == "Wall")
         {
             canJump_ = false;  
-            Debug.Log("Can Jump: " + false);
         }    
     }
 
@@ -176,7 +175,6 @@ public abstract class CharacterAbstraction : MonoBehaviour
         if (collision.gameObject.tag == "Wall") 
         {
             canJump_ = true;
-            Debug.Log("Can Jump: " + false);
         }
     }
 
@@ -186,7 +184,6 @@ public abstract class CharacterAbstraction : MonoBehaviour
         {
             transform.position += new Vector3(0, -0.1f, 0);
             body_.AddForce(Vector3.down * dowmSpeed);
-            Debug.Log("Down Jump!");
         }
     }
 }
