@@ -15,9 +15,12 @@ public interface IInput
     float GetAxisMouseY();   // Padrão- (-1S | 1 W)
     bool FixCameraOnMyKubberInput(); //Padrão- Tab
     bool RescueKubberInput(); //Padrão- Control
-    bool RunInput(); //Padrão- Shift
+    bool RunInput(); //Padrão- LeftShift
+    bool RunInputUp(); //Padrão - LeftShift
+    bool RunInputOnce(); //Padrão - LeftShift    
     bool Exit(); //Padrão- Esc
     bool EnterInCaptureMode(); //Padrão- Backspace
     bool Jump(); //Padrão- SpaceBar
+    bool JumpOnce(); //Padrão- SpaceBar
 }
 

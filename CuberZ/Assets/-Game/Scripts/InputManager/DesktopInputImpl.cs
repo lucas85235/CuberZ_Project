@@ -3,10 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class DesktopInputImpl : MonoBehaviour, IInput
-{
-    private static DesktopInputImpl instance_;
-    public static DesktopInputImpl instance { get { return instance_; } }
-   
+{  
     [Header("Teclas Configuráveis")]
     public KeyCode moveCameraKey = KeyCode.Mouse1;
     public KeyCode executeActionInput = KeyCode.Mouse0;
@@ -24,11 +21,6 @@ public class DesktopInputImpl : MonoBehaviour, IInput
     public KeyCode exitKey = KeyCode.Escape;
     public KeyCode captureKubberkey = KeyCode.Backspace;
     public KeyCode jumpkey = KeyCode.Space;
-
-    private void Awake()
-    {
-        instance_ = this;
-    }
 
     #region Variáveis PlayerPrefs
     private const string moveCameraPlayerPref = "MOVE-CAMERA";
@@ -65,9 +57,12 @@ public class DesktopInputImpl : MonoBehaviour, IInput
     public bool FixCameraOnMyKubberInput() { return Input.GetKeyDown(fixCameraOnMyKubberKey); }
     public bool RescueKubberInput() { return Input.GetKeyDown(rescueKubberKey); }
     public bool RunInput() { return Input.GetKey(runKey); }
+    public bool RunInputUp() { return Input.GetKeyUp(runKey); }
+    public bool RunInputOnce() { return Input.GetKeyDown(runKey); }
     public bool Exit() { return Input.GetKeyDown(exitKey); }
     public bool EnterInCaptureMode() { return Input.GetKeyDown(captureKubberkey); }
-    public bool Jump() { return Input.GetKeyDown(jumpkey); }
+    public bool Jump() { return Input.GetKey(jumpkey); }
+    public bool JumpOnce() { return Input.GetKeyDown(jumpkey); }
     #endregion
 
     #region Funções PlayerPrefs

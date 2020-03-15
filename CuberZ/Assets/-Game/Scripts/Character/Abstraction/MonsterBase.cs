@@ -134,10 +134,10 @@ public abstract class MonsterBase : CharacterAbstraction
                 ref smooth_,
                 smoothTime);
 
-            if (input_.RunInput()) // Quando solta o LeftControl
-                inRunInput = true;
-            else  //Quando aperta uma única vez
+            if (input_.RunInputUp()) // Quando solta o LeftControl
                 inRunInput = false;
+            else if (input_.RunInputOnce()) //Quando aperta uma única vez
+                inRunInput = true;
 
             if (input_.RunInput() && inRunInput && !isJump && !endedStamina)
             {
@@ -161,7 +161,7 @@ public abstract class MonsterBase : CharacterAbstraction
 
     protected override void JumpBehaviour()
     {
-        if (input_.Jump() && !isJump && canJump_ && characterStamina >= 10.0f)
+        if (input_.JumpOnce() && !isJump && canJump_ && characterStamina >= 10.0f)
         {
             body_.AddForce(Vector3.up * initialJumpImpulse, ForceMode.Impulse);
             startJumpTime = true;

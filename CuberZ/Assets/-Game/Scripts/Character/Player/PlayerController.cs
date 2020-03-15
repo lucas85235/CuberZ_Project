@@ -134,9 +134,9 @@ public class PlayerController : CharacterAbstraction
 
             if (!captureSystem.inCaptureMode)
             {
-                if (input_.RunInput())
+                if (input_.RunInputUp())
                     inRunInput = true;
-                else
+                else if (input_.RunInputOnce())
                     inRunInput = false;
 
                 if (input_.RunInput() && inRunInput && !isJump && !endedStamina)
