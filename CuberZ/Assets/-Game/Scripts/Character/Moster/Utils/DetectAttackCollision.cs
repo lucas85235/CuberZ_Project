@@ -17,13 +17,17 @@ public class DetectAttackCollision : MonoBehaviour
 	private Transform thisKubber_;
 	private Collider thisCollider_;
 
+	private string colliderTag;
+
 	private bool initAttack_ = false;
 	private bool damagePerSecond_ = false;
 	private bool isAttackingInStay_ = false;
-	private bool inStayCollision = false;
+	private bool inStayCollision_ = false;
 
+	[Header("Ajustes")]
+	public ColliderTag currentTag;
 	public float adjustHitPosition = 2.5f;
-
+	
 	// Pronto
 	// 1 limpar o cogigo
 	// 3 ajustar ataque iniciado no stay colluider
@@ -34,11 +38,22 @@ public class DetectAttackCollision : MonoBehaviour
 	// 5 ajustar attack de projetil 
 	// 6 ajustar attack de dano por segundo
 
+	public enum ColliderTag 
+	{
+		Enemy,
+		Monster
+	}
+
 	private void Start() 
 	{
 		thisKubber_ = transform.parent;
 
 		levelManager_ = thisKubber_.GetComponent<LevelManager>();
+	
+		if (currentTag == ColliderTag.Enemy)
+			colliderTag = "Enemy";
+		if (currentTag == ColliderTag.Monster)
+			colliderTag = "Monster";
 	}
 
 	public void UpdateCurrentAttackStats(AttackManager.AttackStats newStats) 
@@ -84,9 +99,8 @@ public class DetectAttackCollision : MonoBehaviour
 				{
 					StartCoroutine(AttackInStayBehaviour(other));
 				}
-				inStayCollision = true;
+				inStayCollision_ = true;
 			}
-			else inStayCollision = false;
 		}
 	}
 
@@ -95,7 +109,7 @@ public class DetectAttackCollision : MonoBehaviour
 		if (other.tag == "Enemy" && damagePerSecond_) 
 		{
 			damagePerSecond_ = false;
-			inStayCollision = false;
+			inStayCollision_ = false;
 		}
 	}
 	#endregion
@@ -103,6 +117,7 @@ public class DetectAttackCollision : MonoBehaviour
 	public IEnumerator AttackEnterBehaviour(Collider other) 
 	{
 		initAttack_ = true;
+		inStayCollision_ = true;
 
 		enemy_ = other.GetComponent<IAAbstraction>();
 		monster_ = thisKubber_.GetComponent<MonsterBase>();
@@ -118,7 +133,6 @@ public class DetectAttackCollision : MonoBehaviour
 		yield return new WaitForSeconds(currentAttackStats.attackAnimationTime);
 
 		initAttack_ = false;
-		isAttackingInStay_ = false;
 	}
 
 	private IEnumerator AttackInStayBehaviour(Collider other) 
@@ -135,7 +149,7 @@ public class DetectAttackCollision : MonoBehaviour
 
 		yield return new WaitForSeconds(currentAttackStats.startDamageTime);
 
-		if (inStayCollision) 
+		if (inStayCollision_) 
 		{
 			int damage = attack_.attackStats[monster_.currentAttackIndex].baseDamage;
 
@@ -212,7 +226,7 @@ public class DetectAttackCollision : MonoBehaviour
 	{
 		// impede que o efeito seja instanciado caso haja outro efeito no objeto em que ele sera instanciado
 
-		if (!GameObject.Find("Hit_FX"))
+		if (!objectTransform.Find("Hit_FX"))
 		{
 			GameObject hitEffect = Instantiate(effect);
 			hitEffect.transform.position = objectTransform.position + (Vector3.up * adjustHitPosition);
