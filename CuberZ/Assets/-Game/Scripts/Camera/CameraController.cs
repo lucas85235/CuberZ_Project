@@ -40,7 +40,7 @@ public class CameraController : CameraProperties
 
     private void Awake()
     {
-        Construt(Object.FindObjectOfType<InputSystem>());
+        Construt(Object.FindObjectOfType<DesktopInputImpl>());
     }
 
     void FixedUpdate()

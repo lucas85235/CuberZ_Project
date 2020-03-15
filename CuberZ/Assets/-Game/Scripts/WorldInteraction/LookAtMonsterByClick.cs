@@ -39,7 +39,7 @@ public class LookAtMonsterByClick : MonoBehaviour
 
     private void Awake()
     {
-        Construt (Object.FindObjectOfType<InputSystem>(), 
+        Construt (Object.FindObjectOfType<DesktopInputImpl>(), 
             Camera.main.GetComponent<CameraProperties>());
     }
 

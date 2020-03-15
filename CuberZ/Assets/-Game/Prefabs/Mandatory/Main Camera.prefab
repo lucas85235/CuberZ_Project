@@ -103,11 +103,11 @@ MonoBehaviour:
   maxAngleY: 70
   target_: {fileID: 0}
   enemyTarget_: {fileID: 0}
-  cameraDistanceMin: 8
-  cameraDistanceMax: 20
-  cameraDistance: 16
-  zoomSpeed: 25
-  smooth: 10
+  cameraDistanceMin_: 5
+  cameraDistanceMax_: 20
+  cameraDistance_: 16
+  zoomSpeed_: 25
+  smooth_: 10
   sensibility: 125
   adjustCollisionForward: 0.1
   invertVerticalMouseInput: 0

@@ -7,18 +7,27 @@ public class HUDKubberAttacks : MonoBehaviour
 {
     public Text[] skillName, staminaCost, skillBaseDamage, attackCoolDown;
     public GameObject[] selector_;
+    private IInput input_;
     private AttackManager.AttackStats[] skillSetHolder_;
     private AttackManager.AttackStats selectedAttack_;
+
     private int[] attackTierHolder_;
-    bool getContent_;
+    private bool getContent_;
 
     #region Singleton
     private static HUDKubberAttacks instance_;
     public static HUDKubberAttacks instance { get { return instance_; } }
 
+    protected virtual void Construt(IInput newInputInterface)
+    {
+        input_ = newInputInterface;
+    }
+
     private void Awake()
     {
         instance_ = this;
+
+        Construt(FindObjectOfType<DesktopInputImpl>());
     }
     #endregion
 
@@ -31,7 +40,7 @@ public class HUDKubberAttacks : MonoBehaviour
             HudUpdateAll(true);
         }
 
-        if (InputSystem.instance.ExecuteAction())
+        if (input_.ExecuteAction())
         {
             CastSkill();
         }
@@ -76,7 +85,7 @@ public class HUDKubberAttacks : MonoBehaviour
 
     public void WhichSkillIsSelected()
     {
-        if (InputSystem.instance.KubberAttack1())
+        if (input_.KubberAttack1())
         {
             if (skillSetHolder_.Length > 0)
             {
@@ -85,7 +94,7 @@ public class HUDKubberAttacks : MonoBehaviour
                 getContent_ = true;
             }
         }
-        else if (InputSystem.instance.KubberAttack2())
+        else if (input_.KubberAttack2())
         {
             if (skillSetHolder_.Length > 1)
             {
@@ -94,7 +103,7 @@ public class HUDKubberAttacks : MonoBehaviour
                 getContent_ = true;
             }
         }  
-        else if (InputSystem.instance.KubberAttack3())
+        else if (input_.KubberAttack3())
         {
             if (skillSetHolder_.Length > 2)
             {
@@ -103,7 +112,7 @@ public class HUDKubberAttacks : MonoBehaviour
                 getContent_ = true;
             }
         }
-        else if (InputSystem.instance.KubberAttack4())
+        else if (input_.KubberAttack4())
         {
             if (skillSetHolder_.Length > 3)
             {

@@ -60,7 +60,7 @@ public abstract class CharacterAbstraction : MonoBehaviour
 
     protected virtual void Awake() 
     {
-        Construt(Object.FindObjectOfType<InputSystem>());
+        Construt(Object.FindObjectOfType<DesktopInputImpl>());
     }
 
     #region Implementações padrão

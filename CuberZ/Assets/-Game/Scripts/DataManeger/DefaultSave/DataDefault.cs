@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class DataDefault : MonoBehaviour
 {
-    private InputSystem inputSystem;
+    private DesktopInputImpl inputSystem;
     private DataPresetOptions data;
 
     private const string defaultOptionsPreset_ = "DefaultOptionsPresetPlayerPrefs";
@@ -31,7 +31,7 @@ public class DataDefault : MonoBehaviour
     #region Funções Unity
     private void Awake()
     {
-        inputSystem = new InputSystem();
+        inputSystem = new DesktopInputImpl();
         data = new DataPresetOptions();
 
         if (!PlayerPrefs.HasKey(defaultInputs_))
