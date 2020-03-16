@@ -16,12 +16,6 @@ public class SQLiteImpl : MonoBehaviour, IDatabase
     private IDbCommand dbCommand_;
     private IDataReader reader_;
 
-    void Awake ()
-    {
-        dbPath_ =  Application.dataPath + "/-Game/Scripts/Database/SQLiteDatabase/";
-        OpenConnection("test");
-        CreateTable("client", "name VARCHAR(10)");
-    }
  
     public void CreateDatabase(string dbName)
     {
@@ -65,7 +59,8 @@ public class SQLiteImpl : MonoBehaviour, IDatabase
         }
         catch { Debug.Log("Can't create table without a database connected"); }
     }
-
+/* Waiting for system implementation
+ * 
     public void ShowData(string tableName)
     {
         dbCommand_ = dbConnection_.CreateCommand();
@@ -74,4 +69,5 @@ public class SQLiteImpl : MonoBehaviour, IDatabase
         dbCommand_.Dispose();
         dbCommand_ = null;
     }
+*/
 }
