@@ -77,6 +77,7 @@ public class AnimationDefaultImpl : MonoBehaviour, AnimationBase
     public virtual void ExitDeathState() 
     {
         animator_.SetBool("DEAD", false);
+        eyes_.enabled = true;
         eyes_.OpenEyes();
     }
 
