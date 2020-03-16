@@ -22,6 +22,7 @@ public class CameraController : CameraProperties
     [SerializeField] private float cameraDistance_ = 16.0f;
     [SerializeField] private float zoomSpeed_ = 25.0f;
     [SerializeField] private float smooth_ = 4.0f;
+    
     public float sensibility = 125.0f;
     public float adjustCollisionForward = 0.1f;
     public bool invertVerticalMouseInput;
@@ -47,19 +48,19 @@ public class CameraController : CameraProperties
     {
         if (cameraStyle_ == CameraMode.FollowPlayer)
         {
-            if (target_)cameraPosition_ = target_.position - transform.forward * cameraDistance * distanceUp_;
+            if (target_) cameraPosition_ = target_.position - transform.forward * cameraDistance_ * distanceUp_;
             distanceUp_ = Mathf.Clamp(distanceUp_ += input_.GetAxisVertical(), minAngle_, maxAngle_);
             transform.position = Vector3.Lerp(transform.position, cameraPosition_, Time.deltaTime * smooth_);
         }
         else if (cameraStyle_ == CameraMode.Capturing)
         {
-            if (target_) cameraPosition_ = target_.position - transform.forward * (cameraDistance / 2);
-            transform.position = Vector3.Lerp(transform.position, cameraPosition_, Time.deltaTime * smooth);
+            if (target_) cameraPosition_ = target_.position - transform.forward * (cameraDistance_ / 2);
+            transform.position = Vector3.Lerp(transform.position, cameraPosition_, Time.deltaTime * smooth_);
         }
 
         if (cameraStyle_ == CameraMode.TargetEnemy)
         {
-            if(target_) cameraPosition_ = target_.position - transform.forward * cameraDistance * distanceUp_;
+            if(target_) cameraPosition_ = target_.position - transform.forward * cameraDistance_ * distanceUp_;
             distanceUp_ = Mathf.Clamp(distanceUp_ += input_.GetAxisVertical(), minAngle_, maxAngle_);
             transform.position = Vector3.Lerp(transform.position, cameraPosition_, Time.deltaTime * smooth_);
 
@@ -85,9 +86,10 @@ public class CameraController : CameraProperties
         float angleY = 0;
 
         if (invertVerticalMouseInput)
+        {
             angleY = -input_.GetAxisMouseY() * sensibility * Time.deltaTime;
-        else
-            angleY = input_.GetAxisMouseY() * sensibility * Time.deltaTime;
+        }
+        else angleY = input_.GetAxisMouseY() * sensibility * Time.deltaTime;
 
         if (transform.eulerAngles.x + angleY > minAngleY && transform.eulerAngles.x + angleY < maxAngleY)
         {

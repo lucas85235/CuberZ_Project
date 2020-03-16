@@ -77,12 +77,14 @@ public class CaptureSystemNew : MonoBehaviour
 
     private void Start()
     {
-        Construt(Object.FindObjectOfType<InputSystem>());
-        layerMask_ = LayerMask.GetMask("Input");
+        Construt(Object.FindObjectOfType<DesktopInputImpl>());
+
         playerAnimation_ = FindObjectOfType<PlayerAnimation>();
         playerController_ = FindObjectOfType<PlayerController>();
         cameraController_ = FindObjectOfType<CameraController>();
         kubberzInventory_ = FindObjectOfType<KubberzInventory>();
+
+        layerMask_ = LayerMask.GetMask("Input");
     }
 
     private void Update()
