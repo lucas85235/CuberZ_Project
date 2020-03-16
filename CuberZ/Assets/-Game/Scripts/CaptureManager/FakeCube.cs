@@ -39,7 +39,7 @@ public class FakeCube : MonoBehaviour
             allcubes_[i].transform.localRotation = cubesRotationList_[i];
         }
 
-        transform.gameObject.SetActive(false);
+        Destroy(transform.gameObject);
 
         yield break;
 

@@ -12,6 +12,7 @@ public class MonsterDataBase : MonoBehaviour
 public struct KubberDex
 {
     public string monsterName;
+    public int identifier;
     public MonsterID monsterID;
     public GameObject monster;
     public bool beenSeen;

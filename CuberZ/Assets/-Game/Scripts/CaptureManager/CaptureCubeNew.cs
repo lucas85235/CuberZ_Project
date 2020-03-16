@@ -92,10 +92,7 @@ public class CaptureCubeNew : MonoBehaviour
     {
         rigidybody_.velocity = Vector3.zero;
         rigidybody_.useGravity = true;
-        GameObject t = Pooling.InstantiatePooling(fakeCube, transform.position, transform.rotation);
-        transform.GetChild(0).gameObject.SetActive(true);
-        transform.GetChild(1).gameObject.SetActive(false);
-        transform.gameObject.SetActive(false);
+        GameObject t = Instantiate(fakeCube, transform.position, transform.rotation);
         Destroy(transform.gameObject);
     }
 

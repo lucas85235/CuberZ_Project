@@ -47,19 +47,19 @@ public class CameraController : CameraProperties
     {
         if (cameraStyle_ == CameraMode.FollowPlayer)
         {
-            cameraPosition_ = target_.position - transform.forward * cameraDistance_ * distanceUp_;
+            if (target_)cameraPosition_ = target_.position - transform.forward * cameraDistance * distanceUp_;
             distanceUp_ = Mathf.Clamp(distanceUp_ += input_.GetAxisVertical(), minAngle_, maxAngle_);
             transform.position = Vector3.Lerp(transform.position, cameraPosition_, Time.deltaTime * smooth_);
         }
         else if (cameraStyle_ == CameraMode.Capturing)
         {
-            cameraPosition_ = target_.position - transform.forward * (cameraDistance_ / 2);
-            transform.position = Vector3.Lerp(transform.position, cameraPosition_, Time.deltaTime * smooth_);
+            if (target_) cameraPosition_ = target_.position - transform.forward * (cameraDistance / 2);
+            transform.position = Vector3.Lerp(transform.position, cameraPosition_, Time.deltaTime * smooth);
         }
 
         if (cameraStyle_ == CameraMode.TargetEnemy)
         {
-            cameraPosition_ = target_.position - transform.forward * cameraDistance_ * distanceUp_;
+            if(target_) cameraPosition_ = target_.position - transform.forward * cameraDistance * distanceUp_;
             distanceUp_ = Mathf.Clamp(distanceUp_ += input_.GetAxisVertical(), minAngle_, maxAngle_);
             transform.position = Vector3.Lerp(transform.position, cameraPosition_, Time.deltaTime * smooth_);
 
@@ -71,14 +71,16 @@ public class CameraController : CameraProperties
         if (Input.GetAxis("Mouse ScrollWheel") != 0)
             CameraZoom();
 
-        if (Physics.Linecast(target_.position, transform.position, out hit_, excludeLayers))
-            transform.position = 
-                hit_.point + transform.forward * adjustCollisionForward;
+        if (target_)
+        {
+            if (Physics.Linecast(target_.position, transform.position, out hit_, excludeLayers))
+                transform.position = hit_.point + transform.forward * adjustCollisionForward;
+        }
     }
 
     private void CameraRotate()
     {
-        transform.RotateAround(target_.position, transform.up, input_.GetAxisMouseX() * sensibility * Time.deltaTime);
+        if (target_) transform.RotateAround(target_.position, transform.up, input_.GetAxisMouseX() * sensibility * Time.deltaTime);
 
         float angleY = 0;
 
@@ -88,7 +90,9 @@ public class CameraController : CameraProperties
             angleY = input_.GetAxisMouseY() * sensibility * Time.deltaTime;
 
         if (transform.eulerAngles.x + angleY > minAngleY && transform.eulerAngles.x + angleY < maxAngleY)
-            transform.RotateAround(target_.position, transform.right, angleY);
+        {
+            if(target_) transform.RotateAround(target_.position, transform.right, angleY);
+        }
 
         Vector3 rotation = transform.eulerAngles;
         rotation.z = 0;

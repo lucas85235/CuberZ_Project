@@ -9,6 +9,8 @@ public class MinitiBehaviuor : MonsterBase
 
     private bool canFollowPlayer = true;
     private bool canMove = true;
+    private TeamManager teamManager_;
+    private PlayerController playerController_;
     [SerializeField] private bool canResetVelocity = false;
 
     [Header("Show Attack in Console")]
@@ -37,6 +39,8 @@ public class MinitiBehaviuor : MonsterBase
             player_ = GameObject.FindGameObjectWithTag("Player").GetComponent<CharacterAbstraction>();
         attack_ = GetComponent<AttackManager>();
         attackCollision = transform.Find("DetectCollision").GetComponent<DetectAttackCollision>();
+        teamManager_ = FindObjectOfType<TeamManager>();
+        playerController_ = FindObjectOfType<PlayerController>();
         #endregion   
 
         body_.freezeRotation = true;
@@ -112,8 +116,15 @@ public class MinitiBehaviuor : MonsterBase
             if (Input.GetKeyDown(KeyCode.F2)) // Key de Teste
                 animation_.ExtraAnimationTwo();
 
-            if (Input.GetKeyDown(KeyCode.T) && player_ != null) // Usado para testes romover na versão final
+            if (Input.GetKeyDown(KeyCode.T) && player_ != null && !teamManager_.spawned_) // Usado para testes romover na versão final
                 SwitchCharacterController(player_);
+
+            else if (Input.GetKeyDown(KeyCode.T) && player_ != null && teamManager_.spawned_)
+            {
+                SwitchCharacterController(player_);
+                playerController_.CanMove_ = true;
+                
+            }
 
             if (input_.ExecuteAction() && !isAttacking && !isJump) 
             {

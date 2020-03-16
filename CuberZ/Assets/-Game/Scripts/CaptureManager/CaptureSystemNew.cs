@@ -25,6 +25,7 @@ public class CaptureSystemNew : MonoBehaviour
     [HideInInspector] public bool finishCubeCatchAnimator { get; set; }
     [HideInInspector] public bool tryToCatchKubber { get; set; }
     [HideInInspector] public Transform previewTarget { get; set; }
+    [HideInInspector] public bool captureMode_ { get; set; }
     #endregion
 
     #region Private Variables
@@ -34,7 +35,6 @@ public class CaptureSystemNew : MonoBehaviour
     private PlayerAnimation playerAnimation_;
     private CameraController cameraController_;
     private KubberzInventory kubberzInventory_;
-    private bool captureMode_;
     private GameObject cubeTemp_;
     private Vector3 cubeGoalPosistion;
     private float lastCubeGoalPointX_;
@@ -66,7 +66,7 @@ public class CaptureSystemNew : MonoBehaviour
     #region Funções Lambda
     private bool CanThrowCube() => input_.ExecuteAction() && !waitingForCaptureEnd && ThrowPointRange();
     private bool CanEnterCaptureMode() => (cubeQuantity > 0 && !captureMode_ && !waitingForCaptureEnd) ? true : false;
-    private bool CanExitCaptureMode() => (captureMode_ && !waitingForCaptureEnd) ? true : false;
+    private bool CanExitCaptureMode() => (captureMode_ && !waitingForCaptureEnd && !monsterBreakFree_) ? true : false;
     #endregion
 
     #region Funções MonoBehaviour
@@ -110,12 +110,12 @@ public class CaptureSystemNew : MonoBehaviour
 
     private void FalseBreakCube()
     {
-        GameObject t = Pooling.InstantiatePooling(fakeCube, cubeTemp_.transform.position, cubeTemp_.transform.rotation);
+        GameObject t = Instantiate(fakeCube, cubeTemp_.transform.position, cubeTemp_.transform.rotation);
         monsterCapturePosition_ = new Vector3(cubeTemp_.transform.position.x, monsterCapturePosition_.y, cubeTemp_.transform.position.z);
         GetRigidyBody(cubeTemp_).velocity = Vector3.zero;
         GetRigidyBody(cubeTemp_).useGravity = false;
-        cubeTemp_.gameObject.SetActive(false);
-        cubeTemp_.transform.parent = null;
+        currentMonsterColider_.transform.parent = null;
+        Destroy(cubeTemp_);
         ResetCaptureSystem(false);
     }
 
@@ -150,26 +150,26 @@ public class CaptureSystemNew : MonoBehaviour
     private IEnumerator ShakeCube(Collider MonsterCollider)
     {
         #region Setando variaveis e dando Start no Shake
-        rotateCubeTorNormal = false;
-        goCubeToGoal_ = false;
-        monsterBreakFree_ = false;
-
         previewTarget = cameraController_.GetTarget();
         cameraController_.SetTarget(cubeTemp_.transform);
-
 
         yield return new WaitForSeconds(1f);
 
         if (!setShakeVariables_)
         {
+            rotateCubeTorNormal = false;
+            goCubeToGoal_ = false;
+            monsterBreakFree_ = false;
+
             catchKubber_ = GetInOrOutMonsterChance(sucessPercentage);
-            numberOfShakes_ = Random.Range(1, 4);
+            if (!catchKubber_) numberOfShakes_ = Random.Range(1, 4);
+            else numberOfShakes_ = 0;
             setShakeVariables_ = true;
         }
 
         cubeTemp_.GetComponent<CubeAnimations>().ShakeCube();
 
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(1.5f);
 
         #endregion
 
@@ -185,7 +185,7 @@ public class CaptureSystemNew : MonoBehaviour
         else if (catchKubber_ && numberOfShakes_ >= 2) //Captura do Kubber foi bem sucedida e terminou a ultima balançada;
         {
             cubeTemp_.GetComponent<CubeAnimations>().DissolveCube();
-            yield return new WaitForSeconds(1.5f);
+            yield return new WaitForSeconds(1f);
 
             cameraController_.SetCameraMode(CameraProperties.CameraMode.FollowPlayer);
             cameraController_.SetTarget(transform.Find("CameraTarget"));
@@ -201,7 +201,12 @@ public class CaptureSystemNew : MonoBehaviour
 
             ResetCaptureSystem(false);
 
+            currentMonsterColider_.transform.parent = null;
+            currentMonsterColider_.gameObject.SetActive(false);
+
+
             kubberzInventory_.AddKubberInNextEmptySlot(currentMonsterColider_.gameObject);
+            playerController_.AddKubberInventoryOnTeam();
 
             yield break;
         }
@@ -210,19 +215,19 @@ public class CaptureSystemNew : MonoBehaviour
         #region Caso não dê certo a Captura
         if (!catchKubber_ && numberOfShakes_ >= 2)
         {
-            FalseBreakCube();
+
             monsterBreakFree_ = true;
+            FalseBreakCube();
 
             cameraController_.SetCameraMode(CameraProperties.CameraMode.FollowPlayer);
             cameraController_.SetTarget(transform.Find("CameraTarget"));
 
             yield return new WaitUntil(() => !monsterBreakFree_);
 
-            if (cubeQuantity > 0) SpawnCubeOnHand();
-            else ExitCaptureMode(false);
             startCapturing = false;
 
             setShakeVariables_ = false;
+
             yield break;
         } //Não teve sucesso na captura e acabou a animação
 
@@ -241,7 +246,7 @@ public class CaptureSystemNew : MonoBehaviour
         Debug.Log("hhggg " + monsterColliderDetected.name);
 
         cameraController_.SetCameraMode(CameraProperties.CameraMode.FollowPlayer);
-        cameraController_.SetTarget(previewTarget);
+        cameraController_.SetTarget(transform.Find("CameraTarget"));
 
         if (monsterColliderDetected.transform.localScale != Vector3.one)
         {
@@ -264,9 +269,9 @@ public class CaptureSystemNew : MonoBehaviour
         }
 
 
-        else if(monsterColliderDetected.transform.localScale.x >= 0.9f)
+        else if (monsterColliderDetected.transform.localScale.x >= 0.8f)
         {
-            playerController_.CanMove_ = true;
+            ResetCaptureSystem(true);
             monsterBreakFree_ = false;
             currentMonsterColider_ = null;
             Debug.Log("ue");
@@ -306,9 +311,11 @@ public class CaptureSystemNew : MonoBehaviour
 
     private void LerpPlayerFowardWithCubeGoal()
     {
+
         Vector3 vectorWithoutY = new Vector3(cubeGoalPosistion.x, playerController_.transform.position.y, cubeGoalPosistion.z);
-        playerController_.transform.forward = Vector3.Lerp(playerController_.transform.forward, vectorWithoutY, turnLerpSpeed * Time.deltaTime);
-        turning_ = (playerController_.transform.forward == vectorWithoutY) ? false : true;
+        Vector3 final = vectorWithoutY - playerController_.transform.position;
+        playerController_.transform.forward = Vector3.Lerp(playerController_.transform.forward, final, turnLerpSpeed * Time.deltaTime);
+        turning_ = (playerController_.transform.forward == final) ? false : true;
     }
 
     private void GoCubeGoPhysics() //FixedUpdate do Cubo
@@ -362,6 +369,7 @@ public class CaptureSystemNew : MonoBehaviour
         cubeTemp_.transform.SetParent(null);
         goCubeToGoal_ = true;
         GetRigidyBody(cubeTemp_).useGravity = true;
+        cubeTemp_.GetComponent<Collider>().enabled = true;
         cubeTemp_.GetComponent<CubeAnimations>().DecreaseCaptureCube();
         cubeTemp_.transform.GetChild(1).gameObject.SetActive(true);
         cubeTemp_.GetComponent<CubeAnimations>().ExpandFakeCube();
@@ -432,10 +440,12 @@ public class CaptureSystemNew : MonoBehaviour
     {
         if (cubeQuantity > 0)
         {
+            if (cubeTemp_) Destroy(cubeTemp_);
             cubeTemp_ = null;
             cubeTemp_ = Instantiate(captureCubePrefab, spawnPoint.transform.position, spawnPoint.transform.rotation);
             cubeTemp_.GetComponent<CaptureCubeNew>().alreadyInUse = false;
             cubeTemp_.GetComponent<CaptureCubeNew>().canShakeCube = false;
+            cubeTemp_.GetComponent<Collider>().enabled = false;
             cubeTemp_.transform.SetParent(spawnPoint.transform);
             cubeTemp_.SetActive(true);
             GetRigidyBody(cubeTemp_).useGravity = false;
@@ -454,8 +464,17 @@ public class CaptureSystemNew : MonoBehaviour
 
     private Rigidbody GetRigidyBody(GameObject obj) => obj.GetComponent<Rigidbody>();
 
-    private bool ThrowPointRange(float a = 15f, float b = 80f) => Vector3.Distance(cubeTemp_.transform.position, CubeGoalPositionCalculator()) >= a &&
-        Vector3.Distance(cubeTemp_.transform.position, CubeGoalPositionCalculator()) <= b;
+    private bool ThrowPointRange(float a = 15f, float b = 80f)
+    {
+        if (cubeTemp_)
+        {
+            return Vector3.Distance(cubeTemp_.transform.position, CubeGoalPositionCalculator()) >= a &&
+                    Vector3.Distance(cubeTemp_.transform.position, CubeGoalPositionCalculator()) <= b;
+        }
+
+        else return false;
+
+    }
 
     private IEnumerator WaitTimerToStopCubeOnAir(Collider currentCollider)
     {

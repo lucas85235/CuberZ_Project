@@ -4127,7 +4127,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 484331875291791517}
-  - {fileID: 137362348536922200}
   m_Father: {fileID: 484331874400015311}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -10521,9 +10520,9 @@ GameObject:
   - component: {fileID: 484331874400111054}
   - component: {fileID: 484331874400111052}
   - component: {fileID: 484331874400111040}
-  - component: {fileID: 3740074197964245103}
   - component: {fileID: 424284370}
   - component: {fileID: 34915763}
+  - component: {fileID: 3238596501000588227}
   m_Layer: 11
   m_Name: PlayerReal
   m_TagString: Player
@@ -10633,30 +10632,6 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   currentKubberSpawned: {fileID: 0}
---- !u!114 &3740074197964245103
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 484331874400111045}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a40d50f1ee53559458bfd23cb091e4b2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  theaterCube: {fileID: 137362348536922201}
-  captureCube: {fileID: 2145423973509888249, guid: 3d60572e299637b4d9067cdd3c2f31c8,
-    type: 3}
-  hand: {fileID: 484331875291791517}
-  impulseForce: 20
-  impulseY: 10
-  sucessPercentage: 60
-  distanceMultiplier: 1
-  cubeAmount: 1000
-  throwbool: 0
-  inCaptureMode: 0
-  captureProcess: 0
 --- !u!114 &424284370
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10683,6 +10658,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lifeImage: {fileID: 0}
   staminaImage: {fileID: 8756699547255818994}
+--- !u!114 &3238596501000588227
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 484331874400111045}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e286070436804d48a456e4d5e396cec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  kubberCube: {fileID: 6500537494581273465, guid: dab516a3f240ed7419e2bfec761a2c81,
+    type: 3}
+  spawnPoint: {fileID: 484331875291791517}
 --- !u!1 &484331874400111047
 GameObject:
   m_ObjectHideFlags: 0

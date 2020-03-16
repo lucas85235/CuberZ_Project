@@ -6,6 +6,7 @@ using UnityEngine.AI;
 public class PlayerController : CharacterAbstraction
 {
     private PlayerAnimation playerAnimation_;
+    private KubberzInventory kubberzInventory_;
     private CaptureSystemNew captureSystem;
     private HudWorldStats worldHud_;
     private CameraProperties camera_;
@@ -41,6 +42,7 @@ public class PlayerController : CharacterAbstraction
         playerAnimation_ = GetComponent<PlayerAnimation>();
         captureSystem = GetComponent<CaptureSystemNew>();
         worldHud_ = GetComponent<HudWorldStats>();
+        kubberzInventory_ = FindObjectOfType<KubberzInventory>();
         #endregion
 
         body_.freezeRotation = true;
@@ -132,52 +134,52 @@ public class PlayerController : CharacterAbstraction
                 ref smooth_,
                 smoothTime);
 
-            if (!captureSystem.waitingForCaptureEnd)
-            {
-                if (input_.RunInputUp())
-                    inRunInput = true;
-                else if (input_.RunInputOnce())
-                    inRunInput = false;
-
-                if (input_.RunInput() && inRunInput && !isJump && !endedStamina)
+        
+                if (!captureSystem.waitingForCaptureEnd)
                 {
-                    transform.position += transform.forward * runSpeed * Time.deltaTime;
-                    playerAnimation_.MovimentSpeed(axisX * axisX + axisY * axisY);
-                    DecrementStamina(0.5f);
-
-                    if (characterStamina == 0)
-                        StartCoroutine(EndedRegenTime());
-                }
-                else if (input_.RunInput() && inRunInput && isJump)
-                {
-                    transform.position += transform.forward * (walkSpeed * 1.8f) * Time.deltaTime;
-                }
-                else
-                {
-                    transform.position += transform.forward * walkSpeed * Time.deltaTime;
-                    float speed = axisX * axisX + axisY * axisY / 2;
-                    playerAnimation_.MovimentSpeed(speed >= 0.5 ? 0.5f : speed);
-
-                    if (!input_.RunInput())
+                    if (Input.GetKeyUp(KeyCode.LeftShift))
                         inRunInput = false;
-                    else
+                    else if (Input.GetKeyDown(KeyCode.LeftShift))
                         inRunInput = true;
-                }
-            }
-            
-            if (captureSystem.waitingForCaptureEnd)
-            {
-                if (input_.GetAxisHorizontal() != 0 || input_.GetAxisVertical() != 0)
-                {
-                    transform.position += transform.forward * (walkSpeed / 2) * Time.deltaTime;
-                    playerAnimation_.MovimentSpeed(0.45f);
-                }
-                else playerAnimation_.MovimentSpeed(0);
-            }
 
-            if (captureSystem.waitingForCaptureEnd) 
-                StopWalk();
-        }
+                    if (input_.RunInput() && inRunInput && !isJump && !endedStamina)
+                    {
+                        transform.position += transform.forward * runSpeed * Time.deltaTime;
+                        playerAnimation_.MovimentSpeed(axisX * axisX + axisY * axisY);
+                        DecrementStamina(0.5f);
+
+                        if (characterStamina == 0)
+                            StartCoroutine(EndedRegenTime());
+                    }
+                    else if (input_.RunInput() && inRunInput && isJump)
+                    {
+                        transform.position += transform.forward * (walkSpeed * 1.8f) * Time.deltaTime;
+                    }
+                    else
+                    {
+                        transform.position += transform.forward * walkSpeed * Time.deltaTime;
+                        float speed = axisX * axisX + axisY * axisY / 2;
+                        playerAnimation_.MovimentSpeed(speed >= 0.5 ? 0.5f : speed);
+
+                        if (!input_.RunInput())
+                            inRunInput = false;
+                        else
+                            inRunInput = true;
+                    }
+                }
+                if (captureSystem.waitingForCaptureEnd)
+                {
+                    if (input_.GetAxisHorizontal() != 0 || input_.GetAxisVertical() != 0)
+                    {
+                        transform.position += transform.forward * (walkSpeed / 2) * Time.deltaTime;
+                        playerAnimation_.MovimentSpeed(0.45f);
+                    }
+                    else playerAnimation_.MovimentSpeed(0);
+                }
+
+                if (captureSystem.waitingForCaptureEnd)
+                    StopWalk();
+            }
     }
 
     protected override void JumpBehaviour()
@@ -284,4 +286,43 @@ public class PlayerController : CharacterAbstraction
         playerAnimation_.MovimentSpeed(0);
         body_.velocity = Vector3.zero;
     }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.tag == "Wall")
+        {
+            canJump_ = false;  
+            Debug.Log("Can Jump: " + false);
+        }    
+    }
+
+    private void OnCollisionExit(Collision collision)
+    {
+        if (collision.gameObject.tag == "Wall") 
+        {
+            canJump_ = true;
+            Debug.Log("Can Jump: " + false);
+        }
+    }
+
+    private void OnCollisionStay(Collision collision)
+    {
+        if (collision.gameObject.tag == "Wall" && isJump)
+        {
+            transform.position += new Vector3(0, -0.1f, 0);
+            body_.AddForce(Vector3.down * dowmSpeed);
+            Debug.Log("Down Jump!");
+        }
+    }
+
+    public void AddKubberInventoryOnTeam()
+    {
+        for (int i = 0; i < 4; i++)
+        {
+            monster[i] = kubberzInventory_.TakeKubberInIndex(i);
+        }
+    }
+
+    public bool VerifyLenght()=> (monster[0] != null) ? true : false;
+    
 }
