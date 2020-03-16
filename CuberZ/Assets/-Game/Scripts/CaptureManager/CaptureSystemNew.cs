@@ -95,6 +95,11 @@ public class CaptureSystemNew : MonoBehaviour
         if (putKubberInCUBE_) KubberCapturingProcess(currentMonsterColider_);
         if (rotateCubeTorNormal) CubeRotateToNormal();
         if (monsterBreakFree_) MonsterBreakedFree(currentMonsterColider_);
+        if(cubeTemp_ && cubeTemp_.transform.parent != null)
+        {
+            cubeTemp_.transform.position = spawnPoint.transform.position;
+            cubeTemp_.transform.rotation = spawnPoint.transform.rotation;   
+        } 
 
         CaptureModeEnterAndExit();
         InputCaptureModeControlState();
